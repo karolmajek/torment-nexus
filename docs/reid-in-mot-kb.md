@@ -6,7 +6,7 @@ domain: computer-vision, multi-object-tracking, re-identification, surveillance,
 status: stable field overview; architecture landscape as of mid-2026
 tags: [reid, mot, mtmc, data-association, appearance-embedding, tracking-by-detection, jde, sde, occlusion, open-set, hota, idf1]
 supersedes: null
-related: [reid-mot-metrics, reid-tracking-challenges-2026h2, reid-tracking-datasets, openood-v1.5, halo-loss]
+related: [reid-mot-metrics, reid-tracking-challenges-2026h2, reid-tracking-datasets, openood-v1.5, halo-loss, matryoshka-representation-learning, disentangled-attribute-embeddings]
 retrieved: 2026-08-18
 confidence: high (concepts and architectures); medium (relative SOTA rankings — verify against live leaderboards)
 ---

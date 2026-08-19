@@ -4,7 +4,7 @@ kb_id: reid-mot-metrics
 type: reference / evaluation protocol
 domain: computer-vision, multi-object-tracking, re-identification, benchmarking
 tags: [hota, deta, assa, idf1, mota, motp, cmc, rank-1, map, minp, ari, trackeval, evaluation, id-switches]
-related: [reid-in-mot, reid-tracking-datasets, reid-tracking-challenges-2026h2, openood-v1.5]
+related: [reid-in-mot, reid-tracking-datasets, reid-tracking-challenges-2026h2, openood-v1.5, matryoshka-representation-learning, disentangled-attribute-embeddings]
 retrieved: 2026-08-18
 confidence: high (metric definitions are stable); verify per-challenge scoring rules against the live challenge page
 ---

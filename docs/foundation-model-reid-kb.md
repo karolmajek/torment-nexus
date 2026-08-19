@@ -5,7 +5,7 @@ type: concept / survey
 domain: computer-vision, re-identification, foundation-models, representation-learning
 status: active research area; landscape as of Aug 2026
 tags: [foundation-model, reid, clip-reid, dinov3, siglip2, luperson, solider, unihcp, instruct-reid, agglomerative, radio, eupe, domain-generalization, linear-probing, megadescriptor]
-related: [reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, openood-v1.5, halo-loss]
+related: [reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, openood-v1.5, halo-loss, matryoshka-representation-learning, disentangled-attribute-embeddings]
 retrieved: 2026-08-18
 confidence: high for the published-work inventory; medium for the "no agglomerative ReID work exists" claim — that is absence-of-evidence from targeted search, not a systematic review
 ---

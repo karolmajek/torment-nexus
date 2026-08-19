@@ -13,7 +13,7 @@ source_date: 2022-05-26 (NeurIPS 2022)
 retrieved: 2026-08-19
 tags: [nested-embeddings, adaptive-retrieval, adaptive-classification, embedding-truncation, dimensionality, cascades, ann, hnsw, reranking, funnel-retrieval, mrl-e, coarse-to-fine, matryoshka, matryoshka-adaptor, imagenet-4k, retrofit, partial-finetuning, speaker-verification, efficiency]
 supersedes: null
-related: [halo-loss, openood-v1.5, foundation-model-reid, reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, flowfeat]
+related: [halo-loss, openood-v1.5, foundation-model-reid, reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, flowfeat, disentangled-attribute-embeddings]
 confidence: |
   high — paper formulation, headline numbers, and Appendix K.1 retrofit ablation read from primary source (arXiv HTML v4 + NeurIPS proceedings PDF + supplementary).
   high — ecosystem adoption (§10), multiple independent sources.

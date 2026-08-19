@@ -7,7 +7,7 @@ tags: [reid, person-reid, vehicle-reid, mtmc, mcmt, city-scale, multi-camera, ta
 retrieved: 2026-08-13
 confidence: high for cited primary sources; medium for synthesis (the merged taxonomy in 10-… is this KB's own construction, not a published one)
 supersedes: null
-related: [halo-loss, openood-v1.5]
+related: [halo-loss, openood-v1.5, matryoshka-representation-learning, disentangled-attribute-embeddings]
 ---
 
 # ReID 2026 — Wiki Index

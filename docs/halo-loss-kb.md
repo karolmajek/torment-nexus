@@ -10,7 +10,7 @@ source_date: 2026-04-06
 code: https://github.com/4rtemi5/halo
 tags: [loss-function, cross-entropy-replacement, rbf, abstain-class, ood-detection, calibration, curse-of-dimensionality, self-distillation, embeddings]
 supersedes: null
-related: [tfsd-loss, scaled-rbf-attention, register-tokens, attention-sink, openood]
+related: [tfsd-loss, scaled-rbf-attention, register-tokens, attention-sink, openood, matryoshka-representation-learning, disentangled-attribute-embeddings]
 ---
 
 # HALO Loss — Hyperspherical Alignment & Latent Optimization

@@ -14,6 +14,8 @@ what a time to be alive
 - real-world scenario,
 - contains 221,763 images corresponding to 26,267 vehicles in total.
 
+## DukeMTMC / ANY Duke-derived WILL NOT BE USED
+
 # Evaluation metrics
 
 ## VehicleID

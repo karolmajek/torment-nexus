@@ -274,11 +274,53 @@ TCSVT lands in the target quadrant, which is exactly what the old list's scoring
 
 ---
 
-## 8. Caveats
+## 8. Software and artifact venues — where C12 could go
+
+Added 2026-08-19, prompted by the proposal to develop **C12** (the open evaluation harness, [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md)) as a separate product alongside the main paper and publish it as an Original Software Publication.
+
+### 8.1 The premise needs correcting first
+
+The proposal assumed SoftwareX is **currently 200 pkt**. That does not survive checking, and it fails twice over:
+
+| Check | Result |
+|---|---|
+| Is SoftwareX in the current 200-pkt set for discipline 2021? | **No.** It does not appear in the Appendix below — the complete 90-journal extract from the 2024-01-05 list. The only "software" title in that set is ACM Transactions on Mathematical Software |
+| What do its bibliometrics support? | **Q3 in both JCR and Scopus** (Computer Science Applications, Software). CiteScore 4.1, JIF ≈ 1.9 (June 2026 edition), SJR 0.483, SNIP 1.46 |
+| What does Q3 mean under the new bands (§ 1.1)? | Q3 ≈ percentile 25–50 → **70 pkt**; a best-category placement into 50–75 → **100 pkt**. The 200-pkt band needs percentile ≥ 93 |
+| Does the median rule (§ 1.2) offer a rescue? | **No.** Median-of-percentiles rescues nothing when a journal is uniformly Q3 — there is no strong indicator to be the maximum |
+| Does the current value matter anyway? | **No.** Per § 2, an article is scored on the list in force in its year of final publication. An OSP submitted after the main paper publishes in 2027 or later, so it is scored on the 2027 list regardless of any present value |
+
+**So the realistic figure is 70–100 pkt, not 200** — one to two tiers below the main paper, and no carry-over to hide behind. This does not kill the plan; it re-prices it.
+
+### 8.2 The candidate venues
+
+| Venue | Indexed | Metrics | Format | Cost | Polish-list reality |
+|---|---|---|---|---|---|
+| **SoftwareX** (Elsevier, ISSN 2352-7110) | Scopus + WoS | Q3/Q3, CiteScore 4.1, JIF ≈ 1.9 | Original Software Publication, **≤ 3000 words**, code metadata table, public repo + permanent archived identifier | Gold OA, APC reported at **≈ USD 760–950**; institutional/agreement discounts exist and some affiliations get 100% on OSPs | Bibliometrically 70–100 pkt band |
+| **Software Impacts** (Elsevier, ISSN 2665-9638) | Scopus | Weaker still — SJR 0.373, JIF ≈ 1.85 | Even shorter, "software that addresses a research challenge" | Gold OA, APC | Same band or lower; sister journal, lighter format |
+| **JOSS** | **Neither Scopus nor WoS** — repeated applications refused | No official CiteScore | Review *of the repository itself*, not of a manuscript | **Free** | **0 pkt.** Excellent reputation among engineers, invisible to the evaluation |
+| **Zenodo DOI only** | n/a | n/a | Archived release, citable, no paper | Free | 0 pkt, but it is a prerequisite for the others anyway |
+
+### 8.3 Recommendation
+
+**Do it, but price it correctly and sequence it late.**
+
+1. **The library is worth building regardless of the paper** — [35-frameworks-toolboxes.md](35-frameworks-toolboxes.md) §7 argues it is the field's missing piece, and MIT licensing is already fixed in `AGENTS.md`. The publication is a by-product, not the justification.
+2. **Do not let the OSP replace a research paper.** The 200-pkt route for this work is the *study*, not the tool: C3 + C12 as an evaluation-and-calibration paper in a 200-pkt venue, with the library released as its artifact. The OSP then adds a cheap 70–100 on top of that, from work already done.
+3. **Sequence: artifact → main paper → OSP.** SoftwareX wants a documented, reusable, archived release plus an impact argument; the main paper *is* the impact evidence. Submitting the OSP first inverts the dependency and weakens it.
+4. **Budget the APC** (≈ USD 760–950) and check the institutional agreement before committing — a free JOSS submission buys reputation but zero points, so the choice between them is a straight cash-for-points trade.
+5. **Keep the two texts disjoint.** An OSP describes design, architecture and reuse; the study's result tables stay in the study. That is the line that keeps this from reading as salami.
+
+**Net:** a second publication for roughly two to four weeks of incremental work, at 70–100 pkt rather than 200. Worth doing at that price — provided it is scheduled after the main submission and does not compete with it for time.
+
+---
+
+## 9. Caveats
 
 - Scopus category percentiles are **not publicly retrievable** without a Scopus subscription. The CiteScore percentiles in § 5 are estimates from category ranks reported by third parties; the JIF percentile is computed from a reported JCR rank (34/210) and is the one hard anchor. Verify against Scopus and JCR before betting on a borderline case.
 - KEN has not announced which indicator or indicators it will select for the 2027 list. Scenario B/C is a possibility, not a forecast.
 - KEN retains ±2 threshold discretion (§ 15 ust. 1 pkt 2–3) on top of the bibliometric result, with published justification.
+- The SoftwareX figures in § 8 come from third-party metric aggregators and search results, not from Scopus/JCR directly — ScienceDirect blocks automated fetching, so the APC (≈ USD 760–950, sources disagree) and the exact quartile placement must be confirmed on the journal's own pages before committing. The structural conclusion (Q3, therefore nowhere near the 93rd percentile) is robust to that uncertainty; the precise band, 70 vs 100, is not.
 - Journal metric values move annually. Everything here reflects the 2025 metric editions (JCR released June 2026, CiteScore released 5 June 2026), which is also roughly the state that the 1 July 2026 cut-off will capture.
 - Points accrue to the discipline the author declares. Any of these journals counts for 2021 only if 2021 is among the author's declared disciplines.
 - Three entries in the current 200-point set carry an empty `Tytuł 1` and are identified only by `Tytuł 2`: Annual Review of Biomedical Engineering, Annual Review of Nuclear and Particle Science, IEEE Reviews in Biomedical Engineering. None are candidates here.

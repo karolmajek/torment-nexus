@@ -120,7 +120,7 @@ Grouped by lane. Each gets an id used in the scoring table.
 
 | id | Contribution | One-line pitch |
 |---|---|---|
-| **C12** | Open evaluation harness release | Reproducibility asset; supports every other item |
+| **C12** | Open evaluation harness release | Reproducibility asset; supports every other item. **Scoped as a product** since 2026-08-19: built as an installable MIT package with a licence-provenance index rather than an internal `eval.py`, which also makes it the library the field lacks ([35](35-frameworks-toolboxes.md) §7). Publication path — a SoftwareX OSP after the main paper, realistically **70–100 pkt, not 200** ([80](80-publication-venue-2024.md) §8) |
 
 ### Why C16 and C17 are worth carrying, in the words of the files that named them
 
@@ -212,7 +212,7 @@ Dominance rule: X dominates Y when Value(X) ≥ Value(Y), Work(X) ≤ Work(Y), R
 | id | Dominated by | Reading |
 |---|---|---|
 | C1 | C13 | Same value, cheaper elsewhere. But see §5.2 — standalone paper value is the wrong lens for this one |
-| C12 | C13 | A harness is a means, not a contribution |
+| C12 | C13 | A harness is a means, not a contribution — *as a research paper*. It is still worth building as a product, and it carries its own low-tier publication path ([80](80-publication-venue-2024.md) §8); that does not promote it into the research front |
 | C15 | C11 | Fine as an add-on, not as a reason to write the paper |
 | C4 | C14 | **Marginal** — same value, same work, 1 point more resources. See §6; C4 has the best venue fit on the board and should be bought as an add-on |
 | **C16** | **C3** | **Marginal, and contested** — identical Value and Work, 2 points more Resources. The entire disagreement between the two source ledgers lives in this row; see §5.1 |

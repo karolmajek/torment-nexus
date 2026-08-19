@@ -342,6 +342,45 @@ Straight answer: **as a paper on its own it is weak; as the artefact of the pape
 
 **Recommendation:** build the C12 harness first as an installable package with a registry and a provenance index from day one, rather than as `eval.py` in this repo. Same work, and it is the only version of the work that ends up being the thing the field is missing.
 
+### 7.6 Running it as a product alongside the main paper
+
+The natural follow-on — develop C12 as its own product during the main paper and publish it later as an open-source framework — works, with two corrections to how it gets priced and sequenced. The venue arithmetic lives in [80-publication-venue-2024.md](80-publication-venue-2024.md) §8; the short version is that **SoftwareX is Q3, not 200 pkt** — the realistic band is 70–100 — and an article published in 2027 is scored on the new list regardless of any present value.
+
+That changes the ordering of the reasons to do it, not the answer:
+
+| Reason to build it as a product | Holds? |
+|---|---|
+| It is infrastructure C1 and C16 need anyway | ✅ the primary reason |
+| MIT-licensed release fills a real gap in the field (§7.1–§7.3) | ✅ |
+| It is a citable artefact with a DOI for the main paper | ✅ |
+| It is a second 200-pkt publication | ❌ — 70–100 pkt (`80` §8.1) |
+
+**Sequencing.** The dependency runs artefact → paper → software paper, because an Original Software Publication needs a documented, archived, reusable release *and* an impact argument, and the main paper is what supplies the second one.
+
+```mermaid
+timeline
+    title C12 as a product, alongside the main paper
+    2026 Q3-Q4 : v0.1 internal — registry + eval, used to run C1 / C16 experiments
+    2026 Q4 : v0.5 public on GitHub, MIT, docs + one worked example
+    2026-11 to 2027-01 : Main paper submitted, cites the repo URL
+    2027 Q1 : v1.0 tagged, archived to Zenodo, DOI minted
+    2027 Q1-Q2 : SoftwareX OSP submitted — 3000 words, code metadata table
+    2027 Q2-Q3 : OSP published, scored on the 2027 list
+```
+
+**What "product" costs beyond "harness".** Roughly two to four incremental weeks *if* §7.4's packaging decisions were taken at the first commit, and considerably more if retrofitted — which is the whole argument for deciding now:
+
+| Item | Needed for |
+|---|---|
+| `pyproject.toml`, versioning, PyPI release | Being depended on rather than forked (§6.6) |
+| MIT licence (fixed in `AGENTS.md`) + per-checkpoint licence notes | §7.4 provenance index; unblocks reuse where BoxMOT cannot go |
+| Docs site + one runnable end-to-end example | OSP requirement, and the difference between adoption and another dead toolbox |
+| Tests + CI on the eval maths | The eval *is* the contribution; a wrong mAP silently invalidates everything downstream |
+| Zenodo archive + DOI | OSP requirement (permanent identifier), and makes the artefact citable |
+| Scope-lock statement in the README | Defence against unbounded model-zoo maintenance (§7.5) |
+
+**Discipline that keeps the two publications separate:** the OSP describes architecture, interfaces and reuse; every experimental result stays in the research paper. Same code, disjoint texts.
+
 ---
 
 ## 8. Which framework for which job

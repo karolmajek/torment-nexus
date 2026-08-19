@@ -1,6 +1,6 @@
 ---
-title: "Experiment Protocol — Idea 02: Agglomerative Backbone Frozen-Probe Study"
-kb_id: reid-idea02-agglomerative-probe-protocol
+title: "Experiment Protocol — Agglomerative Backbone Frozen-Probe Study (ledger C1)"
+kb_id: reid-agglomerative-probe-protocol
 type: experiment protocol / implementation plan
 domain: computer-vision, re-identification, foundation-models
 tags: [protocol, agglomerative-vfm, c-radiov4, eupe, dinov3, siglip2, frozen-probe, linear-probe, arcface, market-1501, msmt17, licensing]
@@ -9,11 +9,11 @@ confidence: |
   high — model family, teacher composition, sizes, and licences are read from `agglomerative-vfm-kb.md` and `foundation-model-reid-kb.md` primary sources.
   medium — this exact experiment (frozen probes across the agglomerative family, on ReID specifically) is named as unrun in `foundation-model-reid-kb.md` §6 but not designed there; the protocol below is this KB's own construction.
   low-medium — exact checkpoint identifiers for DINOv3/SigLIP2 are not confirmed verbatim in this KB's sources and are flagged inline as "verify current model card."
-related: [90-paper-ideas-pareto-2026, agglomerative-vfm, foundation-model-reid, 50-benchmarks-datasets, 60-finetuning-question, openood]
+related: [reid-contribution-ledger-2026, agglomerative-vfm, foundation-model-reid, reid-benchmarks-datasets, reid-finetuning-question, openood-v1.5]
 supersedes: null
 ---
 
-# Experiment Protocol — Idea 02: Agglomerative Backbone Frozen-Probe Study
+# Experiment Protocol — Agglomerative Backbone Frozen-Probe Study (ledger C1)
 
 ## 0. One-paragraph summary
 
@@ -59,7 +59,7 @@ C-RADIOv4 distills SigLIP2 + DINOv3 + SAM3 into one student. Read that teacher l
 
 ## 3. Datasets
 
-Reuse the same set as idea 01 (`91-protocol-idea01-nested-attribute-embeddings.md` §3) for direct comparability across the two studies:
+Reuse the same set as C16 (`91-protocol-nested-attribute-embeddings.md` §3) for direct comparability across the two studies:
 
 | Purpose | Dataset | Scale | Note |
 |---|---|---|---|
@@ -70,7 +70,7 @@ Reuse the same set as idea 01 (`91-protocol-idea01-nested-attribute-embeddings.m
 | Occlusion | **Occluded-ReID** | — | Avoid Occluded-Duke — see the DukeMTMC caveat below |
 | Cloth-change | **CCVID** | 226 IDs / 2,856 tracklets | |
 
-### ⚠️ DukeMTMC caveat (same as idea 01)
+### ⚠️ DukeMTMC caveat (same as C16)
 
 Do not use DukeMTMC-reID or any Duke-derived split (including Occluded-Duke) without first confirming current legal/ethical status — `reid-in-mot-kb.md` §6 flags the dataset's retraction explicitly. Occluded-ReID has no such lineage and is the default here.
 
@@ -100,9 +100,9 @@ Additive angular margin head on the same frozen features — a metric-learning h
 
 | Setting | Value | Note |
 |---|---|---|
-| **Backbone** | Fully frozen — no gradients into the encoder, at all, for any variant | This is the entire point of a frozen-probe study; conflating it with fine-tuning would collapse this into idea 01/05's territory |
+| **Backbone** | Fully frozen — no gradients into the encoder, at all, for any variant | This is the entire point of a frozen-probe study; conflating it with fine-tuning would collapse this into C16/C17's territory |
 | **Probe optimizer** | SGD or AdamW, few epochs (5–15) | Only a linear or ArcFace head is training — this converges fast and cheaply relative to any backbone fine-tune |
-| **Batch sampling** | Standard ReID P×K sampler, matching idea 01's protocol for comparability | |
+| **Batch sampling** | Standard ReID P×K sampler, matching C16's protocol for comparability | |
 | **Compute** | Feature extraction is one forward pass per image, cacheable — extract once per backbone, then train/evaluate probes on cached features. Total compute is dominated by encoder forward passes over the dataset, not by probe training | This is the concrete reason the idea is "cheap": no backward pass through any encoder, ever |
 | **Seeds** | At least 3 for the probe training (cheap to repeat since features are cached) | `50-benchmarks-datasets.md` §6 flags single-run ReID numbers as a field-wide pitfall — this study can trivially avoid it since only a small head is retrained per seed |
 
@@ -127,11 +127,11 @@ Repeat §6.1 at native small-crop resolution vs. an upscaled variant, for each b
 
 ### 6.4 Occlusion and cloth-change stress tests
 
-Run each backbone's best probe (from §6.1) on Occluded-ReID and CCVID with **no additional fine-tuning** — report the drop from the MSMT17-trained probe, matching idea 01's protocol exactly for apples-to-apples comparison across the two studies.
+Run each backbone's best probe (from §6.1) on Occluded-ReID and CCVID with **no additional fine-tuning** — report the drop from the MSMT17-trained probe, matching C16's protocol exactly for apples-to-apples comparison across the two studies.
 
 ### 6.5 Lightweight open-set check (optional but cheap to add)
 
-Since this study already produces clean embeddings and a gallery, add a minimal open-set protocol: hold out a set of identities entirely from the gallery (distractors), and report AUROC / FPR@95 for "is the top-1 match actually correct" using plain cosine-similarity thresholding — no HALO-style retraining needed, this is a post-hoc measurement on frozen embeddings. This directly answers the `foundation-model-reid-kb.md` §7 question of whether an OOD-scoring function tuned for ResNet geometry transfers to these embedding spaces, without committing to idea 03's full scope.
+Since this study already produces clean embeddings and a gallery, add a minimal open-set protocol: hold out a set of identities entirely from the gallery (distractors), and report AUROC / FPR@95 for "is the top-1 match actually correct" using plain cosine-similarity thresholding — no HALO-style retraining needed, this is a post-hoc measurement on frozen embeddings. This directly answers the `foundation-model-reid-kb.md` §7 question of whether an OOD-scoring function tuned for ResNet geometry transfers to these embedding spaces, without committing to C14's full scope.
 
 ---
 
@@ -198,12 +198,12 @@ Pull directly from `60-finetuning-question.md` §1's existing table — no need 
 - One master table: mAP/Rank-1/Rank-5, in-domain and cross-domain (both directions), for every backbone × probe-head combination, plus the three cited baselines from §8.
 - Retention-ratio comparison (§6.2), agglomerative vs. cited baselines.
 - Resolution-robustness delta table (§6.3).
-- Occlusion/cloth-change drop table (§6.4), directly comparable in format to idea 01's §7.5 output.
+- Occlusion/cloth-change drop table (§6.4), directly comparable in format to C16's §7.5 output.
 - Teacher-ablation table and framing (§7) — this is the section a reviewer will read first.
 - (Optional) open-set AUROC/FPR@95 table (§6.5).
 
 ---
 
-## 11. Relationship to idea 01
+## 11. Relationship to C16
 
-This study's winning backbone becomes the natural candidate to swap into idea 01's architecture (`91-protocol-idea01-nested-attribute-embeddings.md` §2.1) if it beats CLIP ViT-B/16 as a frozen-probe starting point. Run this study first, or at least in parallel early, specifically so idea 01 isn't locked into a backbone choice this study might overturn.
+This study's winning backbone becomes the natural candidate to swap into C16's architecture (`91-protocol-nested-attribute-embeddings.md` §2.1) if it beats CLIP ViT-B/16 as a frozen-probe starting point. Run this study first, or at least in parallel early, specifically so C16 isn't locked into a backbone choice this study might overturn.

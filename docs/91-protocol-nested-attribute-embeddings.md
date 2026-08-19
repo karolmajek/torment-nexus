@@ -1,6 +1,6 @@
 ---
-title: "Experiment Protocol — Idea 01: Nested Attribute Embeddings"
-kb_id: reid-idea01-nested-attribute-protocol
+title: "Experiment Protocol — Nested Attribute Embeddings (ledger C16)"
+kb_id: reid-nested-attribute-protocol
 type: experiment protocol / implementation plan
 domain: computer-vision, re-identification, representation-learning
 tags: [protocol, mrl, matryoshka, disentangled-attribute-embeddings, dico, asen, clip-reid, market-1501, msmt17, ablation, tcsvt]
@@ -9,11 +9,11 @@ confidence: |
   high — architecture and loss components are read directly from `mrl-kb.md` and `disentangled-attribute-embeddings-kb.md` primary sources.
   medium — the specific fusion of the two (nesting inside concept blocks) is this KB's own proposed design; nobody has published it, so hyperparameters below are starting points, not validated defaults.
   low-medium — a few implementation specifics below (exact attribute-annotation file provenance, some checkpoint slugs) come from general field knowledge rather than a KB source and are flagged inline as "verify before use."
-related: [90-paper-ideas-pareto-2026, matryoshka-representation-learning, disentangled-attribute-embeddings, halo-loss, 50-benchmarks-datasets, 60-finetuning-question]
+related: [reid-contribution-ledger-2026, matryoshka-representation-learning, disentangled-attribute-embeddings, halo-loss, reid-benchmarks-datasets, reid-finetuning-question]
 supersedes: null
 ---
 
-# Experiment Protocol — Idea 01: Nested Attribute Embeddings
+# Experiment Protocol — Nested Attribute Embeddings (ledger C16)
 
 ## 0. One-paragraph summary
 
@@ -38,7 +38,7 @@ Give a DiCo-style attribute concept block (color, texture, shape, pattern) its o
 
 ### 2.1 Backbone
 
-Default to **CLIP ViT-B/16**, initialized as in CLIP-ReID (`30-methods-catalog.md` §3), because it is the field's current best general recipe and gives a direct, well-documented baseline to fall back on. If idea 02 (agglomerative backbone probe) finds a stronger frozen encoder, swap it in as a drop-in replacement — the block/nesting module attaches to any patch-token backbone and is backbone-agnostic by construction.
+Default to **CLIP ViT-B/16**, initialized as in CLIP-ReID (`30-methods-catalog.md` §3), because it is the field's current best general recipe and gives a direct, well-documented baseline to fall back on. If C1 (agglomerative backbone probe) finds a stronger frozen encoder, swap it in as a drop-in replacement — the block/nesting module attaches to any patch-token backbone and is backbone-agnostic by construction.
 
 ### 2.2 Concept-block module (adapted from DiCo, `disentangled-attribute-embeddings-kb.md` §3.2)
 
@@ -206,6 +206,6 @@ Re-add DiCo's paired text encoder and cross-modal block-level contrastive loss, 
 | Risk | Where it's flagged |
 |---|---|
 | Per-level normalization interaction with block structure is genuinely untested | `mrl-kb.md` §12.4 |
-| HALO-style calibration (idea 03) composing with this is a separate untested question, not assumed here | `mrl-kb.md` §12.4 |
+| HALO-style calibration (C14) composing with this is a separate untested question, not assumed here | `mrl-kb.md` §12.4 |
 | Block interpretability has no formal guarantee in any published method in this family | `disentangled-attribute-embeddings-kb.md` §5 |
 | DukeMTMC provenance — confirm before any Duke-derived data enters the pipeline | `reid-in-mot-kb.md` §6 |

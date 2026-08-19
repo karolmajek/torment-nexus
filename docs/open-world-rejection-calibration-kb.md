@@ -504,7 +504,7 @@ flowchart TD
 **Sibling KBs in this wiki**
 - [70-open-problems-2026.md](70-open-problems-2026.md) section 2 - the one-page version of this problem
 - [50-benchmarks-datasets.md](50-benchmarks-datasets.md) - dataset and protocol details
-- [90-tcsvt-contribution-portfolio.md](90-tcsvt-contribution-portfolio.md) - candidate C3 scores this as the empty lane
+- [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) - candidate C3 scores this as the empty lane, and package P2 is built on it
 - `openood-kb`, `halo-loss`, `reid-mot-metrics`, `reid-in-mot`, `soma`
 
 ## 10. Retrieval hints

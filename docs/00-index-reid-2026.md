@@ -7,7 +7,7 @@ tags: [reid, person-reid, vehicle-reid, mtmc, mcmt, city-scale, multi-camera, ta
 retrieved: 2026-08-13
 confidence: high for cited primary sources; medium for synthesis (the merged taxonomy in 10-… is this KB's own construction, not a published one)
 supersedes: null
-related: [halo-loss, openood-v1.5, matryoshka-representation-learning, disentangled-attribute-embeddings, open-world-rejection-calibration, gallery-and-evaluation]
+related: [reid-contribution-ledger-2026, reid-nested-attribute-protocol, reid-agglomerative-probe-protocol, reid-frameworks-2026, matryoshka-representation-learning, disentangled-attribute-embeddings, halo-loss, flowfeat, foundation-model-reid, agglomerative-vfm, gallery-and-evaluation, reid-mot-metrics, open-world-rejection-calibration, openood-v1.5, reid-in-mot, soma, reid-tracking-datasets, reid-tracking-challenges-2026h2]
 ---
 
 # ReID 2026 — Wiki Index
@@ -29,17 +29,51 @@ Re-identification in 2026 is **no longer one field**. It has split into at least
 
 ## 1. File map
 
+The wiki has two layers. **The numbered spine (§1.1)** is the argument, read in order. **The topic KBs (§1.2)** are deep single-subject references the spine cites; each is self-contained and none of them needs to be read in sequence.
+
+### 1.1 The numbered spine
+
 | File | What it answers | Read it when |
 |---|---|---|
 | **[10-taxonomy-merged.md](10-taxonomy-merged.md)** | The merged 6-axis taxonomy, and how published taxonomies map onto it | You need one coherent frame instead of six partial ones |
 | **[20-surveys-landscape.md](20-surveys-landscape.md)** | Which 2025/2026 surveys exist, what each covers, where they overlap and conflict | You want the source taxonomies before the merge |
 | **[30-methods-catalog.md](30-methods-catalog.md)** | Named approaches/solutions, grouped by family, with what each contributes | You need to name and place a specific method |
+| **[35-frameworks-toolboxes.md](35-frameworks-toolboxes.md)** | Which ReID codebases exist, which are alive, and which support CLIP/VLM, agglomerative backbones, MRL nesting, clustering, trackers, export — plus licenses | You need to pick or judge an implementation, not a method |
 | **[40-city-scale-mtmc.md](40-city-scale-mtmc.md)** | City-scale / multi-camera pipelines, AI City Challenge 2024→2026, HOTA numbers | You are building or evaluating a multi-camera system |
 | **[50-benchmarks-datasets.md](50-benchmarks-datasets.md)** | Datasets, metrics, protocols, evaluation pitfalls | You are choosing a benchmark or reading someone's numbers |
 | **[60-finetuning-question.md](60-finetuning-question.md)** | Is fine-tuning required, and what is the expected gain, with a decision tree | You are scoping training effort and budget |
 | **[70-open-problems-2026.md](70-open-problems-2026.md)** | Unsolved problems, trend lines, what to watch next | You are picking a research direction or forecasting |
 | **[80-publication-venue-2024.md](80-publication-venue-2024.md)** | Where to submit for 200 pkt in discipline 2021, how Dz.U. 2026 poz. 630 rewrites the scoring from 2027, and which venues are at risk | You are choosing where to publish |
-| **[90-tcsvt-contribution-portfolio.md](90-tcsvt-contribution-portfolio.md)** | Candidate contributions for the TCSVT paper, scored on value / work / resources, with the Pareto front and three packages | You are deciding what the paper actually contains |
+| **[90-contribution-ledger-2026.md](90-contribution-ledger-2026.md)** | Every candidate contribution (C1–C17) scored on value / work / resources, the Pareto front, the packages, and the running order | You are deciding what the paper actually contains |
+| **[91-protocol-nested-attribute-embeddings.md](91-protocol-nested-attribute-embeddings.md)** | Executable protocol for **C16** — architecture, losses, datasets, baselines, ablations, falsification bar | You are about to build the nested attribute embedding |
+| **[92-protocol-agglomerative-probe.md](92-protocol-agglomerative-probe.md)** | Executable protocol for **C1** — which backbones, which probes, licensing gates, the teacher ablation | You are about to run the frozen-backbone study |
+
+The 90s are the planning layer: **90 decides, 91–92 execute.** [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) supersedes the two earlier ledgers (`90-tcsvt-contribution-portfolio.md` and `90-paper-ideas-pareto-2026.md`); its §0 carries the crosswalk from the old idea-01…06 numbering to the canonical C-ids, and its §5 reconciles where the two disagreed.
+
+### 1.2 Topic KBs
+
+Deep references on one subject each, cited throughout the spine. Grouped by what they are for.
+
+| File | Subject | Reach for it when |
+|---|---|---|
+| **Representation** ||
+| [mrl-kb.md](mrl-kb.md) | Matryoshka Representation Learning — nested coarse-to-fine embeddings | You need truncatable embeddings, or the per-level renormalisation bug |
+| [disentangled-attribute-embeddings-kb.md](disentangled-attribute-embeddings-kb.md) | Splitting a vector into explainable sub-features (colour, shape, texture) | You want an embedding whose parts mean something |
+| [halo-loss-kb.md](halo-loss-kb.md) | HALO — hyperspherical alignment, distance-based logits, parameter-free abstain | You are replacing a cross-entropy head with a calibrated one |
+| [flowfeat-kb.md](flowfeat-kb.md) | FlowFeat — pixel-dense embedding of motion profiles | You are considering motion as an appearance-independent cue |
+| **Backbones** ||
+| [foundation-model-reid-kb.md](foundation-model-reid-kb.md) | Foundation models for ReID — paradigms, published work, the agglomerative gap | You are choosing an encoder, or looking for the unrun experiment |
+| [agglomerative-vfm-kb.md](agglomerative-vfm-kb.md) | RADIO, EUPE, DUNE — multi-teacher distillation, sizes, licences | You need the details behind C-RADIOv4, including licence friction |
+| **Evaluation** ||
+| [gallery-and-evaluation-kb.md](gallery-and-evaluation-kb.md) | What the gallery *is*, and how mAP/CMC are actually computed, step by step with a worked VeRi query | You are unsure what a number means, or writing eval code |
+| [reid-mot-metrics-kb.md](reid-mot-metrics-kb.md) | HOTA, IDF1, MOTA, mAP, ARI — what each rewards | You are comparing retrieval numbers with tracking numbers |
+| [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) | Rejection, abstention, calibration, ECE / FPR@95 / DIR@FAR, watchlist protocols | You are asking "is this identity in the gallery at all" — the P2 core |
+| [openood-kb.md](openood-kb.md) | OpenOOD v1.5 — the OOD benchmark whose discipline C3 ports over | You need the split/threshold-tuning methodology to copy |
+| **Systems and data** ||
+| [reid-in-mot-kb.md](reid-in-mot-kb.md) | ReID as a module inside detection and tracking — paradigms, failure modes | You are embedding ReID in a tracker rather than a search engine |
+| [soma-kb.md](soma-kb.md) | SOMA — long-occlusion tracker, swappable ReID slots, and a 20k gpt-image-2 synthetic set | You need the tracker for C4, or the free synthetic corpus for §7 |
+| [reid-tracking-datasets-kb.md](reid-tracking-datasets-kb.md) | Non-challenge benchmark datasets for ReID and tracking | You are picking data outside the challenge circuit |
+| [reid-tracking-challenges-2026h2-kb.md](reid-tracking-challenges-2026h2-kb.md) | Live challenge landscape for H2 2026, with deadlines | You are considering entering a competition |
 
 ---
 
@@ -108,7 +142,13 @@ flowchart LR
         direction TB
         Z1["70 open problems"] --> Z2["10 taxonomy"] --> Z3["50 benchmarks"]
     end
+    subgraph P4["Path 4 — I'm writing the paper"]
+        direction TB
+        W1["80 venue"] --> W2["90 ledger"] --> W3["91 / 92 protocols"] --> W4["35 frameworks"]
+    end
 ```
+
+**Path 4 in one line:** [80](80-publication-venue-2024.md) fixes the venue, [90](90-contribution-ledger-2026.md) fixes what goes in the paper, 91/92 say how to run the two contributions that have protocols, and [35](35-frameworks-toolboxes.md) says what to build it on. The gap in that chain is named in [90 §11](90-contribution-ledger-2026.md) — the recommended package's two core contributions (C3, C14) have no protocol document yet.
 
 ---
 
@@ -124,6 +164,6 @@ flowchart LR
 
 ## 6. Retrieval hints
 
-Answers questions of the form: *what is the current state of person re-identification · which ReID survey should I read · what is the ReID taxonomy · how do I structure a multi-camera tracking system · what is MTMC / MCMT / HOTA · do I need to fine-tune a ReID model · what does AI City Challenge 2026 involve · what is text-based person search · which ReID benchmark should I use · why do ReID models fail in deployment · what is Sim2Real ReID.*
+Answers questions of the form: *what is the current state of person re-identification · which ReID survey should I read · what is the ReID taxonomy · how do I structure a multi-camera tracking system · what is MTMC / MCMT / HOTA · do I need to fine-tune a ReID model · what does AI City Challenge 2026 involve · what is text-based person search · which ReID benchmark should I use · why do ReID models fail in deployment · what is Sim2Real ReID · which ReID framework or codebase should I use · what should my next ReID paper be about · what is on the contribution Pareto front · how do I run the nested-attribute or agglomerative-probe experiment.*
 
 **Single most quotable fact:** in-domain ReID accuracy is effectively saturated while cross-domain accuracy is not — the same model family can score 66% mAP on its training domain and under 8% on an unseen one, which is why 2026 research has moved almost entirely to transfer, modality, and system-level questions.

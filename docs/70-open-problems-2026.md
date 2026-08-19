@@ -6,7 +6,7 @@ domain: computer-vision, re-identification, trustworthy-ml
 tags: [open-problems, research-directions, sim2real, calibration, open-world, privacy, federated-learning, lifelong, reasoning, forecast]
 retrieved: 2026-08-13
 confidence: medium — the problem list is well-grounded in stated future-work sections; the prioritisation and the calibration argument in §3 are this KB's own judgement
-related: [reid-2026-index, reid-taxonomy-merged, reid-finetuning-question]
+related: [reid-2026-index, reid-taxonomy-merged, reid-finetuning-question, open-world-rejection-calibration]
 ---
 
 # ReID Open Problems — 2026
@@ -45,6 +45,8 @@ Seven open problems, ranked by how much of the field's remaining value they gate
 ## 2. ⭐ Open-world rejection and calibration
 
 **This is the field's largest blind spot.**
+
+> Full treatment - problem statement, literature from 2014 to 2026, metric definitions, dataset options, loss families, and a concrete protocol - is in **[open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md)**.
 
 ReID is evaluated as closed-set ranking: the correct match is assumed present in the gallery, and the metric averages over the ranking. Real camera networks are the opposite — most tracklets entering camera B have no counterpart anywhere, and the system runs at a fixed similarity threshold. The literature reports mAP; deployments live and die at an operating point that mAP does not describe.
 

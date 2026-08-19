@@ -26,6 +26,8 @@ The ReID dataset landscape splits into **four generations**, and mixing numbers 
 
 ## 1. Metrics
 
+> Step-by-step walkthrough of what a gallery is and how these numbers are actually computed, with a worked AP example on this repo's VeRi-776 data: **[gallery-and-evaluation-kb.md](gallery-and-evaluation-kb.md)**.
+
 | Metric | Definition | Direction | What it hides |
 |---|---|---|---|
 | **mAP** | Mean over queries of average precision across the ranked gallery | ↑ | Whether the model is *calibrated*; whether the right answer even exists in the gallery |

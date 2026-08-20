@@ -7,7 +7,7 @@ tags: [reid, person-reid, vehicle-reid, mtmc, mcmt, city-scale, multi-camera, ta
 retrieved: 2026-08-13
 confidence: high for cited primary sources; medium for synthesis (the merged taxonomy in 10-… is this KB's own construction, not a published one)
 supersedes: null
-related: [reid-contribution-ledger-2026, reid-eval-package-design, mmreid-bench, reid-nested-attribute-protocol, reid-agglomerative-probe-protocol, reid-frameworks-2026, matryoshka-representation-learning, disentangled-attribute-embeddings, halo-loss, flowfeat, foundation-model-reid, agglomerative-vfm, gallery-and-evaluation, reid-mot-metrics, open-world-rejection-calibration, openood-v1.5, reid-in-mot, soma, reid-tracking-datasets, reid-tracking-challenges-2026h2]
+related: [reid-contribution-ledger-2026, reid-eval-package-design, reid-eval-package-simple, mmreid-bench, reid-nested-attribute-protocol, reid-agglomerative-probe-protocol, reid-frameworks-2026, matryoshka-representation-learning, disentangled-attribute-embeddings, halo-loss, flowfeat, foundation-model-reid, agglomerative-vfm, gallery-and-evaluation, reid-mot-metrics, open-world-rejection-calibration, openood-v1.5, reid-in-mot, soma, reid-tracking-datasets, reid-tracking-challenges-2026h2]
 ---
 
 # ReID 2026 — Wiki Index
@@ -40,6 +40,7 @@ The wiki has two layers. **The numbered spine (§1.1)** is the argument, read in
 | **[30-methods-catalog.md](30-methods-catalog.md)** | Named approaches/solutions, grouped by family, with what each contributes | You need to name and place a specific method |
 | **[35-frameworks-toolboxes.md](35-frameworks-toolboxes.md)** | Which ReID codebases exist, which are alive, and which support CLIP/VLM, agglomerative backbones, MRL nesting, clustering, trackers, export — plus licenses | You need to pick or judge an implementation, not a method |
 | **[36-eval-package-design.md](36-eval-package-design.md)** | Design draft for **`reidbench`** (ledger C12) — the eval + provenance package: module tree, dataset adapters, protocol/metric API, PDM packaging and PyPI release plan, milestones | You are about to write the evaluation code, or decide how to package it |
+| **[37-eval-package-simple.md](37-eval-package-simple.md)** | The decomplecting pass over 36 — the whole library as five values and four functions, what each of `ProtocolSpec`'s eighteen fields becomes, and why open-set evaluation needs no second code path | You are about to write the evaluation code, and want the version with the entanglements removed (read it *after* 36) |
 | **[40-city-scale-mtmc.md](40-city-scale-mtmc.md)** | City-scale / multi-camera pipelines, AI City Challenge 2024→2026, HOTA numbers | You are building or evaluating a multi-camera system |
 | **[50-benchmarks-datasets.md](50-benchmarks-datasets.md)** | Datasets, metrics, protocols, evaluation pitfalls | You are choosing a benchmark or reading someone's numbers |
 | **[60-finetuning-question.md](60-finetuning-question.md)** | Is fine-tuning required, and what is the expected gain, with a decision tree | You are scoping training effort and budget |
@@ -48,8 +49,9 @@ The wiki has two layers. **The numbered spine (§1.1)** is the argument, read in
 | **[90-contribution-ledger-2026.md](90-contribution-ledger-2026.md)** | Every candidate contribution (C1–C17) scored on value / work / resources, the Pareto front, the packages, and the running order | You are deciding what the paper actually contains |
 | **[91-protocol-nested-attribute-embeddings.md](91-protocol-nested-attribute-embeddings.md)** | Executable protocol for **C16** — architecture, losses, datasets, baselines, ablations, falsification bar | You are about to build the nested attribute embedding |
 | **[92-protocol-agglomerative-probe.md](92-protocol-agglomerative-probe.md)** | Executable protocol for **C1** — which backbones, which probes, licensing gates, the teacher ablation | You are about to run the frozen-backbone study |
+| **[93-protocol-deployment-precision-fidelity.md](93-protocol-deployment-precision-fidelity.md)** | Protocol for **C18 (proposed)** — what ONNX/TensorRT/fp16/int8 export costs in mAP and, more importantly, in threshold placement; plus the scope decision that `reidbench` records throughput as data and never optimises it | You are wondering whether to chase fast inference, or what your quantised encoder is actually doing to your operating point |
 
-The 90s are the planning layer: **90 decides, 91–92 execute.** [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) supersedes the two earlier ledgers (`90-tcsvt-contribution-portfolio.md` and `90-paper-ideas-pareto-2026.md`); its §0 carries the crosswalk from the old idea-01…06 numbering to the canonical C-ids, and its §5 reconciles where the two disagreed.
+The 90s are the planning layer: **90 decides, 91–93 execute.** [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) supersedes the two earlier ledgers (`90-tcsvt-contribution-portfolio.md` and `90-paper-ideas-pareto-2026.md`); its §0 carries the crosswalk from the old idea-01…06 numbering to the canonical C-ids, and its §5 reconciles where the two disagreed.
 
 ### 1.2 Topic KBs
 
@@ -150,7 +152,7 @@ flowchart LR
     end
 ```
 
-**Path 4 in one line:** [80](80-publication-venue-2024.md) fixes the venue, [90](90-contribution-ledger-2026.md) fixes what goes in the paper, 91/92 say how to run the two contributions that have protocols, and [35](35-frameworks-toolboxes.md) says what to build it on. The gap in that chain is named in [90 §11](90-contribution-ledger-2026.md) — the recommended package's two core contributions (C3, C14) have no protocol document yet.
+**Path 4 in one line:** [80](80-publication-venue-2024.md) fixes the venue, [90](90-contribution-ledger-2026.md) fixes what goes in the paper, 91–93 say how to run the contributions that have protocols, and [35](35-frameworks-toolboxes.md) says what to build it on. The gap in that chain is named in [90 §11](90-contribution-ledger-2026.md) — the recommended package's two core contributions (C3, C14) have no protocol document yet.
 
 ---
 

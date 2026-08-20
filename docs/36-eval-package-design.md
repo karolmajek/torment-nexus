@@ -18,7 +18,11 @@ confidence: |
   synthesis — the module tree, the cache-key scheme, the manifest schema, the `ProtocolSpec` and the test-oracle
   strategy are this file's own construction.
 supersedes: null
-related: [reid-frameworks-2026, reid-contribution-ledger-2026, gallery-and-evaluation, reid-benchmarks-datasets, open-world-rejection-calibration, reid-mot-metrics, openood-v1.5, matryoshka-representation-learning, reid-agglomerative-probe-protocol, reid-nested-attribute-protocol, soma]
+superseded_by: |
+  reid-eval-package-simple (37-eval-package-simple.md) for §2-§12 — architecture, core contracts, module tree,
+  protocol layer, metric signatures, encoder contract, cache API and CLI surface. §0-§1 (scope lock, name,
+  repo split) and §13-§23 (dependencies, PDM, PyPI, testing, docs, milestones, risks, sources) stand as written.
+related: [reid-eval-package-simple, reid-frameworks-2026, reid-contribution-ledger-2026, gallery-and-evaluation, reid-benchmarks-datasets, open-world-rejection-calibration, reid-mot-metrics, openood-v1.5, matryoshka-representation-learning, reid-agglomerative-probe-protocol, reid-nested-attribute-protocol, soma]
 ---
 
 # reidbench — evaluation & provenance package, design draft

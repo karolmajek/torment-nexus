@@ -138,6 +138,16 @@ The pragmatic line, and increasingly the strongest baseline: take DINOv3 or SigL
 
 Newer and less consolidated: using large vision-language models for attribute reasoning, semantic grounding, and **re-ranking** rather than as the embedding backbone. Multimodal-LLM re-ranking for *generalizable* ReID is an active 2026 direction. Treat these as post-hoc modules layered on a conventional retriever, not replacements for it.
 
+**The exception, and the first measurement of it: MMReID-Bench → VP-ReID** (arXiv 2508.06908, Aug and Nov 2025) scores 15 MLLMs — GPT-4o/4.1, Gemini 1.5 Pro / 2.0 Flash, Grok-2/4, Qwen2.5-VL, Qwen3-VL, InternVL3.5 — **as the matcher itself** across ten modalities, against TransReID and IRRA baselines. Headline shape of the result:
+
+| Regime | Number |
+|---|---|
+| Best average, 4-way multiple choice | GPT-4.1, 0.86 (92.31% on RGB) |
+| Visible-thermal / visible-infrared, 500-image gallery | **0.09 / 0.17 mAP** (max over all models) |
+| Conventional baselines | TransReID still leads on RGB and occluded |
+
+Two things to take from it. First, **zero-shot MLLM matching is already competitive on most modalities and collapses on thermal and infrared** — so an MLLM is a plausible fallback matcher for sketch, text and group queries and is not one for cross-spectral work. Second, the protocol dominates the conclusion: the same models on the same identities go from 59.71% four-way accuracy to 0.09 mAP at gallery 500. Full treatment, including why its RGB task is unusable here (DukeMTMC) and what it would take to make it open-set, in [mmreid-bench-kb.md](mmreid-bench-kb.md).
+
 ### 3.5 Domain-specific ReID foundation models
 
 - **MegaDescriptor** and **MiewID** — the de facto wildlife individual-ReID encoders, pretrained on aggregate corpora such as WildlifeReID-10k (~140k images, ~10k identities). Competition-winning pipelines typically blend a global descriptor with local feature matching (SuperPoint + LightGlue).
@@ -291,6 +301,7 @@ Foundation-model ReID inherits a problem the retrieval literature mostly ignores
 - PASS — https://arxiv.org/abs/2203.03931
 - HAP — https://arxiv.org/abs/2310.20695
 - *Person Re-ID in 2025: Supervised, Self-Supervised, and Language-Aligned — What Works?* (Jan 2026) — https://arxiv.org/abs/2601.20598 · code https://github.com/moiiai-tech/object-reid-benchmark
+- *MMReID-Bench* (v1, Aug 2025) / *Find Them All: Unveiling MLLMs for Versatile Person Re-identification* — VP-ReID (v2, Nov 2025) — https://arxiv.org/abs/2508.06908 · no code release found as of 2026-08-20 · see [mmreid-bench-kb.md](mmreid-bench-kb.md)
 - *Rethinking Multi-Branch and Cross-Backbone Fusion for Vehicle Re-Identification in the Foundation-Model Era* (Jul 2026) — https://arxiv.org/abs/2607.22068
 - *One for All: A Review of Large Pre-training Models for Re-Identification* (WWW 2025 companion) · tracker https://github.com/Vill-Lab/Awesome-Evolving-ReID
 - *Transformer for Object Re-Identification: A Survey* — https://arxiv.org/abs/2401.06960

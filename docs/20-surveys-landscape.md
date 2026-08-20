@@ -31,6 +31,7 @@ There is **no single 2025/2026 survey that covers ReID as a whole**. What exists
 | ⭐ **A review of Recent Techniques for Person Re-Identification** (Asperti, Fiorilla, Nardi, Orsini) — Machine Vision and Applications; arXiv Sep 2025 | 2024/25 | supervision | Two-part: supervised SOTA (argued to have little headroom left) and three years of unsupervised progress | Best source for the *supervised-is-saturated / unsupervised-is-converging* thesis |
 | ⭐ **Person Re-ID in 2025: Supervised, Self-Supervised, and Language-Aligned — What Works?** (Balasubramanian, MoiiAi) — arXiv 2601.20598, Jan 2026 | 2026 | supervision, 3-way | 11 models × 9 datasets, uniform protocol; supervised vs self-supervised vs language-aligned | Not a literature survey — an *empirical* one. The single most decision-relevant document for practitioners. **Has internal inconsistencies — see [60 §5](60-finetuning-question.md)** |
 | **Person re-identification: A taxonomic survey and the path ahead** (Image and Vision Computing) | 2022 | multi-dimensional | Explicitly attempts to unify prior categorizations | Historically the closest thing to a merged taxonomy; pre-foundation-model |
+| **MMReID-Bench → VP-ReID** (Li, Chen, Deng, Zhai, Wang) — arXiv 2508.06908, Aug + Nov 2025 | 2025 | modality × model | 15 MLLMs × 10 ReID modalities, two evaluation schemes, TransReID/IRRA baselines | The second *empirical* survey-by-benchmark, from the MLLM angle. Read it with the protocol caveats in [mmreid-bench-kb.md](mmreid-bench-kb.md) — its four-way MCQ numbers are not retrieval numbers |
 
 ### 1.2 Setting-specific
 
@@ -144,7 +145,8 @@ Retrieval surveys assume detection and tracking are solved and upstream. The MVM
 |---|---|
 | **Calibration and rejection** | No ReID survey treats confidence calibration or "none of the above" as a first-class topic, despite every deployed system needing a threshold. The machinery exists next door — see sibling KBs `halo-loss` (parameter-free abstain class, ~5× lower ECE) and `openood-v1.5` (FPR@95 as the operating-point metric) |
 | **Reasoning-driven ReID** | Emerged Apr 2026 (ReID-R); too new for any survey |
-| **Omni-modal ReID** | ORBench/ReID5o is NeurIPS 2025; no survey has absorbed it |
+| **Omni-modal ReID** | ORBench/ReID5o is NeurIPS 2025; no survey has absorbed it. The nearest thing to coverage is a benchmark, not a survey — MMReID-Bench/VP-ReID's ten-modality MLLM evaluation ([mmreid-bench-kb.md](mmreid-bench-kb.md)) |
+| **MLLMs as matchers** | Measured for the first time in Aug–Nov 2025 (arXiv 2508.06908); no survey covers the regime, and its thermal/infrared collapse is unexplained |
 | **Sim2Real as a first-class regime** | Adopted as the theme of AI City 2026 but not yet surveyed |
 | **Cost and latency** | Almost no survey reports throughput, embedding dimension, or gallery-search cost — the numbers a deployment is actually constrained by |
 | **Legal/regulatory constraints** | Entirely absent, despite being decisive in EU deployments |

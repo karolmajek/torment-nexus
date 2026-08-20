@@ -8,12 +8,13 @@ source_url: https://github.com/PINTO0309/soma
 author: Katsuya Hyodo (PINTO0309)
 license: MIT (code); synthetic ReID dataset generated with gpt-image-2 — check OpenAI output terms before redistribution
 doi: 10.5281/zenodo.21986816
-retrieved: 2026-08-18
+retrieved: 2026-08-20 (benchmark re-read; README now ships two fairness-paired tables)
 confidence: |
   high for architecture, module layout, CLI and stated design principles (read from the repository README);
   medium for benchmark numbers — they are self-reported, single-author, measured on the CrowdTrack *train* split with no external verification;
-  low-medium for the ReID accuracy table — 0.9872 mAP on Market-1501 is above the published state of the art and the evaluation protocol behind it is not documented in the README.
-tags: [soma, pinto0309, tracking, mot, wholebody-detection, long-occlusion, crowdtrack, personvit, osnet-ain, tensorrt, onnx, gpt-image-2, synthetic-reid, camera-rig, edge, webgpu, litert]
+  low-medium for the ReID accuracy table — 0.9872 mAP on Market-1501 is above the published state of the art and the evaluation protocol behind it is not documented in the README;
+  high-medium (upgraded 2026-08-20) for the tracker-vs-embedder attribution in section 4 — the README now feeds every ReID row identical features, which breaks the confound this entry previously flagged.
+tags: [soma, pinto0309, boosttrack, hota-decomposition, fairness-pairing, feature-whitening, tracking, mot, wholebody-detection, long-occlusion, crowdtrack, personvit, osnet-ain, tensorrt, onnx, gpt-image-2, synthetic-reid, camera-rig, edge, webgpu, litert]
 supersedes: null
 related: [reid-in-mot, reid-mot-metrics, reid-tracking-datasets, foundation-model-reid, reid-2026-index, reid-open-problems-2026]
 ---
@@ -26,7 +27,7 @@ SOMA is a **single-author, MIT-licensed, online multi-person tracker built for d
 
 Three things make it relevant to this project:
 
-1. **It supplies a downstream utility metric for ReID.** Long-gap same-id recovery, binned at roughly 1 s / 3 s / 5 s, is a *system-level* score that a retrieval mAP number does not predict. SOMA reports baselines scoring 0% in the 5 s bin while its ReID-enabled variant reaches 44%.
+1. **It supplies a downstream utility metric for ReID.** Long-gap same-id recovery, binned at roughly 1 s / 3 s / 5 s, is a *system-level* score that a retrieval mAP number does not predict. SOMA reports baselines scoring 0% in the 5 s bin while its ReID-enabled variant reaches 44% — and as of the 2026-08 README, **0% is still what BoostTrack++ scores when handed the exact same PersonViT embeddings** (§4).
 2. **It is a ready-made, reproducible harness.** ONNX plus TensorRT, a `soma-eval` CLI with a cached-embedding path, and a swappable ReID slot — you can drop any embedder in and read out HOTA, IDF1 and the long-gap bins.
 3. **It ships a 20,000-image synthetic person ReID dataset generated with gpt-image-2**, with a seed-locked 33-camera rig, documented pitch and focal ranges, an occlusion protocol and per-camera JPEG-quality jitter. It is the closest existing artifact to the "generative simulated data" idea, which makes it both a template and a prior-art hazard.
 
@@ -64,7 +65,9 @@ flowchart TD
     class P1,P2,P3,P4 leaf
 ```
 
-Axiom 1 is the interesting one for us: it is the explicit opposite of the "one big foundation embedding" direction in `foundation-model-reid` and `agglomerative-vfm`. SOMA argues that several cheap, partly-independent cues beat one expensive cue at fixed latency. Nobody has tested that claim against strong modern encoders.
+Axiom 1 is the interesting one for us: it is the explicit opposite of the "one big foundation embedding" direction in `foundation-model-reid` and `agglomerative-vfm`. SOMA argues that several cheap, partly-independent cues beat one expensive cue at fixed latency.
+
+**The 2026-08 numbers argue against SOMA's own axiom 1.** Structure-only SOMA scores **29.2 HOTA against BoostTrack++'s 28.9** — a tie, from a far more elaborate perception stack. Every point of separation arrives with the crop embedder (29.2 -> 37.4). Read strictly, the repository demonstrates that *many weak structural channels roughly match a good motion tracker*, and that the expensive appearance channel is what actually buys identity — the opposite of what the axiom claims. What survives is the weaker and still-interesting version: structure is what keeps a track *alive* across the gap, and the embedding is what *closes* it (§4.4).
 
 ---
 
@@ -106,42 +109,103 @@ stateDiagram-v2
     Active --> [*]: exit scene
 ```
 
-**Ghost coasting plus embedding-only revival is the mechanism that produces the long-gap numbers.** Baseline trackers terminate the track instead, so a person who reappears after 5 s becomes a new identity — which is exactly why they score 0% in that bin rather than something small. Note the structural consequence: in the long-gap regime the appearance embedding is not one term in a cost, it is the *only* signal. Diagram detail is this KB's reconstruction from the module descriptions; verify against `tracker.py` before relying on the exact transitions.
+**Ghost coasting plus embedding-only revival is the mechanism that produces the long-gap numbers.** Baseline trackers terminate the track instead, so a person who reappears after 5 s becomes a new identity — which is exactly why they score 0% in that bin rather than something small. §4.4 now demonstrates this rather than asserting it: BoostTrack++ fed the *identical* PersonViT embeddings still scores 0% at 3 s and 5 s, because the state machine above never keeps a candidate alive long enough for the embedding to be queried. Note the structural consequence: in the long-gap regime the appearance embedding is not one term in a cost, it is the *only* signal. Diagram detail is this KB's reconstruction from the module descriptions; verify against `tracker.py` before relying on the exact transitions.
 
 ---
 
-## 4. Reported benchmark
+## 4. Reported benchmark — the 2x2 that matters
 
-CrowdTrack train split, 640x640 stretch, detector wb28. All numbers self-reported.
+CrowdTrack **train** split, 640x640 stretch, and — this is the important part — **every row consumes the same low-floor (0.10) wb28 detections, and within each table every ReID row is fed the same features.** The author calls it *fairness pairing*. External baselines are run from official code through shims. All numbers self-reported, read from the README on 2026-08-20.
 
-| Tracker | HOTA | DetA | AssA | MOTA | IDF1 | ~1 s | ~3 s | ~5 s |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| **SOMA-R** (PersonViT ViT-S/16, aug v3) | **37.4** | 30.6 | **46.1** | **33.7** | **45.2** | **34** | **30** | **44** |
-| SOMA-R (OSNet-AIN, aug v3) | 36.7 | — | — | — | — | — | — | 32 |
-| ByteTrack | 26.4 | 27.7 | 25.4 | 31.2 | 28.6 | 6 | 0 | 0 |
-| BoostTrack++ | 28.9 | 26.1 | 32.2 | 28.9 | 30.4 | 5 | 0 | 0 |
+### 4.1 PersonViT ViT-S/16 features (aug v3, raw)
 
-Read the columns separately. **DetA is essentially flat across all four systems** (26–31), so the entire HOTA gap comes from AssA — association, not detection. That is the well-behaved part of the result.
+| Tracker | HOTA | DetA | AssA | MOTA | IDF1 | IDSW | sw/TP | ~1 s | ~3 s | ~5 s |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **SOMA-R** | **37.4** | **30.6** | **46.1** | **33.7** | **45.2** | 4,376 | 1.65% | **34** | **30** | **44** |
+| BoostTrack++-R | 30.7 | 26.3 | 36.0 | 29.3 | 33.2 | **3,426** | **1.58%** | 7 | 0 | 0 |
+| SOMA (no ReID) | 29.2 | 28.5 | 30.2 | 31.1 | 31.2 | 7,964 | 3.32% | 8 | 0 | 0 |
+| BoostTrack++ | 28.9 | 26.1 | 32.2 | 28.9 | 30.4 | 4,500 | 2.08% | 5 | 0 | 0 |
+| ByteTrack | 26.4 | 27.7 | 25.4 | 31.2 | 28.6 | 7,456 | 3.08% | 6 | 0 | 0 |
 
-The long-gap columns are the headline and the weakest link at once: a 0% denominator makes any positive number look enormous, and the bins are defined by SOMA itself.
+### 4.2 OSNet-AIN x1.0 features (aug v4, whitened)
 
----
+| Tracker | HOTA | DetA | AssA | MOTA | IDF1 | IDSW | sw/TP | ~1 s | ~3 s | ~5 s |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **SOMA-R** | **36.7** | **30.6** | **44.3** | **33.5** | **44.1** | 5,030 | 1.90% | **31** | **23** | **35** |
+| BoostTrack++-R | 30.6 | 26.2 | 36.0 | 29.1 | 32.9 | **3,599** | **1.66%** | 6 | 0 | 0 |
+| SOMA (no ReID) | 29.2 | 28.5 | 30.2 | 31.1 | 31.2 | 7,964 | 3.32% | 8 | 0 | 0 |
+| BoostTrack++ | 28.9 | 26.1 | 32.2 | 28.9 | 30.4 | 4,500 | 2.08% | 5 | 0 | 0 |
+| ByteTrack | 26.4 | 27.7 | 25.4 | 31.2 | 28.6 | 7,456 | 3.08% | 6 | 0 | 0 |
+
+The four ReID rows across the two tables form a clean **{tracker} x {embedder} factorial** with the detections held fixed. That is the design this KB asked for in its previous revision, and it is now in the README.
+
+### 4.3 The HOTA decomposition
+
+`HOTA ~ sqrt(DetA x AssA)`, so plotting DetA against AssA separates the two failure modes. On CrowdTrack every system sits in a narrow DetA band (26–31) and spreads widely on AssA (25–46): **the ranking is decided almost entirely by association.**
+
+```mermaid
+quadrantChart
+    title HOTA decomposition on CrowdTrack 640 (PersonViT features shared)
+    x-axis "DetA 24%" --> "DetA 32%"
+    y-axis "AssA 24%" --> "AssA 48%"
+    quadrant-1 Detects and associates
+    quadrant-2 Associates, under-detects
+    quadrant-3 Weak on both
+    quadrant-4 Detects, loses identity
+    "SOMA-R": [0.83, 0.92]
+    "BoostTrack++-R": [0.29, 0.50]
+    "BoostTrack++": [0.26, 0.34]
+    "SOMA": [0.56, 0.26]
+    "ByteTrack": [0.46, 0.06]
+```
+
+*Axes are the DetA and AssA columns of §4.1, rescaled to the plot box; quadrant labels are this KB's reading, not SOMA's.* Curves of constant HOTA are hyperbolae `AssA = HOTA^2 / DetA`. The five systems span **4.5 pp of DetA against 20.7 pp of AssA**, so essentially all movement on this plot is vertical — which is what it looks like when a benchmark is association-bound.
+
+**One correction to the earlier reading of this table.** DetA is *not* strictly flat: adding ReID to SOMA moves it 28.5 -> 30.6 (+2.1) with the detector untouched. HOTA's DetA is computed over detections that survived into output tracks, so reviving a ghost adds true positives and inflates "detection" quality. Do not treat DetA as a pure detector score.
+
+### 4.4 Factor decomposition — mechanism dominates the embedder
+
+| Contrast | Held fixed | AssA delta | ~5 s bin delta |
+|---|---|---:|---:|
+| **Mechanism** — SOMA-R vs BoostTrack++-R | PersonViT features, detections | **+10.1** | **+44 pp** |
+| **Mechanism** — SOMA-R vs BoostTrack++-R | OSNet features, detections | **+8.3** | **+35 pp** |
+| **Embedder** — PersonViT vs OSNet inside SOMA-R | tracker, detections | +1.8 | +9 pp |
+| **Embedder** — PersonViT vs OSNet inside BoostTrack++-R | tracker, detections | 0.0 | 0 pp |
+| **Adding ReID at all** — SOMA-R vs SOMA | tracker core, detections | +15.9 | +44 pp |
+| **Adding ReID at all** — BoostTrack++-R vs BoostTrack++ | tracker core, detections | +3.8 | 0 pp |
+
+Three conclusions, and they are the reason this update matters more than the headline HOTA:
+
+1. **The long-gap capability is a tracker mechanism, not an embedding property.** BoostTrack++ handed state-of-the-art PersonViT features still recovers **0%** at 3 s and 5 s, because it terminates the track before the embedding is ever consulted. Ghost coasting plus embedding-only revival (§3.1) is what converts embedding quality into recovered identities. This retires the "44% vs 32% is confounded" caveat the previous revision of this entry carried.
+2. **Embedder quality only pays inside a tracker that can spend it.** The same PersonViT-over-OSNet delta is worth +9 pp of 5 s recovery inside SOMA-R and exactly nothing inside BoostTrack++-R. **Encoder selection is not separable from the tracker it will run in** — which is a direct problem for any benchmark, including ours, that ranks encoders standalone.
+3. **Retrieval mAP badly mispredicts the size of the effect.** PersonViT beats OSNet by ~1.4 pp Market mAP (0.9872 vs 0.9733, §5) — a difference a retrieval paper would call noise. That "noise" is 9 pp of 5 s recovery in one host tracker and 0 pp in another.
+
+### 4.5 What is still soft
+
+- Self-reported, single author, **train** split, no external verification. Fairness pairing fixes the *internal* comparison; it does nothing for the absolute numbers.
+- The embedder axis is not perfectly clean: the PersonViT rows are **aug v3, raw** and the OSNet rows are **aug v4, whitened**, so architecture, fine-tuning corpus version and post-processing move together. Only the *mechanism* axis is fully controlled.
+- The 0% denominators still flatter the long-gap columns, and SOMA defines the bins. But "0% with the same features" is a far stronger statement than "0% with weaker features", which is what the previous table supported.
+- IDSW is the one metric where BoostTrack++-R wins (3,426 vs SOMA-R's 4,376, and a lower sw/TP). SOMA trades more switches for far more recoveries — reasonable if recovery is the KPI, worth naming rather than hiding.
 
 ## 5. Models in the swappable slots
 
 | Slot | Options |
 |---|---|
 | **Detector** | YOLOv9-E Wholebody28-Refine (primary); DEIM-Wholebody28; YOLO-Wholebody34; DEIMv2-Wholebody34 / 40 / 49 |
-| **Embedder** | PersonViT ViT-S/16 + token-IN — 22.0M params, 2.94 GFLOPs @256x128, 384-d; OSNet-AIN x1.0 — 2.2M params, 0.98 GFLOPs, 512-d |
+| **Embedder** | PersonViT ViT-S/16 + token-IN — 22.0M params, 2.94 GFLOPs @256x128, 384-d; OSNet-AIN x1.0 — 2.7M params, 512-d (README listed 2.2M on 2026-08-18; the shipped variant changed) |
 | **Runtime** | ONNX + TensorRT fp16 (native); onnxruntime-web and LiteRT.js + WebGPU (browser/Electron) |
 
 Reported embedder accuracy after the repository's own fine-tuning:
 
 | Embedder | Market mAP | Market R1 | MSMT17 mAP | MSMT17 R1 |
 |---|---:|---:|---:|---:|
-| PersonViT S-ain-aug (fine-tuned) | 0.9872 | 0.9911 | 0.9397 | 0.9697 |
-| OSNet P-ain-aug (fine-tuned) | 0.9711 | 0.9857 | 0.8711 | 0.9472 |
+| PersonViT S-ain-aug (fine-tuned, aug v3) | 0.9872 | 0.9911 | 0.9397 | 0.9697 |
+| OSNet P-ain-aug (fine-tuned, aug v4) | 0.9733 | 0.9881 | 0.8832 | 0.9511 |
 | OSNet-AIN official (untuned reference) | 0.4580 | 0.7304 | 0.4869 | 0.7613 |
+
+*OSNet row updated 2026-08-20 — was 0.9711 / 0.9857 / 0.8711 / 0.9472 before the aug v4 rebuild.* The two fine-tuned rows differ by **~1.4 pp Market mAP**, and §4.4 shows what that difference actually buys: 9 pp of 5 s recovery inside SOMA-R, and nothing at all inside BoostTrack++-R.
+
+**Feature whitening (new in the 2026-08 README).** The OSNet path whitens embeddings with statistics computed **across the people present in a frame**, the web runtime applying it only on frames with **>= 4 valid embeddings**. That is a *transductive, per-frame* normalisation: it uses the current frame's population rather than a fixed training statistic. Two consequences to carry into our own protocol — it has no equivalent at single-crop retrieval time (so the whitened tracker embedder is not the operator a retrieval benchmark scores), and it means the §4.2 rows vary architecture, fine-tuning corpus version *and* post-processing together.
 
 > **Caveat, flagged loudly.** 0.9872 mAP on Market-1501 and 0.9397 mAP on MSMT17 sit *above* the published state of the art for these benchmarks by a clear margin, and the README does not state the evaluation protocol, the query/gallery construction, or whether the fine-tuning corpus overlaps the test identities. Treat these as *internal* numbers for ranking SOMA's own embedder variants, and do not cite them as ReID results without reproducing the protocol.
 
@@ -199,7 +263,7 @@ flowchart TD
 
 | Missing | Why it matters |
 |---|---|
-| No ablation isolating the synthetic data's contribution | The 44% vs 32% long-gap difference is confounded — different backbone *and* different fine-tuning corpus |
+| No ablation isolating the synthetic data's contribution | Still open, but narrowed. §4.4 now separates *tracker mechanism* from *embedder*, so the long-gap gap is no longer attributable to the encoder at all. What remains unmeasured is the synthetic **corpus**: PersonViT (aug v3) vs OSNet (aug v4) still vary architecture and corpus version together |
 | No scaling curve | 400 identities x 40 images is one point. Nothing tells you whether identities or images-per-identity or camera count is the binding constraint |
 | No real-domain transfer measurement of the synthetic set alone | The embedders are fine-tuned on real ReID data too, so synthetic-only transfer is unmeasured |
 | No identity-consistency audit | Generative models drift identity across a 40-image set; there is no reported check that `p00042` is the same person in all 40 images |
@@ -262,7 +326,7 @@ flowchart LR
 Three distinct uses, in increasing order of ambition:
 
 1. **Baseline and citation.** A recent, honest, MIT-licensed system whose author states the benchmark critique out loud. Cite it when arguing that mAP is not the deployment KPI.
-2. **Measuring instrument.** Swap encoders into the ReID slot and read out long-gap recovery. Everything except the embedding is held constant, which is precisely the controlled comparison the ReID literature lacks.
+2. **Measuring instrument.** Swap encoders into the ReID slot and read out long-gap recovery. Everything except the embedding is held constant, which is precisely the controlled comparison the ReID literature lacks. The README's own fairness pairing (§4) is the template: run each candidate encoder through **both** SOMA-R and BoostTrack++-R, because §4.4 shows the same encoder delta is worth 9 pp in one host and 0 pp in the other. A single-host number would let us publish an encoder ranking that is really a tracker ranking.
 3. **Prior art to differentiate from.** Its synthetic dataset already exists, is documented, and is free. Regenerating something similar from scratch is not a contribution; *explaining which of its properties matter* is.
 
 **Licence caution:** the code is MIT and reusable. The generated images are a separate question — model output terms, and the presence of synthetic likenesses, both need checking before redistribution or before training a model you intend to publish weights for.
@@ -281,6 +345,9 @@ Three distinct uses, in increasing order of ambition:
 | **Ghost coasting** | Keeping an unmatched track alive without detections past normal motion-prediction validity |
 | **Embedding-only revival** | Re-attaching a ghost purely on appearance similarity, with no geometric support |
 | **Long-gap recovery bin** | Fraction of occlusion episodes of a given duration after which the original identity is restored |
+| **Fairness pairing** | The README's protocol of feeding every ReID-enabled row in a table the identical cached features and the identical detections, so a row-to-row difference is attributable to the tracker alone |
+| **Per-frame whitening** | Normalising embeddings using statistics computed over the people visible in the current frame (OSNet path; web runtime requires >= 4 valid embeddings). Transductive — it has no single-crop retrieval equivalent |
+| **sw/TP** | Identity switches per true positive; a rate-normalised IDSW that stays comparable when trackers output different numbers of detections |
 | **CrowdTrack** | Crowded-scene MOT benchmark with roughly 19x more 5-second occlusion episodes than MOT17 |
 | **token-IN** | Token-level instance normalisation used in the PersonViT variant |
 
@@ -299,6 +366,6 @@ Three distinct uses, in increasing order of ambition:
 
 ## 11. Retrieval hints
 
-Answers: *what is SOMA tracker · PINTO0309 SOMA · long occlusion tracking · long-gap identity recovery metric · CrowdTrack vs MOT17 occlusion episodes · wholebody detector tracking pipeline · embedding-only revival · ghost coasting · gpt-image-2 synthetic ReID dataset · synthetic person ReID camera rig · how to generate a synthetic ReID dataset · which ReID embedder for a tracker · TensorRT ReID edge tracking · WebGPU tracking runtime.*
+Answers: *what is SOMA tracker · PINTO0309 SOMA · long occlusion tracking · long-gap identity recovery metric · CrowdTrack vs MOT17 occlusion episodes · wholebody detector tracking pipeline · embedding-only revival · ghost coasting · HOTA DetA AssA decomposition · fairness pairing shared ReID features · BoostTrack++-R · does a better ReID encoder improve tracking · per-frame feature whitening · gpt-image-2 synthetic ReID dataset · synthetic person ReID camera rig · how to generate a synthetic ReID dataset · which ReID embedder for a tracker · TensorRT ReID edge tracking · WebGPU tracking runtime.*
 
-**Single most quotable fact:** on CrowdTrack, ByteTrack and BoostTrack++ recover **0%** of identities after a ~5 s occlusion while SOMA-R recovers **44%** with the same class of detector — a difference produced entirely by the appearance channel and entirely invisible to the retrieval mAP normally used to select that channel.
+**Single most quotable fact (strengthened 2026-08-20):** on CrowdTrack, BoostTrack++ recovers **0%** of identities after a ~5 s occlusion while SOMA-R recovers **44%** — *fed the same detections and the same PersonViT embeddings*. The gap is not embedding quality; it is whether the tracker keeps a candidate alive long enough to ask the embedding a question. Corollary: a 1.4 pp Market-1501 mAP difference between two encoders is worth 9 pp of 5 s recovery in one tracker and 0 pp in another, so encoder rank and system rank are not the same ordering.

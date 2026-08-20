@@ -207,6 +207,8 @@ flowchart TD
 
 **Caveat:** single paper, April 2026, not yet independently replicated. Treat as promising direction, not established result.
 
+**Adjacent, and now measured: the MLLM used directly as the matcher.** Rather than reasoning *inside* a trained ReID model, prompt a general MLLM to decide whether two crops are the same person — either as an *n*-way choice or as a Yes/No verification whose score ranks a gallery. MMReID-Bench / VP-ReID (arXiv 2508.06908) is the first systematic scoring of this across 15 models and ten modalities: competitive with TransReID on most modalities, near-useless on thermal and infrared (0.09 / 0.17 mAP at gallery 500), and about 2.3 M model calls per model to evaluate. It shares reasoning-driven ReID's interpretability argument — the decision arrives with a rationale — and inherits an inference cost that rules it out as a first-pass retriever. Details and protocol caveats: [mmreid-bench-kb.md](mmreid-bench-kb.md).
+
 ---
 
 ## 10. Parameter-efficient fine-tuning in ReID

@@ -78,6 +78,8 @@ flowchart LR
 
 **Also missing:** ReID reports no ECE, no reliability diagrams, no gallery-size sensitivity curves, and almost never a fixed-threshold operating point.
 
+**The blind spot is being reproduced in new work, not closed.** MMReID-Bench / VP-ReID (arXiv 2508.06908, Nov 2025) built a ten-modality benchmark for MLLM-based ReID in which *every question has exactly one correct answer* — four-way multiple choice, or a 500-image gallery guaranteed to contain the mate. Its Yes/No matching scheme produces a verification score per pair, so adding non-mated probes would have cost almost nothing and would have produced the field's first open-set MLLM ReID result. It was not done. Newest benchmark, newest model class, same closed-set assumption — see [mmreid-bench-kb.md](mmreid-bench-kb.md) §4.1.
+
 ---
 
 ## 3. A unified performance + generalization model
@@ -148,6 +150,8 @@ Improving, but slowly. The 2026 developments that help:
 | Hidden test sets + post-hoc ranking | Mitigates leaderboard overfitting |
 
 **Still missing:** seed variance (most ReID results are single-run), throughput and embedding-dimension reporting, gallery-scaling curves, and any operating-point metric.
+
+**And a 2025 development that pushes the other way:** MMReID-Bench's four-image multiple-choice galleries (chance level 25%, three of ten tasks above 99%) are the cheapest possible protocol and the least deployment-predictive. Its own v2 shows the cost — the same models drop to 0.09 mAP on thermal once the gallery reaches 500 ([mmreid-bench-kb.md](mmreid-bench-kb.md) §4.2). Gallery size is not a detail of the protocol; below a few thousand it *is* the protocol.
 
 ---
 

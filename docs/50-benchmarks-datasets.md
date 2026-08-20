@@ -6,7 +6,7 @@ domain: computer-vision, re-identification, evaluation
 tags: [datasets, benchmarks, market1501, msmt17, cuhk03, cityflow, orbench, pab, detreidx, ag-vpreid, metrics, map, cmc, hota, evaluation-pitfalls]
 retrieved: 2026-08-13
 confidence: high for dataset facts; medium for cross-dataset performance comparisons (protocols differ)
-related: [reid-taxonomy-merged, reid-city-scale-mtmc, reid-finetuning-question]
+related: [reid-taxonomy-merged, reid-city-scale-mtmc, reid-finetuning-question, mmreid-bench, gallery-and-evaluation]
 ---
 
 # ReID Benchmarks, Datasets and Metrics
@@ -136,6 +136,7 @@ For comparison, the AG-VPReID 2025 challenge (80–120 m, UAV + CCTV + wearable)
 | **TVRID** (ICPR 2026) | Top-view RGB + depth | Privacy-preserving; difficulty order RGB > Depth > Cross-Modal |
 | **PAB** (AI City 2026 T4) | Image + text, behaviour-conditioned | 1,013,605 synthetic train images; test = 1,978 queries vs 1,978 GT + 34,795 distractors |
 | **MALS** | Image + text + attributes | Text-based person retrieval pretraining |
+| **MMReID-Bench → VP-ReID** (arXiv 2508.06908) | RGB, sketch, synthetic, UAV, occluded, cloth-change, group, text, thermal, infrared — 10 tasks | v1: 20,710 imgs / 4,142 queries, **4-way multiple choice**, accuracy only. v2: 257,310 imgs / 4,642 queries, adds **QGM** (500-image gallery, mAP + CMC). Not a new corpus — it re-samples ten existing datasets to score **MLLMs as the matcher**. ⛔ its RGB task is DukeMTMC-ReID. See [mmreid-bench-kb.md](mmreid-bench-kb.md) |
 
 ---
 
@@ -173,6 +174,7 @@ Adapted to ReID, with the OpenOOD pitfall list (sibling KB `openood-v1.5` §10) 
 | **Single-run numbers** | Most ReID papers report one seed. The AI City ImageNet-scale analogue (OpenOOD) explicitly flags single-run rows as not supporting small-difference claims |
 | **Synthetic-only validation** | Clean labels and controlled capture make synthetic benchmarks useful for isolating variables and misleading about deployment. This is precisely why 2026 introduced a real test set |
 | **Gallery-size sensitivity** | mAP degrades with gallery size; comparing across benchmarks with different gallery sizes is meaningless. PAB's 34,795 distractors exist specifically to make this honest |
+| **Multiple-choice protocols are not retrieval** | An *n*-way forced choice has a chance floor (25% at n=4) and a ceiling most tasks hit. MMReID-Bench's four-image galleries put three of ten tasks above 99%; the same models on the same identities score 0.09 mAP once the gallery grows to 500 ([mmreid-bench-kb.md](mmreid-bench-kb.md) §4.2). Never read an MCQ accuracy as a retrieval number |
 
 ---
 
@@ -217,6 +219,7 @@ flowchart TD
 - VReID-XFD challenge results and dataset table — https://arxiv.org/abs/2601.01312
 - AG-VPReID 2025 challenge results — https://arxiv.org/abs/2506.22843
 - ORBench / ReID5o — https://arxiv.org/abs/2506.09385 · MP-ReID — https://arxiv.org/abs/2503.17096 · EvReID — https://arxiv.org/abs/2507.13659 · TVRID — https://arxiv.org/abs/2605.04977
+- MMReID-Bench (v1) / VP-ReID (v2) — https://arxiv.org/abs/2508.06908 (see [mmreid-bench-kb.md](mmreid-bench-kb.md))
 - PAB / AI City 2026 Track 4 rules — https://www.aicitychallenge.org/2026-track4/
 - MTMC datasets — https://huggingface.co/datasets/nvidia/PhysicalAI-SmartSpaces
 - DG protocols — https://arxiv.org/abs/2506.12413

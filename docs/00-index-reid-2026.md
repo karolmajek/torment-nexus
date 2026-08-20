@@ -7,7 +7,7 @@ tags: [reid, person-reid, vehicle-reid, mtmc, mcmt, city-scale, multi-camera, ta
 retrieved: 2026-08-13
 confidence: high for cited primary sources; medium for synthesis (the merged taxonomy in 10-… is this KB's own construction, not a published one)
 supersedes: null
-related: [reid-contribution-ledger-2026, reid-nested-attribute-protocol, reid-agglomerative-probe-protocol, reid-frameworks-2026, matryoshka-representation-learning, disentangled-attribute-embeddings, halo-loss, flowfeat, foundation-model-reid, agglomerative-vfm, gallery-and-evaluation, reid-mot-metrics, open-world-rejection-calibration, openood-v1.5, reid-in-mot, soma, reid-tracking-datasets, reid-tracking-challenges-2026h2]
+related: [reid-contribution-ledger-2026, reid-eval-package-design, mmreid-bench, reid-nested-attribute-protocol, reid-agglomerative-probe-protocol, reid-frameworks-2026, matryoshka-representation-learning, disentangled-attribute-embeddings, halo-loss, flowfeat, foundation-model-reid, agglomerative-vfm, gallery-and-evaluation, reid-mot-metrics, open-world-rejection-calibration, openood-v1.5, reid-in-mot, soma, reid-tracking-datasets, reid-tracking-challenges-2026h2]
 ---
 
 # ReID 2026 — Wiki Index
@@ -39,6 +39,7 @@ The wiki has two layers. **The numbered spine (§1.1)** is the argument, read in
 | **[20-surveys-landscape.md](20-surveys-landscape.md)** | Which 2025/2026 surveys exist, what each covers, where they overlap and conflict | You want the source taxonomies before the merge |
 | **[30-methods-catalog.md](30-methods-catalog.md)** | Named approaches/solutions, grouped by family, with what each contributes | You need to name and place a specific method |
 | **[35-frameworks-toolboxes.md](35-frameworks-toolboxes.md)** | Which ReID codebases exist, which are alive, and which support CLIP/VLM, agglomerative backbones, MRL nesting, clustering, trackers, export — plus licenses | You need to pick or judge an implementation, not a method |
+| **[36-eval-package-design.md](36-eval-package-design.md)** | Design draft for **`reidbench`** (ledger C12) — the eval + provenance package: module tree, dataset adapters, protocol/metric API, PDM packaging and PyPI release plan, milestones | You are about to write the evaluation code, or decide how to package it |
 | **[40-city-scale-mtmc.md](40-city-scale-mtmc.md)** | City-scale / multi-camera pipelines, AI City Challenge 2024→2026, HOTA numbers | You are building or evaluating a multi-camera system |
 | **[50-benchmarks-datasets.md](50-benchmarks-datasets.md)** | Datasets, metrics, protocols, evaluation pitfalls | You are choosing a benchmark or reading someone's numbers |
 | **[60-finetuning-question.md](60-finetuning-question.md)** | Is fine-tuning required, and what is the expected gain, with a decision tree | You are scoping training effort and budget |
@@ -69,6 +70,7 @@ Deep references on one subject each, cited throughout the spine. Grouped by what
 | [reid-mot-metrics-kb.md](reid-mot-metrics-kb.md) | HOTA, IDF1, MOTA, mAP, ARI — what each rewards | You are comparing retrieval numbers with tracking numbers |
 | [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) | Rejection, abstention, calibration, ECE / FPR@95 / DIR@FAR, watchlist protocols | You are asking "is this identity in the gallery at all" — the P2 core |
 | [openood-kb.md](openood-kb.md) | OpenOOD v1.5 — the OOD benchmark whose discipline C3 ports over | You need the split/threshold-tuning methodology to copy |
+| [mmreid-bench-kb.md](mmreid-bench-kb.md) | MMReID-Bench → VP-ReID — 15 MLLMs scored *as the matcher* across 10 modalities; MCQ vs 500-gallery QGM | You are asking whether GPT-class models can do ReID, or want a fresh citation that protocol changes invert conclusions |
 | **Systems and data** ||
 | [reid-in-mot-kb.md](reid-in-mot-kb.md) | ReID as a module inside detection and tracking — paradigms, failure modes | You are embedding ReID in a tracker rather than a search engine |
 | [soma-kb.md](soma-kb.md) | SOMA — long-occlusion tracker, swappable ReID slots, and a 20k gpt-image-2 synthetic set | You need the tracker for C4, or the free synthetic corpus for §7 |

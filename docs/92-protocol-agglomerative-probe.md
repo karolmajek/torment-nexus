@@ -63,16 +63,22 @@ Reuse the same set as C16 (`91-protocol-nested-attribute-embeddings.md` §3) for
 
 | Purpose | Dataset | Scale | Note |
 |---|---|---|---|
-| In-domain probe train/eval | **MSMT17** | 126,441 boxes / 4,101 IDs / 15 cameras | Primary |
-| In-domain probe train/eval | **Market-1501** | 32,668 images / 1,501 IDs / 6 cameras | Secondary, near-ceiling — report but don't lead with it |
+| In-domain probe train/eval | **MSMT17** | [counts · access](../datasets/msmt17.md) | Primary. ⚠️ its first-party download 404s as of 2026-08-21 — the page has the three remaining routes and the fallback |
+| In-domain probe train/eval | **Market-1501** | [counts · access](../datasets/market1501.md) | Secondary, near-ceiling — report but don't lead with it |
 | Cross-domain | MSMT17 ↔ Market-1501, both directions | — | Report retention ratio (§6.2), not just raw numbers |
-| Hard cross-domain | **CUHK03 (detected split)** | 14,097 images / 1,467 IDs | Use detected, not labelled, boxes |
-| Occlusion | **Occluded-ReID** | — | Avoid Occluded-Duke — see the DukeMTMC caveat below |
-| Cloth-change | **CCVID** | 226 IDs / 2,856 tracklets | |
+| Hard cross-domain | **CUHK03-NP (detected split)** | [counts · access](../datasets/cuhk03-np.md) | Use detected, not labelled, boxes — and name which of the two splits |
+| Occlusion | **Occluded-ReID** | [counts · access](../datasets/occluded-reid.md) | ✅ on disk. TIFF, and **no camera labels**, so its protocol excludes `same_uid` only |
+| Cloth-change | **CCVID** | [counts · access](../datasets/ccvid.md) | Tracklet-shaped; general vs cloth-changing are two protocol values |
+
+Every count, licence and download route for these lives on the pages linked above and nowhere else — including in
+this document, which used to carry its own copies.
 
 ### ⚠️ DukeMTMC caveat (same as C16)
 
-Do not use DukeMTMC-reID or any Duke-derived split (including Occluded-Duke) without first confirming current legal/ethical status — `reid-in-mot-kb.md` §6 flags the dataset's retraction explicitly. Occluded-ReID has no such lineage and is the default here.
+Do not use DukeMTMC-reID or any Duke-derived split (including Occluded-Duke): the dataset was withdrawn over
+non-consensual collection, and this project denies the whole lineage with no override flag in either `get.py` or
+`reidbench.provenance`. Occluded-ReID has no such lineage and is the default here.
+Full reasoning and substitutes: [datasets/dukemtmc-denied.md](../datasets/dukemtmc-denied.md).
 
 ---
 

@@ -86,10 +86,10 @@ mindmap
 
 | Dataset | Scale | Cameras | What it tests | Status note |
 |---|---|---|---|---|
-| **Market-1501** | 1,501 IDs / ~32k boxes | 6 | The canonical baseline | **Saturated** — top methods above 95% rank-1. Comparability only. |
-| **MSMT17** | 4,101 IDs / ~126k boxes | 15 | Scale, indoor+outdoor, multi-season lighting | The current standard difficulty benchmark. Access has been restricted at times — check terms. |
-| **CUHK03** | 1,467 IDs | 2 | Small-scale, detected vs. labelled box protocol | Two split protocols exist; state which you used |
-| **DukeMTMC-reID** | 1,404 IDs | 8 | Was a standard pairing with Market-1501 | ⚠️ **Withdrawn by its creators over consent/ethics concerns.** Do not use in new work. Papers still cite it; treat those numbers as legacy. |
+| **Market-1501** | [counts](../datasets/market1501.md) | — | The canonical baseline | **Saturated** — top methods above 95% rank-1. Comparability only. |
+| **MSMT17** | [counts](../datasets/msmt17.md) | — | Scale, indoor+outdoor, multi-season lighting | The current standard difficulty benchmark. **Its first-party download 404s as of 2026-08-21** — see the page. |
+| **CUHK03** | [counts](../datasets/cuhk03-np.md) | — | Small-scale, detected vs. labelled box protocol | Two split protocols exist; state which you used |
+| **DukeMTMC-reID** | [denied](../datasets/dukemtmc-denied.md) | — | Was a standard pairing with Market-1501 | ⚠️ **Withdrawn by its creators over consent/ethics concerns.** Denied in this project, with no override. Papers still cite it; treat those numbers as legacy. |
 | **Occluded-Duke** | Derived from Duke | 8 | Partial visibility | Inherits the DukeMTMC ethical problem |
 | **Occluded-REID** | 200 IDs | — | Heavy occlusion, small | Use as a supplementary probe set |
 
@@ -101,7 +101,7 @@ mindmap
 
 | Dataset | What makes it distinct |
 |---|---|
-| **MARS** | Large video ReID set; tracklets rather than single crops, with detector noise included |
+| **MARS** | Large video ReID set; tracklets rather than single crops, with detector noise included — [counts](../datasets/mars.md) |
 | **iLIDS-VID / PRID2011** | Small, older video sets; still used for cross-dataset generalisation tests |
 | **LS-VID** | Larger-scale video ReID with longer sequences |
 | **MEVID** | Large-scale video person ReID emphasising **long time spans and outfit changes** across many cameras — closest to a realistic deployment distribution |
@@ -135,9 +135,9 @@ Person search is the honest formulation: ground-truth boxes are a luxury a deplo
 
 | Dataset | Scale | Notes |
 |---|---|---|
-| **VeRi-776** | 776 vehicles, 20 cameras | The standard; includes plate and spatio-temporal metadata |
-| **VehicleID** | ~26k vehicles | Front/rear views only; tests fine-grained model discrimination |
-| **VERI-Wild** | ~40k vehicles | Unconstrained, day/night, long time span; the hardest of the three |
+| **VeRi-776** | [counts](../datasets/veri776.md) | The standard; includes plate and spatio-temporal metadata, and is this project's evaluator oracle |
+| **VehicleID** | [counts](../datasets/vehicleid.md) | Front/rear views only; tests fine-grained model discrimination |
+| **VERI-Wild** | [counts](../datasets/veri-wild.md) | Unconstrained, day/night, long time span; the hardest of the three |
 
 Vehicle ReID's distinctive difficulty is the inverse of person ReID: **intra-class variation is low and inter-class variation is lower still** — thousands of identical-model, identical-colour vehicles. Discriminative signal comes from subtle marks, damage, stickers, and licence plates.
 

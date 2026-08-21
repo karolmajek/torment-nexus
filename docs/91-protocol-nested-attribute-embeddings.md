@@ -82,17 +82,24 @@ L = L_ID_global + L_triplet_global
 
 | Purpose | Dataset | Scale | Source / access note |
 |---|---|---|---|
-| **Primary training** | **MSMT17** | 126,441 boxes / 4,101 IDs / 15 cameras | Largest classic benchmark, indoor+outdoor, multi-time-of-day — request via the standard person-ReID community access form. Per `50-benchmarks-datasets.md` §2, this is "the de facto hard classic benchmark." |
-| **Secondary training / in-domain eval** | **Market-1501** | 32,668 images / 1,501 IDs / 6 cameras | Standard download; near-ceiling on its own, so treat as the *easy* in-domain check, not the headline number. |
+| **Primary training** | **MSMT17** | [counts · access](../datasets/msmt17.md) | Largest classic benchmark, indoor+outdoor, multi-time-of-day. ⚠️ **its first-party download 404s as of 2026-08-21** — the page carries the three remaining routes, their provenance cost, and the fallback if it stays unavailable |
+| **Secondary training / in-domain eval** | **Market-1501** | [counts · access](../datasets/market1501.md) | Near-ceiling on its own, so treat as the *easy* in-domain check, not the headline number. |
 | **Cross-domain transfer eval** | MSMT17 ↔ Market-1501, both directions | — | Train on one, zero-shot test on the other, report retention ratio per `60-finetuning-question.md` §3. **Do not report only one direction.** |
-| **Hard cross-domain / detected-box realism** | **CUHK03 (detected split)** | 14,097 images / 1,467 IDs | Use the *detected*, not *labelled*, split — `50-benchmarks-datasets.md` §6 flags labelled boxes as systematically easier and less honest. |
-| **Occlusion stress test** | **Occluded-ReID** (preferred) | — | Independently collected occlusion set. **Avoid Occluded-Duke / Occluded-DukeMTMC** — see the DukeMTMC caveat below. |
-| **Cloth-change stress test** | **CCVID** | 226 IDs / 2,856 tracklets | RGB-only cloth-changing, per `50-benchmarks-datasets.md` §4.2. |
-| **Attribute-alignment probe** (for H1, §7.3) | Market-1501 attribute annotations (27 binary attributes: colour of upper/lower clothing, sleeve length, etc.) | — | ⚠️ **Not directly confirmed in this KB's sources — verify current availability and licence before relying on it.** If unavailable, fall back to a manual small labeled probe set (a few hundred crops, hand-tagged for colour/pattern), following the concept-whitening-style "probe set" pattern in `disentangled-attribute-embeddings-kb.md` §3.4. |
+| **Hard cross-domain / detected-box realism** | **CUHK03-NP (detected split)** | [counts · access](../datasets/cuhk03-np.md) | Use the *detected*, not *labelled*, split, and name which of the two protocols — labelled boxes are systematically easier and less honest. |
+| **Occlusion stress test** | **Occluded-ReID** (preferred) | [counts · access](../datasets/occluded-reid.md) | ✅ on disk. Independently collected, no Duke lineage. TIFF, and **no camera labels**, so its protocol excludes `same_uid` only. |
+| **Cloth-change stress test** | **CCVID** | [counts · access](../datasets/ccvid.md) | RGB-only cloth-changing; general vs cloth-changing are two protocol values, not a flag. |
+| **Attribute-alignment probe** (for H1, §7.3) | Market-1501 attribute annotations | [counts · access](../datasets/market1501-attribute.md) | Identity-level labels joined onto a Market manifest as extra columns. If unavailable, fall back to a manual small labeled probe set (a few hundred crops, hand-tagged for colour/pattern), following the concept-whitening-style "probe set" pattern in `disentangled-attribute-embeddings-kb.md` §3.4. |
 
-### ⚠️ DukeMTMC / DukeMTMC-reID — do not use without checking status first
+Every count, licence and download route above lives on the linked page and nowhere else — including in this
+document, which used to carry its own copies.
 
-`reid-in-mot-kb.md` §6 flags the **DukeMTMC retraction** under privacy/legal open problems, and `50-benchmarks-datasets.md` §2 separately notes "the provenance/ethics controversy around the parent dataset." DukeMTMC-reID and everything derived from it (including Occluded-Duke) inherits this. **Before using any Duke-derived split, confirm current legal/ethical status and institutional policy — default to Occluded-ReID and CCVID instead, which do not share this lineage.**
+### ⚠️ DukeMTMC / DukeMTMC-reID — denied
+
+DukeMTMC was withdrawn over how surveillance footage of students was collected and distributed, and DukeMTMC-reID,
+DukeMTMC-VideoReID, Occluded-Duke and P-DukeMTMC-reID all inherit that. This project denies the lineage outright,
+with no override flag in either `datasets/get.py` or `reidbench.provenance` — default to Occluded-ReID and CCVID,
+which do not share it. Full reasoning and a substitute for each:
+[datasets/dukemtmc-denied.md](../datasets/dukemtmc-denied.md).
 
 ### Never report only Market-1501 and Duke
 

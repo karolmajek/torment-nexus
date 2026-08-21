@@ -4,23 +4,36 @@ what a time to be alive
 
 
 # Datasets
-## VeRi-776 datasets/VeRi [liu2017provid]
-- 50,000 images of 776 vehicles
-- where 37,781 images of 576 vehicles are employed as training set,
-- while 11,579 images of 200 vehicles are employed as a test set.
-- A subset of 1,678 images in the test set generates the query set
 
-## VehicleID [liu2016deep]
-- real-world scenario,
-- contains 221,763 images corresponding to 26,267 vehicles in total.
+**[datasets/](datasets/) is the single source of truth.** One page per dataset — contents, splits,
+counts, licence, and how to obtain it — plus `get.py` (`ls · show · fetch · verify`), which reads
+those same pages. Counts are not repeated anywhere else in this repository, including here: the
+copy that used to live in this file disagreed with the release about VeRi's training set size.
+
+```bash
+python datasets/get.py ls
+python datasets/get.py counts veri776
+```
+
+- [VeRi-776](datasets/veri776.md) — vehicles; also this project's evaluator oracle [liu2017provid]
+- [VehicleID](datasets/vehicleid.md) — vehicles, front/rear only [liu2016deep]
+- [MSMT17](datasets/msmt17.md), [Market-1501](datasets/market1501.md),
+  [CUHK03-NP](datasets/cuhk03-np.md), [Occluded-REID](datasets/occluded-reid.md),
+  [CCVID](datasets/ccvid.md), [MARS](datasets/mars.md) — people
+- [VERI-Wild](datasets/veri-wild.md), [SOMA](datasets/soma.md),
+  [Market-1501 Attribute](datasets/market1501-attribute.md)
 
 ## DukeMTMC / ANY Duke-derived WILL NOT BE USED
+
+Denied in code, with no override flag, in both `datasets/get.py` and `reidbench.provenance`.
+Reasoning and substitutes: [datasets/dukemtmc-denied.md](datasets/dukemtmc-denied.md).
 
 # Evaluation metrics
 
 ## VehicleID
 
-From the original testing data, four subsets, which contain 800, 1,600, 2,400 and 3,200 vehicles, are extracted for vehicle search for multi-scales.
+Four test subsets by identity count, each drawn repeatedly and averaged — sizes and draw count on
+[its page](datasets/vehicleid.md); the subset size belongs in the protocol name.
 - CMC curve and
 - mAP are employed to evaluate the overall performance for all test images.
 - For each query, its average precision (AP) is computed from the precision-recall curve.

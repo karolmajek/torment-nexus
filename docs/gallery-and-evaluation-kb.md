@@ -15,7 +15,7 @@ related: [50-benchmarks-datasets, reid-mot-metrics, open-world-rejection-calibra
 
 # The ReID Gallery and How Evaluation Actually Works
 
-A ground-up walkthrough. Everything from section 4 onward is computed on this repository's own data: **VeRi-776**, 1,678 query images, 11,579 gallery images, using [src/torment_nexus/eval.py](../src/torment_nexus/eval.py) and the two embedding sets already cached in [datasets/VeRi/](../datasets/VeRi/).
+A ground-up walkthrough. Everything from section 4 onward is computed on this repository's own data: **VeRi-776** ([counts](../datasets/veri776.md)), using `src/torment_nexus/eval.py` and two cached embedding sets, both from an earlier layout of this project. `datasets/` now means [the dataset pages](../datasets/); the data itself lives under `$REID_DATA_ROOT`.
 
 ## TL;DR
 
@@ -38,24 +38,28 @@ Same model. Same images. Numbers ranging from 45% to 87% mAP and from 46% to 99.
 
 | Term | What it is | In VeRi-776 |
 |---|---|---|
-| **Query / probe** | The image you search with | 1,678 images, 200 identities, ~8.4 images per identity |
-| **Gallery / test set** | The pool being searched and ranked | 11,579 images, the same 200 identities, 11-202 images each |
+| **Query / probe** | The image you search with | ~8.4 images per identity |
+| **Gallery / test set** | The pool being searched and ranked | the same identities as the query set, 11-202 images each |
 | **Ground truth / positives** | Gallery entries that are the same identity *and* count | median **51** per query, range 5-196 |
 | **Junk** | Gallery entries excluded from scoring, neither reward nor penalty | median **6** per query, range 1-24 |
 | **Distractor** | Gallery entries of identities that appear in no query - pure clutter | none in VeRi; Market-1501 offers +500k |
-| **Training set** | Disjoint identities used to learn the embedding | 576 identities, 37,778 images |
+| **Training set** | Disjoint identities used to learn the embedding | identity-disjoint from test |
+
+Split sizes are not repeated here: **[datasets/veri776.md](../datasets/veri776.md) owns VeRi's counts**, and this
+page owns the per-query distributions above, which are its own analysis. The two never disagree because only one of
+them is written down twice.
 
 The single most important structural rule: **train and test identities never overlap.** ReID is evaluated as an open-vocabulary problem at the identity level - the model has never seen the 200 test vehicles during training. It is only closed-set in the weaker sense that at test time every query is guaranteed to have an answer in the gallery. That second assumption is the one [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) attacks.
 
 ```mermaid
 flowchart TD
-    ALL["VeRi-776<br/>776 vehicles, 20 cameras"]
-    ALL --> TR["TRAIN split<br/>576 identities<br/>37,778 images"]
-    ALL --> TE["TEST split<br/>200 identities<br/>disjoint from train"]
+    ALL["VeRi-776"]
+    ALL --> TR["TRAIN split"]
+    ALL --> TE["TEST split<br/>disjoint from train"]
 
     TR --> M["train the embedding model<br/>identity labels used as supervision"]
-    TE --> QQ["QUERY set<br/>1,678 images"]
-    TE --> GG["GALLERY set<br/>11,579 images<br/>contains the query images too"]
+    TE --> QQ["QUERY set"]
+    TE --> GG["GALLERY set<br/>contains the query images too"]
 
     M -.->|"frozen model,<br/>no test identity ever seen"| EMB["embed query + gallery"]
     QQ --> EMB
@@ -70,7 +74,7 @@ flowchart TD
     class M,EMB,EVAL act
 ```
 
-Note the detail that trips everyone up on first contact: **the query images are also members of the gallery.** All 1,678 VeRi query files appear in `name_test.txt`. This is deliberate, and it is why the junk rule in section 4 is not optional.
+Note the detail that trips everyone up on first contact: **the query images are also members of the gallery.** Every VeRi query file appears in `name_test.txt`. This is deliberate, and it is why the junk rule in section 4 is not optional.
 
 ---
 
@@ -110,7 +114,7 @@ Everything in this file describes the left-hand box, because that is what publis
 flowchart LR
     S1["1. SPLIT<br/>query vs gallery<br/>with id and camera labels"]
     S2["2. EMBED<br/>each image to a vector<br/>L2-normalized"]
-    S3["3. SCORE<br/>cosine similarity matrix<br/>1,678 x 11,579"]
+    S3["3. SCORE<br/>cosine similarity matrix<br/>Q x G"]
     S4["4. RANK<br/>sort each row<br/>descending"]
     S5["5. LABEL<br/>each ranked entry:<br/>hit / junk / miss"]
     S6["6. REDUCE<br/>AP and CMC per query,<br/>then average"]
@@ -135,11 +139,11 @@ Where each step lives in this repo:
 
 ```mermaid
 flowchart TD
-    Q["query embeddings<br/>1,678 x D"] --> N1["L2 normalize"]
-    G["gallery embeddings<br/>11,579 x D"] --> N2["L2 normalize"]
+    Q["query embeddings<br/>Q x D"] --> N1["L2 normalize"]
+    G["gallery embeddings<br/>G x D"] --> N2["L2 normalize"]
     N1 --> MM["matmul<br/>Q times G transpose"]
     N2 --> MM
-    MM --> SIM["similarity matrix<br/>1,678 rows x 11,579 columns<br/>entry = cosine in -1..1"]
+    MM --> SIM["similarity matrix<br/>Q rows x G columns<br/>entry = cosine in -1..1"]
     SIM --> ROW["take one row<br/>one query against everything"]
     ROW --> SORT["argsort descending"]
     SORT --> RANKED["ranked gallery indices<br/>rank 1 = most similar"]
@@ -194,7 +198,7 @@ Query: `0776_c007_00000600_0.jpg`, vehicle id **776**, camera **7**. It has **7*
 
 ### 5.1 The raw ranking
 
-Top 14 of 11,579, by cosine similarity with the `backbone` embeddings:
+Top 14 of the full gallery, by cosine similarity with the `backbone` embeddings:
 
 | Raw rank | File | id | cam | sim | Class |
 |---|---|---|---|---|---|
@@ -345,7 +349,7 @@ Same embeddings, same images, four protocols:
 ```mermaid
 flowchart LR
     E["one fixed embedding model<br/>backbone, VeRi test images"]
-    E --> P1["official protocol<br/>11,579 gallery, cross-camera only"]
+    E --> P1["official protocol<br/>full gallery, cross-camera only"]
     E --> P2["junk rule off<br/>naive implementation"]
     E --> P3["gallery cut to 10 identities"]
     E --> P4["VehicleID-style<br/>1 gallery image per identity"]
@@ -408,7 +412,7 @@ The `+/- 1.3` point spread across 10 random gallery draws matters too: on a sing
 | Same-camera exclusion, official | 45.31% | 72.53% | 85.64% |
 | No exclusion, naive | 52.71% | **99.82%** | 100.00% |
 
-A rank-1 of 99.82% looks like a state-of-the-art result and is pure self-retrieval: all 1,678 query files are also gallery files, so the top hit is the query image compared with itself at similarity 1.0000. Anyone building an evaluator from scratch produces this number first. **If your rank-1 is suspiciously near 100%, check the junk rule before celebrating.**
+A rank-1 of 99.82% looks like a state-of-the-art result and is pure self-retrieval: every query file is also a gallery file, so the top hit is the query image compared with itself at similarity 1.0000. Anyone building an evaluator from scratch produces this number first. **If your rank-1 is suspiciously near 100%, check the junk rule before celebrating.**
 
 ### 7.4 The full protocol checklist
 
@@ -437,9 +441,9 @@ Per-dataset differences that regularly cause confusion:
 
 | Dataset | Gallery | Cross-camera rule | Repeats | Note |
 |---|---|---|---|---|
-| **VeRi-776** | 11,579 images, 200 ids, multi-shot | same-id-same-camera is junk | single fixed split | ships `gt_index.txt` and `jk_index.txt`; also supports tracklet-level evaluation via `test_track.txt` |
-| **Market-1501** | 19,732 images, 750 ids, optional +500k distractors | same-id-same-camera is junk; `id = -1` distractors are junk | single fixed split | single-query and multi-query variants both published |
-| **MSMT17** | 82,161 images, 3,060 ids, 15 cameras | same as Market | single fixed split | the hard classic benchmark |
+| **VeRi-776** | multi-shot — [counts](../datasets/veri776.md) | same-id-same-camera is junk | single fixed split | ships `gt_index.txt` and `jk_index.txt`; also supports tracklet-level evaluation via `test_track.txt` |
+| **Market-1501** | optional +500k distractors — [counts](../datasets/market1501.md) | same-id-same-camera is junk; `id = -1` distractors are junk | single fixed split | single-query and multi-query variants both published |
+| **MSMT17** | [counts](../datasets/msmt17.md) | same as Market | single fixed split | the hard classic benchmark; note that its test-identity count is not its query count |
 | **CUHK03** | two protocols in circulation | same | **old: 20 random splits; new: single 767/700 split** | numbers under the two protocols differ by tens of points and are routinely confused |
 | **VehicleID** | 1 image per identity, subsets of 800/1,600/2,400/3,200 | no camera rule | multiple random draws, averaged | its mAP is not comparable to VeRi's mAP |
 

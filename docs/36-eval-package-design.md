@@ -479,9 +479,9 @@ line it came from, so a default can be audited without reading code:
 
 | Dataset | Gallery | Cross-camera rule | Repeats | The trap the adapter must not fall into |
 |---|---|---|---|---|
-| VeRi-776 | 11,579 imgs / 200 ids, multi-shot | same-id-same-cam = junk | single fixed split | ignoring `jk_index.txt` → the 99.82 R1 self-retrieval artefact (§16.2) |
-| Market-1501 | 19,732 / 750 ids (+500k optional) | same-id-same-cam = junk; `pid == -1` junk | single fixed split | silently defaulting to multi-query, which is a different number |
-| MSMT17 | 82,161 / 3,060 ids / 15 cams | as Market | single fixed split | V1 vs V2 list confusion — record which in `Dataset.version` |
+| VeRi-776 | multi-shot — [counts](../datasets/veri776.md) | same-id-same-cam = junk | single fixed split | ignoring `jk_index.txt` → the 99.82 R1 self-retrieval artefact (§16.2) |
+| Market-1501 | +500k distractors optional — [counts](../datasets/market1501.md) | same-id-same-cam = junk; `pid == -1` junk | single fixed split | silently defaulting to multi-query, which is a different number |
+| MSMT17 | [counts](../datasets/msmt17.md) | as Market | single fixed split | V1 vs V2 list confusion — record which in `Dataset.version`; and **test identities are not queries**, an error this table used to contain |
 | CUHK03 | two protocols in circulation | as Market | **old: 20 random splits; new: single 767/700** | reporting one and citing the other; they differ by tens of points |
 | VehicleID | 1 image per id; subsets 800/1600/2400/3200 | **no camera rule** | multiple random draws, averaged | applying Market's camera rule; its mAP is not comparable to VeRi's |
 | CCVID / MEVID | tracklet-level | as Market | fixed | evaluating at image level and calling it a video number |
@@ -773,7 +773,8 @@ below the fourth decimal for cosine scoring. It is a config field, hashed, so a 
 
 `scoring/similarity.py` chunks the query × gallery product (default 4096 queries per block) and never materialises
 the full matrix unless asked. With torch present it dispatches to GPU; without, numpy BLAS. MSMT17's
-3,060 × 82,161 fp16 matrix is ~500 MB, which is fine chunked and hostile if allocated whole. FAISS is deliberately
+query × gallery matrix ([counts](../datasets/msmt17.md)) is several gigabytes in fp16 — fine chunked and hostile if
+allocated whole. An earlier revision put it at ~500 MB by mistaking test identities for queries. FAISS is deliberately
 *not* a dependency — exact scoring is the requirement here, and approximate search would be a silent accuracy
 variable in a package whose whole purpose is exactness.
 
@@ -1265,7 +1266,7 @@ imported torch.
 | **C11** threshold transfer | τ fitted on one domain, applied to another; SOMA as the controllable probe | `calib/threshold.py`, `data/adapters/soma.py` | v0.5 |
 | **C2** vehicle breadth | VeRi + VehicleID + VERI-Wild adapters with their distinct protocols | `data/adapters/` | v0.1 / v0.5 |
 | **C4** tracker validation (the venue-fit gate) | embedding + gate export, HOTA/IDF1 read-back | `metrics/tracking.py`, export bridge | v1.0 (or earlier if the gate is pulled forward, per `90` §9.4) |
-| **C16** nested attribute embeddings ([91](91-protocol-nested-attribute-embeddings.md)) | nesting-aware evaluation, per-level truncation, cascade/efficiency curves | `models/nesting.py`, `spec.nesting` | v0.1 (evaluation side); the training lives in the experiment repo, not here |
+| **C16** nested attribute embeddings ([91](91-protocol-nested-attribute-embeddings.md)) | nesting-aware evaluation, per-level and per-block truncation, cascade/efficiency curves | **as built:** `transform.truncate_blocks` (+ the two anti-functions), `measure/cascade.py`, `stats.retention` — not `models/nesting.py` or a `spec.nesting` field, because the layout is a property of the embedding and travels in its description | ✅ **built** (evaluation side), see [38](38-c16-eval-readiness.md); the training lives in the experiment repo, not here |
 
 Note the asymmetry that keeps the scope honest: C16 *trains* something, and that training loop stays in the
 experiment repo. reidbench evaluates its output. The moment a training loop lands in this package, §0.1 has been

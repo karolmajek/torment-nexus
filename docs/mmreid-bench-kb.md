@@ -160,7 +160,8 @@ With N=4, chance is 25%, the numbers compress against a ceiling (three tasks abo
 alarm rate `1 − (1 − f)^N` is essentially unmeasurable at N=4. The paper's own "instability with enlarged gallery
 sets" is what that pitfall looks like from the inside.
 
-For scale: VeRi's official gallery is 11,579 images, MSMT17's is 82,161, and PAB ships 34,795 distractors
+For scale: VeRi's and MSMT17's official galleries run to tens of thousands of images
+([counts](../datasets/veri776.md), [counts](../datasets/msmt17.md)), and PAB ships 34,795 distractors
 specifically to stop this. VP-ReID's 500 is an improvement on 4 and is still one to two orders of magnitude short of
 where deployments live.
 

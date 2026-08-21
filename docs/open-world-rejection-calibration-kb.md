@@ -293,7 +293,7 @@ flowchart TD
 |---|---|---|
 | **OPeRID v1.0** (2014) | Yes - purpose-built | 6 cameras, 200 IDs, 7,413 images. Correct protocol, obsolete scale |
 | **Market-1501 + 500k distractors** | Partial | The 500k distractor set gives you non-mated gallery clutter; still no non-mated *probe* protocol out of the box |
-| **MSMT17** | No | 15 cameras, 4,101 IDs; largest classic set, closed-set protocol |
+| **MSMT17** | No | largest classic set, closed-set protocol — [counts](../datasets/msmt17.md) |
 | **CUHK-SYSU / PRW** (person search) | Closest by accident | Gallery is whole scene images containing many unlabelled people; person search inherently produces candidates that match nobody |
 | **QMUL-SurvFace** | Yes - native | 463,507 images, 15,573 IDs, open-set surveillance protocol, rank-k success at fixed false alarm. Faces, not bodies, but the protocol transfers verbatim |
 | **IJB-B / IJB-C** | Yes | Explicit non-mated probe sets; the template for mated/non-mated splits |

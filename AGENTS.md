@@ -3,6 +3,14 @@ Target license for lib: MIT
 Not release yet - nothing is a "breaking change"
 we don't need backward compat for anything
 
+we have PDM installed locally
+do not use node js npm whatever
+python formatter? black
+
+We do not re-share any dataset
+we can provide download scripts
+end users need to comply to dataset licences
+
 LLM-WIKI in docs/
 
 Markdown + Mermaid (a lot!)

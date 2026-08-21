@@ -50,15 +50,18 @@ MOTA   = 1 − Σ_t (FN_t + FP_t + IDSW_t) / Σ_t GT_t
 
 ## 2. Generation 1 — classic retrieval datasets
 
+Where a dataset has a page under [datasets/](../datasets/), that page owns its counts and this table links to it
+rather than repeating them — the copies here had already drifted apart from each other once.
+
 | Dataset | Scale | Cameras | Character |
 |---|---|---|---|
-| **Market-1501** | 32,668 images / 1,501 IDs | 6 | Tsinghua campus. High quality, clear viewpoints. The easiest of the standard four |
-| **DukeMTMC-reID** | 36,411 images / 1,404 IDs | 8 | Derived from the DukeMTMC tracking dataset. Diverse angles, challenging lighting. **Note the provenance/ethics controversy around the parent dataset** |
-| **CUHK03** | 14,097 images / 1,467 IDs | — | Provides both hand-labelled and auto-detected boxes; the detected split is harder and is the honest one to use |
-| **MSMT17** | 126,441 boxes / 4,101 IDs | 15 | Largest of the classic set; indoor+outdoor, multiple times of day and weather. The de facto "hard" classic benchmark |
+| **Market-1501** | [counts](../datasets/market1501.md) | — | Tsinghua campus. High quality, clear viewpoints. The easiest of the standard four |
+| **DukeMTMC-reID** | ⛔ [denied](../datasets/dukemtmc-denied.md) | — | Derived from the withdrawn DukeMTMC tracking dataset. Denied here, lineage and all |
+| **CUHK03** | [counts](../datasets/cuhk03-np.md) | — | Provides both hand-labelled and auto-detected boxes; the detected split is harder and is the honest one to use |
+| **MSMT17** | [counts](../datasets/msmt17.md) | — | Largest of the classic set; indoor+outdoor, multiple times of day and weather. The de facto "hard" classic benchmark — **and its first-party download is gone** |
 | **GRID** | 1,275 images / 250 IDs | 8 | Underground station. Low resolution, poor lighting, severe occlusion. Small and brutal |
-| **MARS** | 20,478 tracklets / 1,261 IDs | — | The first large video ReID benchmark; auto-generated tracklets with distractors |
-| **LS-VID** | 14,943 tracklets / 3,772 IDs | — | Larger video benchmark |
+| **MARS** | [counts](../datasets/mars.md) | — | The first large video ReID benchmark; auto-generated tracklets with distractors |
+| **LS-VID** | [counts](../datasets/mars.md) | — | Larger video benchmark; documented on MARS's page, since choosing between them is one decision |
 
 **Saturation evidence:** on MARS, early baselines sat around 68.3% Rank-1 / 49.3% mAP; recent attention-based and temporal models exceed 90% Rank-1 and 85% mAP. There is not much room left to demonstrate progress here.
 
@@ -116,7 +119,7 @@ For comparison, the AG-VPReID 2025 challenge (80–120 m, UAV + CCTV + wearable)
 
 | Dataset | Character |
 |---|---|
-| **CCVID** | 226 IDs / 2,856 tracklets; RGB-only cloth-changing |
+| **CCVID** | RGB-only cloth-changing, tracklet-shaped — [counts](../datasets/ccvid.md) |
 | **VCCR** | 392 IDs / 4,384 tracklets |
 | **LaST** | Large-scale spatio-temporal; long time spans, attribute-based retrieval |
 | **CelebReID** | Celebrity red-carpet / street / media imagery. High-resolution, professionally lit — a *reverse* domain shift from surveillance |

@@ -174,7 +174,8 @@ next to it (§7). An aggregate that exists only to be unpacked is complecting wi
 - `valid[q, g]` — this pair participates. Everything 36 calls "junk" is here: self-retrieval, same-id-same-camera,
   `pid == -1`, and any dataset's private rule.
 
-*Honest note on size.* MSMT17 is 3,060 × 82,161, so each matrix is 251 MB as bytes, 31 MB packed. The **definition**
+*Honest note on size.* MSMT17's query × gallery matrix ([counts](../datasets/msmt17.md)) is ~1.9 GB as bytes and
+~240 MB packed — an earlier revision said 251 MB, having mistaken test identities for queries. The **definition**
 stays as written; the **implementation** materialises `rel`/`valid` per query block from the per-row `pid`/`camid`
 arrays, exactly as `score` already chunks `S` (36 §9.3). `measure` therefore also accepts an iterator of row blocks.
 The conceptual model does not bend for the memory; the loop does.

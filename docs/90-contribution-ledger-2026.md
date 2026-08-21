@@ -419,7 +419,7 @@ The venue decision is already made in [80-publication-venue-2024.md](80-publicat
 | Is there an image-generation API budget, and how much? | Determines whether §7 Condition 1 uses SOMA's free set only, or own generation |
 | Access to a real multi-camera deployment or private footage? | A private real test set is worth more than any synthetic corpus for the transfer claim |
 | Is CrowdTrack obtainable? | C4 depends on it; check licence and download before committing to the tracker validation |
-| How far along is the attribute-embedding code, really? | C16's marginal work of 3 (§6) is the assumption P2′ rests on. If it is closer to 6, P2′ is off the table |
+| ~~How far along is the attribute-embedding code, really?~~ **Answered 2026-08-21** — see [38](38-c16-eval-readiness.md) §2.1 | **The model code is not in `reidbench` at all**; what was there is `truncate` and its test. The *evaluation* half of C16 is now built (per-block nesting, cascade-vs-expected-cost, retention), so the marginal discount survives on the eval side and the training side must be costed from zero. P2′ still rests on where the DiCo/MRL training code actually lives |
 
 ---
 

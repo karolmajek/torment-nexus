@@ -4,7 +4,7 @@ kb_id: agglomerative-vfm
 type: reference / model family
 domain: computer-vision, foundation-models, knowledge-distillation, representation-learning
 tags: [agglomerative, multi-teacher-distillation, am-radio, c-radiov4, radiov2.5, eupe, dune, unic, theia, sam-clip, amoe, dinov3, siglip2, sam3, proxy-teacher, licensing]
-related: [foundation-model-reid, reid-in-mot]
+related: [reid-glossary, foundation-model-reid, reid-in-mot]
 retrieved: 2026-08-18
 confidence: high for model composition and lineage; verify parameter counts and benchmark numbers against the current model cards — this family ships releases every few months
 ---
@@ -249,21 +249,13 @@ Teacher licences do not automatically constrain the student, but they are worth 
 
 ---
 
-## 8. Glossary
+## 8. Terms
 
-| Term | Definition |
-|---|---|
-| **Agglomerative model** | Student distilled from multiple heterogeneous foundation teachers |
-| **Multi-teacher distillation** | Training one student to match several teachers' features simultaneously |
-| **Label-free distillation** | Matching teacher features rather than ground-truth labels; no annotation needed |
-| **Adaptor head** | Per-teacher projection letting the student emulate that teacher's output space |
-| **Proxy teacher** | EUPE's intermediate high-capacity model that unifies knowledge before compression |
-| **Resolution mode shift** | Degradation when inference resolution differs from training resolution |
-| **Shift equivariance** | Property whereby translating the input translates the features predictably; used to suppress fixed-pattern artifacts |
-| **ViTDet mode** | Windowed-attention inference for cheaper high-resolution processing |
-| **Token compression** | Reducing output token count for practical VLM integration |
-| **PHI-S** | Distribution-balancing method for normalising heterogeneous teacher feature statistics |
-| **Summary token** | The global/CLS-style output, as distinct from dense patch tokens |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Agglomerative model](glossary.md#51-backbone-families) · [Multi-teacher distillation](glossary.md#51-backbone-families) · [Label-free distillation](glossary.md#51-backbone-families) · [Adaptor head](glossary.md#51-backbone-families) ·
+[Proxy teacher](glossary.md#51-backbone-families) · [Resolution mode shift](glossary.md#51-backbone-families) · [Shift equivariance](glossary.md#51-backbone-families) · [ViTDet mode](glossary.md#51-backbone-families) ·
+[Token compression](glossary.md#51-backbone-families) · [PHI-S](glossary.md#51-backbone-families) · [Summary token](glossary.md#51-backbone-families)
 
 ---
 

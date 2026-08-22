@@ -13,7 +13,7 @@ source_date: 2022-05-26 (NeurIPS 2022)
 retrieved: 2026-08-19
 tags: [nested-embeddings, adaptive-retrieval, adaptive-classification, embedding-truncation, dimensionality, cascades, ann, hnsw, reranking, funnel-retrieval, mrl-e, coarse-to-fine, matryoshka, matryoshka-adaptor, imagenet-4k, retrofit, partial-finetuning, speaker-verification, efficiency]
 supersedes: null
-related: [halo-loss, openood-v1.5, foundation-model-reid, reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, flowfeat, disentangled-attribute-embeddings]
+related: [reid-glossary, halo-loss, openood-v1.5, foundation-model-reid, reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, flowfeat, disentangled-attribute-embeddings]
 confidence: |
   high — paper formulation, headline numbers, and Appendix K.1 retrofit ablation read from primary source (arXiv HTML v4 + NeurIPS proceedings PDF + supplementary).
   high — ecosystem adoption (§10), multiple independent sources.
@@ -584,22 +584,13 @@ Per-nesting-level renormalization (§3.4) is MRL's own patch for this class of p
 
 ---
 
-## 14. Glossary
+## 14. Terms
 
-| Term | Meaning |
-|---|---|
-| **`M`** | The nesting set — the dimensionalities explicitly optimized. `\|M\| ≤ ⌊log d⌋`. |
-| **`c_m`** | Relative importance weight for nesting size `m`. Set to 1 for all `m` in the paper. |
-| **MRL–E** | Efficient MRL. Classifier heads are column slices of one shared `W`. ~Half the classifier params. |
-| **MRL–AC** | Adaptive Classification. Confidence-thresholded cascade over prefixes of a single vector. |
-| **MRL–AR** | Adaptive Retrieval. Shortlist at `D_s`, rerank at `D_r`. |
-| **Funnel retrieval** | Multi-stage AR that grows dimensionality while shrinking the shortlist, removing the `D_s`/`D_r` choice. |
-| **FF** | Fixed Feature — the baseline of independently trained low-dimensional models. |
-| **Interpolation property** | Accuracy at dimensions *not* in `M` lies smoothly between neighbouring optimized sizes. |
-| **`D_s` / `D_r`** | Shortlist dimensionality / rerank dimensionality. |
-| **ImageNet-4K** | Retrieval benchmark introduced by this paper: ~4.2M database, ~200K queries, 4202 classes. |
-| **Matryoshka-Adaptor** | Post-hoc transform giving nesting properties to frozen or black-box embeddings (§9.2). |
-| **Quality-adaptive nesting** | This KB's name for the DAME-style idea of allocating dimensions by per-sample information content (§12.3). |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[M (the nesting set)](glossary.md#81-matryoshka-representation-learning-mrl) · [c_m](glossary.md#81-matryoshka-representation-learning-mrl) · [MRL-E](glossary.md#81-matryoshka-representation-learning-mrl) · [MRL-AC](glossary.md#81-matryoshka-representation-learning-mrl) ·
+[MRL-AR](glossary.md#81-matryoshka-representation-learning-mrl) · [D_s / D_r](glossary.md#81-matryoshka-representation-learning-mrl) · [Funnel retrieval](glossary.md#81-matryoshka-representation-learning-mrl) · [FF](glossary.md#81-matryoshka-representation-learning-mrl) ·
+[Interpolation property](glossary.md#81-matryoshka-representation-learning-mrl) · [ImageNet-4K](glossary.md#81-matryoshka-representation-learning-mrl) · [Matryoshka-Adaptor](glossary.md#81-matryoshka-representation-learning-mrl) · [Quality-adaptive nesting](glossary.md#81-matryoshka-representation-learning-mrl)
 
 ---
 

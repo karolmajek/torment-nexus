@@ -16,7 +16,7 @@ confidence: |
   high-medium (upgraded 2026-08-20) for the tracker-vs-embedder attribution in section 4 — the README now feeds every ReID row identical features, which breaks the confound this entry previously flagged.
 tags: [soma, pinto0309, boosttrack, hota-decomposition, fairness-pairing, feature-whitening, tracking, mot, wholebody-detection, long-occlusion, crowdtrack, personvit, osnet-ain, tensorrt, onnx, gpt-image-2, synthetic-reid, camera-rig, edge, webgpu, litert]
 supersedes: null
-related: [reid-in-mot, reid-mot-metrics, reid-tracking-datasets, foundation-model-reid, reid-2026-index, reid-open-problems-2026]
+related: [reid-glossary, reid-in-mot, reid-mot-metrics, reid-tracking-datasets, foundation-model-reid, reid-2026-index, reid-open-problems-2026]
 ---
 
 # SOMA — Structured Output Matching & Association
@@ -333,23 +333,13 @@ Three distinct uses, in increasing order of ambition:
 
 ---
 
-## 9. Glossary
+## 9. Terms
 
-| Term | Definition |
-|---|---|
-| **SOMA / SOMA-R** | The tracker without / with a crop ReID embedder |
-| **Wholebody detector** | Detector emitting body box plus parts, keypoints, head orientation and attributes in one pass |
-| **Assembly** | Grouping raw part detections into per-person groups via bone joining |
-| **Anatomical token** | Per-person structured record consumed by the tracker, including a synthesised amodal box |
-| **Amodal box** | Full extent of a person including the occluded part, as opposed to the visible extent |
-| **Ghost coasting** | Keeping an unmatched track alive without detections past normal motion-prediction validity |
-| **Embedding-only revival** | Re-attaching a ghost purely on appearance similarity, with no geometric support |
-| **Long-gap recovery bin** | Fraction of occlusion episodes of a given duration after which the original identity is restored |
-| **Fairness pairing** | The README's protocol of feeding every ReID-enabled row in a table the identical cached features and the identical detections, so a row-to-row difference is attributable to the tracker alone |
-| **Per-frame whitening** | Normalising embeddings using statistics computed over the people visible in the current frame (OSNet path; web runtime requires >= 4 valid embeddings). Transductive — it has no single-crop retrieval equivalent |
-| **sw/TP** | Identity switches per true positive; a rate-normalised IDSW that stays comparable when trackers output different numbers of detections |
-| **CrowdTrack** | Crowded-scene MOT benchmark with roughly 19x more 5-second occlusion episodes than MOT17 |
-| **token-IN** | Token-level instance normalisation used in the PersonViT variant |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[SOMA / SOMA-R](glossary.md#84-soma) · [Wholebody detector](glossary.md#84-soma) · [Assembly](glossary.md#84-soma) · [Anatomical token](glossary.md#84-soma) ·
+[Ghost coasting](glossary.md#84-soma) · [Embedding-only revival](glossary.md#84-soma) · [Long-gap recovery bin](glossary.md#84-soma) · [Fairness pairing](glossary.md#84-soma) ·
+[Per-frame whitening](glossary.md#84-soma) · [token-IN](glossary.md#84-soma) · [CrowdTrack](glossary.md#84-soma) · [Amodal box](glossary.md#7-imaging-conditions)
 
 ---
 

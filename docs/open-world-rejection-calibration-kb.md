@@ -10,7 +10,7 @@ confidence: |
   medium for the structural claim that ReID largely abandoned this line after ~2018 - it is based on search coverage of 2019-2026 venues, not a systematic bibliometric count;
   the protocol in section 9 and the cross-field mapping in section 8 are this KB's own construction, not published consensus.
 supersedes: null
-related: [reid-open-problems-2026, openood-v1.5, halo-loss, reid-mot-metrics, reid-in-mot, foundation-model-reid, reid-2026-index, soma, gallery-and-evaluation]
+related: [reid-glossary, reid-open-problems-2026, openood-v1.5, halo-loss, reid-mot-metrics, reid-in-mot, foundation-model-reid, reid-2026-index, soma, gallery-and-evaluation]
 ---
 
 # Open-World Rejection and Calibration for ReID
@@ -435,29 +435,17 @@ flowchart TD
 
 ---
 
-## 8. Glossary
+## 8. Terms
 
-| Term | Definition |
-|---|---|
-| **Open-set identification** | 1:N search where the probe may match nobody; requires accept/reject plus identification |
-| **Mated / non-mated probe** | Probe whose identity is / is not enrolled in the gallery (biometrics terminology) |
-| **FPIR** | False positive identification rate - fraction of non-mated searches returning any candidate above threshold |
-| **FNIR** | False negative identification rate - fraction of mated searches where the true mate is below threshold or outside rank R |
-| **DIR@FAR** | Detection and identification rate at a given false accept rate (Liao 2014) |
-| **TTR / FTR** | True / false target recognition rate (Zheng 2016) - the watchlist framing of the same pair |
-| **EER** | Equal error rate; the DET-curve point where the two error rates coincide |
-| **minDCF** | Minimum detection cost function; cost-weighted operating point with an explicit target prior |
-| **Cllr / minCllr** | Log-likelihood-ratio cost, and its value after ideal recalibration; the difference is the miscalibration loss |
-| **ECE** | Expected calibration error - binned gap between confidence and accuracy |
-| **csID** | Covariate-shifted in-distribution: known identity under corruption, new camera, or new clothing; must be accepted |
-| **Openness** | Scheirer's formalisation of how open a problem is, from the ratio of training to test classes |
-| **Selective prediction / risk-coverage** | Framework where the model may abstain; risk plotted against the fraction of inputs answered |
-| **Conformal prediction** | Distribution-free construction of prediction sets with a coverage guarantee under exchangeability |
-| **Cohort / AS-norm** | Score normalization against an impostor cohort, making scores comparable across probes |
-| **Biometric menagerie** | Doddington's per-subject difficulty taxonomy: sheep, goats, lambs, wolves |
-| **BAKS / BAUS** | Balanced accuracy on known / unknown (new) individuals; AnimalCLEF ranks by their geometric mean |
-| **OWTA** | Open-world tracking accuracy - unknown-detection recall combined with association accuracy |
-| **Ratio test** | Reject rule using the ratio or margin between the best and second-best match; from SIFT, applies directly to gallery scores |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Open-set identification](glossary.md#11-what-is-being-asked) · [csID](glossary.md#41-distribution-vocabulary) · [Openness](glossary.md#41-distribution-vocabulary) · [Abstain class](glossary.md#42-rejection-mechanisms) ·
+[Ratio test](glossary.md#42-rejection-mechanisms) · [Selective prediction / risk-coverage](glossary.md#42-rejection-mechanisms) · [Conformal prediction](glossary.md#42-rejection-mechanisms) · [Cohort / AS-norm](glossary.md#42-rejection-mechanisms) ·
+[FPIR](glossary.md#43-operating-point-and-calibration-metrics) · [FNIR](glossary.md#43-operating-point-and-calibration-metrics) · [DIR@FAR](glossary.md#43-operating-point-and-calibration-metrics) · [TTR / FTR](glossary.md#43-operating-point-and-calibration-metrics) ·
+[EER](glossary.md#43-operating-point-and-calibration-metrics) · [minDCF](glossary.md#43-operating-point-and-calibration-metrics) · [Cllr / minCllr](glossary.md#43-operating-point-and-calibration-metrics) · [ECE](glossary.md#43-operating-point-and-calibration-metrics) ·
+[BAKS / BAUS](glossary.md#43-operating-point-and-calibration-metrics) · [Mated / non-mated probe](glossary.md#44-population-and-benchmark-terms) · [Biometric menagerie](glossary.md#44-population-and-benchmark-terms) · [OWTA](glossary.md#33-clustering-metrics-for-identity-discovery)
+
+---
 
 ## 9. Sources
 

@@ -6,7 +6,7 @@ domain: computer-vision, re-identification, deployment
 tags: [fine-tuning, zero-shot, foundation-models, clip-reid, siglip2, dinov2, transfer, peft, lora, deployment, cost]
 retrieved: 2026-08-13
 confidence: high for the qualitative conclusion (multiple independent sources agree); medium for exact magnitudes (dominated by one 2026 study that has internal inconsistencies — flagged in §5)
-related: [reid-methods-catalog, reid-benchmarks-datasets, reid-city-scale-mtmc]
+related: [reid-glossary, reid-methods-catalog, reid-benchmarks-datasets, reid-city-scale-mtmc]
 ---
 
 # Is Fine-Tuning a Must-Have?
@@ -198,17 +198,14 @@ For a surveillance-like deployment with unknown or partially known target sites:
 
 ---
 
-## 9. Glossary
+## 9. Terms
 
-| Term | Definition |
-|---|---|
-| **Zero-shot ReID** | Using a pretrained encoder's features directly for retrieval, with no ReID training |
-| **PEFT** | Parameter-efficient fine-tuning — LoRA, adapters, or prompt tuning instead of updating all weights |
-| **UDA / USL** | Unsupervised domain adaptation (labelled source + unlabelled target) / fully unsupervised (target only) |
-| **Retention ratio** | Target-domain score ÷ source-domain score; the honest measure of transfer |
-| **Catastrophic forgetting** | Loss of previously acquired capability when training on new data |
-| **Re-indexing** | Recomputing all stored gallery embeddings after a model change |
-| **Operating point** | The similarity threshold at which a deployed system accepts a match |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Zero-shot ReID](glossary.md#12-named-settings) · [UDA / USL](glossary.md#12-named-settings) · [Re-indexing](glossary.md#21-gallery-anatomy) · [Operating point](glossary.md#22-retrieval-metrics) ·
+[PEFT](glossary.md#6-training-adaptation-and-transfer) · [Retention](glossary.md#6-training-adaptation-and-transfer) · [Catastrophic forgetting](glossary.md#6-training-adaptation-and-transfer)
+
+---
 
 ## 10. Sources
 

@@ -8,7 +8,7 @@ retrieved: 2026-08-19
 updated: 2026-08-19 (added §3.5 MM-slotgate, SLiCS in §3.4, §7.3 Matryoshka-combination follow-up)
 tags: [disentangled-representation-learning, attribute-specific-embedding, concept-subspace, interpretable-embeddings, explainable-ai, concept-whitening, concept-bottleneck-models, slot-attention, attribute-attention, fashion-retrieval, person-reid, cloth-changing-reid, appearance-structure-disentanglement, dg-net, is-gan, asen, dico, mm-slotgate, slics, color-shape-texture, composable-embeddings, matryoshka-comparison, sparse-dictionary-learning]
 supersedes: null
-related: [matryoshka-representation-learning, halo-loss, reid-in-mot, foundation-model-reid, reid-mot-metrics]
+related: [reid-glossary, matryoshka-representation-learning, halo-loss, reid-in-mot, foundation-model-reid, reid-mot-metrics]
 confidence: |
   high — ASEN (§3.1) mechanism, losses, and headline numbers read from primary source (ar5iv full text of arXiv 2002.02814).
   high — DiCo (§3.2) mechanism, losses, and headline numbers read from primary source (arXiv HTML 2601.10053v2).
@@ -230,18 +230,12 @@ Every constructive method in §3.1–§3.3 was validated on **retrieval metrics 
 
 ---
 
-## 8. Glossary
+## 8. Terms
 
-| Term | Meaning |
-|---|---|
-| **Disentangled representation** | A representation where distinct, ideally independent factors of variation (color, shape, pose, identity...) are encoded in separable parts of the vector. |
-| **Concept subspace / concept block** | A named or emergent slice of an embedding corresponding to one semantic factor. |
-| **Slot attention** | A routing mechanism where input tokens compete (via softmax over a small set of learned query slots) to be assigned to one of K slots, which then aggregate their assigned tokens — the mechanism underlying DiCo's part-level slots. |
-| **Prototype dictionary** | A shared, learned set of vectors that a concept block projects onto via attention, grounding the same concept index across modalities (image/text) without ever labeling what that concept is. |
-| **Appearance code / structure code** | DG-Net/IS-GAN's 2-way split: identity-related (appearance) vs. identity-unrelated (structure/pose/background) features. |
-| **Concept whitening** | A layer-replacement technique that decorrelates a latent space and rotates its axes to align with pre-chosen concepts, using small probe example sets. |
-| **Concept Activation Vector (CAV)** | The normal vector to the linear boundary separating a frozen model's activations on concept-positive vs. concept-negative examples — a purely post-hoc probing tool. |
-| **Concept Bottleneck Model** | The general ML lineage (Koh et al., ICML 2020) that forces prediction through an intermediate layer of named, human-interpretable concept neurons, enabling test-time human correction of a wrong concept. Background context for this whole family; not itself read for this KB entry. |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Disentangled representation](glossary.md#53-structure-inside-the-embedding) · [Concept subspace / concept block](glossary.md#53-structure-inside-the-embedding) · [Slot attention](glossary.md#53-structure-inside-the-embedding) · [Prototype dictionary](glossary.md#53-structure-inside-the-embedding) ·
+[Appearance code / structure code](glossary.md#53-structure-inside-the-embedding) · [Concept whitening](glossary.md#53-structure-inside-the-embedding) · [Concept Activation Vector](glossary.md#53-structure-inside-the-embedding) · [Concept Bottleneck Model](glossary.md#53-structure-inside-the-embedding)
 
 ---
 

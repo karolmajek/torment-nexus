@@ -16,6 +16,7 @@ license: MIT (code)
 latest_release_at_capture: v1.5 (Jun 2023); v1.5 report published in DMLR (Nov 2024)
 retrieved: 2026-08-13
 confidence: high (numbers from the v1.5 report; live leaderboard may have newer entries)
+related: [reid-glossary, open-world-rejection-calibration, reid-mot-metrics, halo-loss]
 ---
 
 # OpenOOD
@@ -336,23 +337,14 @@ flowchart TD
 
 ---
 
-## 11. Glossary
+## 11. Terms
 
-| Term | Meaning |
-|---|---|
-| **ID** | In-distribution — label in the classifier's known set, no covariate shift |
-| **OOD** | Out-of-distribution — semantically novel category |
-| **csID** | Covariate-shifted ID — corrupted/restyled but still a known class; must be accepted |
-| **Near-OOD / hard-OOD** | Semantically close to ID; the hard case |
-| **Far-OOD / easy-OOD** | Semantically distant from ID; largely solved at scale |
-| **Post-hoc method** | Inference-time scoring function; no retraining required |
-| **Postprocessor** | OpenOOD's name for a post-hoc scoring function |
-| **OOD score** | Scalar `s(x)`; thresholded to produce a binary ID/OOD decision |
-| **Full-spectrum detection** | Joint OOD generalization (accept csID) + OOD detection (reject OOD) |
-| **OSR** | Open-set recognition — a parallel literature pursuing the same goal |
-| **Outlier Exposure (OE)** | Training with auxiliary outlier data to sharpen the ID/OOD boundary |
-| **SSB-hard / NINCO** | Curated hard near-OOD sets for ImageNet; NINCO was built to remove label noise present in older OOD sets |
-| **FPR@95** | False positive rate at 95% true negative rate |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[ID](glossary.md#41-distribution-vocabulary) · [OOD](glossary.md#41-distribution-vocabulary) · [csID](glossary.md#41-distribution-vocabulary) · [Near-OOD / hard-OOD](glossary.md#41-distribution-vocabulary) ·
+[Far-OOD / easy-OOD](glossary.md#41-distribution-vocabulary) · [Full-spectrum detection](glossary.md#41-distribution-vocabulary) · [OSR](glossary.md#41-distribution-vocabulary) · [Post-hoc method / postprocessor](glossary.md#42-rejection-mechanisms) ·
+[OOD score](glossary.md#42-rejection-mechanisms) · [Outlier Exposure](glossary.md#42-rejection-mechanisms) · [AUROC / AUPR](glossary.md#43-operating-point-and-calibration-metrics) · [FPR@95](glossary.md#43-operating-point-and-calibration-metrics) ·
+[SSB-hard / NINCO](glossary.md#44-population-and-benchmark-terms)
 
 ---
 

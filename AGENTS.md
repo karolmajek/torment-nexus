@@ -11,7 +11,7 @@ We do not re-share any dataset
 we can provide download scripts
 end users need to comply to dataset licences
 
-minimize amount of code
+minimize amount of code (do not keep unused, old; do not overcomplicate stuff - KISS, DRY, no code = no maintanance)
 minimize docs - let's have a single source of truth for things, easier to maintain...
 let's not keep a note about what was removed, what was before, etc (we track this in git)
 

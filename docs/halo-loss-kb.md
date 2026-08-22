@@ -10,7 +10,7 @@ source_date: 2026-04-06
 code: https://github.com/4rtemi5/halo
 tags: [loss-function, cross-entropy-replacement, rbf, abstain-class, ood-detection, calibration, curse-of-dimensionality, self-distillation, embeddings]
 supersedes: null
-related: [tfsd-loss, scaled-rbf-attention, register-tokens, attention-sink, openood, matryoshka-representation-learning, disentangled-attribute-embeddings]
+related: [reid-glossary, tfsd-loss, scaled-rbf-attention, register-tokens, attention-sink, openood, matryoshka-representation-learning, disentangled-attribute-embeddings]
 ---
 
 # HALO Loss — Hyperspherical Alignment & Latent Optimization
@@ -321,21 +321,13 @@ mindmap
 
 ---
 
-## 9. Glossary
+## 9. Terms
 
-| Term | Definition |
-|---|---|
-| **Abstain class** | A virtual K+1 output representing "none of the above"; here pinned to the origin at zero parameter cost |
-| **Attention sink** | A dummy token that absorbs surplus attention mass in Transformers; conceptual ancestor of the abstain class |
-| **ECE** | Expected Calibration Error — gap between stated confidence and actual accuracy; lower is better |
-| **FPR@95** | False positive rate at 95% true positive rate; lower is better for OOD detection |
-| **Magnitude bullying** | Winning softmax competition by inflating vector norms rather than improving alignment |
-| **Radial explosion** | Optimizer pushing features infinitely far from origin to saturate softmax |
-| **RBF** | Radial Basis Function kernel; similarity as a function of distance |
-| **Register token** | Explicitly added dummy token providing an attention dump when magnitude-based sinks are suppressed |
-| **Shift-invariance** | Property of softmax whereby adding a constant to all logits in a row leaves probabilities unchanged |
-| **Soap bubble** | Metaphor for a high-dimensional Gaussian, whose mass concentrates on a thin outer shell |
-| **TFSD** | Teacher-Free Self-Distillation; soft targets built from the model's own negative-class distances |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Abstain class](glossary.md#42-rejection-mechanisms) · [ECE](glossary.md#43-operating-point-and-calibration-metrics) · [FPR@95](glossary.md#43-operating-point-and-calibration-metrics) · [Near-OOD / far-OOD](glossary.md#41-distribution-vocabulary) ·
+[Attention sink](glossary.md#82-halo) · [Register token](glossary.md#82-halo) · [Magnitude bullying](glossary.md#82-halo) · [Radial explosion](glossary.md#82-halo) ·
+[Shift-invariance](glossary.md#82-halo) · [Soap bubble](glossary.md#82-halo) · [RBF](glossary.md#82-halo) · [TFSD](glossary.md#82-halo)
 
 ---
 

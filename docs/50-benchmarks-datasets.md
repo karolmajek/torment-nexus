@@ -6,7 +6,7 @@ domain: computer-vision, re-identification, evaluation
 tags: [datasets, benchmarks, market1501, msmt17, cuhk03, cityflow, orbench, pab, detreidx, ag-vpreid, metrics, map, cmc, hota, evaluation-pitfalls]
 retrieved: 2026-08-13
 confidence: high for dataset facts; medium for cross-dataset performance comparisons (protocols differ)
-related: [reid-taxonomy-merged, reid-city-scale-mtmc, reid-finetuning-question, mmreid-bench, gallery-and-evaluation]
+related: [reid-glossary, reid-taxonomy-merged, reid-city-scale-mtmc, reid-finetuning-question, mmreid-bench, gallery-and-evaluation]
 ---
 
 # ReID Benchmarks, Datasets and Metrics
@@ -202,19 +202,15 @@ flowchart TD
 
 ---
 
-## 8. Glossary
+## 8. Terms
 
-| Term | Definition |
-|---|---|
-| **mAP** | Mean average precision over queries |
-| **CMC / Rank-k** | Cumulative matching characteristic; top-k hit rate |
-| **Distractor** | A gallery image that matches no query; inflates realism and deflates scores |
-| **Identity-disjoint split** | Test identities never appear in training — mandatory for a valid ReID protocol |
-| **Leave-one-dataset-out** | DG protocol: train on all source datasets but one, test on the held-out one |
-| **Detected vs labelled boxes** | Auto-detector output vs human-drawn boxes; detected is harder and more realistic |
-| **Performance retention** | Target-domain score as a percentage of source-domain score |
-| **Soft biometric** | Non-identifying attribute (gender, clothing, accessories) used as an auxiliary label |
-| **Nadir view** | Straight-down camera angle (90° pitch); the hardest aerial viewpoint |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Distractor](glossary.md#21-gallery-anatomy) · [mAP](glossary.md#22-retrieval-metrics) · [CMC / Rank-k](glossary.md#22-retrieval-metrics) · [Identity-disjoint split](glossary.md#23-protocol-vocabulary) ·
+[Leave-one-dataset-out](glossary.md#23-protocol-vocabulary) · [Detected vs. labelled boxes](glossary.md#23-protocol-vocabulary) · [Soft biometric](glossary.md#53-structure-inside-the-embedding) · [Retention](glossary.md#6-training-adaptation-and-transfer) ·
+[Nadir view](glossary.md#7-imaging-conditions)
+
+---
 
 ## 9. Sources
 

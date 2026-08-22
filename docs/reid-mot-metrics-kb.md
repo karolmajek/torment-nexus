@@ -4,7 +4,7 @@ kb_id: reid-mot-metrics
 type: reference / evaluation protocol
 domain: computer-vision, multi-object-tracking, re-identification, benchmarking
 tags: [hota, deta, assa, idf1, mota, motp, cmc, rank-1, map, minp, ari, trackeval, evaluation, id-switches]
-related: [reid-in-mot, reid-tracking-datasets, reid-tracking-challenges-2026h2, openood-v1.5, matryoshka-representation-learning, disentangled-attribute-embeddings]
+related: [reid-glossary, reid-in-mot, reid-tracking-datasets, reid-tracking-challenges-2026h2, openood-v1.5, matryoshka-representation-learning, disentangled-attribute-embeddings]
 retrieved: 2026-08-18
 confidence: high (metric definitions are stable); verify per-challenge scoring rules against the live challenge page
 ---
@@ -182,24 +182,14 @@ flowchart TD
 
 ---
 
-## 9. Glossary
+## 9. Terms
 
-| Term | Meaning |
-|---|---|
-| **HOTA** | Higher Order Tracking Accuracy; √(DetA·AssA), averaged over localisation thresholds |
-| **DetA / AssA / LocA** | Detection / Association / Localisation accuracy sub-scores of HOTA |
-| **IDF1** | Identity F1 after global trajectory-to-trajectory matching |
-| **IDTP / IDFP / IDFN** | Identity-consistent true positives / false positives / false negatives |
-| **MOTA / MOTP** | CLEAR MOT accuracy and precision |
-| **IDSW** | Identity switch |
-| **MT / ML / Frag** | Mostly Tracked, Mostly Lost, Fragmentation |
-| **CMC** | Cumulative Matching Characteristic curve; Rank-k is a point on it |
-| **mAP** | Mean Average Precision over the ranked gallery |
-| **mINP** | Mean Inverse Negative Penalty — hardest-correct-match cost |
-| **ARI** | Adjusted Rand Index — chance-corrected pairwise clustering agreement |
-| **Re-ranking** | k-reciprocal or similar post-hoc list refinement |
-| **Public / private detections** | Benchmark-provided vs. self-generated detections |
-| **TrackEval** | Community-standard evaluation code for MOT metrics |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[HOTA](glossary.md#32-tracking-metrics) · [DetA / AssA / LocA](glossary.md#32-tracking-metrics) · [IDF1](glossary.md#32-tracking-metrics) · [IDTP / IDFP / IDFN](glossary.md#32-tracking-metrics) ·
+[MOTA / MOTP](glossary.md#32-tracking-metrics) · [IDSW](glossary.md#32-tracking-metrics) · [MT / ML / Frag](glossary.md#32-tracking-metrics) · [TrackEval](glossary.md#32-tracking-metrics) ·
+[Public / private detections](glossary.md#31-pipeline-pieces) · [ARI](glossary.md#33-clustering-metrics-for-identity-discovery) · [NMI](glossary.md#33-clustering-metrics-for-identity-discovery) · [Purity / BCubed](glossary.md#33-clustering-metrics-for-identity-discovery) ·
+[CMC / Rank-k](glossary.md#22-retrieval-metrics) · [mAP](glossary.md#22-retrieval-metrics) · [mINP](glossary.md#22-retrieval-metrics) · [Re-ranking](glossary.md#22-retrieval-metrics)
 
 ---
 

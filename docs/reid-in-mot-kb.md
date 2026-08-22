@@ -6,7 +6,7 @@ domain: computer-vision, multi-object-tracking, re-identification, surveillance,
 status: stable field overview; architecture landscape as of mid-2026
 tags: [reid, mot, mtmc, data-association, appearance-embedding, tracking-by-detection, jde, sde, occlusion, open-set, hota, idf1]
 supersedes: null
-related: [reid-mot-metrics, reid-tracking-challenges-2026h2, reid-tracking-datasets, openood-v1.5, halo-loss, matryoshka-representation-learning, disentangled-attribute-embeddings]
+related: [reid-glossary, reid-mot-metrics, reid-tracking-challenges-2026h2, reid-tracking-datasets, openood-v1.5, halo-loss, matryoshka-representation-learning, disentangled-attribute-embeddings]
 retrieved: 2026-08-18
 confidence: high (concepts and architectures); medium (relative SOTA rankings — verify against live leaderboards)
 ---
@@ -244,25 +244,14 @@ For a new domain, in order:
 
 ---
 
-## 9. Glossary
+## 9. Terms
 
-| Term | Definition |
-|---|---|
-| **ReID** | Re-identification — matching instances of the same physical entity across views or time |
-| **SDE** | Separate Detection and Embedding — detector and ReID model are distinct networks |
-| **JDE** | Joint Detection and Embedding — one backbone, detection head + ReID head |
-| **SCT** | Single-camera tracking |
-| **MTMC / MCMT** | Multi-target multi-camera tracking; global IDs across a camera network |
-| **Tracklet** | A confident, contiguous fragment of a trajectory before global ID assignment |
-| **Gallery** | The stored set of identity representations a query is matched against |
-| **Query / probe** | The observation being matched into the gallery |
-| **Gating** | Hard rejection of implausible pairs before the assignment solver |
-| **CMC** | Cumulative Matching Characteristic — rank-k retrieval accuracy curve |
-| **Re-ranking** | Post-hoc refinement of a ranked list using gallery-gallery similarity, e.g. k-reciprocal encoding |
-| **GTA** | Global Tracklet Association — offline clustering of tracklets into identities |
-| **Open-set ReID** | Setting where the probe may belong to no gallery identity; requires a reject option |
-| **Distractor** | A gallery entry designed to be a plausible-but-wrong match |
-| **Person search** | Joint detection + ReID directly on full frames, no ground-truth boxes given |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[ReID](glossary.md#11-what-is-being-asked) · [Open-set ReID](glossary.md#11-what-is-being-asked) · [Person search](glossary.md#11-what-is-being-asked) · [MTMC / MCMT](glossary.md#12-named-settings) ·
+[Gallery](glossary.md#21-gallery-anatomy) · [Query / probe](glossary.md#21-gallery-anatomy) · [Distractor](glossary.md#21-gallery-anatomy) · [CMC](glossary.md#22-retrieval-metrics) ·
+[Re-ranking](glossary.md#22-retrieval-metrics) · [SDE](glossary.md#31-pipeline-pieces) · [JDE](glossary.md#31-pipeline-pieces) · [SCT](glossary.md#31-pipeline-pieces) ·
+[Tracklet](glossary.md#31-pipeline-pieces) · [GTA](glossary.md#31-pipeline-pieces) · [Gating](glossary.md#31-pipeline-pieces)
 
 ---
 

@@ -7,7 +7,7 @@ tags: [reid, person-reid, vehicle-reid, mtmc, mcmt, city-scale, multi-camera, ta
 retrieved: 2026-08-13
 confidence: high for cited primary sources; medium for synthesis (the merged taxonomy in 10-… is this KB's own construction, not a published one)
 supersedes: null
-related: [reid-contribution-ledger-2026, reid-eval-package, reid-reidbench-owed, mmreid-bench, reid-nested-attribute-protocol, reid-agglomerative-probe-protocol, reid-frameworks-2026, matryoshka-representation-learning, disentangled-attribute-embeddings, halo-loss, flowfeat, foundation-model-reid, agglomerative-vfm, gallery-and-evaluation, reid-mot-metrics, open-world-rejection-calibration, openood-v1.5, reid-in-mot, soma, reid-tracking-datasets, reid-tracking-challenges-2026h2]
+related: [reid-glossary, reid-contribution-ledger-2026, reid-eval-package, reid-reidbench-owed, mmreid-bench, reid-nested-attribute-protocol, reid-agglomerative-probe-protocol, reid-frameworks-2026, matryoshka-representation-learning, disentangled-attribute-embeddings, halo-loss, flowfeat, foundation-model-reid, agglomerative-vfm, gallery-and-evaluation, reid-mot-metrics, open-world-rejection-calibration, openood-v1.5, reid-in-mot, soma, reid-tracking-datasets, reid-tracking-challenges-2026h2]
 ---
 
 # ReID 2026 — Wiki Index
@@ -30,6 +30,10 @@ Re-identification in 2026 is **no longer one field**. It has split into at least
 ## 1. File map
 
 The wiki has two layers. **The numbered spine (§1.1)** is the argument, read in order. **The topic KBs (§1.2)** are deep single-subject references the spine cites; each is self-contained and none of them needs to be read in sequence.
+
+Across both layers there is **one glossary**: **[glossary.md](glossary.md)**. Every page links its terms
+there rather than defining them, so a definition exists in exactly one place. Add new terms to it; do not
+open a second one.
 
 ### 1.1 The numbered spine
 
@@ -69,6 +73,7 @@ Deep references on one subject each, cited throughout the spine. Grouped by what
 | [foundation-model-reid-kb.md](foundation-model-reid-kb.md) | Foundation models for ReID — paradigms, published work, the agglomerative gap | You are choosing an encoder, or looking for the unrun experiment |
 | [agglomerative-vfm-kb.md](agglomerative-vfm-kb.md) | RADIO, EUPE, DUNE — multi-teacher distillation, sizes, licences | You need the details behind C-RADIOv4, including licence friction |
 | **Evaluation** ||
+| [glossary.md](glossary.md) | Every term used anywhere in this wiki, defined once | You hit a term you do not know, or are about to define one |
 | [gallery-and-evaluation-kb.md](gallery-and-evaluation-kb.md) | What the gallery *is*, and how mAP/CMC are actually computed, step by step with a worked VeRi query | You are unsure what a number means, or writing eval code |
 | [reid-mot-metrics-kb.md](reid-mot-metrics-kb.md) | HOTA, IDF1, MOTA, mAP, ARI — what each rewards | You are comparing retrieval numbers with tracking numbers |
 | [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) | Rejection, abstention, calibration, ECE / FPR@95 / DIR@FAR, watchlist protocols | You are asking "is this identity in the gallery at all" — the P2 core |

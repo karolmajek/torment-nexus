@@ -5,7 +5,7 @@ type: concept / survey
 domain: computer-vision, re-identification, foundation-models, representation-learning
 status: active research area; landscape as of Aug 2026
 tags: [foundation-model, reid, clip-reid, dinov3, siglip2, luperson, solider, unihcp, instruct-reid, agglomerative, radio, eupe, domain-generalization, linear-probing, megadescriptor]
-related: [reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, openood-v1.5, halo-loss, matryoshka-representation-learning, disentangled-attribute-embeddings]
+related: [reid-glossary, reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, openood-v1.5, halo-loss, matryoshka-representation-learning, disentangled-attribute-embeddings]
 retrieved: 2026-08-18
 confidence: high for the published-work inventory; medium for the "no agglomerative ReID work exists" claim — that is absence-of-evidence from targeted search, not a systematic review
 ---
@@ -274,21 +274,13 @@ Foundation-model ReID inherits a problem the retrieval literature mostly ignores
 
 ---
 
-## 9. Glossary
+## 9. Terms
 
-| Term | Definition |
-|---|---|
-| **Foundation model** | Large pretrained model producing broadly reusable representations |
-| **Agglomerative model** | A student distilled from multiple heterogeneous foundation teachers |
-| **Linear probing** | Freeze the backbone, train only a linear head — isolates what the representation already encodes |
-| **Prompt learning** | Learning continuous text tokens rather than writing prompts; CLIP-ReID's core mechanism |
-| **Pseudo-caption** | Automatically generated text for an uncaptioned image corpus, enabling VL pretraining |
-| **Human-centric pretraining** | Pretraining specifically on person imagery to close the ImageNet-to-person domain gap |
-| **Fine-tuning distortion** | Degradation of pretrained features under full fine-tuning, harming OOD performance |
-| **Layer-wise LR decay** | Lower learning rates for earlier layers; the standard mitigation for the above |
-| **Instance discrimination** | Separating individual instances, as opposed to categories — what ReID actually needs |
-| **OmniReID** | Instruct-ReID's multi-setting ReID benchmark |
-| **MegaDescriptor / MiewID** | Standard pretrained wildlife individual-ReID encoders |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Foundation model](glossary.md#51-backbone-families) · [Agglomerative model](glossary.md#51-backbone-families) · [MegaDescriptor / MiewID](glossary.md#51-backbone-families) · [Linear probing](glossary.md#52-probing-a-frozen-backbone) ·
+[Instance discrimination](glossary.md#52-probing-a-frozen-backbone) · [Prompt learning](glossary.md#6-training-adaptation-and-transfer) · [Pseudo-caption](glossary.md#6-training-adaptation-and-transfer) · [Human-centric pretraining](glossary.md#6-training-adaptation-and-transfer) ·
+[Fine-tuning distortion](glossary.md#6-training-adaptation-and-transfer) · [Layer-wise LR decay](glossary.md#6-training-adaptation-and-transfer) · [OmniReID](glossary.md#12-named-settings)
 
 ---
 

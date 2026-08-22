@@ -6,7 +6,7 @@ domain: computer-vision, re-identification
 tags: [methods, clip-reid, transreid, osnet, dg-reid, mixture-of-experts, lifelong-reid, text-based-person-search, omni-modal, mamba, reasoning-reid, peft]
 retrieved: 2026-08-13
 confidence: high for method existence and claimed contribution; medium for cross-method performance comparison (different protocols — see 50-benchmarks)
-related: [reid-taxonomy-merged, reid-city-scale-mtmc, reid-finetuning-question]
+related: [reid-glossary, reid-taxonomy-merged, reid-city-scale-mtmc, reid-finetuning-question]
 ---
 
 # ReID Methods Catalog
@@ -239,18 +239,14 @@ These belong to the same category as OpenOOD's "post-hoc methods": no retraining
 
 ---
 
-## 12. Glossary
+## 12. Terms
 
-| Term | Definition |
-|---|---|
-| **BNNeck** | A batch-norm layer inserted between the feature used for triplet loss and the feature used for ID loss, letting each operate in its preferred space |
-| **Side information embedding** | Learnable tokens encoding camera or viewpoint identity, added to the transformer input (TransReID) |
-| **IBN** | Instance-Batch Normalization; fixed channel split between IN and BN |
-| **MoE** | Mixture of Experts; specialised subnetworks plus a gating/voting mechanism |
-| **PEFT** | Parameter-efficient fine-tuning (prompt / adapter / LoRA) |
-| **k-reciprocal re-ranking** | Re-scoring using mutual nearest-neighbour relations between query and gallery |
-| **Pseudo-label clustering** | Assigning identity labels by clustering unlabelled target embeddings, then training on them |
-| **Non-trivial sampling** | Selecting training examples that are informative rather than redundant (ReID-R) |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[BNNeck](glossary.md#54-architecture-components) · [Side information embedding](glossary.md#54-architecture-components) · [IBN](glossary.md#54-architecture-components) · [MoE](glossary.md#54-architecture-components) ·
+[k-reciprocal re-ranking](glossary.md#22-retrieval-metrics) · [PEFT](glossary.md#6-training-adaptation-and-transfer) · [Pseudo-label clustering](glossary.md#6-training-adaptation-and-transfer) · [Non-trivial sampling](glossary.md#6-training-adaptation-and-transfer)
+
+---
 
 ## 13. Sources
 

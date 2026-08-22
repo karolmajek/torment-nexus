@@ -6,7 +6,7 @@ domain: computer-vision, multi-camera-tracking, smart-city, industrial-automatio
 tags: [mtmc, mcmt, city-scale, hota, idf1, ai-city-challenge, cityflow, sim2real, warehouse, bev, camera-link-model, omniverse]
 retrieved: 2026-08-13
 confidence: high for challenge facts and leaderboard numbers (verified against organiser pages and workshop papers); medium for the generic pipeline description (synthesised from multiple winning systems)
-related: [reid-taxonomy-merged, reid-methods-catalog, reid-benchmarks-datasets]
+related: [reid-glossary, reid-taxonomy-merged, reid-methods-catalog, reid-benchmarks-datasets]
 ---
 
 # City-Scale & Multi-Camera ReID
@@ -227,21 +227,15 @@ Metric: mAP. Submission is a top-10 ranked image list per query.
 
 ---
 
-## 9. Glossary
+## 9. Terms
 
-| Term | Definition |
-|---|---|
-| **SCT** | Single-camera tracking; produces tracklets within one view |
-| **ICA** | Inter-camera association; clusters tracklets into global identities |
-| **Camera-link model** | A learned or annotated model of which camera pairs are connected and the transit-time distribution between them |
-| **BEV** | Bird's-eye view; a shared ground-plane coordinate system for multi-view fusion |
-| **HOTA** | Higher Order Tracking Accuracy; balances detection, association, localization |
-| **DetA / AssA / LocA** | HOTA's detection, association and localization sub-scores |
-| **IDSW** | Identity switch |
-| **Online tracker** | Uses only past frames at inference; awarded a 10% HOTA bonus in AI City |
-| **AMR** | Autonomous mobile robot; a tracked class in the warehouse benchmarks |
-| **Omniverse / Isaac Sim** | NVIDIA simulation stack used to generate the synthetic training corpora |
-| **Cosmos Transfer** | Generative model used in the 2026 data pipeline to diversify synthetic renders |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[SCT](glossary.md#31-pipeline-pieces) · [ICA](glossary.md#31-pipeline-pieces) · [Camera-link model](glossary.md#31-pipeline-pieces) · [BEV](glossary.md#31-pipeline-pieces) ·
+[Online tracker](glossary.md#31-pipeline-pieces) · [HOTA](glossary.md#32-tracking-metrics) · [DetA / AssA / LocA](glossary.md#32-tracking-metrics) · [IDSW](glossary.md#32-tracking-metrics) ·
+[AMR](glossary.md#34-simulation-and-challenge-infrastructure) · [Omniverse / Isaac Sim](glossary.md#34-simulation-and-challenge-infrastructure) · [Cosmos Transfer](glossary.md#34-simulation-and-challenge-infrastructure)
+
+---
 
 ## 10. Sources
 

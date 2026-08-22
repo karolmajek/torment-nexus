@@ -13,7 +13,7 @@ source_date: 2025-11-10 (arXiv v1); NeurIPS 2025
 retrieved: 2026-08-14
 tags: [feature-upsampling, pixel-dense-features, motion-profiles, optical-flow-distillation, mean-teacher, ema, ridge-regression, dpt-decoder, dinov2, vos, monocular-depth, semantic-segmentation, frozen-backbone, self-supervised]
 supersedes: null
-related: [featup, loftup, dinov2, dino, mae, v-jepa, videomae, sea-raft, raft, smurf, dpt, pamr, adabins, crw, davis-2017]
+related: [reid-glossary, featup, loftup, dinov2, dino, mae, v-jepa, videomae, sea-raft, raft, smurf, dpt, pamr, adabins, crw, davis-2017]
 ---
 
 # FlowFeat — Pixel-Dense Embedding of Motion Profiles
@@ -460,26 +460,14 @@ mindmap
 
 ---
 
-## 14. Glossary
+## 14. Terms
 
-| Term | Definition |
-|---|---|
-| **Motion profile** | Distribution of plausible velocities at a pixel (Shi & Malik, 1998). FlowFeat's core borrowed concept — the thing being embedded. |
-| **Apparent motion** | Motion observable in the image plane, i.e. optical flow; distinct from true 3-D scene motion. |
-| **Motion stochasticity** | The fact that one image is compatible with many future motions — the obstacle that kills naïve flow regression. |
-| **A\*** | The per-sample optimal linear (in code: affine) operator mapping features to flow; solved in closed form by ridge regression on the EMA teacher's features, never learned. |
-| **Ridge parameter γ** | L2 penalty on A\*; γ = 1.0. The single most load-bearing hyperparameter (−7.6 J&F when weakened). |
-| **Focal gradient matching** | Second-order loss weighted by `1 − e^{−∇u/σ}` so it only acts at motion discontinuities. Source of boundary sharpness. |
-| **Mean teacher / EMA** | Teacher decoder is an exponential moving average of the student decoder (Tarvainen & Valpola, 2017). |
-| **DPT** | Dense Prediction Transformer decoder (Ranftl et al.); reads 4 intermediate ViT blocks via hooks and fuses them to full resolution. FlowFeat's only trainable module. |
-| **FlowFeat++** | Post-hoc PAMR mask refinement driven by FlowFeat affinities instead of RGB intensities. No training. |
-| **Attention probing** | Probe with C learnable queries cross-attending the feature map; used because FlowFeat lacks cross-image semantic alignment. |
-| **Linear probing (VOS)** | Fit a linear classifier on frame 1's ground-truth mask, apply unchanged to the rest of the video. Non-autoregressive — effectively few-shot. |
-| **Local KNN** | Caron-style label propagation for VOS; autoregressive and known to be hyperparameter-brittle. |
-| **J&F** | DAVIS metric: mean of region similarity J_m (IoU) and contour accuracy F_m. |
-| **csID-style caveat** | *(cross-ref to openood-kb)* — not used here; FlowFeat reports no robustness-under-corruption evaluation. |
-| **FeatUp / LoftUp** | Prior/concurrent feature upsamplers: bilateral-filter-based and coordinate-based (SAM-supervised) respectively. FlowFeat's headline baselines. |
-| **SEA-RAFT / RAFT / SMURF** | Optical flow networks used as the frozen teacher; SMURF is itself unsupervised, enabling a fully label-free pipeline. |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Motion profile](glossary.md#83-flowfeat) · [Motion stochasticity](glossary.md#83-flowfeat) · [A*](glossary.md#83-flowfeat) · [Ridge parameter](glossary.md#83-flowfeat) ·
+[Focal gradient matching](glossary.md#83-flowfeat) · [Mean teacher / EMA](glossary.md#83-flowfeat) · [DPT](glossary.md#83-flowfeat) · [FlowFeat++](glossary.md#83-flowfeat) ·
+[Linear probing (VOS)](glossary.md#83-flowfeat) · [Local KNN](glossary.md#83-flowfeat) · [J&F](glossary.md#83-flowfeat) · [FeatUp / LoftUp](glossary.md#83-flowfeat) ·
+[SEA-RAFT / RAFT / SMURF](glossary.md#83-flowfeat) · [Apparent motion](glossary.md#7-imaging-conditions) · [csID](glossary.md#41-distribution-vocabulary)
 
 ---
 

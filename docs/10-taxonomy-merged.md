@@ -6,7 +6,7 @@ domain: computer-vision, re-identification
 tags: [taxonomy, reid, classification-scheme, domain-generalization, cross-modal, mtmc, synthesis]
 retrieved: 2026-08-13
 confidence: medium-high — the axis decomposition is this KB's construction; the individual categories are taken from published surveys and are individually well-sourced
-related: [reid-2026-index, reid-surveys-landscape, reid-methods-catalog]
+related: [reid-glossary, reid-2026-index, reid-surveys-landscape, reid-methods-catalog]
 ---
 
 # ReID Merged Taxonomy
@@ -209,24 +209,14 @@ flowchart TD
 
 ---
 
-## 5. Glossary
+## 5. Terms
 
-| Term | Definition |
-|---|---|
-| **ReID** | Re-identification — matching the same identity across non-overlapping camera views |
-| **MTMC / MCMT** | Multi-target multi-camera (tracking) / multi-camera multi-target — same thing, two naming conventions |
-| **DA-ReID** | Domain-adaptive ReID; unlabelled target data available at training time |
-| **DG-ReID** | Domain-generalizable ReID; *no* target data at training time |
-| **USL** | Fully unsupervised learning setting; pseudo-labels from clustering |
-| **VI-ReID** | Visible–infrared ReID; a cross-modality problem |
-| **CC-ReID** | Cloth-changing ReID |
-| **LReID** | Lifelong ReID; sequential domains without catastrophic forgetting |
-| **TBPS** | Text-based person search / text-to-image person retrieval |
-| **OM-ReID** | Omni multi-modal ReID; arbitrary combinations of query modalities |
-| **Sim2Real** | Train on synthetic data, evaluate on real data |
-| **csID** | Covariate-shifted in-distribution — corrupted/restyled but still a known identity (term borrowed from OpenOOD) |
-| **Person search** | Detection and ReID performed jointly on uncropped frames |
-| **Tracklet** | A short, single-camera, single-identity trajectory; the atomic unit of video ReID and MTMC |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[ReID](glossary.md#11-what-is-being-asked) · [Person search](glossary.md#11-what-is-being-asked) · [MTMC / MCMT](glossary.md#12-named-settings) · [DA-ReID](glossary.md#12-named-settings) ·
+[DG-ReID](glossary.md#12-named-settings) · [USL](glossary.md#12-named-settings) · [VI-ReID](glossary.md#12-named-settings) · [CC-ReID](glossary.md#12-named-settings) ·
+[LReID](glossary.md#12-named-settings) · [TBPS](glossary.md#12-named-settings) · [OM-ReID](glossary.md#12-named-settings) · [Sim2Real](glossary.md#12-named-settings) ·
+[Tracklet](glossary.md#31-pipeline-pieces) · [csID](glossary.md#41-distribution-vocabulary)
 
 ---
 

@@ -6,7 +6,7 @@ domain: computer-vision, re-identification, trustworthy-ml
 tags: [open-problems, research-directions, sim2real, calibration, open-world, privacy, federated-learning, lifelong, reasoning, forecast]
 retrieved: 2026-08-13
 confidence: medium — the problem list is well-grounded in stated future-work sections; the prioritisation and the calibration argument in §3 are this KB's own judgement
-related: [reid-2026-index, reid-taxonomy-merged, reid-finetuning-question, open-world-rejection-calibration]
+related: [reid-glossary, reid-2026-index, reid-taxonomy-merged, reid-finetuning-question, open-world-rejection-calibration]
 ---
 
 # ReID Open Problems — 2026
@@ -202,18 +202,14 @@ flowchart LR
 
 ---
 
-## 10. Glossary
+## 10. Terms
 
-| Term | Definition |
-|---|---|
-| **Open-world ReID** | Setting where the query identity may not exist in the gallery at all |
-| **csID** | Covariate-shifted in-distribution — known identity under corruption or restyling; must be accepted, not rejected (term from OpenOOD) |
-| **ECE** | Expected Calibration Error — gap between stated confidence and actual accuracy |
-| **FPR@95** | False positive rate at 95% true positive rate; an operating-point metric |
-| **Abstain class** | An explicit "none of the above" output; parameter-free in HALO's construction |
-| **Ground sampling distance** | Real-world size represented by one pixel; the limiting quantity in aerial ReID |
-| **Re-indexing-free** | A continual-learning property where updated models remain compatible with an existing embedding index |
-| **Training-as-a-Service** | Infrastructure pattern where models train against data that never leaves the provider's platform |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Open-set / open-world ReID](glossary.md#11-what-is-being-asked) · [csID](glossary.md#41-distribution-vocabulary) · [Abstain class](glossary.md#42-rejection-mechanisms) · [ECE](glossary.md#43-operating-point-and-calibration-metrics) ·
+[FPR@95](glossary.md#43-operating-point-and-calibration-metrics) · [Re-indexing-free](glossary.md#6-training-adaptation-and-transfer) · [Training-as-a-Service](glossary.md#6-training-adaptation-and-transfer) · [Ground sampling distance](glossary.md#7-imaging-conditions)
+
+---
 
 ## 11. Sources
 

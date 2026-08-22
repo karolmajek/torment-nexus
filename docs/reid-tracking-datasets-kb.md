@@ -4,7 +4,7 @@ kb_id: reid-tracking-datasets
 type: reference / dataset catalogue
 domain: computer-vision, re-identification, multi-object-tracking, benchmarking
 tags: [dataset, benchmark, market1501, msmt17, mot17, mot20, dancetrack, sportsmot, bdd100k, veri776, prcc, cuhk-pedes, wildlifereid, licensing, dukemtmc]
-related: [reid-in-mot, reid-mot-metrics, reid-tracking-challenges-2026h2]
+related: [reid-glossary, reid-in-mot, reid-mot-metrics, reid-tracking-challenges-2026h2]
 retrieved: 2026-08-18
 confidence: high for dataset composition; medium for current availability and licence terms — several datasets have been withdrawn or restricted, always re-check the source before use
 ---
@@ -225,19 +225,13 @@ flowchart TD
 
 ---
 
-## 11. Glossary
+## 11. Terms
 
-| Term | Meaning |
-|---|---|
-| **Closed-set ReID** | Every probe identity exists in the gallery |
-| **Cross-dataset / direct transfer** | Train on dataset A, test on B with no fine-tuning |
-| **Person search** | Joint detection + ReID on full frames rather than cropped boxes |
-| **Cloth-changing protocol** | Gallery entries with the same outfit as the query are excluded |
-| **Single-query / multi-query** | One probe image per identity vs. an aggregated set |
-| **Detected vs. labelled boxes** | Detector output vs. hand-drawn boxes; changes CUHK03 scores meaningfully |
-| **Public / private detections** | Benchmark-supplied vs. self-generated detections in MOT |
-| **Tracklet** | A contiguous confident trajectory fragment |
-| **MegaDescriptor / MiewID** | Standard pretrained wildlife ReID feature extractors |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Closed-set ReID](glossary.md#11-what-is-being-asked) · [Person search](glossary.md#11-what-is-being-asked) · [Single-query / multi-query](glossary.md#21-gallery-anatomy) · [Cross-dataset / direct transfer](glossary.md#23-protocol-vocabulary) ·
+[Cloth-changing protocol](glossary.md#23-protocol-vocabulary) · [Detected vs. labelled boxes](glossary.md#23-protocol-vocabulary) · [Tracklet](glossary.md#31-pipeline-pieces) · [Public / private detections](glossary.md#31-pipeline-pieces) ·
+[MegaDescriptor / MiewID](glossary.md#51-backbone-families)
 
 ---
 

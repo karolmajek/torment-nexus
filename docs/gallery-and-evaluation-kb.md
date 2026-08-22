@@ -10,7 +10,7 @@ confidence: |
   and the junk/ground-truth rule was verified against VeRi's official gt_index.txt and jk_index.txt for all 1,678 queries;
   protocol descriptions for datasets not present locally (Market-1501, CUHK03, VehicleID) come from their published protocols, not from local verification.
 supersedes: null
-related: [50-benchmarks-datasets, reid-mot-metrics, open-world-rejection-calibration, reid-2026-index, reid-in-mot]
+related: [reid-glossary, 50-benchmarks-datasets, reid-mot-metrics, open-world-rejection-calibration, reid-2026-index, reid-in-mot]
 ---
 
 # The ReID Gallery and How Evaluation Actually Works
@@ -36,14 +36,17 @@ Same model. Same images. Numbers ranging from 45% to 87% mAP and from 46% to 99.
 
 ## 1. The cast
 
-| Term | What it is | In VeRi-776 |
-|---|---|---|
-| **Query / probe** | The image you search with | ~8.4 images per identity |
-| **Gallery / test set** | The pool being searched and ranked | the same identities as the query set, 11-202 images each |
-| **Ground truth / positives** | Gallery entries that are the same identity *and* count | median **51** per query, range 5-196 |
-| **Junk** | Gallery entries excluded from scoring, neither reward nor penalty | median **6** per query, range 1-24 |
-| **Distractor** | Gallery entries of identities that appear in no query - pure clutter | none in VeRi; Market-1501 offers +500k |
-| **Training set** | Disjoint identities used to learn the embedding | identity-disjoint from test |
+What each role *is* is defined in [glossary.md §2.1](glossary.md#21-gallery-anatomy). What this page
+owns is how big each one gets on a real benchmark:
+
+| Term | In VeRi-776 |
+|---|---|
+| [Query / probe](glossary.md#21-gallery-anatomy) | ~8.4 images per identity |
+| [Gallery](glossary.md#21-gallery-anatomy) (here, the test set) | the same identities as the query set, 11-202 images each |
+| [Ground truth / positives](glossary.md#21-gallery-anatomy) | median **51** per query, range 5-196 |
+| [Junk](glossary.md#21-gallery-anatomy) | median **6** per query, range 1-24 |
+| [Distractor](glossary.md#21-gallery-anatomy) | none in VeRi; Market-1501 offers +500k |
+| Training set | identity-disjoint from test |
 
 Split sizes are not repeated here: **[datasets/veri776.md](../datasets/veri776.md) owns VeRi's counts**, and this
 page owns the per-query distributions above, which are its own analysis. The two never disagree because only one of
@@ -498,22 +501,15 @@ you think it is.
 
 ---
 
-## 11. Glossary
+## 11. Terms
 
-| Term | Definition |
-|---|---|
-| **Query / probe** | Image or tracklet used to search |
-| **Gallery** | The searched set; fixed in benchmarks, growing in deployment |
-| **Junk** | Gallery entry excluded from scoring; in most protocols, the same identity seen by the same camera |
-| **Distractor** | Gallery identity that never appears as a query; clutter that can only hurt |
-| **Hit / true positive** | Gallery entry with the query's identity from a different camera |
-| **Single-shot / multi-shot gallery** | One image per identity vs many |
-| **Single-query / multi-query** | One probe image vs a pooled set of probe images per query identity |
-| **CMC** | Cumulative Matching Characteristic; rank-k hit rate |
-| **AP / mAP** | Average precision for one query; its mean over queries |
-| **mINP** | Metric driven by the rank of the hardest positive |
-| **Re-ranking** | Query-adaptive score refinement such as k-reciprocal encoding; raises mAP, destroys score comparability across queries |
-| **Tracklet-level evaluation** | Aggregating the frames of one track into a single query or gallery entry, e.g. via VeRi's `test_track.txt` |
+Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+
+[Query / probe](glossary.md#21-gallery-anatomy) · [Gallery](glossary.md#21-gallery-anatomy) · [Ground truth / positives / hit](glossary.md#21-gallery-anatomy) · [Junk](glossary.md#21-gallery-anatomy) ·
+[Distractor](glossary.md#21-gallery-anatomy) · [Single-shot / multi-shot gallery](glossary.md#21-gallery-anatomy) · [Single-query / multi-query](glossary.md#21-gallery-anatomy) · [Tracklet-level evaluation](glossary.md#21-gallery-anatomy) ·
+[AP / mAP](glossary.md#22-retrieval-metrics) · [CMC](glossary.md#22-retrieval-metrics) · [mINP](glossary.md#22-retrieval-metrics) · [Re-ranking](glossary.md#22-retrieval-metrics)
+
+---
 
 ## 12. Sources
 

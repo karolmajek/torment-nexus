@@ -445,7 +445,7 @@ Per-dataset differences that regularly cause confusion:
 | Dataset | Gallery | Cross-camera rule | Repeats | Note |
 |---|---|---|---|---|
 | **VeRi-776** | multi-shot — [counts](../../datasets/veri776.md) | same-id-same-camera is junk | single fixed split | ships `gt_index.txt` and `jk_index.txt`; also supports tracklet-level evaluation via `test_track.txt` |
-| **Market-1501** | optional +500k distractors — [counts](../../datasets/market1501.md) | same-id-same-camera is junk; `id = -1` distractors are junk | single fixed split | single-query and multi-query variants both published |
+| **Market-1501** | optional +500k distractors — [counts](../../datasets/market1501.md), [+500k](../../datasets/market1501-500k.md) | same-id-same-camera is junk; `pid -1` is junk and leaves the ranking, `pid 0` is a distractor and stays in it | single fixed split | single-query and multi-query variants both published; the two unlabelled classes are **not** interchangeable |
 | **MSMT17** | [counts](../../datasets/msmt17.md) | same as Market | single fixed split | the hard classic benchmark; note that its test-identity count is not its query count |
 | **CUHK03** | two protocols in circulation | same | **old: 20 random splits; new: single 767/700 split** | numbers under the two protocols differ by tens of points and are routinely confused |
 | **VehicleID** | 1 image per identity, subsets of 800/1,600/2,400/3,200 | no camera rule | multiple random draws, averaged | its mAP is not comparable to VeRi's mAP |

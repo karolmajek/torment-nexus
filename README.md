@@ -17,9 +17,14 @@ python datasets/get.py counts veri776
 
 - [VeRi-776](datasets/veri776.md) — vehicles; also this project's evaluator oracle [liu2017provid]
 - [VehicleID](datasets/vehicleid.md) — vehicles, front/rear only [liu2016deep]
+- [VRAI](datasets/vrai.md) — vehicles from a drone; the test identities are not in the
+  release, so the only protocol that scores offline is over its training split [Wang2019vehicle]
 - [MSMT17](datasets/msmt17.md), [Market-1501](datasets/market1501.md),
   [CUHK03-NP](datasets/cuhk03-np.md), [Occluded-REID](datasets/occluded-reid.md),
   [CCVID](datasets/ccvid.md), [MARS](datasets/mars.md) — people
+- [Market-1501 +500k](datasets/market1501-500k.md) — the same 3,368 queries against a gallery
+  27x larger. It measures how fast a score decays with gallery size, which is the axis every
+  other benchmark holds fixed and never reports [zheng2015scalable]
 - [VERI-Wild](datasets/veri-wild.md), [SOMA](datasets/soma.md),
   [Market-1501 Attribute](datasets/market1501-attribute.md)
 
@@ -55,6 +60,13 @@ Four test subsets by identity count, each drawn repeatedly and averaged — size
   pages={645--658},
   year={2017},
   publisher={IEEE}
+}
+@inproceedings{zheng2015scalable,
+  title={Scalable Person Re-identification: A Benchmark},
+  author={Zheng, Liang and Shen, Liyue and Tian, Lu and Wang, Shengjin and Wang, Jingdong and Tian, Qi},
+  booktitle={Proceedings of the IEEE International Conference on Computer Vision},
+  pages={1116--1124},
+  year={2015}
 }
 @inproceedings{liu2016deep,
   title={Deep relative distance learning: Tell the difference between similar vehicles},

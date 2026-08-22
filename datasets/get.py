@@ -102,6 +102,21 @@ def is_denied(pages: dict[str, dict[str, Any]], name: str) -> bool:
     return name.lower() in {i.lower() for i in denied_ids(pages).get("ids", [])}
 
 
+def missing(page: dict[str, Any], root: Path) -> list[str]:
+    """What the page says the release contains and the disk does not have.
+
+    Presence, not counts — `verify` does counts. The distinction matters because two pages
+    can name the same `dir` and differ by one entry inside it, which is exactly what
+    Market-1501 and its +500k gallery do: the root being there is not the dataset being
+    there.
+    """
+    base = root / page["dataset"]["dir"]
+    if not base.is_dir():
+        return [str(base)]
+    wanted = page.get("expect", {})
+    return [str(base / name) for name in wanted if not (base / name).exists()]
+
+
 # ------------------------------------------------------------------------------- reporting
 
 
@@ -132,7 +147,7 @@ def cmd_ls(args: argparse.Namespace) -> int:
     rows = []
     for name in sorted(k for k in pages if not k.startswith("_")):
         item = pages[name]["dataset"]
-        present = (root / item["dir"]).is_dir()
+        present = not missing(pages[name], root)
         rows.append(
             (
                 name,
@@ -167,7 +182,10 @@ def cmd_show(args: argparse.Namespace) -> int:
     print(f"              licence_verified={item.get('licence_verified')} commercial_ok={item.get('commercial_ok')}")
     print(f"  access      {item.get('access')}   link_verified={item.get('link_verified')} (checked {item.get('checked_on')})")
     print(f"  homepage    {item.get('homepage', '')}")
-    print(f"  on disk     {root / item['dir']}   {'present' if (root / item['dir']).is_dir() else 'MISSING'}")
+    absent = missing(block, root)
+    print(f"  on disk     {root / item['dir']}   {'present' if not absent else 'MISSING'}")
+    for path in absent:
+        print(f"              missing: {path}")
     print(f"  reidbench   adapter={item.get('adapter') or '(none yet)'}  protocols={item.get('protocols') or []}")
     for url in block.get("fetch", {}).get("urls", []):
         print(f"  url         {url}")
@@ -276,6 +294,12 @@ def _refuse(pages: dict[str, dict[str, Any]], name: str) -> int:
     return 3
 
 
+IGNORED = {"Thumbs.db", ".DS_Store"}
+"""Not data. The Market-1501 archive genuinely ships four `Thumbs.db` files, so counting
+directory entries naively puts every `expect` in that page one over — a page correction for
+something no dataset author meant to release."""
+
+
 def _count(path: Path) -> int | None:
     """Entries in a directory, or lines in a .txt file. One rule, decided by the path."""
     if path.suffix == ".txt":
@@ -285,7 +309,7 @@ def _count(path: Path) -> int | None:
             return sum(1 for line in handle if line.strip())
     if not path.is_dir():
         return None
-    return sum(1 for _ in path.iterdir())
+    return sum(1 for entry in path.iterdir() if entry.name not in IGNORED)
 
 
 def _download(url: str, into: Path) -> Path:

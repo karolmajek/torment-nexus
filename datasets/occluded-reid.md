@@ -34,7 +34,7 @@ commercial_ok = false
 access = "direct"
 homepage = "https://github.com/tinajia2012/ICME2018_Occluded-Person-Reidentification_datasets"
 dir = "occluded-reid"
-adapter = ""
+adapter = "occluded-reid"
 protocols = ["occluded-reid/occluded-vs-whole@1"]
 checked_on = "2026-08-21"
 link_verified = true
@@ -175,7 +175,7 @@ the commercial question comes up.
 | | |
 |---|---|
 | On disk | ✅ `data/occluded-reid`, verified |
-| `reidbench` adapter | not written — `adapters/occluded_reid.py`, plus the regression test that `occluded-duke` still resolves denied |
-| `reidbench` protocol | not written — `occluded-reid/occluded-vs-whole@1`, per §4 |
-| Provenance record | not written |
+| `reidbench` adapter | ✅ `adapters/occluded_reid.py` |
+| `reidbench` protocol | ✅ `occluded-reid/occluded-vs-whole@1`, per §4 |
+| Provenance record | ✅ |
 | Access | done |

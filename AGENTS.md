@@ -15,6 +15,8 @@ minimize amount of code (do not keep unused, old; do not overcomplicate stuff - 
 minimize docs - let's have a single source of truth for things, easier to maintain...
 let's not keep a note about what was removed, what was before, etc (we track this in git)
 
+DO NOT search full disk outside this repo dir
+
 LLM-WIKI in docs/
 
 Markdown + Mermaid (a lot!)

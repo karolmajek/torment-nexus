@@ -91,6 +91,8 @@ rather than repeating them — the copies here had already drifted apart from ea
 | **AG-VPReID** | 3,027 | 13,511 | 3.70 M | 80–120 m | ✓ |
 | **VReID-XFD / DetReIDX** | 371 | 11,288 | **11.75 M** | **5.8–120 m** | ✓ |
 
+The table above is *person* aerial. Its vehicle counterpart is **VRAI** — two UAVs at 15–80 m, [counts](../../datasets/vrai.md) — and it is the one aerial set on this list that is on disk here. Its test identities are withheld and scored on EvalAI, so any offline number over it is over its training split and must say so.
+
 **VReID-XFD detail** (the current hardest aerial benchmark): built from DetReIDX across seven university campuses in Portugal, Turkey, Angola and India. Two-phase capture — a controlled 20-second ground reference per subject, then outdoor UAV sessions in two different outfits, at 18 viewpoints spanning pitch 30°/60°/90°, altitude 5.8–120 m, horizontal distance 10–120 m. 16 soft-biometric labels. Three identity-disjoint protocols: A→A, A→G, G→A.
 
 **What the numbers say about difficulty:**

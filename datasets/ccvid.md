@@ -9,7 +9,7 @@ confidence: |
   medium — the repository, licence line and citation were read on 2026-08-21; the Drive file id
   was not extractable from the rendered page, and the tracklet split counts come from the CVPR
   2022 paper rather than from a download. Verify both on first fetch.
-related: [dataset-occluded-reid, dataset-mars, reid-benchmarks-datasets, reid-c1-eval-readiness]
+related: [dataset-occluded-reid, dataset-mars, reid-benchmarks-datasets, reid-reidbench-owed]
 ---
 
 # CCVID

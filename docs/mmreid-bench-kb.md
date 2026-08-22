@@ -15,7 +15,7 @@ confidence: |
   synthesis — §4 (what the protocol can and cannot measure), §5 (relevance to this repo's plan) and §6 are this
   KB's own construction, not claims made by the authors.
 supersedes: null
-related: [reid-2026-index, reid-benchmarks-datasets, gallery-and-evaluation, open-world-rejection-calibration, foundation-model-reid, reid-methods-catalog, reid-surveys-landscape, reid-contribution-ledger-2026, reid-eval-package-design, reid-mot-metrics]
+related: [reid-2026-index, reid-benchmarks-datasets, gallery-and-evaluation, open-world-rejection-calibration, foundation-model-reid, reid-methods-catalog, reid-surveys-landscape, reid-contribution-ledger-2026, reid-eval-package, reid-mot-metrics]
 ---
 
 # MMReID-Bench / VP-ReID
@@ -194,7 +194,7 @@ three consequences:
 |---|---|
 | One row is unreproducible here | The RGB task cannot be re-run, so any comparison against VP-ReID's headline RGB number is a comparison against data we will not touch |
 | Cross-benchmark citation still works | Citing their thermal/infrared/sketch/group findings is unaffected — those tasks have clean lineage |
-| It constrains `reidbench` | Per [36 §5.4](36-eval-package-design.md), a hypothetical `vp-reid` adapter would have to deny 1 of its 10 tasks at load time. That is the denylist working as designed, and it is worth having the adapter's docstring say so |
+| It constrains `reidbench` | Duke-derived data is denied in `reidbench` in code, with no override flag, so a hypothetical `vp-reid` adapter would have to deny 1 of its 10 tasks at load time. That is the denylist working as designed, and it is worth having the adapter's docstring say so |
 
 Note also **DeepChange** (cloth-changing task): `open-world-rejection-calibration-kb.md` §4.1 lists it among the
 csID-relevant sets; it has no Duke lineage, so it stays available.
@@ -221,13 +221,11 @@ data we do not have to collect.
 
 ### 5.4 Design consequence for `reidbench`
 
-An MLLM matcher does **not** satisfy the `Encoder` contract in [36 §3](36-eval-package-design.md): it produces no
-embedding, only a pairwise score. Supporting this class of system needs a second entry point — a
-`Scorer`/score-matrix path, `evaluate_scores(S, query_meta, gallery_meta, spec)` — where `S` is an arbitrary
-(Q × G) score matrix produced by anything at all, including an API. This is cheap (the metrics already consume a
-score matrix internally), it makes the package able to evaluate MLLM judges, human raters and commercial APIs, and
-it does not violate the scope lock because no model code enters the package. Added to the design in
-[36 §8.4](36-eval-package-design.md).
+An MLLM matcher produces no embedding, only a pairwise score — so it cannot be an encoder. It needs no special
+support either: `reidbench` measures `(S, rel, valid)`, where `S` is an arbitrary (Q × G) score matrix produced by
+anything at all, including an API, and `rel`/`valid` come from `protocol.select` on the manifest. Scoring an MLLM
+judge, a human rater or a commercial API is therefore the same three lines as scoring embeddings, with the score
+step replaced — and no model code enters the package, so the scope lock holds.
 
 ---
 
@@ -267,7 +265,7 @@ it does not violate the scope lock because no model code enters the package. Add
   [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) §1.3, §4.2 ·
   [foundation-model-reid-kb.md](foundation-model-reid-kb.md) §3.4 ·
   [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) TL;DR, §11 ·
-  [36-eval-package-design.md](36-eval-package-design.md) §3, §5.4, §8.4
+  [36-reidbench.md](36-reidbench.md) · [`reidbench/README.md`](../reidbench/README.md)
 
 ## 9. Retrieval hints
 

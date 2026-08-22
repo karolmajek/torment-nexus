@@ -8,7 +8,7 @@ retrieved: 2026-08-21
 confidence: |
   high — downloaded, unpacked and inspected on 2026-08-21. Every count, filename and format
   fact below was read off the extracted tree, not from documentation.
-related: [dataset-msmt17, dataset-ccvid, reid-c1-eval-readiness, reid-tracking-datasets]
+related: [dataset-msmt17, dataset-ccvid, reid-reidbench-owed, reid-tracking-datasets]
 ---
 
 # Occluded-REID

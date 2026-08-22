@@ -10,7 +10,7 @@ confidence: |
   published MSMT17 table uses.
   medium — the mirror descriptions are read from search results and repository listings, not
   from a completed download. Nothing below has been fetched.
-related: [dataset-market1501, dataset-cuhk03-np, reid-benchmarks-datasets, reid-c1-eval-readiness]
+related: [dataset-market1501, dataset-cuhk03-np, reid-benchmarks-datasets, reid-reidbench-owed]
 ---
 
 # MSMT17

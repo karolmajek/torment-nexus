@@ -8,7 +8,7 @@ retrieved: 2026-08-21
 confidence: |
   medium — the repository and the attribute count are well established in the literature; the
   exact field names and file format have not been downloaded and checked by this project.
-related: [dataset-market1501, reid-nested-attribute-protocol, reid-c16-eval-readiness]
+related: [dataset-market1501, reid-nested-attribute-protocol, reid-reidbench-owed]
 ---
 
 # Market-1501 Attribute

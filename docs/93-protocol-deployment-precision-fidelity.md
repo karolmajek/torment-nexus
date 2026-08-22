@@ -9,10 +9,10 @@ confidence: |
   high — the export-everywhere landscape (BoxMOT, Ultralytics, FastRT, NVIDIA TAO) is read directly off
   `35-frameworks-toolboxes.md` §5–§6, and the recording machinery described in §3 is implemented and tested in
   `reidbench` as of this file's date;
-  high — the scope position in §1–§2 follows from `37-eval-package-simple.md` §1 row 11 and §5.4, quoted inline;
+  high — the scope position in §1–§2 follows from the package's own one-arithmetic rule, quoted inline;
   synthesis — the hypotheses in §5, the predicted closed-set/open-set asymmetry in §7, and the runtime ordering
   in §4 are this file's own construction and have not been tested.
-related: [reid-eval-package-simple, reid-eval-package-design, reid-frameworks-2026, open-world-rejection-calibration,
+related: [reid-eval-package, reid-reidbench-owed, reid-frameworks-2026, open-world-rejection-calibration,
           openood-v1.5, gallery-and-evaluation, reid-contribution-ledger-2026, reid-mot-metrics]
 supersedes: null
 ---
@@ -60,11 +60,10 @@ flowchart TB
     class Q q
 ```
 
-1. **It contradicts the design's own best decision.** `37-eval-package-simple.md` §1 row 11 killed a `backend.py`
-   that dispatched to torch when available, with the reason quoted verbatim: *"the fourth decimal can depend on
-   whether torch is present, in the package whose thesis is the fourth decimal."* §5.4 then fixed one arithmetic,
-   always. A "fastest" claim reintroduces precisely that entanglement, one level up, in the public promise instead
-   of in one module.
+1. **It contradicts the package's own best decision.** `reidbench` has no backend switch that dispatches to torch
+   when it happens to be installed: `score.py` owns one arithmetic, always, because otherwise the fourth decimal
+   depends on whether torch is present — in the package whose thesis is the fourth decimal. A "fastest" claim
+   reintroduces precisely that entanglement, one level up, in the public promise instead of in one module.
 2. **The vendors own that ground and it is not their differentiator either.** See §0. `35` §7.3's list of five things
    the field is actually missing contains no speed item.
 3. **It breaks the scope lock that makes the package publishable.** `35` §7.5: this is C12, the reproducibility
@@ -100,7 +99,7 @@ Two consequences worth stating out loud.
 
 **Compute precision and storage precision are different questions.** `precision` is the arithmetic that produced the
 numbers (fp32 / tf32 / fp16 / bf16 / int8 / fp8). `storage_dtype` is how many bits of them survived to disk — fp16 by
-default, per `36` §9.2. Both move a metric; both are in the key; one field could never answer both. `reidbench`'s
+default in `cache.py`. Both move a metric; both are in the key; one field could never answer both. `reidbench`'s
 `cache.key(encoder_spec, manifest_digest, storage_dtype)` takes them as separate inputs for exactly this reason, and
 a test asserts that changing either one changes the key.
 
@@ -139,7 +138,7 @@ flowchart LR
 
 | Category | Where it lives | Note |
 |---|---|---|
-| **Configs** | the values *are* the config (`37` §1 row 12) | there is no `config.py` to drift from `types.py`; a protocol is four keys of YAML, an encoder is a JSON spec |
+| **Configs** | the values *are* the config | there is no `config.py` to drift from `types.py`; a protocol is four keys of YAML, an encoder is a JSON spec |
 | **Versions** | `env`: reidbench, numpy, pyarrow, python + implementation, platform, machine, **BLAS thread counts**; `timing.runtime_versions`: torch / onnxruntime / tensorrt | thread counts are in there because a BLAS reduction is not associative — the thread count changes the summation order and therefore the low bits of every dot product. If two machines disagree in the fourth decimal, that is the first place to look |
 | **Hashes** | manifest content digest (order-independent), protocol digest, `weights_sha`, cache key, per-array content digests | the manifest digest survives row reordering, so an annotated manifest still hits the same cache as the value it equals |
 | **Seeds** | manifest **recipes**, in the table's Arrow schema metadata | `{transform, seed, parent_digest, at, …}`, appended not overwritten, carried through parquet for free. `stats.ci()` also returns the seed it used |
@@ -151,7 +150,7 @@ column, they ride through `write`/`read` without a sidecar and **without changin
 manifest never invalidates a cache.
 
 `report.check()` reports what is missing before anyone could rebuild a number: no manifest digest, no protocol name,
-no reidbench version, a random transform that recorded no seed. Consistent with `37` §7.3 — render always, check
+no reidbench version, a random transform that recorded no seed. Render always, check
 separately — it *reports*, it does not refuse.
 
 **What is deliberately not recorded:** git SHA of the caller's experiment repo, hostname, full `pip freeze`, GPU
@@ -192,7 +191,7 @@ still never knew where anything came from.
 | **H1** | Closed-set retrieval is **robust** to deployment precision: fp16/bf16/int8 move mAP and R1 by less than the gap between two credible encoders | §7.1 table, fp32 baseline | any precision moving mAP by more than ~1 point on VeRi or Market |
 | **H2** | Open-set **threshold placement** is **not** robust: a τ fitted on fp32 scores, applied to int8 scores, misses its target FPIR by a margin that matters operationally | §7.2 — fit τ at FPIR=0.01 on fp32 val, measure realised FPIR on quantised test | realised FPIR staying within, say, ±20% relative of target across all precisions |
 | **H3** | The damage is **calibration, not ranking**: ECE and reliability degrade markedly while AUROC and mAP barely move | §7.2 — ECE/Brier/AURC alongside AUROC | ECE flat, or AUROC degrading in step with ECE |
-| **H4** | Storage precision (fp16 cache) is **negligible** next to compute precision, justifying `36` §9.2's default | §7.3 — fp32 compute × {fp32, fp16} storage | fp16 storage moving mAP above the fourth decimal |
+| **H4** | Storage precision (fp16 cache) is **negligible** next to compute precision, justifying the package's fp16 cache default | §7.3 — fp32 compute × {fp32, fp16} storage | fp16 storage moving mAP above the fourth decimal |
 | **H5** | Precision damage is **encoder-dependent**, and specifically worse for the agglomerative/distilled family than for supervised specialists | §7.1 across the C1 backbone set | a uniform degradation across encoder families |
 
 **Falsification bar.** H1 + H2 together are the paper. If H1 fails, the finding is bigger, not smaller — "quantised
@@ -262,7 +261,7 @@ currently invisible leak, and `report.check()`'s "these rows mix precision" warn
 
 ### 7.3 The control
 
-`storage_dtype ∈ {fp32, fp16}` at fixed fp32 compute isolates `36` §9.2's claim that fp16 storage costs less than the
+`storage_dtype ∈ {fp32, fp16}` at fixed fp32 compute isolates the package's claim that fp16 storage costs less than the
 fourth decimal. If that claim is wrong, the default changes and every cached feature set in the project is affected —
 which is why it is worth one row.
 
@@ -306,10 +305,8 @@ this is sweeps plus a GPU box), **Resources 5** (TRT needs hardware the project 
 
 ## 10. Sources
 
-- [37-eval-package-simple.md](37-eval-package-simple.md) §1 row 11, §5.4, §7.1–§7.2 — the one-arithmetic rule, the
-  description tree, and the value/context distinction §2 generalises
-- [36-eval-package-design.md](36-eval-package-design.md) §9.1–§9.2 — cache key derivation and the fp16 storage default
-  that §7.3 puts on trial
+- [`reidbench/docs/design.md`](../reidbench/docs/design.md) — the one-arithmetic rule, the description tree, the
+  value/context distinction §2 generalises, and the cache-key derivation and fp16 storage default §7.3 puts on trial
 - [35-frameworks-toolboxes.md](35-frameworks-toolboxes.md) §5–§6, §7.4 — who exports what, and the "ONNX first —
   BoxMOT proves the demand" line that makes §4's ordering a continuation rather than a new idea
 - [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) §3.2–§3.3 — the open-set metric set

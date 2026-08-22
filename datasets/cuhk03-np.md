@@ -10,7 +10,7 @@ confidence: |
   on 2026-08-21.
   medium — the classic-20-split structure is not restated in that README; nothing has been
   downloaded.
-related: [dataset-msmt17, dataset-market1501, reid-benchmarks-datasets, reid-c1-eval-readiness]
+related: [dataset-msmt17, dataset-market1501, reid-benchmarks-datasets, reid-reidbench-owed]
 ---
 
 # CUHK03-NP (detected)

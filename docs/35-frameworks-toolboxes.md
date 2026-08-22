@@ -342,7 +342,7 @@ Straight answer: **as a paper on its own it is weak; as the artefact of the pape
 
 **Recommendation:** build the C12 harness first as an installable package with a registry and a provenance index from day one, rather than as `eval.py` in this repo. Same work, and it is the only version of the work that ends up being the thing the field is missing.
 
-> **Now specified.** [36-eval-package-design.md](36-eval-package-design.md) turns §7.4–§7.6 into an implementable design: package name (`reidbench`), module tree, dataset-adapter and encoder contracts, the `ProtocolSpec` that encodes every knob in `gallery-and-evaluation-kb.md` §7.4, the open-set/calibration metric set, PDM + PyPI packaging, the test oracles, and milestones tied to C1/C3/C14.
+> **Now built.** §7.4–§7.6 became [`reidbench/`](../reidbench/) — MIT, PDM-packaged, torch-free core, with the retrieval / open-set / calibration metric set, dataset adapters over a normalised manifest, a content-addressed feature cache and a licence-provenance index. The package documents itself; [36-reidbench.md](36-reidbench.md) says which of its pages answers what, and [38-reidbench-owed.md](38-reidbench-owed.md) tracks what C1/C3/C16 still need from it.
 
 ### 7.6 Running it as a product alongside the main paper
 

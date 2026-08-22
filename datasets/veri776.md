@@ -9,7 +9,7 @@ confidence: |
   high — the layout, the index files and the published numbers are pinned by `reidbench`'s
   adapter, its `veri776/official@1` protocol and two tests that run against a real root.
   medium — the current access procedure; the request flow has not been re-run recently.
-related: [dataset-vehicleid, dataset-veri-wild, gallery-and-evaluation, reid-c1-eval-readiness]
+related: [dataset-vehicleid, dataset-veri-wild, gallery-and-evaluation, reid-reidbench-owed]
 ---
 
 # VeRi-776

@@ -26,9 +26,9 @@ on evaluation machinery. Both are blocked on **data** — four adapters that do 
 **two teacher checkpoints no backend can load**. The whole remaining library-side list is roughly 500 lines: one
 pooling mode, three `check` axes, a contract test, four adapters and nine provenance records.
 
-The package's own list of what is unbuilt lives in [`reidbench/docs/design.md`](../reidbench/docs/design.md)
+The package's own list of what is unbuilt lives in [[reidbench/docs/design.md](../reidbench/docs/design.md)](../reidbench/docs/design.md)
 ("what is not built yet"), and its validation debt in
-[`reidbench/docs/validation.md`](../reidbench/docs/validation.md) ("still owed"). **This page adds only the demand
+[[reidbench/docs/validation.md](../reidbench/docs/validation.md)](../reidbench/docs/validation.md) ("still owed"). **This page adds only the demand
 side:** which experiment forces each item, and in what order. Items nothing forces — `measure/cluster.py`, the
 tracker bridge, a `local:` backend — stay unbuilt on purpose.
 
@@ -105,7 +105,7 @@ therefore gets **no licence check at all**, and EUPE's record says `commercial_o
 
 ## 2. Validation debt, and which experiment it gates
 
-The list itself is [`reidbench/docs/validation.md`](../reidbench/docs/validation.md), under "still owed". What
+The list itself is [[reidbench/docs/validation.md](../reidbench/docs/validation.md)](../reidbench/docs/validation.md), under "still owed". What
 this page adds is who is stopped by each item:
 
 | Owed oracle | Gates |

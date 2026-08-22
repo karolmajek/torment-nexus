@@ -196,7 +196,7 @@ three consequences:
 | Cross-benchmark citation still works | Citing their thermal/infrared/sketch/group findings is unaffected — those tasks have clean lineage |
 | It constrains `reidbench` | Duke-derived data is denied in `reidbench` in code, with no override flag, so a hypothetical `vp-reid` adapter would have to deny 1 of its 10 tasks at load time. That is the denylist working as designed, and it is worth having the adapter's docstring say so |
 
-Note also **DeepChange** (cloth-changing task): `open-world-rejection-calibration-kb.md` §4.1 lists it among the
+Note also **DeepChange** (cloth-changing task): [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) §4.1 lists it among the
 csID-relevant sets; it has no Duke lineage, so it stays available.
 
 ### 5.2 It strengthens the ledger rather than threatening it
@@ -265,7 +265,7 @@ step replaced — and no model code enters the package, so the scope lock holds.
   [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) §1.3, §4.2 ·
   [foundation-model-reid-kb.md](foundation-model-reid-kb.md) §3.4 ·
   [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) TL;DR, §11 ·
-  [36-reidbench.md](36-reidbench.md) · [`reidbench/README.md`](../reidbench/README.md)
+  [36-reidbench.md](36-reidbench.md) · [[reidbench/README.md](../reidbench/README.md)](../reidbench/README.md)
 
 ## 9. Retrieval hints
 

@@ -305,7 +305,7 @@ The proposal assumed SoftwareX is **currently 200 pkt**. That does not survive c
 
 **Do it, but price it correctly and sequence it late.**
 
-1. **The library is worth building regardless of the paper** — [35-frameworks-toolboxes.md](35-frameworks-toolboxes.md) §7 argues it is the field's missing piece, and MIT licensing is already fixed in `AGENTS.md`. The publication is a by-product, not the justification.
+1. **The library is worth building regardless of the paper** — [35-frameworks-toolboxes.md](35-frameworks-toolboxes.md) §7 argues it is the field's missing piece, and MIT licensing is already fixed in [AGENTS.md](../AGENTS.md). The publication is a by-product, not the justification.
 2. **Do not let the OSP replace a research paper.** The 200-pkt route for this work is the *study*, not the tool: C3 + C12 as an evaluation-and-calibration paper in a 200-pkt venue, with the library released as its artifact. The OSP then adds a cheap 70–100 on top of that, from work already done.
 3. **Sequence: artifact → main paper → OSP.** SoftwareX wants a documented, reusable, archived release plus an impact argument; the main paper *is* the impact evidence. Submitting the OSP first inverts the dependency and weakens it.
 4. **Budget the APC** (≈ USD 760–950) and check the institutional agreement before committing — a free JOSS submission buys reputation but zero points, so the choice between them is a straight cash-for-points trade.

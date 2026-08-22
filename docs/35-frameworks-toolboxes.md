@@ -25,9 +25,9 @@ related: [reid-2026-index, reid-methods-catalog, matryoshka-representation-learn
 **Five findings, each a fact about the tooling rather than an opinion:**
 
 1. **The classic research-toolbox generation is frozen.** Torchreid's last *code* commit is 2023-02-08 (the 2026-01-09 push is a README edit). FastReID last pushed 2024-07-30, OpenUnReID 2021-06-14, mmtracking 2023-09-19. The only continuously-developed general ReID trainer with 4k+ stars, [layumi/Person_reID_baseline_pytorch](https://github.com/layumi/Person_reID_baseline_pytorch) (pushed 2026-07-18), **is not a library** — it is flat scripts (`train.py`, `test.py`, per-dataset `prepare_*.py`) at repo root, with no `setup.py`, no `pyproject.toml` and no package directory.
-2. **CLIP never landed in the toolboxes.** The dominant method family since 2023 (`30-methods-catalog.md` §3) lives only in single-paper repos. Torchreid ships 20 architectures, **all CNN** — no ViT, no CLIP. FastReID has a ViT backbone config but no vision-language init. BoxMOT *removed* the CLIP-ReID weights it shipped in v10 — its v22 registry contains no CLIP and no DINO entry.
-3. **Matryoshka / nested embeddings exist in the text-retrieval stack and nowhere in ReID.** `sentence-transformers` ships `MatryoshkaLoss`, `Matryoshka2dLoss` and `AdaptiveLayerLoss`; no ReID framework surveyed has any nesting primitive. This is the *tooling-side* confirmation of the gap `mrl-kb.md` §12.1 found in the literature — nobody has the code either.
-4. **Zero ReID frameworks expose an agglomerative VFM backbone** (C-RADIO, EUPE). Independently confirms `foundation-model-reid-kb.md` §6, and is exactly why C1 ([92-protocol-agglomerative-probe.md](92-protocol-agglomerative-probe.md)) has to wire the backbone by hand.
+2. **CLIP never landed in the toolboxes.** The dominant method family since 2023 ([30-methods-catalog.md](30-methods-catalog.md) §3) lives only in single-paper repos. Torchreid ships 20 architectures, **all CNN** — no ViT, no CLIP. FastReID has a ViT backbone config but no vision-language init. BoxMOT *removed* the CLIP-ReID weights it shipped in v10 — its v22 registry contains no CLIP and no DINO entry.
+3. **Matryoshka / nested embeddings exist in the text-retrieval stack and nowhere in ReID.** `sentence-transformers` ships `MatryoshkaLoss`, `Matryoshka2dLoss` and `AdaptiveLayerLoss`; no ReID framework surveyed has any nesting primitive. This is the *tooling-side* confirmation of the gap [mrl-kb.md](mrl-kb.md) §12.1 found in the literature — nobody has the code either.
+4. **Zero ReID frameworks expose an agglomerative VFM backbone** (C-RADIO, EUPE). Independently confirms [foundation-model-reid-kb.md](foundation-model-reid-kb.md) §6, and is exactly why C1 ([92-protocol-agglomerative-probe.md](92-protocol-agglomerative-probe.md)) has to wire the backbone by hand.
 
 5. **There is no "timm for ReID", and the reason is not laziness.** Neither flagship toolbox has a first-party PyPI package — FastReID has no `setup.py` at all, and the `torchreid` on PyPI is a *third-party repackage* (`torchreid-pip`, v0.2.5, October 2022, published by `kadirnar`, not by the author). The only pip-installable, registry-driven ReID library in the whole survey is BoxMOT's `ReIDModel` (v22) — AGPL-3.0 and tracker-scoped. §6.6 explains why the gap persists; **§7 specifies what filling it would take, and argues the genuinely missing piece is an evaluation package, not a model library.**
 
@@ -187,7 +187,7 @@ The columns are the axes this KB's research programme runs on.
 | **NVIDIA TAO ReID** | ❌ | ✅ via DeepStream / MDX | ✅ **first-class** — ONNX → TensorRT → DeepStream NvDCF / Metropolis MDX MTMC | ✅ ONNX / TensorRT | ✅ |
 | **wildlife-tools** | 🟡 calibrated score fusion (WildFusion) | ❌ | ❌ | ❌ | 🟡 |
 
-**Ultralytics' ReID design deserves a note**, because it is the cheapest ReID any deployment can get: `model: auto` reuses the *detector's own* backbone features as the appearance embedding, falling back to `yolo26n-cls.pt` when the detector exposes no compatible features. It costs almost nothing and is almost certainly weaker than a trained ReID head — but it is now the default path most practitioners hit, which matters when reading anyone's HOTA/IDF1 numbers (`reid-mot-metrics-kb.md`).
+**Ultralytics' ReID design deserves a note**, because it is the cheapest ReID any deployment can get: `model: auto` reuses the *detector's own* backbone features as the appearance embedding, falling back to `yolo26n-cls.pt` when the detector exposes no compatible features. It costs almost nothing and is almost certainly weaker than a trained ReID head — but it is now the default path most practitioners hit, which matters when reading anyone's HOTA/IDF1 numbers ([reid-mot-metrics-kb.md](reid-mot-metrics-kb.md)).
 
 ---
 
@@ -198,7 +198,7 @@ The columns are the axes this KB's research programme runs on.
 | **[sentence-transformers](https://github.com/huggingface/sentence-transformers)** | 19,019 | Apache-2.0 | 2026-08-19 | **The only maintained `MatryoshkaLoss`** (+ `Matryoshka2dLoss`, `AdaptiveLayerLoss`). Reference semantics for per-level weighting and truncation |
 | **[pytorch-metric-learning](https://github.com/KevinMusgrave/pytorch-metric-learning)** | 6,338 | MIT | 2025-08-17 | Modular losses / miners / samplers — the cleanest way to add a loss to a frozen toolbox's training loop |
 | **[open-metric-learning](https://github.com/OML-Team/open-metric-learning)** | 996 | Apache-2.0 | 2025-11-26 | Retrieval pipeline + validation protocol as a library, dataset-agnostic |
-| **[RADIO / AM-RADIO](https://github.com/NVlabs/RADIO)** | 1,923 | NOASSERTION — check terms | 2026-05-29 | The **agglomerative** backbone family (C-RADIO) that no ReID framework wraps — see `agglomerative-vfm-kb.md` |
+| **[RADIO / AM-RADIO](https://github.com/NVlabs/RADIO)** | 1,923 | NOASSERTION — check terms | 2026-05-29 | The **agglomerative** backbone family (C-RADIO) that no ReID framework wraps — see [agglomerative-vfm-kb.md](agglomerative-vfm-kb.md) |
 | **[DINOv3](https://github.com/facebookresearch/dinov3)** | 11,211 | NOASSERTION — Meta terms | 2026-07-15 | Strongest generic SSL features; the frozen-probe control in C1 |
 
 **Reading of this table:** every capability the flagship idea needs already exists in maintained code — just never in the same repo. The engineering task is composition, not invention.
@@ -221,7 +221,7 @@ The columns are the axes this KB's research programme runs on.
 | mmtracking | 2023-09 | ~3 |
 | FastReID | 2024-07 | ~2 |
 
-Consequence for anyone starting today: **a "standard" ReID codebase predates CLIP-ReID, ViT-scale training recipes, and every foundation model in `foundation-model-reid-kb.md`.** Numbers reproduced from these repos remain valid baselines — they are just baselines from a different era, and the era matters, because `60-finetuning-question.md` shows the interesting variance is now cross-domain, which these toolboxes were never built to measure.
+Consequence for anyone starting today: **a "standard" ReID codebase predates CLIP-ReID, ViT-scale training recipes, and every foundation model in [foundation-model-reid-kb.md](foundation-model-reid-kb.md).** Numbers reproduced from these repos remain valid baselines — they are just baselines from a different era, and the era matters, because [60-finetuning-question.md](60-finetuning-question.md) shows the interesting variance is now cross-domain, which these toolboxes were never built to measure.
 
 ### 6.2 CLIP support fragmented instead of consolidating
 
@@ -229,7 +229,7 @@ The expected path — CLIP-ReID absorbed into FastReID/Torchreid as a config —
 
 ### 6.3 MRL is absent from ReID tooling — the gap is real on both sides
 
-`mrl-kb.md` §12.1 claims no *published work* combines Matryoshka nesting with ReID. This file adds the independent tooling-side observation: **no ReID framework has a nesting primitive at all.** The nearest thing in the field is light-reid's coarse-to-fine *binary* codes — a hashing answer to the same "cheap first pass, expensive second pass" problem, worth citing as prior art in C16's related work precisely because it is *not* nesting: binary codes are a separate representation, whereas MRL prefixes are the same vector.
+[mrl-kb.md](mrl-kb.md) §12.1 claims no *published work* combines Matryoshka nesting with ReID. This file adds the independent tooling-side observation: **no ReID framework has a nesting primitive at all.** The nearest thing in the field is light-reid's coarse-to-fine *binary* codes — a hashing answer to the same "cheap first pass, expensive second pass" problem, worth citing as prior art in C16's related work precisely because it is *not* nesting: binary codes are a separate representation, whereas MRL prefixes are the same vector.
 
 ### 6.4 No framework can load an agglomerative backbone
 
@@ -277,7 +277,7 @@ The consequence is that the field's unit of reuse is **the fork, not the depende
 
 Five reasons, roughly in order of how binding they are:
 
-1. **Weights cannot be freely redistributed.** timm's entire model rests on "download ImageNet-pretrained weights, no questions". ReID weights are trained on datasets that are research-use-only, request-gated, or withdrawn outright — DukeMTMC and everything derived from it is the standing example in this repo's own README and in `50-benchmarks-datasets.md`. A hub of ReID checkpoints inherits every one of those restrictions. **This is the real blocker, and it is legal rather than technical.**
+1. **Weights cannot be freely redistributed.** timm's entire model rests on "download ImageNet-pretrained weights, no questions". ReID weights are trained on datasets that are research-use-only, request-gated, or withdrawn outright — DukeMTMC and everything derived from it is the standing example in this repo's own README and in [50-benchmarks-datasets.md](50-benchmarks-datasets.md). A hub of ReID checkpoints inherits every one of those restrictions. **This is the real blocker, and it is legal rather than technical.**
 2. **There is no task-neutral interface to standardise.** timm only had to agree on `forward(x) → logits`. ReID needs embedding + metric + gallery/query protocol + camera-aware exclusion rules; each repo bakes its own, so there is nothing to factor out until the *evaluation* is standardised first.
 3. **The incentive is a table row, not a package.** Papers are done when the number is published; the toolboxes that did exist froze the moment in-domain mAP saturated (§6.1).
 4. **The surviving maintainers are tracker vendors** whose business model is AGPL-3.0 plus commercial licences (§6.5). A permissive ReID library is not in their interest.
@@ -324,7 +324,7 @@ For frozen-encoder work — which is what C1 and most of the ledger actually nee
 |---|---|---|
 | **Registry** | `create_reid_model(name, pretrained=True)` wrapping timm / open_clip / DINOv3 / C-RADIO, plus the four ReID-specific checkpoints worth carrying (OSNet, CLIP-ReID, SOLIDER, MegaDescriptor) | Low — mostly delegation |
 | **Encoder contract** | `extract(images) → (N, D)` L2-normalised, optional `nesting=[8, 32, 128, 512]` truncation, deterministic preprocessing per checkpoint | Low, but the preprocessing table is where correctness lives |
-| **Eval** | mAP / CMC with camera-aware exclusion, the cross-domain matrix, open-set AUROC / FPR@95 / ECE (`open-world-rejection-calibration-kb.md`), tracklet aggregation | **The real work — and it is C12** |
+| **Eval** | mAP / CMC with camera-aware exclusion, the cross-domain matrix, open-set AUROC / FPR@95 / ECE ([open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md)), tracklet aggregation | **The real work — and it is C12** |
 | **Provenance index** | Per checkpoint: training data, licence, redistribution status, request-gate | Low effort, high differentiator; nothing else in the field has it |
 | **Export** | ONNX first — BoxMOT proves the demand | Low |
 | **Explicitly out of scope** | Training loops, dataset mirrors, trackers, SOTA chasing | — |
@@ -336,8 +336,8 @@ Licence must be MIT or Apache-2.0, or it lands in the same trap as BoxMOT for an
 Straight answer: **as a paper on its own it is weak; as the artefact of the papers already planned it is nearly free.**
 
 - The ledger already carries **C12 — open evaluation harness release** ([90-contribution-ledger-2026.md](90-contribution-ledger-2026.md)). Everything in §7.4 except the registry and the provenance index *is* C12. This is not a new eighteenth candidate; it is C12 with a packaging decision attached.
-- C1 (frozen agglomerative probes) and C16 (nested attribute embeddings) each need roughly the eval half anyway, and C1 needs the licence-provenance index regardless because `agglomerative-vfm-kb.md` flags exactly that friction for RADIO/EUPE weights.
-- Venue reality: a tools paper goes to SoftwareX / JOSS or a journal tools section, not to TCSVT on its own merits (`80-publication-venue-2024.md`). It earns its keep as the reproducibility asset attached to the flagship paper, which reviewers do reward, rather than as a submission.
+- C1 (frozen agglomerative probes) and C16 (nested attribute embeddings) each need roughly the eval half anyway, and C1 needs the licence-provenance index regardless because [agglomerative-vfm-kb.md](agglomerative-vfm-kb.md) flags exactly that friction for RADIO/EUPE weights.
+- Venue reality: a tools paper goes to SoftwareX / JOSS or a journal tools section, not to TCSVT on its own merits ([80-publication-venue-2024.md](80-publication-venue-2024.md)). It earns its keep as the reproducibility asset attached to the flagship paper, which reviewers do reward, rather than as a submission.
 - Risk to respect: a model zoo is unbounded maintenance. The scope-lock that keeps it alive is *"only the encoders our own papers evaluate"* — grow the registry when an experiment needs an entry, never speculatively.
 
 **Recommendation:** build the C12 harness first as an installable package with a registry and a provenance index from day one, rather than as `eval.py` in this repo. Same work, and it is the only version of the work that ends up being the thing the field is missing.
@@ -375,7 +375,7 @@ timeline
 | Item | Needed for |
 |---|---|
 | `pyproject.toml`, versioning, PyPI release | Being depended on rather than forked (§6.6) |
-| MIT licence (fixed in `AGENTS.md`) + per-checkpoint licence notes | §7.4 provenance index; unblocks reuse where BoxMOT cannot go |
+| MIT licence (fixed in [AGENTS.md](../AGENTS.md)) + per-checkpoint licence notes | §7.4 provenance index; unblocks reuse where BoxMOT cannot go |
 | Docs site + one runnable end-to-end example | OSP requirement, and the difference between adoption and another dead toolbox |
 | Tests + CI on the eval maths | The eval *is* the contribution; a wrong mAP silently invalidates everything downstream |
 | Zenodo archive + DOI | OSP requirement (permanent identifier), and makes the artefact citable |
@@ -424,10 +424,10 @@ Mapping the matrix onto the two active protocols:
 | Need | Nearest existing code | What still has to be written |
 |---|---|---|
 | CLIP ViT-B/16 ReID baseline (C16 base, per [91-protocol-nested-attribute-embeddings.md](91-protocol-nested-attribute-embeddings.md)) | CLIP-ReID repo (MIT, 2023) | Port to a current PyTorch — it predates the toolchain by three years |
-| Matryoshka loss over ReID embeddings | `sentence-transformers` `MatryoshkaLoss` | Port to the ID + triplet setting; per-level L2 renormalisation is the known silent bug (`mrl-kb.md` §3.4) |
+| Matryoshka loss over ReID embeddings | `sentence-transformers` `MatryoshkaLoss` | Port to the ID + triplet setting; per-level L2 renormalisation is the known silent bug ([mrl-kb.md](mrl-kb.md) §3.4) |
 | Attribute-block structure | Nothing — FastAttr is attribute *classification*, not block-structured embedding | Entirely new, which is the contribution |
 | Frozen agglomerative probes (C1) | RADIO + DINOv3 loaders, ArcFace via pytorch-metric-learning | The probe harness and eval protocol — no framework provides either |
-| Cross-domain eval (MSMT17↔Market + occlusion + cloth-change) | Torchreid has the dataset plumbing; OML has the retrieval-validation abstraction | Glue only; and per `50-benchmarks-datasets.md` §6, never Market alone |
+| Cross-domain eval (MSMT17↔Market + occlusion + cloth-change) | Torchreid has the dataset plumbing; OML has the retrieval-validation abstraction | Glue only; and per [50-benchmarks-datasets.md](50-benchmarks-datasets.md) §6, never Market alone |
 | MOT-side validation of the embedding | BoxMOT — MOT metrics built in since v22 | Watch the AGPL boundary if any of it ships |
 | A ReID package worth depending on (C12) | timm + open_clip for encoders; nothing for the protocol | The eval + provenance layer of §7.4 — the one piece of infrastructure that is also the field's missing library |
 
@@ -459,7 +459,7 @@ Mapping the matrix onto the two active protocols:
 
 **A ❌ means "not found where a user would look" — registry, model directory, or official docs.** It does not exclude an unmerged PR, a fork, or a config buried in `projects/`. Two cells are weaker than the rest and flagged inline: light-reid's mechanism (attributed from its ECCV 2020 paper, not re-read) and FastReID's full project list (README-derived — the README's changelog stops at 2021 while the repo pushed to 2024).
 
-**Not verified in this pass, deliberately:** benchmark accuracy per framework. Framework model zoos report Market-1501 in-domain numbers almost exclusively, which `50-benchmarks-datasets.md` §6 argues is the least informative protocol available. NVIDIA's published Swin-T 93.8 mAP / 95.6 Rank-1 and Swin-B 94.3 / 96.0 on Market-1501 are quoted here only as an illustration of that pattern, not as a cross-framework comparison.
+**Not verified in this pass, deliberately:** benchmark accuracy per framework. Framework model zoos report Market-1501 in-domain numbers almost exclusively, which [50-benchmarks-datasets.md](50-benchmarks-datasets.md) §6 argues is the least informative protocol available. NVIDIA's published Swin-T 93.8 mAP / 95.6 Rank-1 and Swin-B 94.3 / 96.0 on Market-1501 are quoted here only as an illustration of that pattern, not as a cross-framework comparison.
 
 ---
 

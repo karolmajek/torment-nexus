@@ -21,7 +21,7 @@ supersedes: null
 
 ## 0. One-paragraph summary
 
-Everybody exports. `35-frameworks-toolboxes.md` §5 records that BoxMOT ships ONNX/OpenVINO/TensorRT/TorchScript/TFLite
+Everybody exports. [35-frameworks-toolboxes.md](35-frameworks-toolboxes.md) §5 records that BoxMOT ships ONNX/OpenVINO/TensorRT/TorchScript/TFLite
 exporters, Ultralytics consumes `.engine` ReID encoders and ships `yolo26*-reid.onnx`, FastReID has FastRT, and NVIDIA
 TAO's whole path is **ONNX → TensorRT → DeepStream**. And everybody then quotes the fp32 paper number. Nobody publishes
 what the export cost them, because measuring it needs an evaluation harness that treats *runtime* and *precision* as
@@ -200,7 +200,7 @@ and this reduces to a robustness note in `reidbench`'s docs; that is the honest 
 because the recording machinery in §3 is worth having regardless and is already built.
 
 The one outcome that would make the whole thing uninteresting is H1 and H2 both holding trivially — everything
-robust, nothing to report. `open-world-rejection-calibration-kb.md` §3.2's evidence that operating points are fragile
+robust, nothing to report. [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) §3.2's evidence that operating points are fragile
 under far milder distribution shift is the reason to expect otherwise.
 
 ---
@@ -218,7 +218,7 @@ you have to babysit — and it is why the recording work had to come first.
 `splits.identity_disjoint` rewrite of Market for the open-set axis, seeded and saved so the exact split ships with
 the paper. VehicleID adds the "no camera rule, averaged over draws" case once its adapter exists.
 
-**Encoders.** The C1 set (`92-protocol-agglomerative-probe.md` §2) — C-RADIOv4, DINOv3, SigLIP2 — plus one supervised
+**Encoders.** The C1 set ([92-protocol-agglomerative-probe.md](92-protocol-agglomerative-probe.md) §2) — C-RADIOv4, DINOv3, SigLIP2 — plus one supervised
 specialist as a contrast for H5. This is deliberate reuse: the C1 features are already extracted and cached, so the
 marginal cost of this study is *re-extraction at other precisions*, nothing else.
 
@@ -305,7 +305,7 @@ this is sweeps plus a GPU box), **Resources 5** (TRT needs hardware the project 
 
 ## 10. Sources
 
-- [`reidbench/docs/design.md`](../reidbench/docs/design.md) — the one-arithmetic rule, the description tree, the
+- [[reidbench/docs/design.md](../reidbench/docs/design.md)](../reidbench/docs/design.md) — the one-arithmetic rule, the description tree, the
   value/context distinction §2 generalises, and the cache-key derivation and fp16 storage default §7.3 puts on trial
 - [35-frameworks-toolboxes.md](35-frameworks-toolboxes.md) §5–§6, §7.4 — who exports what, and the "ONNX first —
   BoxMOT proves the demand" line that makes §4's ordering a continuation rather than a new idea

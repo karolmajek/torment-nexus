@@ -56,7 +56,7 @@ open a second one.
 | **[92-protocol-agglomerative-probe.md](92-protocol-agglomerative-probe.md)** | Executable protocol for **C1** — which backbones, which probes, licensing gates, the teacher ablation | You are about to run the frozen-backbone study |
 | **[93-protocol-deployment-precision-fidelity.md](93-protocol-deployment-precision-fidelity.md)** | Protocol for **C18 (proposed)** — what ONNX/TensorRT/fp16/int8 export costs in mAP and, more importantly, in threshold placement; plus the scope decision that `reidbench` records throughput as data and never optimises it | You are wondering whether to chase fast inference, or what your quantised encoder is actually doing to your operating point |
 
-The 90s are the planning layer: **90 decides, 91–93 execute.** [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) supersedes the two earlier ledgers (`90-tcsvt-contribution-portfolio.md` and `90-paper-ideas-pareto-2026.md`); its §0 carries the crosswalk from the old idea-01…06 numbering to the canonical C-ids, and its §5 reconciles where the two disagreed.
+The 90s are the planning layer: **90 decides, 91–93 execute.** [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) is the single ledger; its §0 carries the crosswalk from the old idea-01…06 numbering to the canonical C-ids.
 
 ### 1.2 Topic KBs
 

@@ -39,10 +39,10 @@ wiki — an installer of `reidbench` can read neither this file nor any other pa
 
 | Question | Read |
 |---|---|
-| What is it, what does it refuse to be, what is supported today | [`reidbench/README.md`](../reidbench/README.md) |
-| The five values and four functions; the module graph; what each module refuses to do; replicability without a tracking service; the decisions that had two defensible answers; **what is not built yet** | [`reidbench/docs/design.md`](../reidbench/docs/design.md) |
-| The five oracles, the property and contract tests, and the validation still owed | [`reidbench/docs/validation.md`](../reidbench/docs/validation.md) |
-| What changed between versions | [`reidbench/CHANGELOG.md`](../reidbench/CHANGELOG.md) |
+| What is it, what does it refuse to be, what is supported today | [[reidbench/README.md](../reidbench/README.md)](../reidbench/README.md) |
+| The five values and four functions; the module graph; what each module refuses to do; replicability without a tracking service; the decisions that had two defensible answers; **what is not built yet** | [[reidbench/docs/design.md](../reidbench/docs/design.md)](../reidbench/docs/design.md) |
+| The five oracles, the property and contract tests, and the validation still owed | [[reidbench/docs/validation.md](../reidbench/docs/validation.md)](../reidbench/docs/validation.md) |
+| What changed between versions | [[reidbench/CHANGELOG.md](../reidbench/CHANGELOG.md)](../reidbench/CHANGELOG.md) |
 
 ---
 
@@ -57,4 +57,4 @@ wiki — an installer of `reidbench` can read neither this file nor any other pa
    with no override flag.
 
 Everything else — module boundaries, API shape, cache keying, protocol naming — is settled in the package's own
-`design.md`, at the place a maintainer will actually look.
+[design.md](../reidbench/docs/design.md), at the place a maintainer will actually look.

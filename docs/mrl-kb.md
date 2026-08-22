@@ -557,13 +557,13 @@ Four hypotheses, in rough order of expected payoff:
 1. **Quality-adaptive nesting (the DAME transplant).** Swap duration for crop quality. A tiny occluded detection carries less identity evidence than a clean full-body crop, so forcing both through 2048 dims mismatches capacity to evidence. DAME shows this framing works in the audio analogue and can be applied as fine-tuning on an existing encoder. **This is the most novel and best-motivated of the four.**
 2. **Two-tier association.** Intra-camera association over a small candidate set is easy; cross-camera matching over a full gallery is hard. Use a 64-dim prefix for the hot path, full width for cross-camera rerank. Near-free accuracy-wise, materially cheaper.
 3. **Retention tiering.** Long-term MTMC storage is linear in `d`. Nesting lets archived tracklets degrade gracefully instead of being dropped.
-4. **Hardness signal for free.** As in MRL–AC, the dimension at which a match becomes confident is a per-track difficulty estimate — a candidate flag for identity switches, which HOTA punishes hardest. See `reid-mot-metrics`.
+4. **Hardness signal for free.** As in MRL–AC, the dimension at which a match becomes confident is a per-track difficulty estimate — a candidate flag for identity switches, which HOTA punishes hardest. See [reid-mot-metrics](reid-mot-metrics-kb.md).
 
-**Backbone compatibility:** MRL is loss-level and architecture-agnostic, so it should attach to a CLIP-ReID-, SOLIDER-, or DINOv3-probe-style pipeline with no architectural cost — and §9.1 says a 10-epoch partial fine-tune recovers most of the benefit above 64 dims without retraining from scratch. See `foundation-model-reid` and `agglomerative-vfm`.
+**Backbone compatibility:** MRL is loss-level and architecture-agnostic, so it should attach to a CLIP-ReID-, SOLIDER-, or DINOv3-probe-style pipeline with no architectural cost — and §9.1 says a 10-epoch partial fine-tune recovers most of the benefit above 64 dims without retraining from scratch. See [foundation-model-reid](foundation-model-reid-kb.md) and [agglomerative-vfm](agglomerative-vfm-kb.md).
 
 ### 12.4 The open geometric question
 
-MRL nests *coordinates*; `halo-loss` argues embeddings naturally occupy a thin shell whose radius is dimension-dependent, and that fighting that geometry destroys capacity. **A prefix of a shell-resident 2048-dim vector is not obviously shell-resident in 64-dim.**
+MRL nests *coordinates*; [halo-loss](halo-loss-kb.md) argues embeddings naturally occupy a thin shell whose radius is dimension-dependent, and that fighting that geometry destroys capacity. **A prefix of a shell-resident 2048-dim vector is not obviously shell-resident in 64-dim.**
 
 Per-nesting-level renormalization (§3.4) is MRL's own patch for this class of problem, and MRL demonstrably works with normalized contrastive objectives. But combining MRL with HALO's radial regularizer would require the radial term computed **per nesting level with its own `D`** — the `volume_coeff = 0.5 − 1.0/D` term is dimension-dependent, so applying it once at full width would be wrong for every prefix. Untested as far as this KB knows.
 

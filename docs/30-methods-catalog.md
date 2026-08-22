@@ -81,7 +81,7 @@ L_supervised = L_ID  +  λ · L_triplet
 
 where `L_ID` is temperature-scaled cross-entropy over identity classes with learnable per-identity prototypes, and `L_triplet` enforces a margin α between positive and negative distances. This two-term recipe is remarkably stable across a decade of papers.
 
-> **Aside worth noting:** the `L_ID` term is exactly the unconstrained-dot-product softmax that the sibling KB `halo-loss` critiques for driving embedding-norm inflation and overconfidence. ReID is a plausible target for distance-based logits + an abstain class, and to this KB's knowledge nobody has tried it. See [70-open-problems-2026.md §3](70-open-problems-2026.md).
+> **Aside worth noting:** the `L_ID` term is exactly the unconstrained-dot-product softmax that the sibling KB [halo-loss](halo-loss-kb.md) critiques for driving embedding-norm inflation and overconfidence. ReID is a plausible target for distance-based logits + an abstain class, and to this KB's knowledge nobody has tried it. See [70-open-problems-2026.md §3](70-open-problems-2026.md).
 
 ---
 
@@ -235,7 +235,7 @@ Because full fine-tuning of a foundation backbone is often the binding cost cons
 | **Multi-measure similarity fusion** | Fixed-weight combination of several similarity cues, `S* = αS₁ + βS₂ + γS₃` |
 | **Query expansion / feature averaging over tracklets** | Free accuracy in video and MTMC settings |
 
-These belong to the same category as OpenOOD's "post-hoc methods": no retraining, plug into any existing model, and consequently the first thing to try. See sibling KB `openood-v1.5` §5 for the analogous argument in OOD detection.
+These belong to the same category as OpenOOD's "post-hoc methods": no retraining, plug into any existing model, and consequently the first thing to try. See sibling KB [openood-v1.5](openood-kb.md) §5 for the analogous argument in OOD detection.
 
 ---
 

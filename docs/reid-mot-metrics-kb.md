@@ -171,7 +171,7 @@ flowchart TD
 
 ## 8. Pitfalls
 
-- **Never tune thresholds on the test set.** Association gates, ReID distance cutoffs, and rejection thresholds are hyperparameters. Held-out validation splits exist for this. (Same discipline as the OpenOOD validation-split rule — see `openood-v1.5`.)
+- **Never tune thresholds on the test set.** Association gates, ReID distance cutoffs, and rejection thresholds are hyperparameters. Held-out validation splits exist for this. (Same discipline as the OpenOOD validation-split rule — see [openood-v1.5](openood-kb.md).)
 - **MOTA is not comparable across datasets.** It is normalised by GT count and dominated by detector recall.
 - **Raw ID-switch counts are meaningless in isolation** — always alongside a normalised metric.
 - **Public vs. private detections.** MOT17-style benchmarks distinguish these; comparing a private-detection tracker against public-detection baselines is not a valid comparison.
@@ -199,7 +199,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - MOTChallenge metric documentation — https://motchallenge.net/
 - AI City Challenge 2026 evaluation system (3D HOTA, mAP for text ReID) — https://www.aicitychallenge.org/2026-evaluation-system/
 - AnimalCLEF 2026 ARI protocol — https://www.imageclef.org/AnimalCLEF2026
-- Evaluation-discipline companion entry: `openood-v1.5` §6, §10
+- Evaluation-discipline companion entry: [openood-v1.5](openood-kb.md) §6, §10
 
 ---
 

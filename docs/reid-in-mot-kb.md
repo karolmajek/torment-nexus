@@ -225,8 +225,8 @@ flowchart LR
     FIX["Shared remedies:<br/>bounded distance-based scores,<br/>explicit abstain / reject option,<br/>threshold calibrated on a validation split,<br/>report FPR at fixed TPR — not just rank-1"]
 ```
 
-- See **`halo-loss`** for a distance-based logit formulation with a parameter-free abstain class — directly transferable to an open-set ReID head.
-- See **`openood-v1.5`** for evaluation discipline: never tune the rejection threshold on the test gallery, report an operating-point metric (FPR@95) alongside a threshold-free one (AUROC), and stratify near vs. far distractors. The near/far OOD split maps cleanly onto *hard distractor* vs. *easy distractor* identities.
+- See **[halo-loss](halo-loss-kb.md)** for a distance-based logit formulation with a parameter-free abstain class — directly transferable to an open-set ReID head.
+- See **[openood-v1.5](openood-kb.md)** for evaluation discipline: never tune the rejection threshold on the test gallery, report an operating-point metric (FPR@95) alongside a threshold-free one (AUROC), and stratify near vs. far distractors. The near/far OOD split maps cleanly onto *hard distractor* vs. *easy distractor* identities.
 
 ---
 
@@ -262,7 +262,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - AI City Challenge, 10th edition at ECCV 2026 — https://www.aicitychallenge.org/
 - MaCVi maritime tracking + ReID benchmarks — https://macvi.org/
 - SoccerNet sports tracking / game-state reconstruction — https://www.soccer-net.org/
-- Companion KB entries: `reid-mot-metrics`, `reid-tracking-challenges-2026h2`, `reid-tracking-datasets`
+- Companion KB entries: [reid-mot-metrics](reid-mot-metrics-kb.md), [reid-tracking-challenges-2026h2](reid-tracking-challenges-2026h2-kb.md), [reid-tracking-datasets](reid-tracking-datasets-kb.md)
 
 ---
 

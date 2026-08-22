@@ -244,7 +244,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - MaCVi dataset index (SeaDronesSee, LaRS, BoaTrack) — https://macvi.org/dataset
 - SoccerNet datasets and dev kits — https://www.soccer-net.org/
 - AI City Challenge dataset access — https://www.aicitychallenge.org/ai-city-challenge-dataset-access/
-- Companion KB entries: `reid-in-mot`, `reid-mot-metrics`, `reid-tracking-challenges-2026h2`
+- Companion KB entries: [reid-in-mot](reid-in-mot-kb.md), [reid-mot-metrics](reid-mot-metrics-kb.md), [reid-tracking-challenges-2026h2](reid-tracking-challenges-2026h2-kb.md)
 
 ---
 

@@ -44,7 +44,7 @@ Three things make it relevant to this project:
 | Published numbers include offline tuning unavailable live | SOMA restricts itself to online-only, no interpolation, no per-sequence tuning | Self-imposed constraint, verifiable from the code |
 | Amodal boxes serve association, not reusable detection | Amodal box synthesis kept internal, at token level | Design argument, not measured |
 
-This is the same complaint that appears in `reid-mot-metrics` and `reid-open-problems-2026` §7 (*evaluation that predicts deployment*), arrived at independently from an engineering direction rather than an academic one.
+This is the same complaint that appears in [reid-mot-metrics](reid-mot-metrics-kb.md) and [reid-open-problems-2026](70-open-problems-2026.md) §7 (*evaluation that predicts deployment*), arrived at independently from an engineering direction rather than an academic one.
 
 ---
 
@@ -65,7 +65,7 @@ flowchart TD
     class P1,P2,P3,P4 leaf
 ```
 
-Axiom 1 is the interesting one for us: it is the explicit opposite of the "one big foundation embedding" direction in `foundation-model-reid` and `agglomerative-vfm`. SOMA argues that several cheap, partly-independent cues beat one expensive cue at fixed latency.
+Axiom 1 is the interesting one for us: it is the explicit opposite of the "one big foundation embedding" direction in [foundation-model-reid](foundation-model-reid-kb.md) and [agglomerative-vfm](agglomerative-vfm-kb.md). SOMA argues that several cheap, partly-independent cues beat one expensive cue at fixed latency.
 
 **The 2026-08 numbers argue against SOMA's own axiom 1.** Structure-only SOMA scores **29.2 HOTA against BoostTrack++'s 28.9** — a tie, from a far more elaborate perception stack. Every point of separation arrives with the crop embedder (29.2 -> 37.4). Read strictly, the repository demonstrates that *many weak structural channels roughly match a good motion tracker*, and that the expensive appearance channel is what actually buys identity — the opposite of what the axiom claims. What survives is the weaker and still-interesting version: structure is what keeps a track *alive* across the gap, and the embedding is what *closes* it (§4.4).
 
@@ -350,7 +350,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - PersonViT — https://arxiv.org/abs/2408.05398
 - OSNet-AIN — https://arxiv.org/abs/1910.06827
 - CrowdTrack — the benchmark SOMA evaluates on; verify split definitions at source before quoting
-- Companion entries: `reid-in-mot`, `reid-mot-metrics`, `reid-tracking-datasets`, `agglomerative-vfm`, `reid-open-problems-2026`
+- Companion entries: [reid-in-mot](reid-in-mot-kb.md), [reid-mot-metrics](reid-mot-metrics-kb.md), [reid-tracking-datasets](reid-tracking-datasets-kb.md), [agglomerative-vfm](agglomerative-vfm-kb.md), [reid-open-problems-2026](70-open-problems-2026.md)
 
 ---
 

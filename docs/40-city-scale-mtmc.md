@@ -197,7 +197,7 @@ The task: retrieve a person from a camera network using a natural-language descr
 
 Metric: mAP. Submission is a top-10 ranked image list per query.
 
-**Note the protocol discipline** — the organisers explicitly prohibit any use of the test distribution during training, including as a validation set without labels, and including for threshold tuning, ensemble selection, pseudo-labelling, or post-processing adjustment. This mirrors OpenOOD's central pitfall warning about tuning on test data (see sibling KB `openood-v1.5` §10) and is the correct default for any benchmark you build yourself.
+**Note the protocol discipline** — the organisers explicitly prohibit any use of the test distribution during training, including as a validation set without labels, and including for threshold tuning, ensemble selection, pseudo-labelling, or post-processing adjustment. This mirrors OpenOOD's central pitfall warning about tuning on test data (see sibling KB [openood-v1.5](openood-kb.md) §10) and is the correct default for any benchmark you build yourself.
 
 ---
 

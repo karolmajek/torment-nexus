@@ -71,8 +71,8 @@ flowchart LR
 
 **The adjacent toolkit that has not crossed over.** Two sibling KBs in this collection contain most of what is missing:
 
-- `openood-v1.5` — a standardised protocol for exactly this: near-OOD vs far-OOD stratification, FPR@95 as the operating-point metric, dedicated validation splits so thresholds are never tuned on test data, and the finding that no scoring function wins across settings. Its **csID** concept (covariate-shifted in-distribution: corrupted or restyled but still a known identity, which must be *accepted*) is precisely the ReID situation of a known person under new lighting or a new camera — and ReID has no name for it.
-- `halo-loss` — a drop-in replacement for the ID cross-entropy that ReID universally uses. It swaps unconstrained dot-product logits for distance-based RBF logits, adds a **parameter-free abstain class pinned to the origin**, and reports roughly 5× lower calibration error and about half the OOD false-positive rate at accuracy parity, with zero extra parameters or compute. Its diagnosis — that softmax's cheapest path to low loss is inflating feature magnitude, producing overconfident, radially exploded embeddings — describes the standard ReID training objective exactly.
+- [openood-v1.5](openood-kb.md) — a standardised protocol for exactly this: near-OOD vs far-OOD stratification, FPR@95 as the operating-point metric, dedicated validation splits so thresholds are never tuned on test data, and the finding that no scoring function wins across settings. Its **csID** concept (covariate-shifted in-distribution: corrupted or restyled but still a known identity, which must be *accepted*) is precisely the ReID situation of a known person under new lighting or a new camera — and ReID has no name for it.
+- [halo-loss](halo-loss-kb.md) — a drop-in replacement for the ID cross-entropy that ReID universally uses. It swaps unconstrained dot-product logits for distance-based RBF logits, adds a **parameter-free abstain class pinned to the origin**, and reports roughly 5× lower calibration error and about half the OOD false-positive rate at accuracy parity, with zero extra parameters or compute. Its diagnosis — that softmax's cheapest path to low loss is inflating feature magnitude, producing overconfident, radially exploded embeddings — describes the standard ReID training objective exactly.
 
 **Concrete, apparently untried experiment:** replace `L_ID` in the standard `L_ID + λ·L_triplet` ReID recipe with a distance-based loss carrying an abstain class, and evaluate not on mAP but on FPR@95 for the "this person is not in the gallery" decision. If the calibration gains transfer, the practical impact on deployed false-match rates would be larger than another point of mAP. Caveat: HALO is a single-author research prototype validated only at ResNet-18/CIFAR scale, so this is a hypothesis, not a recommendation.
 
@@ -219,7 +219,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - ReID-R reasoning paradigm — https://arxiv.org/abs/2604.19218
 - TVRID privacy competition — https://arxiv.org/abs/2605.04977
 - Lifelong ReID: DKC (CVPR 2025), continual compatible representation (CVPR 2024), LSTKC+ (TPAMI 2025)
-- Calibration and rejection machinery: sibling KBs `halo-loss` (https://pisoni.ai/posts/halo/) and `openood-v1.5` (https://arxiv.org/abs/2306.09301)
+- Calibration and rejection machinery: sibling KBs [halo-loss](halo-loss-kb.md) (https://pisoni.ai/posts/halo/) and [openood-v1.5](openood-kb.md) (https://arxiv.org/abs/2306.09301)
 
 ## 12. Retrieval hints
 

@@ -194,7 +194,7 @@ For a surveillance-like deployment with unknown or partially known target sites:
 6. **Calibrate a threshold** on held-out data from the actual site, and report performance *at that threshold*, not just mAP.
 7. **If inside a tracker**: fix calibration, camera topology and detection first. Measure end-to-end HOTA, not mAP.
 
-**Step 6 is the one everyone skips.** The ReID literature reports ranking quality; deployments run at operating points. The tooling for this exists in the OOD-detection community — FPR@95-style operating-point reporting and calibrated, distance-based confidences with an explicit abstain option (see sibling KBs `openood-v1.5` and `halo-loss`) — and has essentially not crossed over into ReID.
+**Step 6 is the one everyone skips.** The ReID literature reports ranking quality; deployments run at operating points. The tooling for this exists in the OOD-detection community — FPR@95-style operating-point reporting and calibrated, distance-based confidences with an explicit abstain option (see sibling KBs [openood-v1.5](openood-kb.md) and [halo-loss](halo-loss-kb.md)) — and has essentially not crossed over into ReID.
 
 ---
 
@@ -216,7 +216,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - VReID-XFD challenge (re-ranking gain, aerial ceiling) — https://arxiv.org/abs/2601.01312
 - PEFT in ReID — MambaPro https://arxiv.org/abs/2412.10707 · PS-ReID https://arxiv.org/abs/2503.21595
 - ReMix (heterogeneous training data) — https://arxiv.org/abs/2410.21938
-- Calibration/rejection machinery: sibling KBs `halo-loss`, `openood-v1.5`
+- Calibration/rejection machinery: sibling KBs [halo-loss](halo-loss-kb.md), [openood-v1.5](openood-kb.md)
 
 ## 11. Retrieval hints
 

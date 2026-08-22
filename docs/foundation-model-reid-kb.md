@@ -51,7 +51,7 @@ flowchart LR
     class R1,R2,R3 b
 ```
 
-This is the same invariance-vs-discrimination tension described in `reid-in-mot` §3 for joint detection-and-embedding heads, displaced one level up into the pretraining objective.
+This is the same invariance-vs-discrimination tension described in [reid-in-mot](reid-in-mot-kb.md) §3 for joint detection-and-embedding heads, displaced one level up into the pretraining objective.
 
 ---
 
@@ -196,7 +196,7 @@ flowchart TD
 
 ## 6. The agglomerative gap
 
-**Agglomerative vision foundation models** — multi-teacher distillation into one student — are the current frontier of general-purpose backbones. See the companion entry `agglomerative-vfm` for the model family itself.
+**Agglomerative vision foundation models** — multi-teacher distillation into one student — are the current frontier of general-purpose backbones. See the companion entry [agglomerative-vfm](agglomerative-vfm-kb.md) for the model family itself.
 
 ### Why they should be excellent for ReID
 
@@ -243,7 +243,7 @@ As of **18 Aug 2026**, targeted search surfaces **no published work applying the
 A clean, publishable study:
 
 1. **Frozen linear/ArcFace probe** across: DINOv3, SigLIP2, PEcore, C-RADIOv4-{L,SO400M,H}, EUPE-B, DUNE, plus the human-centric line (SOLIDER, HAP) as specialist baselines.
-2. **Evaluate in-domain and cross-domain** — MSMT17 → Market-1501 and back, plus an occlusion set and a cloth-changing set. Report the *drop*, not just the peak (per `reid-mot-metrics` and the §4 finding).
+2. **Evaluate in-domain and cross-domain** — MSMT17 → Market-1501 and back, plus an occlusion set and a cloth-changing set. Report the *drop*, not just the peak (per [reid-mot-metrics](reid-mot-metrics-kb.md) and the §4 finding).
 3. **Ablate the teachers.** Does removing SAM3 hurt occluded ReID? Does SigLIP2 carry text-to-image capability through the distillation?
 4. **Test the joint-backbone collapse claim** from §3.3 — is an agglomerated single backbone better than a naive two-backbone fusion at matched FLOPs? Theory says yes; nobody has checked.
 5. **Measure the MOT-integration win.** One backbone for detection + ReID + masks vs. the standard SDE two-pass setup, at matched HOTA.
@@ -256,9 +256,9 @@ Nobody appears to have published this. It is cheap — frozen probes, public dat
 
 Foundation-model ReID inherits a problem the retrieval literature mostly ignores: **a cosine-similarity gallery search always returns a rank-1**. Bigger encoders make the wrong rank-1 *more* confident, not less.
 
-`openood-v1.5` already flags that ViTs, Swin, zero-shot CLIP, and DINOv2 linear probes are **not well served by OOD scoring functions designed around ResNet feature geometry** — v1.5 lists this as an open direction. That finding transfers directly: an OOD/reject threshold tuned for a ResNet ReID model should not be assumed valid for a DINOv3 or C-RADIOv4 embedding space.
+[openood-v1.5](openood-kb.md) already flags that ViTs, Swin, zero-shot CLIP, and DINOv2 linear probes are **not well served by OOD scoring functions designed around ResNet feature geometry** — v1.5 lists this as an open direction. That finding transfers directly: an OOD/reject threshold tuned for a ResNet ReID model should not be assumed valid for a DINOv3 or C-RADIOv4 embedding space.
 
-`halo-loss` offers a candidate head: distance-based logits with a parameter-free abstain class pinned to the origin, plus a closed-form rejection bias. Pairing a frozen agglomerative backbone with a HALO-style open-set head is a second unrun experiment, and it addresses the deployment problem — "not in gallery" — that rank-1 mAP never measures.
+[halo-loss](halo-loss-kb.md) offers a candidate head: distance-based logits with a parameter-free abstain class pinned to the origin, plus a closed-form rejection bias. Pairing a frozen agglomerative backbone with a HALO-style open-set head is a second unrun experiment, and it addresses the deployment problem — "not in gallery" — that rank-1 mAP never measures.
 
 ---
 
@@ -298,7 +298,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - *One for All: A Review of Large Pre-training Models for Re-Identification* (WWW 2025 companion) · tracker https://github.com/Vill-Lab/Awesome-Evolving-ReID
 - *Transformer for Object Re-Identification: A Survey* — https://arxiv.org/abs/2401.06960
 - S3-CLIP, VReID-XFD challenge @ WACV 2026 — https://arxiv.org/abs/2601.08807
-- Companion entries: `agglomerative-vfm`, `reid-in-mot`, `reid-mot-metrics`, `openood-v1.5`, `halo-loss`
+- Companion entries: [agglomerative-vfm](agglomerative-vfm-kb.md), [reid-in-mot](reid-in-mot-kb.md), [reid-mot-metrics](reid-mot-metrics-kb.md), [openood-v1.5](openood-kb.md), [halo-loss](halo-loss-kb.md)
 
 ---
 

@@ -44,7 +44,7 @@ Rank-k = fraction of queries with a correct match in Top-k
 MOTA   = 1 − Σ_t (FN_t + FP_t + IDSW_t) / Σ_t GT_t
 ```
 
-**Metrics that are conspicuously absent from ReID practice:** any calibration measure (ECE) and any operating-point false-positive measure (FPR@95). Both are standard in OOD detection — see sibling KBs `openood-v1.5` and `halo-loss`. A deployed ReID system runs at a *threshold*, and the literature almost never reports what happens there.
+**Metrics that are conspicuously absent from ReID practice:** any calibration measure (ECE) and any operating-point false-positive measure (FPR@95). Both are standard in OOD detection — see sibling KBs [openood-v1.5](openood-kb.md) and [halo-loss](halo-loss-kb.md). A deployed ReID system runs at a *threshold*, and the literature almost never reports what happens there.
 
 ---
 
@@ -163,7 +163,7 @@ See [40-city-scale-mtmc.md §7](40-city-scale-mtmc.md). Key points: hidden test 
 
 ## 6. Evaluation pitfalls
 
-Adapted to ReID, with the OpenOOD pitfall list (sibling KB `openood-v1.5` §10) as the template — most of its warnings transfer directly.
+Adapted to ReID, with the OpenOOD pitfall list (sibling KB [openood-v1.5](openood-kb.md) §10) as the template — most of its warnings transfer directly.
 
 | Pitfall | Why it bites |
 |---|---|
@@ -224,7 +224,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - DG protocols — https://arxiv.org/abs/2506.12413
 - MVMC dataset survey tables — https://arxiv.org/abs/2510.09731
 - Public dataset index — https://github.com/NEU-Gou/awesome-reid-dataset
-- Evaluation-pitfall template — OpenOOD v1.5, https://arxiv.org/abs/2306.09301 (see sibling KB `openood-v1.5`)
+- Evaluation-pitfall template — OpenOOD v1.5, https://arxiv.org/abs/2306.09301 (see sibling KB [openood-v1.5](openood-kb.md))
 
 ## 10. Retrieval hints
 

@@ -59,7 +59,7 @@ There is **no single 2025/2026 survey that covers ReID as a whole**. What exists
 | Survey | Year | Root axis | Taxonomy |
 |---|---|---|---|
 | ⭐ **Multi Camera Connected Vision System with Multi View Analytics: A Comprehensive Survey** (Munsif, Ahmad, Ali, Ullah, Hussain, Baik — Sejong University) — arXiv 2510.09731 | Oct 2025 | system task | **MVMC tracking** · **MVMC re-identification** · **MVMC action understanding** · **MVMC integrated approaches**. Claims to be the first to unify all three tasks into one framework. Also covers lifelong learning, privacy, federated learning as emerging axes |
-| **Generalized OOD detection survey** (Yang et al.) | — | rejection | Not a ReID survey, but the taxonomy paper that unifies OOD detection / open-set recognition / novelty detection. Relevant because ReID's open-world problem is that literature's core problem — see sibling KB `openood-v1.5` |
+| **Generalized OOD detection survey** (Yang et al.) | — | rejection | Not a ReID survey, but the taxonomy paper that unifies OOD detection / open-set recognition / novelty detection. Relevant because ReID's open-world problem is that literature's core problem — see sibling KB [openood-v1.5](openood-kb.md) |
 
 ---
 
@@ -143,7 +143,7 @@ Retrieval surveys assume detection and tracking are solved and upstream. The MVM
 
 | Gap | Why it matters |
 |---|---|
-| **Calibration and rejection** | No ReID survey treats confidence calibration or "none of the above" as a first-class topic, despite every deployed system needing a threshold. The machinery exists next door — see sibling KBs `halo-loss` (parameter-free abstain class, ~5× lower ECE) and `openood-v1.5` (FPR@95 as the operating-point metric) |
+| **Calibration and rejection** | No ReID survey treats confidence calibration or "none of the above" as a first-class topic, despite every deployed system needing a threshold. The machinery exists next door — see sibling KBs [halo-loss](halo-loss-kb.md) (parameter-free abstain class, ~5× lower ECE) and [openood-v1.5](openood-kb.md) (FPR@95 as the operating-point metric) |
 | **Reasoning-driven ReID** | Emerged Apr 2026 (ReID-R); too new for any survey |
 | **Omni-modal ReID** | ORBench/ReID5o is NeurIPS 2025; no survey has absorbed it. The nearest thing to coverage is a benchmark, not a survey — MMReID-Bench/VP-ReID's ten-modality MLLM evaluation ([mmreid-bench-kb.md](mmreid-bench-kb.md)) |
 | **MLLMs as matchers** | Measured for the first time in Aug–Nov 2025 (arXiv 2508.06908); no survey covers the regime, and its thermal/infrared collapse is unexplained |

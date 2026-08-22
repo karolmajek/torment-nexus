@@ -17,7 +17,7 @@ Published ReID taxonomies conflict because each picks a different **root** and n
 
 None of them is wrong. They are projections of a **product space** onto different faces. This note proposes the product space itself: **six orthogonal axes**, any point in which is a valid ReID problem instance.
 
-> **The practical payoff:** a method is only comparable to another method if they agree on *all six* axes. Most apparent SOTA disputes in the literature are actually axis mismatches. (Compare: OpenOOD's "no single winner" finding, which is the same phenomenon in OOD detection — see sibling KB `openood-v1.5`.)
+> **The practical payoff:** a method is only comparable to another method if they agree on *all six* axes. Most apparent SOTA disputes in the literature are actually axis mismatches. (Compare: OpenOOD's "no single winner" finding, which is the same phenomenon in OOD detection — see sibling KB [openood-v1.5](openood-kb.md).)
 
 ---
 
@@ -122,7 +122,7 @@ This axis is where 2026 research concentrates. DG-ReID is the setting the DG sur
 | **Embedding inside MTMC/MCMT** | Cross-camera association stability over time | HOTA (3D HOTA), IDF1, MOTA |
 | **Open-world / abstain-capable** | Rejecting "none of these" | FPR@95-style operating points; largely *absent* from ReID practice |
 
-**The biggest blind spot in the taxonomy.** Axis F's third value is nearly empty in the ReID literature. ReID is almost always evaluated as *closed-set ranking* — the correct answer is assumed to be in the gallery. Real camera networks are open-world: most people entering camera B were never in camera A. Calibration and rejection are treated as first-class in the OOD-detection community (see sibling KBs `openood-v1.5` and `halo-loss`, where an abstain class and calibrated confidence are the core object of study) and are almost entirely missing here. See [70-open-problems-2026.md §3](70-open-problems-2026.md).
+**The biggest blind spot in the taxonomy.** Axis F's third value is nearly empty in the ReID literature. ReID is almost always evaluated as *closed-set ranking* — the correct answer is assumed to be in the gallery. Real camera networks are open-world: most people entering camera B were never in camera A. Calibration and rejection are treated as first-class in the OOD-detection community (see sibling KBs [openood-v1.5](openood-kb.md) and [halo-loss](halo-loss-kb.md), where an abstain class and calibrated confidence are the core object of study) and are almost entirely missing here. See [70-open-problems-2026.md §3](70-open-problems-2026.md).
 
 ---
 

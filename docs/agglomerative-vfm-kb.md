@@ -229,7 +229,7 @@ The benchmark suite this family reports is remarkably consistent — and remarka
 |---|---|
 | **Instance-level discrimination** | Retrieval, ReID, individual identification. Category semantics ≠ instance identity. |
 | **Fine-grained / long-tail retrieval** | The tail is where distillation loss is least constrained. |
-| **Calibration and OOD rejection** | See `openood-v1.5`: foundation-model feature geometry is not well served by ResNet-era scoring functions, and v1.5 flags this as open. Nobody reports ECE or AUROC for these backbones. |
+| **Calibration and OOD rejection** | See [openood-v1.5](openood-kb.md): foundation-model feature geometry is not well served by ResNet-era scoring functions, and v1.5 flags this as open. Nobody reports ECE or AUROC for these backbones. |
 | **Temporal consistency** | Tracking needs frame-to-frame embedding stability, not just per-frame quality. |
 | **Small-crop behaviour** | Stochastic resolution training targets this, but it is validated on segmentation, not on 128×64 person crops. |
 
@@ -268,7 +268,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - EUPE (Meta, Mar 2026) — https://arxiv.org/abs/2603.22387 · https://github.com/facebookresearch/EUPE
 - SigLIP 2 (Google DeepMind) — https://arxiv.org/abs/2502.14786
 - AMoE / agglomerative MoE — https://arxiv.org/abs/2512.20157
-- Companion entries: `foundation-model-reid`, `reid-in-mot`, `openood-v1.5`
+- Companion entries: [foundation-model-reid](foundation-model-reid-kb.md), [reid-in-mot](reid-in-mot-kb.md), [openood-v1.5](openood-kb.md)
 
 ---
 

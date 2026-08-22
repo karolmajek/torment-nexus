@@ -76,7 +76,7 @@ Standard ReID benchmarks score none of the three. They score *ranking quality gi
 
 When someone says a dataset is "open-world", check which of the three they mean. The OWD benchmark is a good dataset and its name promises a property it does not test.
 
-The OOD literature has its own vocabulary that maps cleanly onto ReID, and the mapping is the useful part - see the sibling KB `openood-v1.5`:
+The OOD literature has its own vocabulary that maps cleanly onto ReID, and the mapping is the useful part - see the sibling KB [openood-v1.5](openood-kb.md):
 
 | OOD term | ReID equivalent | Correct system response |
 |---|---|---|
@@ -192,7 +192,7 @@ flowchart LR
 | 2018-2022 | Mahalanobis, ODIN, energy, ReAct, KNN-OOD, ViM, GEN | Post-hoc scores, no retraining - the cheapest possible ReID experiment |
 | 2018 | **Reducing Network Agnostophobia** (Objectosphere, entropic open-set loss) | Trains *unknown* samples to low feature magnitude and high entropy. The direct ancestor of every abstain-class idea |
 | 2021 | PROSER, ARPL, OpenGAN | Placeholder classes, reciprocal points, generated unknowns |
-| 2022 | **LogitNorm** (ICML) | Diagnoses that logit norm grows during training and causes overconfidence; fixes it by constraining norm. Reduces FPR95 by up to 42.3%. The exact pathology `halo-loss` describes |
+| 2022 | **LogitNorm** (ICML) | Diagnoses that logit norm grows during training and causes overconfidence; fixes it by constraining norm. Reduces FPR95 by up to 42.3%. The exact pathology [halo-loss](halo-loss-kb.md) describes |
 | 2023 | **CIDER** (ICLR) | Hyperspherical embeddings with dispersion + compactness losses for OOD. This is *metric learning*, i.e. the thing ReID already does - the closest methodological neighbour |
 | 2023 | **OpenOOD v1.5** | Fixed splits, validation-only threshold tuning, near/far stratification, FPR@95, the "no single winner" finding |
 | 2024-2025 | OSR surveys, incl. VLM-guided rejection | Current-state maps; note the 2025 Applied Intelligence survey covers vision-language-model-guided OSR |
@@ -301,7 +301,7 @@ flowchart TD
 | **AnimalCLEF 2025 / 2026** | Yes - leaderboard key | New individuals in the query set; BAKS x BAUS, then clustering ARI in 2026 |
 | **TAO-OW** | Yes, at tracking level | Unknown object categories, OWTA metric |
 | **OWD** (IJCV 2024) | No | "Open-world" in the diversity sense - streets, malls, seasons, day/night, faces obscured |
-| **MOT17 / MOT20 / DanceTrack / CrowdTrack** | Implicitly | Every track birth is an open-set decision; scored only indirectly through IDF1/HOTA. See `soma` for the long-gap re-attachment view |
+| **MOT17 / MOT20 / DanceTrack / CrowdTrack** | Implicitly | Every track birth is an open-set decision; scored only indirectly through IDF1/HOTA. See [soma](soma-kb.md) for the long-gap re-attachment view |
 
 ### 4.2 Recipe: build an open-set split from any closed-set ReID dataset
 
@@ -346,7 +346,7 @@ Three details that decide whether the benchmark is honest:
 
 The near-universal recipe is `L = L_ID (cross-entropy over training identities) + lambda * L_triplet`. Three properties of it fight rejection:
 
-1. **Unbounded logits.** Softmax's cheapest route to low loss is inflating feature/logit magnitude. LogitNorm demonstrates the mechanism and shows constraining logit norm cuts FPR95 by up to 42.3%. `halo-loss` makes the same diagnosis for radially exploded embeddings.
+1. **Unbounded logits.** Softmax's cheapest route to low loss is inflating feature/logit magnitude. LogitNorm demonstrates the mechanism and shows constraining logit norm cuts FPR95 by up to 42.3%. [halo-loss](halo-loss-kb.md) makes the same diagnosis for radially exploded embeddings.
 2. **No negative space.** Every training sample belongs to some identity. The model is never shown "none of these" and has no output for it.
 3. **Symmetric treatment of genuine and imposter scores.** Triplet and softmax care about *relative order*, not about the absolute magnitude of the worst imposter. The ECCV 2024 open-set biometrics paper attacks exactly this: what matters open-set is the **maximum imposter score per probe**, and no standard loss minimizes it.
 
@@ -392,7 +392,7 @@ flowchart TD
 | **Margin softmax** | ArcFace, CosFace, CircleLoss | bounded, angular scores; better geometry | drop-in loss swap | Partially - bounded cosine scores calibrate better than dot products, but there is still no reject output |
 | **Norm control** | **LogitNorm** | constrains logit norm during training, decoupling magnitude from confidence | drop-in loss swap | Yes, and the pathology it fixes is present in every ID-cross-entropy ReID model |
 | **Hyperspherical dispersion/compactness** | **CIDER** | explicit inter-prototype dispersion + intra-class compactness | training change | Yes, and it is the closest neighbour methodologically: ReID already learns hyperspherical embeddings, just without the dispersion objective |
-| **Distance-based logits + abstain** | **HALO**, DUQ | RBF logits over prototypes; parameter-free abstain class at the origin; ~5x lower calibration error reported | drop-in head swap, no extra params | Hypothesis, untried in ReID. Caveat: HALO is validated at ResNet-18/CIFAR scale only - see `halo-loss` |
+| **Distance-based logits + abstain** | **HALO**, DUQ | RBF logits over prototypes; parameter-free abstain class at the origin; ~5x lower calibration error reported | drop-in head swap, no extra params | Hypothesis, untried in ReID. Caveat: HALO is validated at ResNet-18/CIFAR scale only - see [halo-loss](halo-loss-kb.md) |
 | **Placeholders / selective heads** | PROSER, SelectiveNet, deep gamblers, Chow's rule | reserves capacity for "unknown" or learns an explicit abstain gate | training change | Plausible; SelectiveNet-style heads give a coverage knob directly |
 | **Negative supervision** | Objectosphere / entropic open-set, outlier exposure, VOS, NPOS, OpenGAN, **Adversarial PersonNet** | trains against unknowns: real, exposed, or synthesised | needs an unknown source | Yes - and ReID has an unusually good unknown source: unlabelled tracklets from the same site, plus other datasets' identities as far-unknowns |
 | **Open-set-aware identification losses** | **identification-detection loss + relative threshold minimization** (ECCV 2024) | directly minimizes the worst imposter score per probe | training change | Yes, and it was already validated on person ReID. This is the current state of the art for the exact problem |
@@ -431,7 +431,7 @@ flowchart TD
 2. **Do calibration gains from norm-controlled losses survive domain shift?** Calibration under distribution shift is known to degrade badly in classification; ReID's whole problem is distribution shift.
 3. **How should csID and near-unknown be separated in practice?** A person in new clothing and a stranger in similar clothing produce similar scores. Whether any current representation separates them at all is untested.
 4. **What is the right unknown source for negative supervision in ReID?** Same-site unlabelled tracklets, other datasets' identities, or synthesised imposters - Adversarial PersonNet chose the third in 2018 and nobody compared.
-5. **Does the tracking-level metric move?** If open-set calibration improves FPIR but HOTA/IDF1 do not change, the contribution is deployment-relevant but leaderboard-invisible - which is precisely the trap described in `reid-mot-metrics`.
+5. **Does the tracking-level metric move?** If open-set calibration improves FPIR but HOTA/IDF1 do not change, the contribution is deployment-relevant but leaderboard-invisible - which is precisely the trap described in [reid-mot-metrics](reid-mot-metrics-kb.md).
 
 ---
 
@@ -464,7 +464,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - Dhamija, Guenther, Boult - Reducing Network Agnostophobia (entropic open-set + Objectosphere), NeurIPS 2018 - https://arxiv.org/abs/1811.04110
 - Wei et al. - Mitigating Neural Network Overconfidence with Logit Normalization, ICML 2022 - https://arxiv.org/abs/2205.09310
 - Ming et al. - CIDER: hyperspherical embeddings for OOD detection, ICLR 2023 - https://arxiv.org/abs/2203.04450
-- OpenOOD v1.5 - https://arxiv.org/abs/2306.09301 (see sibling KB `openood-v1.5`)
+- OpenOOD v1.5 - https://arxiv.org/abs/2306.09301 (see sibling KB [openood-v1.5](openood-kb.md))
 - A Survey on Open-Set Image Recognition - https://arxiv.org/abs/2312.15571
 - Recognizing unknowns: a survey on visual open-set recognition, Applied Intelligence 2025 - https://link.springer.com/article/10.1007/s10489-025-06956-7
 - Evaluating Uncertainty Calibration for Open-Set Recognition - https://arxiv.org/abs/2205.07160
@@ -493,7 +493,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 - [70-open-problems-2026.md](70-open-problems-2026.md) section 2 - the one-page version of this problem
 - [50-benchmarks-datasets.md](50-benchmarks-datasets.md) - dataset and protocol details
 - [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) - candidate C3 scores this as the empty lane, and package P2 is built on it
-- `openood-kb`, `halo-loss`, `reid-mot-metrics`, `reid-in-mot`, `soma`
+- [openood-v1.5](openood-kb.md), [halo-loss](halo-loss-kb.md), [reid-mot-metrics](reid-mot-metrics-kb.md), [reid-in-mot](reid-in-mot-kb.md), [soma](soma-kb.md)
 
 ## 10. Retrieval hints
 

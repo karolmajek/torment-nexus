@@ -132,7 +132,7 @@ flowchart TD
 | 7 | **Omni-modal ReID got a benchmark** | ORBench / ReID5o: one model, 5 modalities (RGB, IR, colour pencil, sketch, text), arbitrary query combinations |
 | 8 | **Aerial ReID exposed a hard physical ceiling** | VReID-XFD: best method 43.9% mAP aerial→ground; ~10–15% mAP under combined high-altitude + nadir + far-range |
 | 9 | **Privacy became a benchmark axis, not just an ethics section** | TVRID (ICPR 2026): top-view RGB-D, privacy-preserving ReID competition |
-| 10 | **The "no single winner" result generalised** | Same conclusion independently reached by the 2026 paradigm study (ReID) and by OpenOOD v1.5 (OOD detection) — see the sibling KB `openood-v1.5` |
+| 10 | **The "no single winner" result generalised** | Same conclusion independently reached by the 2026 paradigm study (ReID) and by OpenOOD v1.5 (OOD detection) — see the sibling KB [openood-v1.5](openood-kb.md) |
 
 ---
 

@@ -27,7 +27,7 @@ related: [reid-2026-index, reid-methods-catalog, matryoshka-representation-learn
 1. **The classic research-toolbox generation is frozen.** Torchreid's last *code* commit is 2023-02-08 (the 2026-01-09 push is a README edit). FastReID last pushed 2024-07-30, OpenUnReID 2021-06-14, mmtracking 2023-09-19. The only continuously-developed general ReID trainer with 4k+ stars, [layumi/Person_reID_baseline_pytorch](https://github.com/layumi/Person_reID_baseline_pytorch) (pushed 2026-07-18), **is not a library** — it is flat scripts (`train.py`, `test.py`, per-dataset `prepare_*.py`) at repo root, with no `setup.py`, no `pyproject.toml` and no package directory.
 2. **CLIP never landed in the toolboxes.** The dominant method family since 2023 ([30-methods-catalog.md](30-methods-catalog.md) §3) lives only in single-paper repos. Torchreid ships 20 architectures, **all CNN** — no ViT, no CLIP. FastReID has a ViT backbone config but no vision-language init. BoxMOT *removed* the CLIP-ReID weights it shipped in v10 — its v22 registry contains no CLIP and no DINO entry.
 3. **Matryoshka / nested embeddings exist in the text-retrieval stack and nowhere in ReID.** `sentence-transformers` ships `MatryoshkaLoss`, `Matryoshka2dLoss` and `AdaptiveLayerLoss`; no ReID framework surveyed has any nesting primitive. This is the *tooling-side* confirmation of the gap [mrl-kb.md](mrl-kb.md) §12.1 found in the literature — nobody has the code either.
-4. **Zero ReID frameworks expose an agglomerative VFM backbone** (C-RADIO, EUPE). Independently confirms [foundation-model-reid-kb.md](foundation-model-reid-kb.md) §6, and is exactly why C1 ([92-protocol-agglomerative-probe.md](92-protocol-agglomerative-probe.md)) has to wire the backbone by hand.
+4. **Zero ReID frameworks expose an agglomerative VFM backbone** (C-RADIO, EUPE). Independently confirms [foundation-model-reid-kb.md](foundation-model-reid-kb.md) §6, and is exactly why C1 ([92-protocol-agglomerative-probe.md](../project/92-protocol-agglomerative-probe.md)) has to wire the backbone by hand.
 
 5. **There is no "timm for ReID", and the reason is not laziness.** Neither flagship toolbox has a first-party PyPI package — FastReID has no `setup.py` at all, and the `torchreid` on PyPI is a *third-party repackage* (`torchreid-pip`, v0.2.5, October 2022, published by `kadirnar`, not by the author). The only pip-installable, registry-driven ReID library in the whole survey is BoxMOT's `ReIDModel` (v22) — AGPL-3.0 and tracker-scoped. §6.6 explains why the gap persists; **§7 specifies what filling it would take, and argues the genuinely missing piece is an evaluation package, not a model library.**
 
@@ -167,7 +167,7 @@ The columns are the axes this KB's research programme runs on.
 | **wildlife-tools** | 🟡 MegaDescriptor (Swin, ReID-pretrained, not language-aligned) | ✅ | ❌ | ❌ | ❌ | ✅ fine-tuning module |
 | *sentence-transformers* (adjacent) | ✅ text/image encoders | ✅ | n/a | ✅ **`MatryoshkaLoss`, `Matryoshka2dLoss`, `AdaptiveLayerLoss`** | ❌ | ✅ |
 
-**The most useful cell in this table is the empty MRL column.** Fifteen ReID codebases, zero nesting primitives; the only maintained implementation of the loss lives in a text-embedding library. Reusing it means porting `MatryoshkaLoss` onto a ReID trainer — exactly what [91-protocol-nested-attribute-embeddings.md](91-protocol-nested-attribute-embeddings.md) assumes.
+**The most useful cell in this table is the empty MRL column.** Fifteen ReID codebases, zero nesting primitives; the only maintained implementation of the loss lives in a text-embedding library. Reusing it means porting `MatryoshkaLoss` onto a ReID trainer — exactly what [91-protocol-nested-attribute-embeddings.md](../project/91-protocol-nested-attribute-embeddings.md) assumes.
 
 ---
 
@@ -335,18 +335,18 @@ Licence must be MIT or Apache-2.0, or it lands in the same trap as BoxMOT for an
 
 Straight answer: **as a paper on its own it is weak; as the artefact of the papers already planned it is nearly free.**
 
-- The ledger already carries **C12 — open evaluation harness release** ([90-contribution-ledger-2026.md](90-contribution-ledger-2026.md)). Everything in §7.4 except the registry and the provenance index *is* C12. This is not a new eighteenth candidate; it is C12 with a packaging decision attached.
+- The ledger already carries **C12 — open evaluation harness release** ([90-contribution-ledger-2026.md](../project/90-contribution-ledger-2026.md)). Everything in §7.4 except the registry and the provenance index *is* C12. This is not a new eighteenth candidate; it is C12 with a packaging decision attached.
 - C1 (frozen agglomerative probes) and C16 (nested attribute embeddings) each need roughly the eval half anyway, and C1 needs the licence-provenance index regardless because [agglomerative-vfm-kb.md](agglomerative-vfm-kb.md) flags exactly that friction for RADIO/EUPE weights.
-- Venue reality: a tools paper goes to SoftwareX / JOSS or a journal tools section, not to TCSVT on its own merits ([80-publication-venue-2024.md](80-publication-venue-2024.md)). It earns its keep as the reproducibility asset attached to the flagship paper, which reviewers do reward, rather than as a submission.
+- Venue reality: a tools paper goes to SoftwareX / JOSS or a journal tools section, not to TCSVT on its own merits ([80-publication-venue-2024.md](../project/80-publication-venue-2024.md)). It earns its keep as the reproducibility asset attached to the flagship paper, which reviewers do reward, rather than as a submission.
 - Risk to respect: a model zoo is unbounded maintenance. The scope-lock that keeps it alive is *"only the encoders our own papers evaluate"* — grow the registry when an experiment needs an entry, never speculatively.
 
 **Recommendation:** build the C12 harness first as an installable package with a registry and a provenance index from day one, rather than as `eval.py` in this repo. Same work, and it is the only version of the work that ends up being the thing the field is missing.
 
-> **Now built.** §7.4–§7.6 became [`reidbench/`](../reidbench/) — MIT, PDM-packaged, torch-free core, with the retrieval / open-set / calibration metric set, dataset adapters over a normalised manifest, a content-addressed feature cache and a licence-provenance index. The package documents itself; [36-reidbench.md](36-reidbench.md) says which of its pages answers what, and [38-reidbench-owed.md](38-reidbench-owed.md) tracks what C1/C3/C16 still need from it.
+> **Now built.** §7.4–§7.6 became [`reidbench/`](../../reidbench/) — MIT, PDM-packaged, torch-free core, with the retrieval / open-set / calibration metric set, dataset adapters over a normalised manifest, a content-addressed feature cache and a licence-provenance index. The package documents itself; [36-reidbench.md](../project/36-reidbench.md) says which of its pages answers what, and [38-reidbench-owed.md](../project/38-reidbench-owed.md) tracks what C1/C3/C16 still need from it.
 
 ### 7.6 Running it as a product alongside the main paper
 
-The natural follow-on — develop C12 as its own product during the main paper and publish it later as an open-source framework — works, with two corrections to how it gets priced and sequenced. The venue arithmetic lives in [80-publication-venue-2024.md](80-publication-venue-2024.md) §8; the short version is that **SoftwareX is Q3, not 200 pkt** — the realistic band is 70–100 — and an article published in 2027 is scored on the new list regardless of any present value.
+The natural follow-on — develop C12 as its own product during the main paper and publish it later as an open-source framework — works, with two corrections to how it gets priced and sequenced. The venue arithmetic lives in [80-publication-venue-2024.md](../project/80-publication-venue-2024.md) §8; the short version is that **SoftwareX is Q3, not 200 pkt** — the realistic band is 70–100 — and an article published in 2027 is scored on the new list regardless of any present value.
 
 That changes the ordering of the reasons to do it, not the answer:
 
@@ -375,7 +375,7 @@ timeline
 | Item | Needed for |
 |---|---|
 | `pyproject.toml`, versioning, PyPI release | Being depended on rather than forked (§6.6) |
-| MIT licence (fixed in [AGENTS.md](../AGENTS.md)) + per-checkpoint licence notes | §7.4 provenance index; unblocks reuse where BoxMOT cannot go |
+| MIT licence (fixed in [AGENTS.md](../../AGENTS.md)) + per-checkpoint licence notes | §7.4 provenance index; unblocks reuse where BoxMOT cannot go |
 | Docs site + one runnable end-to-end example | OSP requirement, and the difference between adoption and another dead toolbox |
 | Tests + CI on the eval maths | The eval *is* the contribution; a wrong mAP silently invalidates everything downstream |
 | Zenodo archive + DOI | OSP requirement (permanent identifier), and makes the artefact citable |
@@ -423,7 +423,7 @@ Mapping the matrix onto the two active protocols:
 
 | Need | Nearest existing code | What still has to be written |
 |---|---|---|
-| CLIP ViT-B/16 ReID baseline (C16 base, per [91-protocol-nested-attribute-embeddings.md](91-protocol-nested-attribute-embeddings.md)) | CLIP-ReID repo (MIT, 2023) | Port to a current PyTorch — it predates the toolchain by three years |
+| CLIP ViT-B/16 ReID baseline (C16 base, per [91-protocol-nested-attribute-embeddings.md](../project/91-protocol-nested-attribute-embeddings.md)) | CLIP-ReID repo (MIT, 2023) | Port to a current PyTorch — it predates the toolchain by three years |
 | Matryoshka loss over ReID embeddings | `sentence-transformers` `MatryoshkaLoss` | Port to the ID + triplet setting; per-level L2 renormalisation is the known silent bug ([mrl-kb.md](mrl-kb.md) §3.4) |
 | Attribute-block structure | Nothing — FastAttr is attribute *classification*, not block-structured embedding | Entirely new, which is the contribution |
 | Frozen agglomerative probes (C1) | RADIO + DINOv3 loaders, ArcFace via pytorch-metric-learning | The probe harness and eval protocol — no framework provides either |

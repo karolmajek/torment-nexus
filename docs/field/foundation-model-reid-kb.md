@@ -276,11 +276,11 @@ Foundation-model ReID inherits a problem the retrieval literature mostly ignores
 
 ## 9. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[Foundation model](glossary.md#51-backbone-families) · [Agglomerative model](glossary.md#51-backbone-families) · [MegaDescriptor / MiewID](glossary.md#51-backbone-families) · [Linear probing](glossary.md#52-probing-a-frozen-backbone) ·
-[Instance discrimination](glossary.md#52-probing-a-frozen-backbone) · [Prompt learning](glossary.md#6-training-adaptation-and-transfer) · [Pseudo-caption](glossary.md#6-training-adaptation-and-transfer) · [Human-centric pretraining](glossary.md#6-training-adaptation-and-transfer) ·
-[Fine-tuning distortion](glossary.md#6-training-adaptation-and-transfer) · [Layer-wise LR decay](glossary.md#6-training-adaptation-and-transfer) · [OmniReID](glossary.md#12-named-settings)
+[Foundation model](../glossary.md#51-backbone-families) · [Agglomerative model](../glossary.md#51-backbone-families) · [MegaDescriptor / MiewID](../glossary.md#51-backbone-families) · [Linear probing](../glossary.md#52-probing-a-frozen-backbone) ·
+[Instance discrimination](../glossary.md#52-probing-a-frozen-backbone) · [Prompt learning](../glossary.md#6-training-adaptation-and-transfer) · [Pseudo-caption](../glossary.md#6-training-adaptation-and-transfer) · [Human-centric pretraining](../glossary.md#6-training-adaptation-and-transfer) ·
+[Fine-tuning distortion](../glossary.md#6-training-adaptation-and-transfer) · [Layer-wise LR decay](../glossary.md#6-training-adaptation-and-transfer) · [OmniReID](../glossary.md#12-named-settings)
 
 ---
 

@@ -586,11 +586,11 @@ Per-nesting-level renormalization (§3.4) is MRL's own patch for this class of p
 
 ## 14. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[M (the nesting set)](glossary.md#81-matryoshka-representation-learning-mrl) · [c_m](glossary.md#81-matryoshka-representation-learning-mrl) · [MRL-E](glossary.md#81-matryoshka-representation-learning-mrl) · [MRL-AC](glossary.md#81-matryoshka-representation-learning-mrl) ·
-[MRL-AR](glossary.md#81-matryoshka-representation-learning-mrl) · [D_s / D_r](glossary.md#81-matryoshka-representation-learning-mrl) · [Funnel retrieval](glossary.md#81-matryoshka-representation-learning-mrl) · [FF](glossary.md#81-matryoshka-representation-learning-mrl) ·
-[Interpolation property](glossary.md#81-matryoshka-representation-learning-mrl) · [ImageNet-4K](glossary.md#81-matryoshka-representation-learning-mrl) · [Matryoshka-Adaptor](glossary.md#81-matryoshka-representation-learning-mrl) · [Quality-adaptive nesting](glossary.md#81-matryoshka-representation-learning-mrl)
+[M (the nesting set)](../glossary.md#81-matryoshka-representation-learning-mrl) · [c_m](../glossary.md#81-matryoshka-representation-learning-mrl) · [MRL-E](../glossary.md#81-matryoshka-representation-learning-mrl) · [MRL-AC](../glossary.md#81-matryoshka-representation-learning-mrl) ·
+[MRL-AR](../glossary.md#81-matryoshka-representation-learning-mrl) · [D_s / D_r](../glossary.md#81-matryoshka-representation-learning-mrl) · [Funnel retrieval](../glossary.md#81-matryoshka-representation-learning-mrl) · [FF](../glossary.md#81-matryoshka-representation-learning-mrl) ·
+[Interpolation property](../glossary.md#81-matryoshka-representation-learning-mrl) · [ImageNet-4K](../glossary.md#81-matryoshka-representation-learning-mrl) · [Matryoshka-Adaptor](../glossary.md#81-matryoshka-representation-learning-mrl) · [Quality-adaptive nesting](../glossary.md#81-matryoshka-representation-learning-mrl)
 
 ---
 

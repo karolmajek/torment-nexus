@@ -246,12 +246,12 @@ For a new domain, in order:
 
 ## 9. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[ReID](glossary.md#11-what-is-being-asked) · [Open-set ReID](glossary.md#11-what-is-being-asked) · [Person search](glossary.md#11-what-is-being-asked) · [MTMC / MCMT](glossary.md#12-named-settings) ·
-[Gallery](glossary.md#21-gallery-anatomy) · [Query / probe](glossary.md#21-gallery-anatomy) · [Distractor](glossary.md#21-gallery-anatomy) · [CMC](glossary.md#22-retrieval-metrics) ·
-[Re-ranking](glossary.md#22-retrieval-metrics) · [SDE](glossary.md#31-pipeline-pieces) · [JDE](glossary.md#31-pipeline-pieces) · [SCT](glossary.md#31-pipeline-pieces) ·
-[Tracklet](glossary.md#31-pipeline-pieces) · [GTA](glossary.md#31-pipeline-pieces) · [Gating](glossary.md#31-pipeline-pieces)
+[ReID](../glossary.md#11-what-is-being-asked) · [Open-set ReID](../glossary.md#11-what-is-being-asked) · [Person search](../glossary.md#11-what-is-being-asked) · [MTMC / MCMT](../glossary.md#12-named-settings) ·
+[Gallery](../glossary.md#21-gallery-anatomy) · [Query / probe](../glossary.md#21-gallery-anatomy) · [Distractor](../glossary.md#21-gallery-anatomy) · [CMC](../glossary.md#22-retrieval-metrics) ·
+[Re-ranking](../glossary.md#22-retrieval-metrics) · [SDE](../glossary.md#31-pipeline-pieces) · [JDE](../glossary.md#31-pipeline-pieces) · [SCT](../glossary.md#31-pipeline-pieces) ·
+[Tracklet](../glossary.md#31-pipeline-pieces) · [GTA](../glossary.md#31-pipeline-pieces) · [Gating](../glossary.md#31-pipeline-pieces)
 
 ---
 

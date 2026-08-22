@@ -251,11 +251,11 @@ Teacher licences do not automatically constrain the student, but they are worth 
 
 ## 8. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[Agglomerative model](glossary.md#51-backbone-families) · [Multi-teacher distillation](glossary.md#51-backbone-families) · [Label-free distillation](glossary.md#51-backbone-families) · [Adaptor head](glossary.md#51-backbone-families) ·
-[Proxy teacher](glossary.md#51-backbone-families) · [Resolution mode shift](glossary.md#51-backbone-families) · [Shift equivariance](glossary.md#51-backbone-families) · [ViTDet mode](glossary.md#51-backbone-families) ·
-[Token compression](glossary.md#51-backbone-families) · [PHI-S](glossary.md#51-backbone-families) · [Summary token](glossary.md#51-backbone-families)
+[Agglomerative model](../glossary.md#51-backbone-families) · [Multi-teacher distillation](../glossary.md#51-backbone-families) · [Label-free distillation](../glossary.md#51-backbone-families) · [Adaptor head](../glossary.md#51-backbone-families) ·
+[Proxy teacher](../glossary.md#51-backbone-families) · [Resolution mode shift](../glossary.md#51-backbone-families) · [Shift equivariance](../glossary.md#51-backbone-families) · [ViTDet mode](../glossary.md#51-backbone-families) ·
+[Token compression](../glossary.md#51-backbone-families) · [PHI-S](../glossary.md#51-backbone-families) · [Summary token](../glossary.md#51-backbone-families)
 
 ---
 

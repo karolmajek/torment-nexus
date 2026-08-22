@@ -241,10 +241,10 @@ These belong to the same category as OpenOOD's "post-hoc methods": no retraining
 
 ## 12. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[BNNeck](glossary.md#54-architecture-components) · [Side information embedding](glossary.md#54-architecture-components) · [IBN](glossary.md#54-architecture-components) · [MoE](glossary.md#54-architecture-components) ·
-[k-reciprocal re-ranking](glossary.md#22-retrieval-metrics) · [PEFT](glossary.md#6-training-adaptation-and-transfer) · [Pseudo-label clustering](glossary.md#6-training-adaptation-and-transfer) · [Non-trivial sampling](glossary.md#6-training-adaptation-and-transfer)
+[BNNeck](../glossary.md#54-architecture-components) · [Side information embedding](../glossary.md#54-architecture-components) · [IBN](../glossary.md#54-architecture-components) · [MoE](../glossary.md#54-architecture-components) ·
+[k-reciprocal re-ranking](../glossary.md#22-retrieval-metrics) · [PEFT](../glossary.md#6-training-adaptation-and-transfer) · [Pseudo-label clustering](../glossary.md#6-training-adaptation-and-transfer) · [Non-trivial sampling](../glossary.md#6-training-adaptation-and-transfer)
 
 ---
 

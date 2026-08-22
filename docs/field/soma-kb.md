@@ -335,11 +335,11 @@ Three distinct uses, in increasing order of ambition:
 
 ## 9. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[SOMA / SOMA-R](glossary.md#84-soma) · [Wholebody detector](glossary.md#84-soma) · [Assembly](glossary.md#84-soma) · [Anatomical token](glossary.md#84-soma) ·
-[Ghost coasting](glossary.md#84-soma) · [Embedding-only revival](glossary.md#84-soma) · [Long-gap recovery bin](glossary.md#84-soma) · [Fairness pairing](glossary.md#84-soma) ·
-[Per-frame whitening](glossary.md#84-soma) · [token-IN](glossary.md#84-soma) · [CrowdTrack](glossary.md#84-soma) · [Amodal box](glossary.md#7-imaging-conditions)
+[SOMA / SOMA-R](../glossary.md#84-soma) · [Wholebody detector](../glossary.md#84-soma) · [Assembly](../glossary.md#84-soma) · [Anatomical token](../glossary.md#84-soma) ·
+[Ghost coasting](../glossary.md#84-soma) · [Embedding-only revival](../glossary.md#84-soma) · [Long-gap recovery bin](../glossary.md#84-soma) · [Fairness pairing](../glossary.md#84-soma) ·
+[Per-frame whitening](../glossary.md#84-soma) · [token-IN](../glossary.md#84-soma) · [CrowdTrack](../glossary.md#84-soma) · [Amodal box](../glossary.md#7-imaging-conditions)
 
 ---
 

@@ -17,10 +17,10 @@ definition can be changed in one place and nowhere else. If a term is missing, a
 inline on the page that needed it.
 
 A glossary entry is one line. When a term needs a whole page to explain properly, the entry says which page
-owns it: [gallery-and-evaluation-kb.md](gallery-and-evaluation-kb.md) owns retrieval scoring,
-[reid-mot-metrics-kb.md](reid-mot-metrics-kb.md) owns tracking metrics,
-[open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) owns rejection and
-calibration, [10-taxonomy-merged.md](10-taxonomy-merged.md) owns the setting axes.
+owns it: [gallery-and-evaluation-kb.md](field/gallery-and-evaluation-kb.md) owns retrieval scoring,
+[reid-mot-metrics-kb.md](field/reid-mot-metrics-kb.md) owns tracking metrics,
+[open-world-rejection-calibration-kb.md](field/open-world-rejection-calibration-kb.md) owns rejection and
+calibration, [10-taxonomy-merged.md](field/10-taxonomy-merged.md) owns the setting axes.
 
 > **Three things this file pins down.** **Distractor** (§2.1) and **retention** (§6) each had two or more
 > non-equivalent wordings scattered across the wiki; one definition each now. **FPR@95** (§4.3) had two
@@ -41,7 +41,7 @@ calibration, [10-taxonomy-merged.md](10-taxonomy-merged.md) owns the setting axe
 | **Identity discovery / online enrolment** | Decide whether an observation is a new identity the system should remember; clustering with unknown *k* |
 | **Person search** | Detection and ReID performed jointly on uncropped frames, with no ground-truth boxes given |
 | **Closed-set ReID** | Every probe identity is guaranteed to exist in the gallery. What standard benchmarks actually score |
-| **Open-set / open-world ReID** | The probe may belong to no gallery identity. "Open-world" carries three unrelated meanings in the literature — [open-world-rejection-calibration-kb.md §1.2](open-world-rejection-calibration-kb.md) disambiguates them |
+| **Open-set / open-world ReID** | The probe may belong to no gallery identity. "Open-world" carries three unrelated meanings in the literature — [open-world-rejection-calibration-kb.md §1.2](field/open-world-rejection-calibration-kb.md) disambiguates them |
 
 ### 1.2 Named settings
 
@@ -65,7 +65,7 @@ calibration, [10-taxonomy-merged.md](10-taxonomy-merged.md) owns the setting axe
 
 ## 2. Retrieval evaluation
 
-Full treatment, with a worked VeRi query: [gallery-and-evaluation-kb.md](gallery-and-evaluation-kb.md).
+Full treatment, with a worked VeRi query: [gallery-and-evaluation-kb.md](field/gallery-and-evaluation-kb.md).
 
 ### 2.1 Gallery anatomy
 
@@ -108,9 +108,9 @@ Full treatment, with a worked VeRi query: [gallery-and-evaluation-kb.md](gallery
 
 ## 3. Tracking and multi-camera systems
 
-Full treatment: [reid-mot-metrics-kb.md](reid-mot-metrics-kb.md) for the metrics,
-[reid-in-mot-kb.md](reid-in-mot-kb.md) for ReID inside a tracker,
-[40-city-scale-mtmc.md](40-city-scale-mtmc.md) for city-scale pipelines.
+Full treatment: [reid-mot-metrics-kb.md](field/reid-mot-metrics-kb.md) for the metrics,
+[reid-in-mot-kb.md](field/reid-in-mot-kb.md) for ReID inside a tracker,
+[40-city-scale-mtmc.md](field/40-city-scale-mtmc.md) for city-scale pipelines.
 
 ### 3.1 Pipeline pieces
 
@@ -163,8 +163,8 @@ Full treatment: [reid-mot-metrics-kb.md](reid-mot-metrics-kb.md) for the metrics
 
 ## 4. Open-set, rejection and calibration
 
-Full treatment: [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md); the OOD
-benchmark discipline is in [openood-kb.md](openood-kb.md).
+Full treatment: [open-world-rejection-calibration-kb.md](field/open-world-rejection-calibration-kb.md); the OOD
+benchmark discipline is in [openood-kb.md](field/openood-kb.md).
 
 ### 4.1 Distribution vocabulary
 
@@ -197,7 +197,7 @@ benchmark discipline is in [openood-kb.md](openood-kb.md).
 | Term | Definition |
 |---|---|
 | **AUROC / AUPR** | Threshold-free ranking quality of the accept/reject score |
-| **FPR@95** | The false-alarm rate on OOD inputs once the threshold is set to admit 95% of ID inputs. Lower is better. Written *FPR at 95% TPR* where ID is the positive class ([halo-loss-kb.md](halo-loss-kb.md), [70-open-problems-2026.md](70-open-problems-2026.md)) and *FPR at 95% TNR* where OOD is ([openood-kb.md](openood-kb.md)) — same operating point, opposite sign conventions. Check which one a table means before comparing numbers |
+| **FPR@95** | The false-alarm rate on OOD inputs once the threshold is set to admit 95% of ID inputs. Lower is better. Written *FPR at 95% TPR* where ID is the positive class ([halo-loss-kb.md](field/halo-loss-kb.md), [70-open-problems-2026.md](field/70-open-problems-2026.md)) and *FPR at 95% TNR* where OOD is ([openood-kb.md](field/openood-kb.md)) — same operating point, opposite sign conventions. Check which one a table means before comparing numbers |
 | **FMR** | False match rate per comparison. Face vendors quote it at 1e-6; ReID papers quote nothing |
 | **FPIR** | False positive identification rate — fraction of non-mated searches returning any candidate above threshold. Accumulates over gallery size: `FPIR(N) ≈ N · FMR` |
 | **FNIR** | False negative identification rate — fraction of mated searches where the true mate falls below threshold or outside rank R |
@@ -310,7 +310,7 @@ term used in this wiki.
 
 ### 8.1 Matryoshka Representation Learning (MRL)
 
-Owning page: [mrl-kb.md](mrl-kb.md).
+Owning page: [mrl-kb.md](field/mrl-kb.md).
 
 
 | Term | Definition |
@@ -330,7 +330,7 @@ Owning page: [mrl-kb.md](mrl-kb.md).
 
 ### 8.2 HALO
 
-Owning page: [halo-loss-kb.md](halo-loss-kb.md).
+Owning page: [halo-loss-kb.md](field/halo-loss-kb.md).
 
 
 | Term | Definition |
@@ -346,7 +346,7 @@ Owning page: [halo-loss-kb.md](halo-loss-kb.md).
 
 ### 8.3 FlowFeat
 
-Owning page: [flowfeat-kb.md](flowfeat-kb.md).
+Owning page: [flowfeat-kb.md](field/flowfeat-kb.md).
 
 
 | Term | Definition |
@@ -367,7 +367,7 @@ Owning page: [flowfeat-kb.md](flowfeat-kb.md).
 
 ### 8.4 SOMA
 
-Owning page: [soma-kb.md](soma-kb.md).
+Owning page: [soma-kb.md](field/soma-kb.md).
 
 
 | Term | Definition |
@@ -388,10 +388,10 @@ Owning page: [soma-kb.md](soma-kb.md).
 
 ## 9. Sources
 
-Definitions follow the pages that own each area — [gallery-and-evaluation-kb.md](gallery-and-evaluation-kb.md),
-[reid-mot-metrics-kb.md](reid-mot-metrics-kb.md),
-[open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md),
-[openood-kb.md](openood-kb.md), [10-taxonomy-merged.md](10-taxonomy-merged.md) — and the per-method pages
+Definitions follow the pages that own each area — [gallery-and-evaluation-kb.md](field/gallery-and-evaluation-kb.md),
+[reid-mot-metrics-kb.md](field/reid-mot-metrics-kb.md),
+[open-world-rejection-calibration-kb.md](field/open-world-rejection-calibration-kb.md),
+[openood-kb.md](field/openood-kb.md), [10-taxonomy-merged.md](field/10-taxonomy-merged.md) — and the per-method pages
 cited in §8. Those pages carry the primary citations. This file carries no numbers, so nothing in it can
 disagree with a dataset page or a results table.
 

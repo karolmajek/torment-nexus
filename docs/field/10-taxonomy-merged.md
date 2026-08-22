@@ -211,12 +211,12 @@ flowchart TD
 
 ## 5. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[ReID](glossary.md#11-what-is-being-asked) · [Person search](glossary.md#11-what-is-being-asked) · [MTMC / MCMT](glossary.md#12-named-settings) · [DA-ReID](glossary.md#12-named-settings) ·
-[DG-ReID](glossary.md#12-named-settings) · [USL](glossary.md#12-named-settings) · [VI-ReID](glossary.md#12-named-settings) · [CC-ReID](glossary.md#12-named-settings) ·
-[LReID](glossary.md#12-named-settings) · [TBPS](glossary.md#12-named-settings) · [OM-ReID](glossary.md#12-named-settings) · [Sim2Real](glossary.md#12-named-settings) ·
-[Tracklet](glossary.md#31-pipeline-pieces) · [csID](glossary.md#41-distribution-vocabulary)
+[ReID](../glossary.md#11-what-is-being-asked) · [Person search](../glossary.md#11-what-is-being-asked) · [MTMC / MCMT](../glossary.md#12-named-settings) · [DA-ReID](../glossary.md#12-named-settings) ·
+[DG-ReID](../glossary.md#12-named-settings) · [USL](../glossary.md#12-named-settings) · [VI-ReID](../glossary.md#12-named-settings) · [CC-ReID](../glossary.md#12-named-settings) ·
+[LReID](../glossary.md#12-named-settings) · [TBPS](../glossary.md#12-named-settings) · [OM-ReID](../glossary.md#12-named-settings) · [Sim2Real](../glossary.md#12-named-settings) ·
+[Tracklet](../glossary.md#31-pipeline-pieces) · [csID](../glossary.md#41-distribution-vocabulary)
 
 ---
 

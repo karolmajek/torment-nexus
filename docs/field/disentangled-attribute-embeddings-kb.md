@@ -232,10 +232,10 @@ Every constructive method in §3.1–§3.3 was validated on **retrieval metrics 
 
 ## 8. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[Disentangled representation](glossary.md#53-structure-inside-the-embedding) · [Concept subspace / concept block](glossary.md#53-structure-inside-the-embedding) · [Slot attention](glossary.md#53-structure-inside-the-embedding) · [Prototype dictionary](glossary.md#53-structure-inside-the-embedding) ·
-[Appearance code / structure code](glossary.md#53-structure-inside-the-embedding) · [Concept whitening](glossary.md#53-structure-inside-the-embedding) · [Concept Activation Vector](glossary.md#53-structure-inside-the-embedding) · [Concept Bottleneck Model](glossary.md#53-structure-inside-the-embedding)
+[Disentangled representation](../glossary.md#53-structure-inside-the-embedding) · [Concept subspace / concept block](../glossary.md#53-structure-inside-the-embedding) · [Slot attention](../glossary.md#53-structure-inside-the-embedding) · [Prototype dictionary](../glossary.md#53-structure-inside-the-embedding) ·
+[Appearance code / structure code](../glossary.md#53-structure-inside-the-embedding) · [Concept whitening](../glossary.md#53-structure-inside-the-embedding) · [Concept Activation Vector](../glossary.md#53-structure-inside-the-embedding) · [Concept Bottleneck Model](../glossary.md#53-structure-inside-the-embedding)
 
 ---
 

@@ -184,12 +184,12 @@ flowchart TD
 
 ## 9. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[HOTA](glossary.md#32-tracking-metrics) · [DetA / AssA / LocA](glossary.md#32-tracking-metrics) · [IDF1](glossary.md#32-tracking-metrics) · [IDTP / IDFP / IDFN](glossary.md#32-tracking-metrics) ·
-[MOTA / MOTP](glossary.md#32-tracking-metrics) · [IDSW](glossary.md#32-tracking-metrics) · [MT / ML / Frag](glossary.md#32-tracking-metrics) · [TrackEval](glossary.md#32-tracking-metrics) ·
-[Public / private detections](glossary.md#31-pipeline-pieces) · [ARI](glossary.md#33-clustering-metrics-for-identity-discovery) · [NMI](glossary.md#33-clustering-metrics-for-identity-discovery) · [Purity / BCubed](glossary.md#33-clustering-metrics-for-identity-discovery) ·
-[CMC / Rank-k](glossary.md#22-retrieval-metrics) · [mAP](glossary.md#22-retrieval-metrics) · [mINP](glossary.md#22-retrieval-metrics) · [Re-ranking](glossary.md#22-retrieval-metrics)
+[HOTA](../glossary.md#32-tracking-metrics) · [DetA / AssA / LocA](../glossary.md#32-tracking-metrics) · [IDF1](../glossary.md#32-tracking-metrics) · [IDTP / IDFP / IDFN](../glossary.md#32-tracking-metrics) ·
+[MOTA / MOTP](../glossary.md#32-tracking-metrics) · [IDSW](../glossary.md#32-tracking-metrics) · [MT / ML / Frag](../glossary.md#32-tracking-metrics) · [TrackEval](../glossary.md#32-tracking-metrics) ·
+[Public / private detections](../glossary.md#31-pipeline-pieces) · [ARI](../glossary.md#33-clustering-metrics-for-identity-discovery) · [NMI](../glossary.md#33-clustering-metrics-for-identity-discovery) · [Purity / BCubed](../glossary.md#33-clustering-metrics-for-identity-discovery) ·
+[CMC / Rank-k](../glossary.md#22-retrieval-metrics) · [mAP](../glossary.md#22-retrieval-metrics) · [mINP](../glossary.md#22-retrieval-metrics) · [Re-ranking](../glossary.md#22-retrieval-metrics)
 
 ---
 

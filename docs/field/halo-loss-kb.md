@@ -323,11 +323,11 @@ mindmap
 
 ## 9. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[Abstain class](glossary.md#42-rejection-mechanisms) · [ECE](glossary.md#43-operating-point-and-calibration-metrics) · [FPR@95](glossary.md#43-operating-point-and-calibration-metrics) · [Near-OOD / far-OOD](glossary.md#41-distribution-vocabulary) ·
-[Attention sink](glossary.md#82-halo) · [Register token](glossary.md#82-halo) · [Magnitude bullying](glossary.md#82-halo) · [Radial explosion](glossary.md#82-halo) ·
-[Shift-invariance](glossary.md#82-halo) · [Soap bubble](glossary.md#82-halo) · [RBF](glossary.md#82-halo) · [TFSD](glossary.md#82-halo)
+[Abstain class](../glossary.md#42-rejection-mechanisms) · [ECE](../glossary.md#43-operating-point-and-calibration-metrics) · [FPR@95](../glossary.md#43-operating-point-and-calibration-metrics) · [Near-OOD / far-OOD](../glossary.md#41-distribution-vocabulary) ·
+[Attention sink](../glossary.md#82-halo) · [Register token](../glossary.md#82-halo) · [Magnitude bullying](../glossary.md#82-halo) · [Radial explosion](../glossary.md#82-halo) ·
+[Shift-invariance](../glossary.md#82-halo) · [Soap bubble](../glossary.md#82-halo) · [RBF](../glossary.md#82-halo) · [TFSD](../glossary.md#82-halo)
 
 ---
 

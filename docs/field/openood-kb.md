@@ -339,12 +339,12 @@ flowchart TD
 
 ## 11. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[ID](glossary.md#41-distribution-vocabulary) · [OOD](glossary.md#41-distribution-vocabulary) · [csID](glossary.md#41-distribution-vocabulary) · [Near-OOD / hard-OOD](glossary.md#41-distribution-vocabulary) ·
-[Far-OOD / easy-OOD](glossary.md#41-distribution-vocabulary) · [Full-spectrum detection](glossary.md#41-distribution-vocabulary) · [OSR](glossary.md#41-distribution-vocabulary) · [Post-hoc method / postprocessor](glossary.md#42-rejection-mechanisms) ·
-[OOD score](glossary.md#42-rejection-mechanisms) · [Outlier Exposure](glossary.md#42-rejection-mechanisms) · [AUROC / AUPR](glossary.md#43-operating-point-and-calibration-metrics) · [FPR@95](glossary.md#43-operating-point-and-calibration-metrics) ·
-[SSB-hard / NINCO](glossary.md#44-population-and-benchmark-terms)
+[ID](../glossary.md#41-distribution-vocabulary) · [OOD](../glossary.md#41-distribution-vocabulary) · [csID](../glossary.md#41-distribution-vocabulary) · [Near-OOD / hard-OOD](../glossary.md#41-distribution-vocabulary) ·
+[Far-OOD / easy-OOD](../glossary.md#41-distribution-vocabulary) · [Full-spectrum detection](../glossary.md#41-distribution-vocabulary) · [OSR](../glossary.md#41-distribution-vocabulary) · [Post-hoc method / postprocessor](../glossary.md#42-rejection-mechanisms) ·
+[OOD score](../glossary.md#42-rejection-mechanisms) · [Outlier Exposure](../glossary.md#42-rejection-mechanisms) · [AUROC / AUPR](../glossary.md#43-operating-point-and-calibration-metrics) · [FPR@95](../glossary.md#43-operating-point-and-calibration-metrics) ·
+[SSB-hard / NINCO](../glossary.md#44-population-and-benchmark-terms)
 
 ---
 

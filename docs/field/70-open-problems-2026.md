@@ -204,10 +204,10 @@ flowchart LR
 
 ## 10. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[Open-set / open-world ReID](glossary.md#11-what-is-being-asked) · [csID](glossary.md#41-distribution-vocabulary) · [Abstain class](glossary.md#42-rejection-mechanisms) · [ECE](glossary.md#43-operating-point-and-calibration-metrics) ·
-[FPR@95](glossary.md#43-operating-point-and-calibration-metrics) · [Re-indexing-free](glossary.md#6-training-adaptation-and-transfer) · [Training-as-a-Service](glossary.md#6-training-adaptation-and-transfer) · [Ground sampling distance](glossary.md#7-imaging-conditions)
+[Open-set / open-world ReID](../glossary.md#11-what-is-being-asked) · [csID](../glossary.md#41-distribution-vocabulary) · [Abstain class](../glossary.md#42-rejection-mechanisms) · [ECE](../glossary.md#43-operating-point-and-calibration-metrics) ·
+[FPR@95](../glossary.md#43-operating-point-and-calibration-metrics) · [Re-indexing-free](../glossary.md#6-training-adaptation-and-transfer) · [Training-as-a-Service](../glossary.md#6-training-adaptation-and-transfer) · [Ground sampling distance](../glossary.md#7-imaging-conditions)
 
 ---
 

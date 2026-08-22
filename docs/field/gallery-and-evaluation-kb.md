@@ -15,7 +15,7 @@ related: [reid-glossary, 50-benchmarks-datasets, reid-mot-metrics, open-world-re
 
 # The ReID Gallery and How Evaluation Actually Works
 
-A ground-up walkthrough. Everything from section 4 onward is measured, not quoted: one dataset, **VeRi-776** ([counts](../datasets/veri776.md)), two cached embedding sets, and one evaluator.
+A ground-up walkthrough. Everything from section 4 onward is measured, not quoted: one dataset, **VeRi-776** ([counts](../../datasets/veri776.md)), two cached embedding sets, and one evaluator.
 
 ## TL;DR
 
@@ -36,19 +36,19 @@ Same model. Same images. Numbers ranging from 45% to 87% mAP and from 46% to 99.
 
 ## 1. The cast
 
-What each role *is* is defined in [glossary.md §2.1](glossary.md#21-gallery-anatomy). What this page
+What each role *is* is defined in [glossary.md §2.1](../glossary.md#21-gallery-anatomy). What this page
 owns is how big each one gets on a real benchmark:
 
 | Term | In VeRi-776 |
 |---|---|
-| [Query / probe](glossary.md#21-gallery-anatomy) | ~8.4 images per identity |
-| [Gallery](glossary.md#21-gallery-anatomy) (here, the test set) | the same identities as the query set, 11-202 images each |
-| [Ground truth / positives](glossary.md#21-gallery-anatomy) | median **51** per query, range 5-196 |
-| [Junk](glossary.md#21-gallery-anatomy) | median **6** per query, range 1-24 |
-| [Distractor](glossary.md#21-gallery-anatomy) | none in VeRi; Market-1501 offers +500k |
+| [Query / probe](../glossary.md#21-gallery-anatomy) | ~8.4 images per identity |
+| [Gallery](../glossary.md#21-gallery-anatomy) (here, the test set) | the same identities as the query set, 11-202 images each |
+| [Ground truth / positives](../glossary.md#21-gallery-anatomy) | median **51** per query, range 5-196 |
+| [Junk](../glossary.md#21-gallery-anatomy) | median **6** per query, range 1-24 |
+| [Distractor](../glossary.md#21-gallery-anatomy) | none in VeRi; Market-1501 offers +500k |
 | Training set | identity-disjoint from test |
 
-Split sizes are not repeated here: **[datasets/veri776.md](../datasets/veri776.md) owns VeRi's counts**, and this
+Split sizes are not repeated here: **[datasets/veri776.md](../../datasets/veri776.md) owns VeRi's counts**, and this
 page owns the per-query distributions above, which are its own analysis. The two never disagree because only one of
 them is written down twice.
 
@@ -444,9 +444,9 @@ Per-dataset differences that regularly cause confusion:
 
 | Dataset | Gallery | Cross-camera rule | Repeats | Note |
 |---|---|---|---|---|
-| **VeRi-776** | multi-shot — [counts](../datasets/veri776.md) | same-id-same-camera is junk | single fixed split | ships `gt_index.txt` and `jk_index.txt`; also supports tracklet-level evaluation via `test_track.txt` |
-| **Market-1501** | optional +500k distractors — [counts](../datasets/market1501.md) | same-id-same-camera is junk; `id = -1` distractors are junk | single fixed split | single-query and multi-query variants both published |
-| **MSMT17** | [counts](../datasets/msmt17.md) | same as Market | single fixed split | the hard classic benchmark; note that its test-identity count is not its query count |
+| **VeRi-776** | multi-shot — [counts](../../datasets/veri776.md) | same-id-same-camera is junk | single fixed split | ships `gt_index.txt` and `jk_index.txt`; also supports tracklet-level evaluation via `test_track.txt` |
+| **Market-1501** | optional +500k distractors — [counts](../../datasets/market1501.md) | same-id-same-camera is junk; `id = -1` distractors are junk | single fixed split | single-query and multi-query variants both published |
+| **MSMT17** | [counts](../../datasets/msmt17.md) | same as Market | single fixed split | the hard classic benchmark; note that its test-identity count is not its query count |
 | **CUHK03** | two protocols in circulation | same | **old: 20 random splits; new: single 767/700 split** | numbers under the two protocols differ by tens of points and are routinely confused |
 | **VehicleID** | 1 image per identity, subsets of 800/1,600/2,400/3,200 | no camera rule | multiple random draws, averaged | its mAP is not comparable to VeRi's mAP |
 
@@ -503,11 +503,11 @@ you think it is.
 
 ## 11. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[Query / probe](glossary.md#21-gallery-anatomy) · [Gallery](glossary.md#21-gallery-anatomy) · [Ground truth / positives / hit](glossary.md#21-gallery-anatomy) · [Junk](glossary.md#21-gallery-anatomy) ·
-[Distractor](glossary.md#21-gallery-anatomy) · [Single-shot / multi-shot gallery](glossary.md#21-gallery-anatomy) · [Single-query / multi-query](glossary.md#21-gallery-anatomy) · [Tracklet-level evaluation](glossary.md#21-gallery-anatomy) ·
-[AP / mAP](glossary.md#22-retrieval-metrics) · [CMC](glossary.md#22-retrieval-metrics) · [mINP](glossary.md#22-retrieval-metrics) · [Re-ranking](glossary.md#22-retrieval-metrics)
+[Query / probe](../glossary.md#21-gallery-anatomy) · [Gallery](../glossary.md#21-gallery-anatomy) · [Ground truth / positives / hit](../glossary.md#21-gallery-anatomy) · [Junk](../glossary.md#21-gallery-anatomy) ·
+[Distractor](../glossary.md#21-gallery-anatomy) · [Single-shot / multi-shot gallery](../glossary.md#21-gallery-anatomy) · [Single-query / multi-query](../glossary.md#21-gallery-anatomy) · [Tracklet-level evaluation](../glossary.md#21-gallery-anatomy) ·
+[AP / mAP](../glossary.md#22-retrieval-metrics) · [CMC](../glossary.md#22-retrieval-metrics) · [mINP](../glossary.md#22-retrieval-metrics) · [Re-ranking](../glossary.md#22-retrieval-metrics)
 
 ---
 

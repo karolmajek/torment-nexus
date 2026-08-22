@@ -462,12 +462,12 @@ mindmap
 
 ## 14. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[Motion profile](glossary.md#83-flowfeat) · [Motion stochasticity](glossary.md#83-flowfeat) · [A*](glossary.md#83-flowfeat) · [Ridge parameter](glossary.md#83-flowfeat) ·
-[Focal gradient matching](glossary.md#83-flowfeat) · [Mean teacher / EMA](glossary.md#83-flowfeat) · [DPT](glossary.md#83-flowfeat) · [FlowFeat++](glossary.md#83-flowfeat) ·
-[Linear probing (VOS)](glossary.md#83-flowfeat) · [Local KNN](glossary.md#83-flowfeat) · [J&F](glossary.md#83-flowfeat) · [FeatUp / LoftUp](glossary.md#83-flowfeat) ·
-[SEA-RAFT / RAFT / SMURF](glossary.md#83-flowfeat) · [Apparent motion](glossary.md#7-imaging-conditions) · [csID](glossary.md#41-distribution-vocabulary)
+[Motion profile](../glossary.md#83-flowfeat) · [Motion stochasticity](../glossary.md#83-flowfeat) · [A*](../glossary.md#83-flowfeat) · [Ridge parameter](../glossary.md#83-flowfeat) ·
+[Focal gradient matching](../glossary.md#83-flowfeat) · [Mean teacher / EMA](../glossary.md#83-flowfeat) · [DPT](../glossary.md#83-flowfeat) · [FlowFeat++](../glossary.md#83-flowfeat) ·
+[Linear probing (VOS)](../glossary.md#83-flowfeat) · [Local KNN](../glossary.md#83-flowfeat) · [J&F](../glossary.md#83-flowfeat) · [FeatUp / LoftUp](../glossary.md#83-flowfeat) ·
+[SEA-RAFT / RAFT / SMURF](../glossary.md#83-flowfeat) · [Apparent motion](../glossary.md#7-imaging-conditions) · [csID](../glossary.md#41-distribution-vocabulary)
 
 ---
 

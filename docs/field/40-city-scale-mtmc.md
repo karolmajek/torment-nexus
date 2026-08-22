@@ -229,11 +229,11 @@ Metric: mAP. Submission is a top-10 ranked image list per query.
 
 ## 9. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[SCT](glossary.md#31-pipeline-pieces) · [ICA](glossary.md#31-pipeline-pieces) · [Camera-link model](glossary.md#31-pipeline-pieces) · [BEV](glossary.md#31-pipeline-pieces) ·
-[Online tracker](glossary.md#31-pipeline-pieces) · [HOTA](glossary.md#32-tracking-metrics) · [DetA / AssA / LocA](glossary.md#32-tracking-metrics) · [IDSW](glossary.md#32-tracking-metrics) ·
-[AMR](glossary.md#34-simulation-and-challenge-infrastructure) · [Omniverse / Isaac Sim](glossary.md#34-simulation-and-challenge-infrastructure) · [Cosmos Transfer](glossary.md#34-simulation-and-challenge-infrastructure)
+[SCT](../glossary.md#31-pipeline-pieces) · [ICA](../glossary.md#31-pipeline-pieces) · [Camera-link model](../glossary.md#31-pipeline-pieces) · [BEV](../glossary.md#31-pipeline-pieces) ·
+[Online tracker](../glossary.md#31-pipeline-pieces) · [HOTA](../glossary.md#32-tracking-metrics) · [DetA / AssA / LocA](../glossary.md#32-tracking-metrics) · [IDSW](../glossary.md#32-tracking-metrics) ·
+[AMR](../glossary.md#34-simulation-and-challenge-infrastructure) · [Omniverse / Isaac Sim](../glossary.md#34-simulation-and-challenge-infrastructure) · [Cosmos Transfer](../glossary.md#34-simulation-and-challenge-infrastructure)
 
 ---
 

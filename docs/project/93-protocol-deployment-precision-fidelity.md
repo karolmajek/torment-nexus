@@ -21,7 +21,7 @@ supersedes: null
 
 ## 0. One-paragraph summary
 
-Everybody exports. [35-frameworks-toolboxes.md](35-frameworks-toolboxes.md) §5 records that BoxMOT ships ONNX/OpenVINO/TensorRT/TorchScript/TFLite
+Everybody exports. [35-frameworks-toolboxes.md](../field/35-frameworks-toolboxes.md) §5 records that BoxMOT ships ONNX/OpenVINO/TensorRT/TorchScript/TFLite
 exporters, Ultralytics consumes `.engine` ReID encoders and ships `yolo26*-reid.onnx`, FastReID has FastRT, and NVIDIA
 TAO's whole path is **ONNX → TensorRT → DeepStream**. And everybody then quotes the fp32 paper number. Nobody publishes
 what the export cost them, because measuring it needs an evaluation harness that treats *runtime* and *precision* as
@@ -200,7 +200,7 @@ and this reduces to a robustness note in `reidbench`'s docs; that is the honest 
 because the recording machinery in §3 is worth having regardless and is already built.
 
 The one outcome that would make the whole thing uninteresting is H1 and H2 both holding trivially — everything
-robust, nothing to report. [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) §3.2's evidence that operating points are fragile
+robust, nothing to report. [open-world-rejection-calibration-kb.md](../field/open-world-rejection-calibration-kb.md) §3.2's evidence that operating points are fragile
 under far milder distribution shift is the reason to expect otherwise.
 
 ---
@@ -305,17 +305,17 @@ this is sweeps plus a GPU box), **Resources 5** (TRT needs hardware the project 
 
 ## 10. Sources
 
-- [[reidbench/docs/design.md](../reidbench/docs/design.md)](../reidbench/docs/design.md) — the one-arithmetic rule, the description tree, the
+- [[reidbench/docs/design.md](../../reidbench/docs/design.md)](../../reidbench/docs/design.md) — the one-arithmetic rule, the description tree, the
   value/context distinction §2 generalises, and the cache-key derivation and fp16 storage default §7.3 puts on trial
-- [35-frameworks-toolboxes.md](35-frameworks-toolboxes.md) §5–§6, §7.4 — who exports what, and the "ONNX first —
+- [35-frameworks-toolboxes.md](../field/35-frameworks-toolboxes.md) §5–§6, §7.4 — who exports what, and the "ONNX first —
   BoxMOT proves the demand" line that makes §4's ordering a continuation rather than a new idea
-- [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) §3.2–§3.3 — the open-set metric set
+- [open-world-rejection-calibration-kb.md](../field/open-world-rejection-calibration-kb.md) §3.2–§3.3 — the open-set metric set
   and the fragility of operating points that H2 extends to precision
-- [openood-kb.md](openood-kb.md) §6 — validation-split discipline; §7.2's "τ fitted at a different precision" is the
+- [openood-kb.md](../field/openood-kb.md) §6 — validation-split discipline; §7.2's "τ fitted at a different precision" is the
   same class of leak, one axis over
 - [92-protocol-agglomerative-probe.md](92-protocol-agglomerative-probe.md) §2 — the encoder set §6 reuses, and the
   cached features that make this study cheap
-- [gallery-and-evaluation-kb.md](gallery-and-evaluation-kb.md) §6.2 — per-query AP distributions, which are where a
+- [gallery-and-evaluation-kb.md](../field/gallery-and-evaluation-kb.md) §6.2 — per-query AP distributions, which are where a
   precision delta will show up before it shows up in a mean
 
 ## 11. Retrieval hints

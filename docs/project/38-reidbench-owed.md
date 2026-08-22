@@ -26,9 +26,9 @@ on evaluation machinery. Both are blocked on **data** — four adapters that do 
 **two teacher checkpoints no backend can load**. The whole remaining library-side list is roughly 500 lines: one
 pooling mode, three `check` axes, a contract test, four adapters and nine provenance records.
 
-The package's own list of what is unbuilt lives in [[reidbench/docs/design.md](../reidbench/docs/design.md)](../reidbench/docs/design.md)
+The package's own list of what is unbuilt lives in [[reidbench/docs/design.md](../../reidbench/docs/design.md)](../../reidbench/docs/design.md)
 ("what is not built yet"), and its validation debt in
-[[reidbench/docs/validation.md](../reidbench/docs/validation.md)](../reidbench/docs/validation.md) ("still owed"). **This page adds only the demand
+[[reidbench/docs/validation.md](../../reidbench/docs/validation.md)](../../reidbench/docs/validation.md) ("still owed"). **This page adds only the demand
 side:** which experiment forces each item, and in what order. Items nothing forces — `measure/cluster.py`, the
 tracker bridge, a `local:` backend — stay unbuilt on purpose.
 
@@ -65,7 +65,7 @@ The data lane is shared, which is why it goes first: it is the only work three s
 
 | Owed | Forced by | Shape | State |
 |---|---|---|---|
-| `adapters/msmt17.py` | C1 §3 (primary), C16 §3, C3 | read the official `list_*.txt` files, not a directory glob, so it takes both the V1 and V2 layouts | 📋 — `msmt17/official@1` and the dataset record already ship; **access is the harder half**, see [datasets/msmt17.md](../datasets/msmt17.md) §4 |
+| `adapters/msmt17.py` | C1 §3 (primary), C16 §3, C3 | read the official `list_*.txt` files, not a directory glob, so it takes both the V1 and V2 layouts | 📋 — `msmt17/official@1` and the dataset record already ship; **access is the harder half**, see [datasets/msmt17.md](../../datasets/msmt17.md) §4 |
 | `adapters/cuhk03.py` | C16 §3 (hard cross-domain), C1 §3 | detected boxes; **two named protocol values** — `cuhk03/detected-767@1` and `cuhk03/detected-classic-20split@1`, never a flag, because a reader who cannot see which split produced a number will assume the flattering one | ✖ |
 | `adapters/occluded_reid.py` | C1 §6.4, C16 §7.5 | TIFF images and **no camera labels**, so its protocol excludes `same_uid` only — a property of the release, written into the protocol's definition rather than left as a silently absent rule. Plus a regression test that `occluded-duke` still resolves **denied** | ✖ — data is on disk |
 | `adapters/ccvid.py` | C1 §6.4, C16 §7.5 | tracklet-shaped: the manifest carries `trackid`, then `transform.aggregate` and a `ccvid/tracklet@1` value shaped like `veri776/tracklet@1` | ✖ |
@@ -105,7 +105,7 @@ therefore gets **no licence check at all**, and EUPE's record says `commercial_o
 
 ## 2. Validation debt, and which experiment it gates
 
-The list itself is [[reidbench/docs/validation.md](../reidbench/docs/validation.md)](../reidbench/docs/validation.md), under "still owed". What
+The list itself is [[reidbench/docs/validation.md](../../reidbench/docs/validation.md)](../../reidbench/docs/validation.md), under "still owed". What
 this page adds is who is stopped by each item:
 
 | Owed oracle | Gates |
@@ -179,7 +179,7 @@ the zero-shot floor without a probe existing; a trained head adds one column, fr
 |---|---|---|
 | 1 | Teacher lane: `timm:` or a new `hf:` backend? | **check timm first** — zero code if it covers SigLIP2 and DINOv3 at the pooling C1 wants; if it does not, C1 is the evidence for `hf:` |
 | 2 | Is 256×128 a supported C-RADIOv4 input size? | **not answerable offline.** `_torchhub` deliberately raises rather than snapping, so the answer arrives as an error naming the nearest supported size. Settled by running the floor |
-| 3 | MSMT17: which access route, at what provenance cost? | open — the first-party distribution is gone; the three remaining routes and the Market + CUHK03-detected fallback are in [datasets/msmt17.md](../datasets/msmt17.md) §4 |
+| 3 | MSMT17: which access route, at what provenance cost? | open — the first-party distribution is gone; the three remaining routes and the Market + CUHK03-detected fallback are in [datasets/msmt17.md](../../datasets/msmt17.md) §4 |
 | 4 | Which repo trains the heads — a sibling directory or a separate repository? | open, and shared by C1 and C16. Either way it pins an exact `reidbench` version |
 | 5 | Is CCVID's cloth-change comparison its own protocol value? | **yes, if it is scored separately** — the same reasoning as CUHK03's two names |
 | 6 | A CLI verb for the backbone grid, or for a nesting sweep? | **no.** Both are loops over values — a directory of JSON specs, a dict of levels — and a `--backbones a,b,c` flag would be a second, stringly-typed way to say what those already say. Build it when an experiment repo asks twice |

@@ -200,10 +200,10 @@ For a surveillance-like deployment with unknown or partially known target sites:
 
 ## 9. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[Zero-shot ReID](glossary.md#12-named-settings) · [UDA / USL](glossary.md#12-named-settings) · [Re-indexing](glossary.md#21-gallery-anatomy) · [Operating point](glossary.md#22-retrieval-metrics) ·
-[PEFT](glossary.md#6-training-adaptation-and-transfer) · [Retention](glossary.md#6-training-adaptation-and-transfer) · [Catastrophic forgetting](glossary.md#6-training-adaptation-and-transfer)
+[Zero-shot ReID](../glossary.md#12-named-settings) · [UDA / USL](../glossary.md#12-named-settings) · [Re-indexing](../glossary.md#21-gallery-anatomy) · [Operating point](../glossary.md#22-retrieval-metrics) ·
+[PEFT](../glossary.md#6-training-adaptation-and-transfer) · [Retention](../glossary.md#6-training-adaptation-and-transfer) · [Catastrophic forgetting](../glossary.md#6-training-adaptation-and-transfer)
 
 ---
 

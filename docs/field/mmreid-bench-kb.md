@@ -37,11 +37,11 @@ versions.
    under QGM. Grok-4 scored **17.50% on occluded — below the 25% chance level**, which is a fact about
    instruction-following, not about vision.
 4. **Its RGB task is DukeMTMC-ReID.** Under this repo's standing policy that is unusable
-   ([50 §2](50-benchmarks-datasets.md), [91 §3](91-protocol-nested-attribute-embeddings.md)), so one of the ten
+   ([50 §2](50-benchmarks-datasets.md), [91 §3](../project/91-protocol-nested-attribute-embeddings.md)), so one of the ten
    rows cannot be reproduced here and the benchmark as a whole inherits the withdrawal problem. §5.1.
 5. **It is closed-set by construction** — every question has exactly one correct answer, in both schemes. It
    therefore cannot express rejection, which is the gap [70 §2](70-open-problems-2026.md) ranks as the field's
-   second-largest and which [90](90-contribution-ledger-2026.md)'s recommended package attacks. This benchmark is
+   second-largest and which [90](../project/90-contribution-ledger-2026.md)'s recommended package attacks. This benchmark is
    evidence *for* that plan, not competition with it. §5.2.
 6. **No code or data release found** as of 2026-08-20. For a benchmark whose value is a protocol, that is the
    difference between a resource and a paper.
@@ -161,7 +161,7 @@ alarm rate `1 − (1 − f)^N` is essentially unmeasurable at N=4. The paper's o
 sets" is what that pitfall looks like from the inside.
 
 For scale: VeRi's and MSMT17's official galleries run to tens of thousands of images
-([counts](../datasets/veri776.md), [counts](../datasets/msmt17.md)), and PAB ships 34,795 distractors
+([counts](../../datasets/veri776.md), [counts](../../datasets/msmt17.md)), and PAB ships 34,795 distractors
 specifically to stop this. VP-ReID's 500 is an improvement on 4 and is still one to two orders of magnitude short of
 where deployments live.
 
@@ -187,7 +187,7 @@ on the same data costs 5,142 forward passes and a matrix multiply.
 ### 5.1 The Duke problem, and what it costs us concretely
 
 The RGB task is built on **DukeMTMC-ReID**. This repo does not use Duke or anything derived from it
-([50 §2](50-benchmarks-datasets.md), [91 §3](91-protocol-nested-attribute-embeddings.md), project README), which has
+([50 §2](50-benchmarks-datasets.md), [91 §3](../project/91-protocol-nested-attribute-embeddings.md), project README), which has
 three consequences:
 
 | Consequence | Detail |
@@ -201,7 +201,7 @@ csID-relevant sets; it has no Duke lineage, so it stays available.
 
 ### 5.2 It strengthens the ledger rather than threatening it
 
-[90](90-contribution-ledger-2026.md)'s TL;DR says the "yet another ReID benchmark" slot is taken by arXiv 2601.20598.
+[90](../project/90-contribution-ledger-2026.md)'s TL;DR says the "yet another ReID benchmark" slot is taken by arXiv 2601.20598.
 MMReID-Bench/VP-ReID is a **second occupant of that slot from a different angle** — 15 MLLMs × 10 modalities rather
 than 11 encoders × 9 datasets — which makes the ledger's conclusion stronger, not weaker: breadth benchmarking is
 now crowded from two directions, and neither occupant scores rejection, calibration, or threshold behaviour. The
@@ -264,8 +264,8 @@ step replaced — and no model code enters the package, so the scope lock holds.
   [gallery-and-evaluation-kb.md](gallery-and-evaluation-kb.md) §7.1, §8 ·
   [open-world-rejection-calibration-kb.md](open-world-rejection-calibration-kb.md) §1.3, §4.2 ·
   [foundation-model-reid-kb.md](foundation-model-reid-kb.md) §3.4 ·
-  [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) TL;DR, §11 ·
-  [36-reidbench.md](36-reidbench.md) · [[reidbench/README.md](../reidbench/README.md)](../reidbench/README.md)
+  [90-contribution-ledger-2026.md](../project/90-contribution-ledger-2026.md) TL;DR, §11 ·
+  [36-reidbench.md](../project/36-reidbench.md) · [[reidbench/README.md](../../reidbench/README.md)](../../reidbench/README.md)
 
 ## 9. Retrieval hints
 

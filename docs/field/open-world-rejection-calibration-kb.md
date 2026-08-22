@@ -293,7 +293,7 @@ flowchart TD
 |---|---|---|
 | **OPeRID v1.0** (2014) | Yes - purpose-built | 6 cameras, 200 IDs, 7,413 images. Correct protocol, obsolete scale |
 | **Market-1501 + 500k distractors** | Partial | The 500k distractor set gives you non-mated gallery clutter; still no non-mated *probe* protocol out of the box |
-| **MSMT17** | No | largest classic set, closed-set protocol — [counts](../datasets/msmt17.md) |
+| **MSMT17** | No | largest classic set, closed-set protocol — [counts](../../datasets/msmt17.md) |
 | **CUHK-SYSU / PRW** (person search) | Closest by accident | Gallery is whole scene images containing many unlabelled people; person search inherently produces candidates that match nobody |
 | **QMUL-SurvFace** | Yes - native | 463,507 images, 15,573 IDs, open-set surveillance protocol, rank-k success at fixed false alarm. Faces, not bodies, but the protocol transfers verbatim |
 | **IJB-B / IJB-C** | Yes | Explicit non-mated probe sets; the template for mated/non-mated splits |
@@ -437,13 +437,13 @@ flowchart TD
 
 ## 8. Terms
 
-Defined once, in **[glossary.md](glossary.md)** — never here. Used on this page:
+Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this page:
 
-[Open-set identification](glossary.md#11-what-is-being-asked) · [csID](glossary.md#41-distribution-vocabulary) · [Openness](glossary.md#41-distribution-vocabulary) · [Abstain class](glossary.md#42-rejection-mechanisms) ·
-[Ratio test](glossary.md#42-rejection-mechanisms) · [Selective prediction / risk-coverage](glossary.md#42-rejection-mechanisms) · [Conformal prediction](glossary.md#42-rejection-mechanisms) · [Cohort / AS-norm](glossary.md#42-rejection-mechanisms) ·
-[FPIR](glossary.md#43-operating-point-and-calibration-metrics) · [FNIR](glossary.md#43-operating-point-and-calibration-metrics) · [DIR@FAR](glossary.md#43-operating-point-and-calibration-metrics) · [TTR / FTR](glossary.md#43-operating-point-and-calibration-metrics) ·
-[EER](glossary.md#43-operating-point-and-calibration-metrics) · [minDCF](glossary.md#43-operating-point-and-calibration-metrics) · [Cllr / minCllr](glossary.md#43-operating-point-and-calibration-metrics) · [ECE](glossary.md#43-operating-point-and-calibration-metrics) ·
-[BAKS / BAUS](glossary.md#43-operating-point-and-calibration-metrics) · [Mated / non-mated probe](glossary.md#44-population-and-benchmark-terms) · [Biometric menagerie](glossary.md#44-population-and-benchmark-terms) · [OWTA](glossary.md#33-clustering-metrics-for-identity-discovery)
+[Open-set identification](../glossary.md#11-what-is-being-asked) · [csID](../glossary.md#41-distribution-vocabulary) · [Openness](../glossary.md#41-distribution-vocabulary) · [Abstain class](../glossary.md#42-rejection-mechanisms) ·
+[Ratio test](../glossary.md#42-rejection-mechanisms) · [Selective prediction / risk-coverage](../glossary.md#42-rejection-mechanisms) · [Conformal prediction](../glossary.md#42-rejection-mechanisms) · [Cohort / AS-norm](../glossary.md#42-rejection-mechanisms) ·
+[FPIR](../glossary.md#43-operating-point-and-calibration-metrics) · [FNIR](../glossary.md#43-operating-point-and-calibration-metrics) · [DIR@FAR](../glossary.md#43-operating-point-and-calibration-metrics) · [TTR / FTR](../glossary.md#43-operating-point-and-calibration-metrics) ·
+[EER](../glossary.md#43-operating-point-and-calibration-metrics) · [minDCF](../glossary.md#43-operating-point-and-calibration-metrics) · [Cllr / minCllr](../glossary.md#43-operating-point-and-calibration-metrics) · [ECE](../glossary.md#43-operating-point-and-calibration-metrics) ·
+[BAKS / BAUS](../glossary.md#43-operating-point-and-calibration-metrics) · [Mated / non-mated probe](../glossary.md#44-population-and-benchmark-terms) · [Biometric menagerie](../glossary.md#44-population-and-benchmark-terms) · [OWTA](../glossary.md#33-clustering-metrics-for-identity-discovery)
 
 ---
 
@@ -492,7 +492,7 @@ Defined once, in **[glossary.md](glossary.md)** — never here. Used on this pag
 **Sibling KBs in this wiki**
 - [70-open-problems-2026.md](70-open-problems-2026.md) section 2 - the one-page version of this problem
 - [50-benchmarks-datasets.md](50-benchmarks-datasets.md) - dataset and protocol details
-- [90-contribution-ledger-2026.md](90-contribution-ledger-2026.md) - candidate C3 scores this as the empty lane, and package P2 is built on it
+- [90-contribution-ledger-2026.md](../project/90-contribution-ledger-2026.md) - candidate C3 scores this as the empty lane, and package P2 is built on it
 - [openood-v1.5](openood-kb.md), [halo-loss](halo-loss-kb.md), [reid-mot-metrics](reid-mot-metrics-kb.md), [reid-in-mot](reid-in-mot-kb.md), [soma](soma-kb.md)
 
 ## 10. Retrieval hints

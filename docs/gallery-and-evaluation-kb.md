@@ -6,7 +6,7 @@ domain: computer-vision, re-identification, evaluation
 tags: [gallery, query, probe, junk, distractor, cmc, rank-1, map, minp, protocol, veri-776, vehicleid, market-1501, cross-camera, single-shot, multi-shot, evaluation-pitfalls, worked-example]
 retrieved: 2026-08-18
 confidence: |
-  high - every number in sections 4 to 7 was computed in this repository on datasets/VeRi with src/torment_nexus/eval.py,
+  high - every number in sections 4 to 7 was computed on VeRi-776 with this project's evaluator,
   and the junk/ground-truth rule was verified against VeRi's official gt_index.txt and jk_index.txt for all 1,678 queries;
   protocol descriptions for datasets not present locally (Market-1501, CUHK03, VehicleID) come from their published protocols, not from local verification.
 supersedes: null
@@ -15,7 +15,7 @@ related: [50-benchmarks-datasets, reid-mot-metrics, open-world-rejection-calibra
 
 # The ReID Gallery and How Evaluation Actually Works
 
-A ground-up walkthrough. Everything from section 4 onward is computed on this repository's own data: **VeRi-776** ([counts](../datasets/veri776.md)), using `src/torment_nexus/eval.py` and two cached embedding sets, both from an earlier layout of this project. `datasets/` now means [the dataset pages](../datasets/); the data itself lives under `$REID_DATA_ROOT`.
+A ground-up walkthrough. Everything from section 4 onward is measured, not quoted: one dataset, **VeRi-776** ([counts](../datasets/veri776.md)), two cached embedding sets, and one evaluator.
 
 ## TL;DR
 
@@ -124,16 +124,16 @@ flowchart LR
     class S1,S2,S3,S4,S5,S6 step
 ```
 
-Where each step lives in this repo:
+What each step actually does:
 
-| Step | Code | Note |
+| Step | Operation | Note |
 |---|---|---|
-| 1 | [veri.py:31](../src/torment_nexus/datasets/veri.py#L31) `load_veri` | parses `test_label.xml` for vehicleID and cameraID |
-| 2 | [eval.py:173](../src/torment_nexus/eval.py#L173) `load_embeddings` | loads cached per-image `.npy` vectors |
-| 3 | [eval.py:37](../src/torment_nexus/eval.py#L37) `_cosine_similarity_matrix` | normalizes then one matmul |
-| 4 | [eval.py:138](../src/torment_nexus/eval.py#L138) `np.argsort(-sim)` | descending similarity per query |
-| 5 | [eval.py:151](../src/torment_nexus/eval.py#L151) | builds the `matches` and `junk` boolean masks |
-| 6 | [eval.py:54](../src/torment_nexus/eval.py#L54) `_compute_ap`, [eval.py:74](../src/torment_nexus/eval.py#L74) `_compute_cmc` | per query, then `.mean()` |
+| 1 | parse the split | `test_label.xml` gives vehicleID and cameraID per image |
+| 2 | load embeddings | cached per-image `.npy` vectors, one array per split |
+| 3 | cosine similarity | L2-normalize both sides, then one matmul |
+| 4 | rank | `argsort(-sim)` per row, descending |
+| 5 | label | build the `matches` and `junk` boolean masks |
+| 6 | reduce | AP and CMC per query, then `.mean()` |
 
 ### Steps 3 and 4 in detail
 
@@ -182,7 +182,7 @@ flowchart TD
 
 **ReID means *re*-identification: recognising the same object seen by a different camera.** A same-camera match is not re-identification, it is tracking. So the protocol deletes those entries from the ranked list entirely - they are not rewarded and, crucially, they do not push true positives down the list.
 
-This repo implements exactly that in one line, [eval.py:154](../src/torment_nexus/eval.py#L154):
+That is one line:
 
 ```python
 junk = matches & (g_cams[order] == q_cams[i])
@@ -338,7 +338,7 @@ Upper line `siglip2-g`, lower line `backbone`. The same numbers as a table, at t
 | queries with AP below 0.10 | **9.0%** | 11.4% |
 | queries with AP above 0.80 | 14.8% | 11.9% |
 
-Roughly one query in eleven is a near-total failure and one in seven is nearly perfect. `ap_per_query` is returned by [eval.py:29](../src/torment_nexus/eval.py#L29) precisely so this distribution can be inspected instead of collapsed. Per-query AP histograms are the cheapest diagnostic in ReID and almost nobody plots them.
+Roughly one query in eleven is a near-total failure and one in seven is nearly perfect. An evaluator should return the per-query AP vector alongside the mean, precisely so this distribution can be inspected instead of collapsed. Per-query AP histograms are the cheapest diagnostic in ReID and almost nobody plots them.
 
 ---
 
@@ -479,15 +479,22 @@ The wider metric comparison, including HOTA and IDF1 for the tracking case, is i
 
 ---
 
-## 10. Reproduce every number in this file
+## 10. How every number here was produced
 
-```bash
-pdm run python scripts/evaluate.py          # section 6.1 table
-```
+Every row is the same three inputs - VeRi's test split, one cached embedding set, one evaluator -
+with a single thing varied. Nothing else differs between rows, which is the only reason they are
+comparable at all:
 
-The other tables come from short scripts over the same API: `load_veri` for the split, `load_embeddings` for the cached vectors, and `evaluate(...)` with modified `ReIDSplit` objects to switch protocol. Passing `ReIDSplit(ids=...)` **without** `cam_ids` disables junk filtering, which is how the section 7.3 row was produced - see [eval.py:153](../src/torment_nexus/eval.py#L153).
+| Table | What was varied |
+|---|---|
+| section 6.1 | the embedding model; official protocol otherwise |
+| section 7.1 | gallery subsampled to N identities, queries restricted to survivors, 5 seeds |
+| section 7.2 | one randomly drawn gallery image per identity, 10 draws |
+| section 7.3 | camera ids withheld, which disables junk filtering entirely |
 
-Reproduction note: the local run emits a `RuntimeWarning` about the GIL being re-enabled when pandas loads under this free-threaded interpreter. It is harmless and does not affect results.
+That last one is the useful trick for checking an evaluator: an implementation that cannot be made
+to produce the 99.82% self-retrieval number on demand probably is not applying the junk rule where
+you think it is.
 
 ---
 
@@ -510,11 +517,9 @@ Reproduction note: the local run emits a `RuntimeWarning` about the GIL being re
 
 ## 12. Sources
 
-**Local, verified in this repository on 2026-08-18**
-- [src/torment_nexus/eval.py](../src/torment_nexus/eval.py) - the evaluator every number comes from
-- [src/torment_nexus/datasets/veri.py](../src/torment_nexus/datasets/veri.py) - split construction
-- [scripts/evaluate.py](../scripts/evaluate.py) - the driver
-- `datasets/VeRi/ReadMe.txt`, `gt_index.txt`, `jk_index.txt` - the official protocol, reproduced exactly by the junk rule for all 1,678 queries
+**Measured locally on 2026-08-18**
+- VeRi-776 test split with two cached embedding sets - every number in sections 4 to 7
+- VeRi's shipped `ReadMe.txt`, `gt_index.txt` and `jk_index.txt` - the official protocol, reproduced exactly by the junk rule for all 1,678 queries
 
 **Datasets and protocols**
 - Liu et al., *Large-scale vehicle re-identification in urban surveillance videos*, ICME 2016, and *PROVID*, IEEE TMM 2018 - VeRi-776
@@ -531,4 +536,4 @@ Reproduction note: the local run emits a `RuntimeWarning` about the GIL being re
 
 ## 13. Retrieval hints
 
-Answers: *what is a gallery in ReID · what is a query or probe · what are junk images · why are same-camera matches excluded · how is mAP computed in re-identification · worked example of average precision for ReID · what is the CMC curve · rank-1 vs mAP · why is my rank-1 almost 100 percent · how does gallery size affect mAP · single-shot vs multi-shot gallery · VehicleID vs VeRi evaluation protocol · CUHK03 old vs new protocol · how to evaluate VeRi-776 · what do gt_index.txt and jk_index.txt contain · why do two models disagree between mAP and rank-1 · how to reproduce ReID evaluation in this repo.*
+Answers: *what is a gallery in ReID · what is a query or probe · what are junk images · why are same-camera matches excluded · how is mAP computed in re-identification · worked example of average precision for ReID · what is the CMC curve · rank-1 vs mAP · why is my rank-1 almost 100 percent · how does gallery size affect mAP · single-shot vs multi-shot gallery · VehicleID vs VeRi evaluation protocol · CUHK03 old vs new protocol · how to evaluate VeRi-776 · what do gt_index.txt and jk_index.txt contain · why do two models disagree between mAP and rank-1 · how to reproduce ReID evaluation.*

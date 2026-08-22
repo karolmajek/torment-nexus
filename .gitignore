@@ -164,3 +164,11 @@ cython_debug/
 
 
 data/
+
+# Regenerable eval intermediates. The run records under results/runs/*/ are kept:
+# results.json, per_query.parquet and curves.npz are the artifacts the table is built from.
+results/cache/
+results/runs/**/work/
+*.parquet
+*.npz
+*.zip

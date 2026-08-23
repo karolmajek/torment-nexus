@@ -56,19 +56,11 @@ rather than copying: `REID_DATA_ROOT=/path/to/collection python datasets/get.py 
 | kind | what happens | which |
 |---|---|---|
 | `direct` | plain HTTPS; `fetch` downloads, checksums, unpacks, and prints the sha256 to record | occluded-reid, market1501-attribute, soma |
-<<<<<<< HEAD
 | `gdrive` | Drive file id is on the page; `fetch` delegates to `gdown` or prints the link | cuhk03-np, ccvid, mars, vrai (a *folder*, so the page prints `gdown --folder`) |
 | `request` | a human signs an agreement and emails an author. No automation exists or is pretended | msmt17, market1501, market1501-500k, veri776, vehicleid, veri-wild |
 | `denied` | refused, loudly, with no override flag | everything with DukeMTMC lineage |
 
 **Six of thirteen are `request`.** That is the real shape of this field's data access, and it is
-=======
-| `gdrive` | Drive file id is on the page; `fetch` delegates to `gdown` or prints the link | cuhk03-np, ccvid, mars, **market1501** |
-| `request` | a human signs an agreement and emails an author. No automation exists or is pretended | msmt17, veri776, vehicleid, veri-wild |
-| `denied` | refused, loudly, with no override flag | everything with DukeMTMC lineage |
-
-**Four of eleven are `request`.** That is the real shape of this field's data access, and it is
->>>>>>> 9c9f3e0 (market access)
 the schedule risk worth planning around: the download is minutes, the agreement is weeks. Start
 the vehicle requests (VeRi-776, VehicleID, VERI-Wild) before you need them.
 
@@ -103,14 +95,9 @@ Full reasoning, the enforcement points, and a substitute for every Duke-derived 
 
 | dataset | role | access | on disk |
 |---|---|---|---|
-<<<<<<< HEAD
 | [market1501](market1501.md) | person, in-domain secondary | request | ✅ **fetched, verified and run** |
 | [market1501-500k](market1501-500k.md) | +500,000 gallery distractors; a scale axis, not a difficulty one | request | downloaded, not yet linked into the Market root |
 | [market1501-attribute](market1501-attribute.md) | 27 attribute labels (C16 H1) | direct | ✅ **fetched and read** |
-=======
-| [market1501](market1501.md) | person, in-domain secondary | gdrive | ✅ **fetched and verified** — but see the page's §4 before reporting a number |
-| [market1501-attribute](market1501-attribute.md) | 27 attribute labels (C16 H1) | direct | — |
->>>>>>> 9c9f3e0 (market access)
 | [msmt17](msmt17.md) | **person, in-domain primary** | request — **source is gone**, see the page | — |
 | [cuhk03-np](cuhk03-np.md) | person, hard cross-domain | gdrive | — |
 | [occluded-reid](occluded-reid.md) | occlusion stress | direct | ✅ **fetched and verified** |
@@ -124,15 +111,8 @@ Full reasoning, the enforcement points, and a substitute for every Duke-derived 
 
 `licence_verified = false` on most entries is not laziness — it means the licence text has not
 been read by anyone in this project on the date recorded, and it should be read before a number
-<<<<<<< HEAD
 from that dataset enters a paper. Five entries are `true`: CUHK03-NP, Occluded-REID and SOMA,
 whose terms were read on 2026-08-21, and VRAI and Market-1501, read on 2026-08-22 — Market's
 terms ship inside its own archive, in `readme.txt`, which is why that one could be closed
 without leaving the disk. Market-1501 +500k stays `false` on purpose: its archive carries no
 licence text at all, and an inherited licence must not read as a verified one.
-=======
-from that dataset enters a paper. Only four entries are `true`: CUHK03-NP, Occluded-REID and
-SOMA, whose terms were read on 2026-08-21, and Market-1501, read on 2026-08-22 — its terms are
-not on the web page at all, they are in `readme.txt` inside the archive, which is exactly why
-nobody had read them.
->>>>>>> 9c9f3e0 (market access)

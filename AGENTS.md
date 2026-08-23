@@ -19,6 +19,8 @@ DO NOT search full disk outside this repo dir
 
 LLM-WIKI in docs/
 
+repo goal - research only (main focus)
+
 Markdown + Mermaid (a lot!)
 
 do not use git! User will do things -> list at the end if needed

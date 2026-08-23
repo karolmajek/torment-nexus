@@ -170,5 +170,7 @@ data/
 results/cache/
 results/runs/**/work/
 *.parquet
+*.npy
 *.npz
 *.zip
+datasets/*/*

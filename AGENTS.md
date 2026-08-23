@@ -8,7 +8,7 @@ do not use node js npm whatever
 python formatter? black
 
 We do not re-share any dataset
-we can provide download scripts
+we can provide download scripts (without links which are not public)
 end users need to comply to dataset licences
 
 minimize amount of code (do not keep unused, old; do not overcomplicate stuff - KISS, DRY, no code = no maintanance)

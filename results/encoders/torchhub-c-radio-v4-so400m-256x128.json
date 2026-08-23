@@ -1,0 +1,9 @@
+{
+  "id": "torchhub:NVlabs/RADIO/c-radio_v4-so400m",
+  "entrypoint": "radio_model",
+  "pooling": "summary",
+  "input_size": [256, 128],
+  "runtime": "torch",
+  "precision": "fp32",
+  "batch_size": 32
+}

@@ -1,0 +1,5 @@
+{
+  "head": "pca",
+  "dim": 512,
+  "train": {"dataset": "market1501", "split": "train"}
+}

@@ -174,3 +174,7 @@ results/runs/**/work/
 *.npz
 *.zip
 datasets/*/*
+
+# Manifests are a function of a dataset root: regenerable, and identified in every result
+# by their content digest rather than by their path.
+results/manifests/

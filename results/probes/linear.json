@@ -1,0 +1,14 @@
+{
+  "head": "linear",
+  "dim": 512,
+  "train": {
+    "dataset": "market1501",
+    "split": "train"
+  },
+  "epochs": 100,
+  "batch_size": 256,
+  "lr": 0.001,
+  "weight_decay": 0.0005,
+  "label_smoothing": 0.1,
+  "seed": 0
+}

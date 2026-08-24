@@ -1,7 +1,12 @@
 # Results
 
-Every (encoder, dataset, protocol) combination this project has actually run, in one table:
-[`table.md`](table.md). It is generated — edit the inputs, not the table.
+Every (encoder, head, dataset, protocol) combination this project has actually run, in one
+table: [`table.md`](table.md). It is generated — edit the inputs, not the table.
+
+A **head** is a small map trained on the frozen encoder's features and nothing else — no
+gradient reaches the backbone, ever. `none` is a value of that axis rather than the absence
+of one: it is the frozen encoder scored directly, and it is the row every other row in its
+section is read against.
 
 ```bash
 python results/run.py plan       # what would run, and why the rest would not
@@ -15,26 +20,38 @@ installed, so a fresh clone reproduces without an install step.
 
 ## Where each fact lives
 
-Nothing is listed twice. `run.py` holds no dataset knowledge and no model knowledge.
+Nothing is listed twice. `run.py` holds no dataset knowledge, no model knowledge and no
+probe knowledge.
 
 ```mermaid
 flowchart LR
     E["results/encoders/*.json<br/><i>an encoder spec</i>"]
+    P["results/probes/*.json<br/><i>a head spec · names its train split</i>"]
     D["datasets/*.md<br/><i>```toml: adapter · dir · protocols</i>"]
     R["run.py<br/><i>the cross product</i>"]
     V["reidbench CLI<br/><i>manifest · encode · score · measure</i>"]
+    PR["probe.py<br/><i>fit · apply</i>"]
+    F["a feature store<br/><i>content-addressed</i>"]
     RUN["results/runs/…/results.json<br/><i>one run record</i>"]
     T["table.md"]
 
     E --> R
+    P --> R
     D --> R
     R --> V
-    V --> RUN
+    R --> PR
+    V -->|encode| F
+    F -->|fit · apply| PR
+    PR -->|another store| F
+    F -->|score · measure| RUN
     RUN -->|reidbench render| T
 ```
 
 - **Add a model** — drop a JSON spec in `encoders/`. That same file is what
   `reidbench encode --encoder` consumes, so the spec is never transcribed.
+- **Add a head** — drop a JSON spec in [`probes/`](probes). It names its own `train`
+  dataset and split, so the matrix gains a row per encoder without `run.py` learning what a
+  probe is. That same file is what `probe.py fit --spec` consumes.
 - **Add a dataset** — a page in [`datasets/`](../datasets) whose ` ```toml ` block names a
   non-empty `adapter` and at least one `protocol`, and a directory on disk. Same block
   [`datasets/get.py`](../datasets/get.py) reads.

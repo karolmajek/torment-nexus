@@ -5,7 +5,7 @@ type: concept / survey
 domain: computer-vision, re-identification, foundation-models, representation-learning
 status: active research area; landscape as of Aug 2026
 tags: [foundation-model, reid, clip-reid, dinov3, siglip2, luperson, solider, unihcp, instruct-reid, agglomerative, radio, eupe, domain-generalization, linear-probing, megadescriptor]
-related: [reid-glossary, reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, openood-v1.5, halo-loss, matryoshka-representation-learning, disentangled-attribute-embeddings]
+related: [reid-glossary, reid-in-mot, reid-mot-metrics, reid-tracking-datasets, agglomerative-vfm, probing-protocols, openood-v1.5, halo-loss, matryoshka-representation-learning, disentangled-attribute-embeddings]
 retrieved: 2026-08-18
 confidence: high for the published-work inventory; medium for the "no agglomerative ReID work exists" claim — that is absence-of-evidence from targeted search, not a systematic review
 ---
@@ -264,7 +264,7 @@ Foundation-model ReID inherits a problem the retrieval literature mostly ignores
 
 ## 8. Practical recipe
 
-1. **Start frozen.** Extract embeddings from DINOv3 and SigLIP2, add an ArcFace head, measure. This is your floor and it is higher than most people expect.
+1. **Start frozen.** Extract embeddings from DINOv3 and SigLIP2, add an ArcFace head, measure. This is your floor and it is higher than most people expect. Which head, and what each one actually measures: [probing-protocols-kb.md](probing-protocols-kb.md).
 2. **Do not full-fine-tune first.** Use layer-wise LR decay; unfreeze progressively. Full FT distorts pretrained features and hurts OOD.
 3. **Report the cross-domain drop.** Train on A, test on B, zero adaptation. Per §4, this inverts the leaderboard.
 4. **Do not naively fuse two foundation backbones.** Joint symmetric fine-tuning collapses them into each other. If you want diversity, get it from an agglomerative model or from asymmetric LRs.

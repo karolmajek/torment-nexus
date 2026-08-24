@@ -241,10 +241,18 @@ benchmark discipline is in [openood-kb.md](field/openood-kb.md).
 
 ### 5.2 Probing a frozen backbone
 
+Catalog of every head, and which community defaults to which: [probing-protocols-kb.md](field/probing-protocols-kb.md).
+
 | Term | Definition |
 |---|---|
+| **Encoder / head / measure** | The three axes of a probing protocol: what produces the vector (checkpoint, resolution, pooling, adaptor, precision — one identity, one cache key), what reshapes it (`none`, linear, ArcFace…), and what number comes out. The head is nested *inside* the encoder's identity, not parallel to it |
+| **Probe (head sense)** | A small module trained on frozen features to reveal what they already encode. Distinct from the *query* sense of "probe" in §2.1 |
 | **Linear probing** | Freeze the backbone, train only a linear head — isolates what the representation already encodes |
-| **Attention probing** | Probe with *C* learnable queries cross-attending the feature map; used when a representation lacks cross-image semantic alignment |
+| **Logistic-regression probe** | The same head fit by L-BFGS to convergence with a swept regularisation strength, rather than by SGD. CLIP's convention; a different estimator from an SGD linear probe, not a synonym |
+| **k-NN probe** | Classify by nearest neighbours over stored train features, no head trained. Cannot be inflated by a hyperparameter sweep, so it bounds how much a tuned head added |
+| **Attention probing** | Probe with *C* learnable queries cross-attending the feature map; used when a representation lacks cross-image semantic alignment, or to remove the pooling choice as a confound |
+| **Margin softmax head** | ArcFace / CosFace / SphereFace / Circle Loss — a classifier with an angular or cosine margin. ReID's actual training head, discarded at test time |
+| **Path A / Path B probing** | Two measurements sharing the name "linear probe": report the head's accuracy on classes it trained on (A), or discard the head and report retrieval mAP on unseen identities (B). Only B is a ReID result |
 | **Instance discrimination** | Separating individual instances rather than categories — what ReID actually needs |
 
 ### 5.3 Structure inside the embedding

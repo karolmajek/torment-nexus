@@ -9,7 +9,7 @@ confidence: |
   high — model family, teacher composition, sizes, and licences are read from `agglomerative-vfm-kb.md` and `foundation-model-reid-kb.md` primary sources.
   medium — this exact experiment (frozen probes across the agglomerative family, on ReID specifically) is named as unrun in `foundation-model-reid-kb.md` §6 but not designed there; the protocol below is this KB's own construction.
   low-medium — exact checkpoint identifiers for DINOv3/SigLIP2 are not confirmed verbatim in this KB's sources and are flagged inline as "verify current model card."
-related: [reid-contribution-ledger-2026, agglomerative-vfm, foundation-model-reid, reid-benchmarks-datasets, reid-finetuning-question, openood-v1.5]
+related: [reid-contribution-ledger-2026, agglomerative-vfm, foundation-model-reid, probing-protocols, reid-benchmarks-datasets, reid-finetuning-question, openood-v1.5]
 supersedes: null
 ---
 
@@ -84,10 +84,22 @@ Full reasoning and substitutes: [datasets/dukemtmc-denied.md](../../datasets/duk
 
 ## 4. Probe design
 
-Two probe heads, both cheap to train, run both for robustness:
+Two probe heads, both cheap to train, run both for robustness. They are two rungs of a longer ladder —
+the full catalog of heads in use, what each one measures, and which community defaults to which, is
+[probing-protocols-kb.md](../field/probing-protocols-kb.md). Three things from there bear directly on
+this section:
+
+- **k-NN is worth adding as a third, untrained head** ([probing-protocols §7](../field/probing-protocols-kb.md)).
+  It is free once §5's feature cache exists, has no sweep, and is the cheap defence against a linear
+  probe that measures its own learning-rate budget rather than the backbone.
+- **These probes are reported under "Path B"** ([probing-protocols §5.1](../field/probing-protocols-kb.md)):
+  the head is discarded and §6.1's mAP is computed on the features it reshaped, over identities the head
+  never saw. Published "linear probe accuracy" numbers are the other measurement and do not bound these.
+- **The §4 feature-extraction table below is the bigger half of the choice.** §12's resolution result
+  moved mAP ~25% with no head at all — more than any head-choice effect this literature reports.
 
 ### 4.1 Linear probe
-Single linear layer on top of frozen features, cross-entropy over identity classes with label smoothing. This is the standard "what does the representation already encode" test ([foundation-model-reid-kb.md](../field/foundation-model-reid-kb.md) §9 recommends starting here as "your floor").
+Single linear layer on top of frozen features, cross-entropy over identity classes with label smoothing. This is the standard "what does the representation already encode" test ([foundation-model-reid-kb.md](../field/foundation-model-reid-kb.md) §8 recommends starting here as "your floor").
 
 ### 4.2 ArcFace probe
 Additive angular margin head on the same frozen features — a metric-learning head rather than a plain classifier, closer to how a deployed ReID system would actually be trained. Compare both; if they diverge meaningfully, report both rather than picking one.

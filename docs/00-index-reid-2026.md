@@ -35,6 +35,7 @@ related:
   - foundation-model-reid
   - agglomerative-vfm
   - gallery-and-evaluation
+  - probing-protocols
   - reid-mot-metrics
   - open-world-rejection-calibration
   - openood-v1.5
@@ -107,6 +108,7 @@ Deep references on one subject each, cited throughout the spine. Grouped by what
 | **Evaluation** ||
 | [glossary.md](glossary.md) | Every term used anywhere in this wiki, defined once | You hit a term you do not know, or are about to define one |
 | [gallery-and-evaluation-kb.md](field/gallery-and-evaluation-kb.md) | What the gallery *is*, and how mAP/CMC are actually computed, step by step with a worked VeRi query | You are unsure what a number means, or writing eval code |
+| [probing-protocols-kb.md](field/probing-protocols-kb.md) | Every probe head in practice — cosine, k-NN, linear, logistic-regression, attentive, ArcFace/CosFace/Circle, BNNeck, part-based — what each measures, and why "linear probe" names two different numbers | You are designing or reading a frozen-backbone evaluation |
 | [reid-mot-metrics-kb.md](field/reid-mot-metrics-kb.md) | HOTA, IDF1, MOTA, mAP, ARI — what each rewards | You are comparing retrieval numbers with tracking numbers |
 | [open-world-rejection-calibration-kb.md](field/open-world-rejection-calibration-kb.md) | Rejection, abstention, calibration, ECE / FPR@95 / DIR@FAR, watchlist protocols | You are asking "is this identity in the gallery at all" — the P2 core |
 | [openood-kb.md](field/openood-kb.md) | OpenOOD v1.5 — the OOD benchmark whose discipline C3 ports over | You need the split/threshold-tuning methodology to copy |

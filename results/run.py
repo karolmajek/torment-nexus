@@ -198,7 +198,17 @@ def write_table() -> int:
     if not records:
         print("no runs on disk; nothing to render")
         return 1
-    reidbench("render", *records, "--out", TABLE)
+    # The figures are named here rather than left to the renderer's defaults, because which
+    # two metrics are worth plotting against each other is a claim about these datasets and
+    # belongs where a reader can change it. mAP against mINP, not against R1: R1 tracks mAP
+    # almost exactly here, so that scatter would be a diagonal line, while mINP is the
+    # hardest true match's rank and separates rows the ranking alone calls equal.
+    reidbench(
+        "render", *records,
+        "--scatter", "mAP,mINP",
+        "--bar", "mAP",
+        "--out", TABLE,
+    )
     return 0
 
 

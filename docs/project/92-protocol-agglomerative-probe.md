@@ -213,3 +213,95 @@ Pull directly from [60-finetuning-question.md](../field/60-finetuning-question.m
 ## 11. Relationship to C16
 
 This study's winning backbone becomes the natural candidate to swap into C16's architecture ([91-protocol-nested-attribute-embeddings.md](91-protocol-nested-attribute-embeddings.md) §2.1) if it beats CLIP ViT-B/16 as a frozen-probe starting point. Run this study first, or at least in parallel early, specifically so C16 isn't locked into a backbone choice this study might overturn.
+
+---
+
+## 12. First measurements — 2026-08-23
+
+The first rows of this study exist. They are **not** the probe study §4 describes: no head is
+trained, in-domain or otherwise. What ran is plain cosine similarity over frozen summary
+tokens — the §8 "zero-shot, no fine-tuning at all" row, measured on this project's own
+protocols instead of cited from elsewhere. Read it as the floor the probes must clear, and as
+proof that the pipeline holds together end to end.
+
+Every number lives in [`results/table.md`](../../results/table.md), generated; the run records
+beside it carry protocol digest, manifest digest, encoder spec, cache key, GPU and git sha.
+What follows is only what those rows mean for §1's hypotheses.
+
+**What ran:** C-RADIOv4-H and C-RADIOv4-SO400M, each at 224x224, 256x128 and native
+resolution (each image at its own size, snapped to the model's /16 grid, capped at 512),
+against CLIP ViT-B/16 at 224x224, on Market-1501 (official), Occluded-REID (occluded-vs-whole)
+and VRAI (train cross-camera). Frozen, fp32, summary token, no adaptor, no flip TTA.
+
+| Dataset | CLIP ViT-B/16 | v4-H best | v4-SO400M best |
+|---|---|---|---|
+| Market-1501 | 0.0227 | 0.0610 | **0.0631** |
+| Occluded-REID | 0.2803 | **0.4560** | 0.4436 |
+| VRAI | 0.0251 | **0.1739** | 0.1489 |
+
+mAP, single query. Rows are not comparable *across* datasets — the galleries differ by more
+than an order of magnitude — and none of them is comparable with a published number, for the
+reasons [`results/README.md`](../../results/README.md) enumerates.
+
+### What this says about the hypotheses
+
+- **H1 is untested and stays untested.** The comparison it names is agglomerative *versus its
+  best individual teacher* — DINOv3-alone and SigLIP2-alone (§7). Neither has been run. CLIP
+  ViT-B/16 is not a teacher of C-RADIOv4; beating it by 2.5x to 7x mAP says the family is
+  worth the study's compute, not that agglomeration composes cleanly.
+- **H3 is answered, and the answer is that §6.3's framing had the variable wrong.** The
+  protocol asks for "native small-crop resolution vs. an upscaled variant" as if resampling
+  were the thing to avoid. Run both ways, the axis that moves the numbers is *resolution
+  relative to the encoder's trained range*, not whether an image was resampled:
+
+  | mAP | Market | Occluded-REID | VRAI |
+  |---|---|---|---|
+  | H — 224x224 | 0.0610 | 0.4560 | 0.1739 |
+  | H — 256x128 | 0.0592 | 0.4466 | 0.1376 |
+  | H — native | 0.0443 | 0.3385 | **0.1936** |
+  | SO400M — 224x224 | 0.0628 | 0.4436 | 0.1489 |
+  | SO400M — 256x128 | 0.0631 | 0.4401 | 0.1268 |
+  | SO400M — native | 0.0472 | 0.3404 | **0.1603** |
+
+  Native for a Market or Occluded-REID crop *is* 64x128 — 32 tokens, below the ~128px floor
+  C-RADIOv4 trains across — and it costs about a quarter of the mAP on both sets, for both
+  sizes. Upsampling those crops to 224x224 is therefore not a distortion the study should
+  control for; it is how a 64x128 crop reaches a size the encoder can read. Native for a VRAI
+  crop is a median 295x202, inside the trained range, and it *gains* 11% (H) and 7.7%
+  (SO400M) over the square resize.
+
+  Two secondary readings, both with consequences for §5's compute model:
+
+  - the stochastic-resolution claim holds in the direction that matters here — 224x224 and
+    256x128 are within noise on person crops (0.0610 vs 0.0592, 0.4560 vs 0.4466) even though
+    one is square and one is 2:1, so the model tolerates aspect distortion at fixed token
+    count. Aspect ratio only bites where the subject has one: the same 2:1 change costs VRAI
+    21% relative;
+  - native person crops run **4.3x faster** than 224x224 (53.9 vs 12.3 img/s for H, 85.9 vs
+    21.3 for SO400M) because 32 tokens is a fifth of 196. A quarter of the mAP for a quarter
+    of the cost is a real operating point, not a strictly dominated one — worth remembering
+    if the probe study ever needs a cheap first pass over a much larger gallery.
+- **H2 and H4 are untouched.** No teacher-only baseline, no cross-domain pair. MSMT17 is not
+  on disk (its first-party download 404s, per [msmt17.md](../../datasets/msmt17.md)), so the
+  §6.2 retention table has no source domain yet; VRAI stands in as a hard cross-*viewpoint*
+  case that the protocol never asked for and gets the largest margin of the three.
+- **A size answer the protocol did not ask for:** H and SO400M are one choice on people and
+  two on vehicles. Market 0.061 vs 0.063 and Occluded-REID 0.456 vs 0.444 are ties; VRAI is
+  0.174 vs 0.149 at 224x224 and 0.194 vs 0.160 at native, H ahead by 17% and 21% relative for
+  1.6x the compute. If §2's model table has to be cut for time, SO400M is the honest default
+  for person ReID and H is not — and the gap widens with resolution, not with the dataset
+  alone.
+
+### What these rows cost
+
+Feature extraction over 235,257 images per configuration, on one RTX 2070 Max-Q: 12.8 img/s
+for H at 224x224, 20.8 for SO400M, roughly 1.6x those at 256x128, 4.3x those at native on
+person crops, and 0.4x on VRAI, where native means bigger images and a batch that has to
+break on every change of shape (11.3 h for one cell). The §5 claim that "total compute is
+dominated by encoder forward passes" is confirmed — every probe this study still
+has to train is minutes of work on features that took hours to extract, which is the whole
+argument for caching them once.
+
+One caveat for anyone reading the run records: the Market x H@224 cell first recorded 2.2
+img/s because another process held ~3.5 GB of the 8 GB card while it ran. It was re-measured;
+the metrics never depended on it.

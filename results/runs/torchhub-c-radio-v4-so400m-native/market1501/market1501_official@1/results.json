@@ -1,5 +1,5 @@
 {
-  "created": "2026-08-23T13:58:14+00:00",
+  "created": "2026-08-24T06:52:21+00:00",
   "env": {
     "git": {
       "branch": "main",
@@ -33,15 +33,14 @@
         "entrypoint": "radio_model",
         "extract_semantics": 1,
         "hub_kwargs": {},
-        "id": "torchhub:NVlabs/RADIO/c-radio_v4-h",
-        "input_size": [
-          224,
-          224
-        ],
+        "id": "torchhub:NVlabs/RADIO/c-radio_v4-so400m",
+        "input_size": "native",
         "kind": "encoder",
         "pooling": "summary",
         "precision": "fp32",
-        "preprocess": {},
+        "preprocess": {
+          "max_side": 512
+        },
         "runtime": "torch",
         "tta": {},
         "weights_sha": null
@@ -72,7 +71,7 @@
         "threads": {}
       },
       "extract_semantics": 1,
-      "key": "db25eaa391a70e6dcbe8465262b1d45d",
+      "key": "133e9f7da3977b7963306503d1c13979",
       "kind": "features",
       "manifest": {
         "columns": [
@@ -93,23 +92,23 @@
       },
       "shape": [
         36036,
-        2560
+        2304
       ],
       "storage_dtype": "float16",
       "timing": {
-        "batch_size": 32,
+        "batch_size": 8,
         "device": "cuda",
-        "items_per_second": 12.319,
-        "measured_at": "2026-08-23T13:57:40+00:00",
+        "items_per_second": 85.895,
+        "measured_at": "2026-08-24T06:51:37+00:00",
         "n_items": 36036,
         "precision": "fp32",
         "runtime": "torch",
         "runtime_versions": {
           "torch": "2.6.0+cu124"
         },
-        "seconds": 2925.2441
+        "seconds": 419.5359
       },
-      "written_at": "2026-08-23T13:57:41+00:00"
+      "written_at": "2026-08-24T06:51:38+00:00"
     },
     "manifest": {
       "columns": [
@@ -166,15 +165,14 @@
           "entrypoint": "radio_model",
           "extract_semantics": 1,
           "hub_kwargs": {},
-          "id": "torchhub:NVlabs/RADIO/c-radio_v4-h",
-          "input_size": [
-            224,
-            224
-          ],
+          "id": "torchhub:NVlabs/RADIO/c-radio_v4-so400m",
+          "input_size": "native",
           "kind": "encoder",
           "pooling": "summary",
           "precision": "fp32",
-          "preprocess": {},
+          "preprocess": {
+            "max_side": 512
+          },
           "runtime": "torch",
           "tta": {},
           "weights_sha": null
@@ -205,7 +203,7 @@
           "threads": {}
         },
         "extract_semantics": 1,
-        "key": "db25eaa391a70e6dcbe8465262b1d45d",
+        "key": "133e9f7da3977b7963306503d1c13979",
         "kind": "features",
         "manifest": {
           "columns": [
@@ -226,23 +224,23 @@
         },
         "shape": [
           36036,
-          2560
+          2304
         ],
         "storage_dtype": "float16",
         "timing": {
-          "batch_size": 32,
+          "batch_size": 8,
           "device": "cuda",
-          "items_per_second": 12.319,
-          "measured_at": "2026-08-23T13:57:40+00:00",
+          "items_per_second": 85.895,
+          "measured_at": "2026-08-24T06:51:37+00:00",
           "n_items": 36036,
           "precision": "fp32",
           "runtime": "torch",
           "runtime_versions": {
             "torch": "2.6.0+cu124"
           },
-          "seconds": 2925.2441
+          "seconds": 419.5359
         },
-        "written_at": "2026-08-23T13:57:41+00:00"
+        "written_at": "2026-08-24T06:51:38+00:00"
       },
       "kind": "scores",
       "metric": "cosine",
@@ -252,12 +250,12 @@
     }
   },
   "metrics": {
-    "R1": 0.18378859857482185,
-    "R10": 0.39548693586698336,
-    "R20": 0.47743467933491684,
-    "R5": 0.32066508313539194,
-    "mAP": 0.06096863485593744,
-    "mINP": 0.00443389362097796,
+    "R1": 0.13687648456057008,
+    "R10": 0.34530878859857483,
+    "R20": 0.4317102137767221,
+    "R5": 0.2746437054631829,
+    "mAP": 0.04722241739114726,
+    "mINP": 0.003989619255231342,
     "n_dropped": 0.0,
     "n_query": 3368.0,
     "n_scored": 3368.0

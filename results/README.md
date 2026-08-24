@@ -48,7 +48,7 @@ supported and what has been measured stays visible instead of being an empty tab
 ## What these numbers do not claim
 
 The table is **three frozen general-purpose encoders, none of them trained on
-re-identification**, at two input sizes each for the two C-RADIOv4 checkpoints. It validates
+re-identification**, at three input sizes each for the two C-RADIOv4 checkpoints. It validates
 the pipeline end to end and ranks encoders within a dataset; no row is a competitive result
 and none may be compared with a published number for its dataset:
 
@@ -74,10 +74,10 @@ and none may be compared with a published number for its dataset:
   timm's code is Apache-2.0, its weights are not. Both C-RADIOv4 checkpoints carry a verified
   NVIDIA Open Model License, which is why the licence column under the metrics is not uniform;
 - **`items_per_second` in a run record measures a machine, not a model.** The
-  market1501 x C-RADIOv4-H@224 cell records 2.2 img/s where the same encoder reaches 12.8 on
-  VRAI, because another process held ~3.5 GB of the 8 GB card while it ran. The metrics are
-  unaffected — same weights, same arithmetic, same cache key — but that one throughput figure
-  is not the encoder's.
+  market1501 x C-RADIOv4-H@224 cell first recorded 2.2 img/s against 12.8 for the same encoder
+  on VRAI, because another process held ~3.5 GB of the 8 GB card while it ran; re-extracting
+  on a quiet card gave 12.3. The metrics never moved — same weights, same arithmetic, same
+  cache key — which is exactly why a throughput figure needs its own scepticism.
 
 ## What they do show
 
@@ -93,7 +93,22 @@ comparison is the one thing here that is sound:
   and 256x128 are within noise of each other (0.0610 vs 0.0592, 0.4560 vs 0.4466) while 2:1
   runs 1.6x faster, so 2:1 is the better trade. On VRAI the same change costs 21% relative
   (0.1739 -> 0.1376): distorting a vehicle's aspect ratio destroys more than the token count
-  buys back.
+  buys back;
+- **`native` is not a way of avoiding resampling, it is a resolution like any other, and it
+  wins only where it lands inside the model's trained range.** Feeding each image at its own
+  size, snapped to the model's grid and capped at 512:
+
+  | | Market | Occluded-REID | VRAI |
+  |---|---|---|---|
+  | H, 224x224 -> native | 0.0610 -> 0.0443 | 0.4560 -> 0.3385 | 0.1739 -> **0.1936** |
+  | SO400M, 224x224 -> native | 0.0628 -> 0.0472 | 0.4436 -> 0.3404 | 0.1489 -> **0.1603** |
+
+  Native for a person crop *is* 64x128 — 32 tokens, below the ~128px floor C-RADIOv4 was
+  trained across — and costs about a quarter of the mAP while running 4.3x faster (53.9 vs
+  12.3 img/s). Native for a VRAI crop is a median 295x202, inside that range, and gains 11%
+  for 2.6x the cost. The variable that moved is resolution, not resampling: upsampling a
+  small crop to 224 is not a distortion to be avoided, it is how the crop reaches a size the
+  encoder was trained to read.
 
 The gallery-size effect that the second bullet has to hand-wave is exactly what
 [market1501-500k](../datasets/market1501-500k.md) exists to measure directly: same queries,

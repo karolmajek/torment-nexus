@@ -221,7 +221,7 @@ The defaults are community-specific, and the mismatch is why cross-citation misl
 | **ReID papers** | margin softmax (ArcFace / Circle) or BNNeck+CE+triplet, on a *fine-tuned* backbone | mAP / Rank-1 | Frozen-backbone ReID numbers are rare, which is the gap C1 exists to fill |
 | **Dense-task papers** ([flowfeat-kb.md](flowfeat-kb.md)) | linear probe + local k-NN for VOS; attentive probing for semseg and depth | J&F, mIoU, RMSE | Note the shape of that design — **two probe types across 5 backbones × 3 tasks**. That is the multi-probe discipline C1 should imitate |
 | **OOD** ([openood-kb.md](openood-kb.md)) | linear probe as a *representation*, then post-hoc scoring on top | AUROC, FPR@95 | The probe is infrastructure, not the result |
-| **This project** | `head = none` (cosine retrieval on frozen summary tokens) as the baseline value of the axis, with `linear`, `arcface` and `pca` beside it | mAP, R1, R5, R10, mINP, single query | The floor is measured across 7 encoders × 3 datasets ([92 §12](../project/92-protocol-agglomerative-probe.md)); the trained heads live in [`results/probe.py`](../../results/probe.py), outside `reidbench`, because the package scores and never trains ([38](../project/38-reidbench-owed.md)) |
+| **This project** | `head = none` (cosine retrieval on frozen summary tokens) as the baseline value of the axis, with `linear`, `arcface` and `pca` beside it | mAP, R1, R5, R10, mINP, single query | 4 heads × 7 encoders × 3 datasets, 84 rows: the floor ([92 §12](../project/92-protocol-agglomerative-probe.md)) and the heads ([92 §13](../project/92-protocol-agglomerative-probe.md)). The trained heads live in [`results/probe.py`](../../results/probe.py), outside `reidbench`, because the package scores and never trains ([38](../project/38-reidbench-owed.md)). `pca` is the control that makes the other two readable — same data, same 512 dimensions, no labels |
 
 ---
 
@@ -278,6 +278,11 @@ backbone that lr happens to suit. Mitigations, cheapest first:
    problem.
 4. **Multiple seeds.** [92 §5](../project/92-protocol-agglomerative-probe.md) already mandates ≥3, which
    is cheap on cached features and rare in the field ([50-benchmarks-datasets.md](50-benchmarks-datasets.md) §6).
+   Measured here, the spread is small enough to report as a spread rather than as three tables:
+   refitting one ArcFace head at three seeds moves mAP by sd 0.0002 on Market-1501 and 0.0050 on
+   Occluded-REID, whose 1,000 queries make it the noisiest set of the three
+   ([92 §13.5](../project/92-protocol-agglomerative-probe.md)). The mandate is still right — what it
+   buys is the licence to *stop* reporting seeds once the spread is known.
 
 ### 5.3 Probe ranking does not predict fine-tuned ranking
 
@@ -301,22 +306,56 @@ computed **before** re-ranking. Full argument:
 
 ---
 
-## 6. The encoder axis moves the numbers more
+## 6. Which axis moves the numbers more
 
-Evidence from this project's own runs, with **no head trained at all**
-([92 §12](../project/92-protocol-agglomerative-probe.md); records under [`results/`](../../results/)):
+Evidence from this project's own runs. The encoder axis was measured first, with **no head
+trained at all** ([92 §12](../project/92-protocol-agglomerative-probe.md)); the head axis was
+measured over the same cached features afterwards
+([92 §13](../project/92-protocol-agglomerative-probe.md); records under [`results/`](../../results/)):
 
 | Encoder-axis change | Effect measured |
 |---|---|
-| **Resolution below the encoder's trained range** | ~25% relative mAP lost on Market-1501 and Occluded-REID when 64×128 crops are fed at native size (32 tokens) instead of upsampled to 224×224 — for both C-RADIOv4 sizes |
+| **Resolution below the encoder's trained range** | ~25% relative mAP lost on Market-1501 and Occluded-REID when 64×128 crops are fed at native size (32 tokens) instead of upsampled to 224×224 — for both C-RADIOv4 sizes, and still ~21% once a head is fitted on top |
 | **Resolution inside the trained range** | the *opposite* sign: VRAI gains 11% (H) and 7.7% (SO400M) at native over a square resize |
-| **Aspect ratio at fixed token count** | within noise on person crops (224×224 vs 256×128), but 21% relative on vehicles |
+| **Aspect ratio at fixed token count** | within noise on person crops frozen (224×224 vs 256×128), but 21% relative on vehicles. With a head fitted, the person-crop tie breaks in favour of 2:1 |
 | **Token count vs throughput** | native person crops run **4.3× faster** for roughly a quarter of the mAP — a real operating point, not a dominated one |
 
-No head-choice effect reported anywhere in this literature is reliably larger than that first row. The
-operational rule: **fix and report the encoder axis before arguing about the head axis**, and treat any probe comparison
-that varies both at once as uninterpretable.
+**This page previously concluded that the encoder axis dominates the head axis outright. Run
+both, that holds only off the training domain.**
 
+| Head-axis change | In-domain (Market-1501) | Transfer (Occluded-REID) | Transfer (VRAI) |
+|---|---|---|---|
+| no head → best head | **+1060%** | +42% | +31% |
+| linear → ArcFace | **+77%** | +3.5% | +33% |
+| 512-d bottleneck alone (PCA control) | +13% | +0.1% | −6.6% |
+
+C-RADIOv4-H at 224×224, mAP, heads fitted on `market1501/train`. The comparison with the table
+above is like-for-like: same rows, same protocol digests, and the resolution effect is ~25%
+relative throughout.
+
+So the rule this page gave has to be split in two:
+
+- **On a dataset the head was fitted on, the head axis dominates everything else by an order of
+  magnitude.** Ranking backbones by cosine similarity over frozen features — the "zero-shot"
+  rung of §3.1 — measures whether identity is *already* a direction in the space, and that is a
+  much harder demand than the one a deployed system makes. It also compresses the backbones
+  together: frozen, C-RADIOv4-H leads CLIP ViT-B/16 on Market by 2.7× mAP; with the same
+  ArcFace head, by 4.1×. **A frozen-cosine ranking understates the distance between
+  representations, and is not a cheap proxy for a probed one.**
+- **Off that domain, the encoder axis still dominates**, and the original rule stands: the
+  resolution row above is larger than every head-choice effect on Occluded-REID and comparable
+  to the largest on VRAI.
+
+The operational rule that survives both: **fix and report the encoder axis before arguing about
+the head axis, and never vary both at once** — but do not conclude from a head-free comparison
+that the head axis is small, because in-domain it is the largest effect on the page.
+
+One further asymmetry, cheap to record and rarely reported: **a margin head is not equally
+fittable on every representation.** Given an identical 100-epoch budget on the same 751
+identities, every C-RADIOv4 configuration reaches ≥0.9998 train top-1, while CLIP ViT-B/16
+reaches 0.9557 under cross-entropy and only 0.7073 under ArcFace — 0.8523 and still climbing
+after 400 epochs. Trainability of the margin head is itself a probe result, and a study that
+reports only the retrieval metric discards it.
 ---
 
 ## 7. What a defensible probe suite looks like

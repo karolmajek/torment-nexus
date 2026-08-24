@@ -65,14 +65,20 @@ supported and what has been measured stays visible instead of being an empty tab
 ## What these numbers do not claim
 
 The table is **three frozen general-purpose encoders, none of them trained on
-re-identification**, at three input sizes each for the two C-RADIOv4 checkpoints. It validates
-the pipeline end to end and ranks encoders within a dataset; no row is a competitive result
-and none may be compared with a published number for its dataset:
+re-identification**, at three input sizes each for the two C-RADIOv4 checkpoints, each scored
+directly and through three heads fitted on Market-1501's training split. It validates the
+pipeline end to end and ranks encoders within a dataset:
 
-- **nothing here was trained for ReID.** CLIP ViT-B/16 learned from image-text pairs;
-  C-RADIOv4 distils SigLIP2-g-384, DINOv3-7B and SAM3 into one backbone. Market's best mAP of
-  0.063 is not a bad ReID model, it is a model nobody asked to do ReID, resized from a 64x128
-  crop. Trained methods report an order of magnitude more on the same protocol;
+- **no backbone here was trained for ReID, and none was trained at all.** CLIP ViT-B/16
+  learned from image-text pairs; C-RADIOv4 distils SigLIP2-g-384, DINOv3-7B and SAM3 into one
+  backbone. Every `head` row is a 512-d affine map fitted on frozen features in under a
+  minute; no gradient has ever reached a backbone in this directory;
+- **`head: none` rows are zero-shot; every other row is not.** All three heads are fitted on
+  `market1501/train` — 12,936 images, 751 identities, disjoint from the 750 test identities.
+  So a Market row with a head is an ordinary **supervised in-domain** number and belongs
+  beside published Market numbers; the same head's Occluded-REID and VRAI rows are
+  **cross-domain transfer**, with no target-domain label ever seen. Three different claims,
+  one column apart, which is why the column exists;
 - **the rows are not comparable across datasets, and `render` says so on every run.**
   Occluded-REID searches roughly a thousand whole-body images; Market searches 15,913; VRAI
   searches 32,338. A gallery sixteen or thirty times larger is most of the gap between 0.52 R1
@@ -84,8 +90,10 @@ and none may be compared with a published number for its dataset:
   the test identities and scores them on EvalAI, so `vrai/train-cross-camera@1` queries the
   first frame of each camera-1 trajectory against every camera-2 training image. That is a
   legitimate zero-shot number for an encoder that never saw VRAI and a meaningless one for
-  anything fine-tuned on it. It is also aerial: 0.2152 R1 against Market's 0.1838 is a
-  viewpoint difference as much as a gallery-size one, and neither belongs in a sentence with
+  anything fine-tuned on it — **including the head rows, which are safe here for exactly one
+  reason: no head in this directory has seen a VRAI image.** A head fitted on VRAI could not
+  be reported on this protocol at all. It is also aerial: 0.2152 R1 against Market's 0.1838 is
+  a viewpoint difference as much as a gallery-size one, and neither belongs in a sentence with
   the other without saying so;
 - **only the CLIP row's licence is unverified**, and `reidbench check` says so on every run:
   timm's code is Apache-2.0, its weights are not. Both C-RADIOv4 checkpoints carry a verified
@@ -131,5 +139,70 @@ The gallery-size effect that the second bullet has to hand-wave is exactly what
 [market1501-500k](../datasets/market1501-500k.md) exists to measure directly: same queries,
 same model, same rules, a gallery 27x larger. It is supported and not yet run — the page says
 what that costs.
+
+## What a head does to all of that
+
+Every head is fitted on `market1501/train` and applied unchanged to all three datasets, so
+one column of the table is in-domain and two are transfer. C-RADIOv4-H at 224x224, mAP:
+
+| | Market (in-domain) | Occluded-REID (transfer) | VRAI (transfer) |
+|---|---|---|---|
+| `none` — frozen | 0.0610 | 0.4560 | 0.1739 |
+| `pca` — 512-d, no labels | 0.0690 | 0.4563 | 0.1625 |
+| `linear` | 0.3998 | 0.6241 | 0.1711 |
+| `arcface` | **0.7087** | **0.6459** | **0.2276** |
+
+- **the whole gain is the labels, and the PCA control is what proves it.** `pca` fits on the
+  same 12,936 images, produces the same 512-d embedding, and uses none of the identities: it
+  moves Market 0.0610 -> 0.0690 and Occluded-REID 0.4560 -> 0.4563, and *loses* on VRAI. Every
+  head number therefore has a matched control that isolates the 2560 -> 512 bottleneck, and
+  the bottleneck is worth nothing. Without this row, "ArcFace beats frozen" would be
+  indistinguishable from "512 dimensions are enough";
+- **a frozen agglomerative backbone plus one affine layer is a real ReID system.** Market
+  0.7181 mAP / 0.8872 R1 (H at 256x128, ArcFace) is the first number in this repository that
+  may be compared with a published one, because it is produced the way published ones are:
+  fitted on the training split, evaluated on `market1501/official@1`. It does not beat a
+  tuned specialist, and it costs one forward pass over 12,936 cached crops plus 29 seconds of
+  head fitting on an RTX 2070 Max-Q;
+- **angular margin beats cross-entropy everywhere it converges, and by most where it was
+  fitted.** Market 0.7087 vs 0.3998 is a 1.8x gap; Occluded-REID 0.6459 vs 0.6241 and VRAI
+  0.2276 vs 0.1711 are narrower. ArcFace optimises the cosine geometry the retrieval metric
+  reads and the linear head does not, which matters most where the head is asked about the
+  identities it was fitted on;
+- **the head transfers out of its domain, including out of its *object class*.** The same
+  Market-person head is worth +42% relative on Occluded-REID and **+31% on aerial vehicles**
+  (0.1739 -> 0.2276), with no vehicle label ever seen. Whatever it learned is not "what a
+  person looks like" — it is a metric geometry that instance discrimination reuses. The
+  matched `pca` row on VRAI *falls* (0.1625), so this is not the bottleneck either;
+- **probing widens the gap between backbones rather than closing it.** Frozen, C-RADIOv4-H
+  leads CLIP on Market by 2.7x mAP; with the same ArcFace head it leads by **4.1x** (0.7087 vs
+  0.1744). A frozen-feature comparison run without a head understates how far apart these
+  representations are;
+- **CLIP's ArcFace head does not converge and C-RADIOv4's saturates within 60 epochs.** Both
+  were given the identical 100-epoch budget, fixed on train accuracy before any retrieval
+  number was read. Every C-RADIOv4 configuration ends at 0.9998 or better train top-1 over the
+  751 training identities; CLIP reaches 0.9557 with the linear head and **0.7073** with
+  ArcFace, still climbing at 400 epochs in a separate check (0.8523). That an angular margin
+  cannot separate 751 identities in CLIP's frozen space, while saturating in C-RADIOv4's, is a
+  property of the representations and is reported rather than tuned away per encoder;
+- **the head reorders the resolution finding without contradicting it.** 224x224 and 256x128
+  were within noise frozen; with ArcFace, 2:1 wins on Market for both checkpoints (0.7181 vs
+  0.7087 for H, 0.7177 vs 0.6957 for SO400M) while still running 1.6x faster, so 2:1 stops
+  being a tie and becomes the choice. `native` stays worst on person crops (0.5593) and best
+  on VRAI (0.2441), exactly as it was frozen — resolution relative to the trained range is
+  still the variable, and a trained head does not rescue 32 tokens;
+- **H and SO400M stay one choice on people and two on vehicles.** With ArcFace at 224x224,
+  Market is 0.7087 vs 0.6957 and Occluded-REID 0.6459 vs 0.6510 — inside 2% and pointing in
+  opposite directions; VRAI is 0.2276 vs 0.2068, H ahead by 10% relative. The head did not
+  change which size to buy.
+
+**Probe-training noise is not what separates any of these rows.** Refitting the H@224 ArcFace
+head at seeds 1 and 2 and rescoring all three datasets gives mAP 0.7087 / 0.7087 / 0.7084 on
+Market (sd 0.0002), 0.6459 / 0.6513 / 0.6414 on Occluded-REID (sd 0.0050, its 1,000 queries
+are the noisiest set here) and 0.2276 / 0.2284 / 0.2294 on VRAI (sd 0.0009). The smallest
+effect claimed above is roughly twenty times the largest of those. Reproduce with
+`probe.py fit --spec` over a copy of `probes/arcface.json` with `seed` changed, then `apply`,
+`score` and `measure`; the run records are not kept, because a noise estimate is a
+measurement about the table rather than a row in it.
 
 The licence table under the metrics is generated with them, not maintained beside them.

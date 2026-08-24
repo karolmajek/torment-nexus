@@ -1,0 +1,335 @@
+{
+  "created": "2026-08-24T09:44:58+00:00",
+  "env": {
+    "git": {
+      "branch": "main",
+      "describe": "c191640",
+      "dirty": true,
+      "sha": "c191640accee44ddce52216fd8b4d447c09917b3",
+      "short": "c191640accee"
+    },
+    "gpu": [
+      {
+        "compute_cap": "7.5",
+        "driver": "531.41",
+        "memory_mb": 8192,
+        "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+      }
+    ],
+    "machine": "AMD64",
+    "numpy": "2.2.6",
+    "platform": "win32",
+    "pyarrow": "25.0.1",
+    "python": "3.13.2",
+    "python_implementation": "CPython",
+    "reidbench": "0.1.dev6+g0e6ee2a",
+    "threads": {}
+  },
+  "inputs": {
+    "features": {
+      "dataset": "market1501",
+      "encoder": {
+        "adaptor": null,
+        "entrypoint": "radio_model",
+        "extract_semantics": 1,
+        "head": {
+          "dim": 512,
+          "encoder_digest": "ece62c5822d80afd94c46f3422a424cf",
+          "head": "pca",
+          "id": "pca",
+          "input_norm": "l2",
+          "kind": "head",
+          "source": {
+            "dataset": "market1501",
+            "manifest_digest": "623d6b70dfbfdfc7a276044961db4b64",
+            "n_identities": 751,
+            "n_images": 12936,
+            "split": "train"
+          },
+          "weights": {
+            "W": {
+              "digest": "03c87eb41f1314b1c38755b7155077c2",
+              "dtype": "float32",
+              "kind": "array",
+              "shape": [
+                512,
+                2560
+              ]
+            },
+            "b": {
+              "digest": "dcd0d7091db5321db2ffa697420d8c95",
+              "dtype": "float32",
+              "kind": "array",
+              "shape": [
+                512
+              ]
+            }
+          }
+        },
+        "hub_kwargs": {},
+        "id": "torchhub:NVlabs/RADIO/c-radio_v4-h",
+        "input_size": [
+          256,
+          128
+        ],
+        "kind": "encoder",
+        "pooling": "summary",
+        "precision": "fp32",
+        "preprocess": {},
+        "runtime": "torch",
+        "tta": {},
+        "weights_sha": null
+      },
+      "env": {
+        "git": {
+          "branch": "main",
+          "describe": "18d1525-dirty",
+          "dirty": true,
+          "sha": "18d152551190bf76885ece13012026a31f113ddb",
+          "short": "18d152551190"
+        },
+        "gpu": [
+          {
+            "compute_cap": "7.5",
+            "driver": "531.41",
+            "memory_mb": 8192,
+            "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+          }
+        ],
+        "machine": "AMD64",
+        "numpy": "2.2.6",
+        "platform": "win32",
+        "pyarrow": "25.0.1",
+        "python": "3.13.2",
+        "python_implementation": "CPython",
+        "reidbench": "0.1.dev6+g0e6ee2a",
+        "threads": {}
+      },
+      "extract_semantics": 1,
+      "key": "300ae4dc9cbaeadfd9e96dca28d58004",
+      "kind": "features",
+      "manifest": {
+        "columns": [
+          "camid",
+          "frame",
+          "pid",
+          "relpath",
+          "seq",
+          "split",
+          "uid"
+        ],
+        "dataset": "market1501",
+        "digest": "623d6b70dfbfdfc7a276044961db4b64",
+        "kind": "manifest",
+        "recipes": [],
+        "rows": 36036,
+        "version": null
+      },
+      "probe_training": {
+        "explained_variance_ratio": 0.97,
+        "items_per_second": 861.857,
+        "measured_at": "2026-08-24T09:44:29+00:00",
+        "n_items": 12936,
+        "seconds": 15.0094
+      },
+      "shape": [
+        36036,
+        512
+      ],
+      "storage_dtype": "float16",
+      "timing": {
+        "items_per_second": 43478.586,
+        "measured_at": "2026-08-24T09:44:31+00:00",
+        "n_items": 36036,
+        "seconds": 0.8288,
+        "source_key": "ea3fadde70120584a515c5a53b512a4c"
+      },
+      "written_at": "2026-08-24T09:44:31+00:00"
+    },
+    "manifest": {
+      "columns": [
+        "camid",
+        "frame",
+        "pid",
+        "relpath",
+        "seq",
+        "split",
+        "uid"
+      ],
+      "dataset": "market1501",
+      "digest": "623d6b70dfbfdfc7a276044961db4b64",
+      "kind": "manifest",
+      "recipes": [],
+      "rows": 36036,
+      "version": null
+    },
+    "protocol": {
+      "digest": "11b7663d71f2e6d8f308aa0815de2d38",
+      "exclude": [
+        [
+          "same_uid",
+          []
+        ],
+        [
+          "same_pid_same_camid",
+          []
+        ],
+        [
+          "pid_in",
+          [
+            [
+              -1
+            ]
+          ]
+        ]
+      ],
+      "gallery": {
+        "split": "gallery"
+      },
+      "kind": "protocol",
+      "name": "market1501/official@1",
+      "query": {
+        "split": "query"
+      }
+    },
+    "scores": {
+      "cross_query_comparable": true,
+      "features": {
+        "dataset": "market1501",
+        "encoder": {
+          "adaptor": null,
+          "entrypoint": "radio_model",
+          "extract_semantics": 1,
+          "head": {
+            "dim": 512,
+            "encoder_digest": "ece62c5822d80afd94c46f3422a424cf",
+            "head": "pca",
+            "id": "pca",
+            "input_norm": "l2",
+            "kind": "head",
+            "source": {
+              "dataset": "market1501",
+              "manifest_digest": "623d6b70dfbfdfc7a276044961db4b64",
+              "n_identities": 751,
+              "n_images": 12936,
+              "split": "train"
+            },
+            "weights": {
+              "W": {
+                "digest": "03c87eb41f1314b1c38755b7155077c2",
+                "dtype": "float32",
+                "kind": "array",
+                "shape": [
+                  512,
+                  2560
+                ]
+              },
+              "b": {
+                "digest": "dcd0d7091db5321db2ffa697420d8c95",
+                "dtype": "float32",
+                "kind": "array",
+                "shape": [
+                  512
+                ]
+              }
+            }
+          },
+          "hub_kwargs": {},
+          "id": "torchhub:NVlabs/RADIO/c-radio_v4-h",
+          "input_size": [
+            256,
+            128
+          ],
+          "kind": "encoder",
+          "pooling": "summary",
+          "precision": "fp32",
+          "preprocess": {},
+          "runtime": "torch",
+          "tta": {},
+          "weights_sha": null
+        },
+        "env": {
+          "git": {
+            "branch": "main",
+            "describe": "18d1525-dirty",
+            "dirty": true,
+            "sha": "18d152551190bf76885ece13012026a31f113ddb",
+            "short": "18d152551190"
+          },
+          "gpu": [
+            {
+              "compute_cap": "7.5",
+              "driver": "531.41",
+              "memory_mb": 8192,
+              "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+            }
+          ],
+          "machine": "AMD64",
+          "numpy": "2.2.6",
+          "platform": "win32",
+          "pyarrow": "25.0.1",
+          "python": "3.13.2",
+          "python_implementation": "CPython",
+          "reidbench": "0.1.dev6+g0e6ee2a",
+          "threads": {}
+        },
+        "extract_semantics": 1,
+        "key": "300ae4dc9cbaeadfd9e96dca28d58004",
+        "kind": "features",
+        "manifest": {
+          "columns": [
+            "camid",
+            "frame",
+            "pid",
+            "relpath",
+            "seq",
+            "split",
+            "uid"
+          ],
+          "dataset": "market1501",
+          "digest": "623d6b70dfbfdfc7a276044961db4b64",
+          "kind": "manifest",
+          "recipes": [],
+          "rows": 36036,
+          "version": null
+        },
+        "probe_training": {
+          "explained_variance_ratio": 0.97,
+          "items_per_second": 861.857,
+          "measured_at": "2026-08-24T09:44:29+00:00",
+          "n_items": 12936,
+          "seconds": 15.0094
+        },
+        "shape": [
+          36036,
+          512
+        ],
+        "storage_dtype": "float16",
+        "timing": {
+          "items_per_second": 43478.586,
+          "measured_at": "2026-08-24T09:44:31+00:00",
+          "n_items": 36036,
+          "seconds": 0.8288,
+          "source_key": "ea3fadde70120584a515c5a53b512a4c"
+        },
+        "written_at": "2026-08-24T09:44:31+00:00"
+      },
+      "kind": "scores",
+      "metric": "cosine",
+      "n_gallery": 19732,
+      "n_query": 3368,
+      "transforms": []
+    }
+  },
+  "metrics": {
+    "R1": 0.1876484560570071,
+    "R10": 0.38657957244655583,
+    "R20": 0.45338479809976245,
+    "R5": 0.31739904988123513,
+    "mAP": 0.0659512796933649,
+    "mINP": 0.0077821493276861,
+    "n_dropped": 0.0,
+    "n_query": 3368.0,
+    "n_scored": 3368.0
+  }
+}

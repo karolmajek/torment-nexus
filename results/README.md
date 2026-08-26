@@ -33,6 +33,7 @@ flowchart LR
     PR["probe.py<br/><i>fit · apply</i>"]
     F["a feature store<br/><i>content-addressed</i>"]
     RUN["results/runs/…/results.json<br/><i>one run record</i>"]
+    G["results/figures.json<br/><i>which figures, and what each asks</i>"]
     T["table.md"]
 
     E --> R
@@ -45,6 +46,7 @@ flowchart LR
     PR -->|another store| F
     F -->|score · measure| RUN
     RUN -->|reidbench render| T
+    G --> T
 ```
 
 - **Add a model** — drop a JSON spec in `encoders/`. That same file is what
@@ -55,6 +57,11 @@ flowchart LR
 - **Add a dataset** — a page in [`datasets/`](../datasets) whose ` ```toml ` block names a
   non-empty `adapter` and at least one `protocol`, and a directory on disk. Same block
   [`datasets/get.py`](../datasets/get.py) reads.
+- **Change the figures** — [`figures.json`](figures.json). A view is a sort order and a
+  colour over the rows that are already there: *does resolution matter, holding encoder and
+  head fixed?* is sorting by encoder, head, resolution and colouring by resolution, and then
+  each block of three bars is one controlled comparison. Delete a view to stop drawing it.
+  Nothing is re-measured either way.
 - **A row's provenance** — every `results.json` carries its own: protocol digest, manifest
   content digest, encoder spec, cache key, library versions, GPU and driver, and the git sha
   with a `dirty` flag. Nothing about a row lives only in this directory.
@@ -64,10 +71,14 @@ supported and what has been measured stays visible instead of being an empty tab
 
 ## What these numbers do not claim
 
-The table is **three frozen general-purpose encoders, none of them trained on
-re-identification**, at three input sizes each for the two C-RADIOv4 checkpoints, each scored
-directly and through three heads fitted on Market-1501's training split. It validates the
-pipeline end to end and ranks encoders within a dataset:
+The table is **six frozen general-purpose backbones, none of them trained on
+re-identification** — two agglomerative students, their two teacher families at two scales
+each, and CLIP — over twelve encoder-resolution pairs, each scored directly and through three
+heads fitted on Market-1501's training split. Two of those pairs are the same CLIP weights at
+the same size under two preprocessing geometries, which is why `resize` is a column. It
+validates the pipeline end to end, ranks encoders within a dataset, and answers the teacher
+ablation in [92-protocol-agglomerative-probe.md](../docs/project/92-protocol-agglomerative-probe.md)
+§14:
 
 - **no backbone here was trained for ReID, and none was trained at all.** CLIP ViT-B/16
   learned from image-text pairs; C-RADIOv4 distils SigLIP2-g-384, DINOv3-7B and SAM3 into one
@@ -109,8 +120,10 @@ pipeline end to end and ranks encoders within a dataset:
 Within one dataset every row shares a protocol digest and a manifest digest, so the encoder
 comparison is the one thing here that is sound:
 
-- **an agglomerative backbone is worth 2.5x to 7x CLIP's mAP, frozen.** Market 0.063 vs 0.023,
-  Occluded-REID 0.456 vs 0.280, VRAI 0.174 vs 0.025 — no ReID training on either side;
+- **an agglomerative backbone is worth 1.5x to 5.6x CLIP's mAP, frozen.** Market 0.063 vs
+  0.029, Occluded-REID 0.456 vs 0.312, VRAI 0.174 vs 0.031 — no ReID training on either side.
+  Read against the *squashed* CLIP row: the centre-cropped one it used to be read against was
+  seeing 45% of each person, and the old "2.5x to 7x" was partly measuring that;
 - **H and SO400M are one choice on people and two on vehicles.** Market 0.061 vs 0.063 and
   Occluded-REID 0.456 vs 0.444 are ties; VRAI is 0.174 vs 0.149, H ahead by 17% relative for
   1.6x the compute. Aerial vehicles are where the extra 222M parameters land;
@@ -174,17 +187,22 @@ one column of the table is in-domain and two are transfer. C-RADIOv4-H at 224x22
   (0.1739 -> 0.2276), with no vehicle label ever seen. Whatever it learned is not "what a
   person looks like" — it is a metric geometry that instance discrimination reuses. The
   matched `pca` row on VRAI *falls* (0.1625), so this is not the bottleneck either;
-- **probing widens the gap between backbones rather than closing it.** Frozen, C-RADIOv4-H
-  leads CLIP on Market by 2.7x mAP; with the same ArcFace head it leads by **4.1x** (0.7087 vs
-  0.1744). A frozen-feature comparison run without a head understates how far apart these
-  representations are;
-- **CLIP's ArcFace head does not converge and C-RADIOv4's saturates within 60 epochs.** Both
-  were given the identical 100-epoch budget, fixed on train accuracy before any retrieval
-  number was read. Every C-RADIOv4 configuration ends at 0.9998 or better train top-1 over the
-  751 training identities; CLIP reaches 0.9557 with the linear head and **0.7073** with
-  ArcFace, still climbing at 400 epochs in a separate check (0.8523). That an angular margin
-  cannot separate 751 identities in CLIP's frozen space, while saturating in C-RADIOv4's, is a
-  property of the representations and is reported rather than tuned away per encoder;
+- **probing does not merely widen the gap between backbones, it reorders them.** Frozen,
+  C-RADIOv4-H leads squashed CLIP on Market by 2.1x mAP; with the same ArcFace head it leads by
+  **2.5x** (0.7087 vs 0.2887). More importantly the *ranking itself* changes: SigLIP2-g is the
+  best encoder in this table on Market frozen (0.1051, ahead of every C-RADIOv4) and fourth
+  once probed (0.6077). A fitted head multiplies frozen Market mAP by 11-13x for DINOv3 and
+  C-RADIOv4 and by only 5.8-6.7x for SigLIP2, whose contrastive objective already optimised its
+  cosine geometry directly. **Frozen-cosine benchmarking systematically flatters contrastively
+  trained encoders**, and this table would have named a different winner without a head;
+- **every head converges except CLIP's, and most of CLIP's failure was the crop.** All were
+  given the identical 100-epoch budget, fixed on train accuracy before any retrieval number was
+  read. Every C-RADIOv4 configuration ends at 0.9998 or better train top-1 over the 751 training
+  identities, DINOv3 reaches 1.0000 at both scales and SigLIP2 0.9911-0.9987. Centre-cropped
+  CLIP reaches 0.9557 linear and **0.7073** ArcFace — but the *same weights on whole crops*
+  reach 0.9955 and **0.9319**. The earlier reading here, that an angular margin cannot separate
+  751 identities in CLIP's frozen space, was substantially measuring a preprocessing choice; it
+  survives only as the narrower claim that CLIP alone still fails to saturate;
 - **the head reorders the resolution finding without contradicting it.** 224x224 and 256x128
   were within noise frozen; with ArcFace, 2:1 wins on Market for both checkpoints (0.7181 vs
   0.7087 for H, 0.7177 vs 0.6957 for SO400M) while still running 1.6x faster, so 2:1 stops
@@ -204,5 +222,52 @@ effect claimed above is roughly twenty times the largest of those. Reproduce wit
 `probe.py fit --spec` over a copy of `probes/arcface.json` with `seed` changed, then `apply`,
 `score` and `measure`; the run records are not kept, because a noise estimate is a
 measurement about the table rather than a row in it.
+
+## What the teacher ablation says
+
+C-RADIOv4 distils SigLIP2-g, DINOv3-7B and SAM3. Six of the twelve encoder-resolution pairs
+here are that student and those teachers, so the table answers the question the distillation
+raises: **does agglomerating teachers cost you the instance-level margin ReID depends on?**
+The full reading is
+[92-protocol-agglomerative-probe.md](../docs/project/92-protocol-agglomerative-probe.md) §14;
+the headline is that the answer is domain-conditional.
+
+ArcFace mAP at 224x224 (SigLIP2-g at its native 256x256, which is resolution-locked):
+
+| | Market | Occluded-REID | VRAI |
+|---|---|---|---|
+| C-RADIOv4-H 653M *(distilled)* | **0.7087** | 0.6459 | 0.2276 |
+| C-RADIOv4-SO400M 431M *(distilled)* | 0.6957 | **0.6510** | 0.2068 |
+| SigLIP2-g 1163M *(the actual teacher)* | 0.6077 | 0.6494 | 0.2290 |
+| DINOv3-H+ 840M *(teacher family)* | 0.6548 | 0.3560 | **0.2467** |
+| SigLIP2-SO400M 428M | 0.5137 | 0.5576 | 0.1772 |
+| DINOv3-L 303M | 0.6072 | 0.3324 | 0.1599 |
+
+- **on people, the student beats its teachers.** C-RADIOv4-H leads the literal teacher by 17%
+  relative on Market and ties it on Occluded-REID, where the three-way 0.6510 / 0.6494 / 0.6459
+  spread is inside the seed noise measured above. It leads by more on **mINP** — 0.3202 vs
+  0.2038 on Market, a 1.57x gap against mAP's 1.17x — and mINP is the hardest true match's
+  rank, which is exactly the instance margin distillation was supposed to have destroyed;
+- **on aerial vehicles, it does not.** DINOv3-H+ leads frozen (0.2346 vs 0.1739) and probed
+  (0.2467 vs 0.2276). This is scale within DINOv3 specifically: 303M to 840M gains **+57%** on
+  VRAI while *losing* 5% on Market and 24% on Occluded-REID, whereas SigLIP2 over a wider range
+  (428M to 1163M) gains 29% on VRAI and still does not pass C-RADIOv4-H;
+- **the shape of that loss is averaging, not destruction.** VRAI is semantically thin — a car
+  from above — so the language teacher contributes little and the dense-feature teacher
+  excels, and C-RADIOv4 lands *between its two teachers* at 0.1739, above SigLIP2-g's 0.1642
+  and below DINOv3-H+'s 0.2346. Agglomeration costs you regression toward the teacher mean
+  wherever the teachers disagree sharply, which is a different and much narrower warning than
+  the one the literature raises;
+- **DINOv3 has a signature the other families do not.** ArcFace is *worse* than the plain
+  linear head on Occluded-REID at both DINOv3 scales — 0.3324 vs 0.3651 and 0.3560 vs 0.3661 —
+  the only place in 144 rows where the angular margin loses, and both probes reach 1.0000 train
+  top-1 so it is not a fit failure. The margin buys in-domain separation on Market people and
+  pays for it on occluded ones.
+
+The `resize` column exists because of this ablation. timm's eval transform short-side-resizes
+and centre-crops, which on a 64x128 person crop keeps the middle 45% of the body; the torchhub
+path every C-RADIOv4 row uses does not. Run on timm's default the teachers would have carried a
+handicap worth up to 66% of their probed Market mAP that C-RADIOv4 never paid, and this section
+would have reported the opposite conclusion with the same confidence.
 
 The licence table under the metrics is generated with them, not maintained beside them.

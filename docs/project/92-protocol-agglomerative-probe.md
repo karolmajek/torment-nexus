@@ -482,8 +482,8 @@ Two consequences for the rest of this protocol:
 
 ### 13.7 What is still unrun, in priority order
 
-1. **§7's teacher ablation** — DINOv3-alone, SigLIP2-alone. The only thing standing between
-   this study and H1/H2. Two encoder specs.
+1. ~~**§7's teacher ablation**~~ — ran 2026-08-25/26, see §14. Five encoder specs, not two:
+   both teachers at two scales each, plus a preprocessing control §14.1 turned out to need.
 2. **MSMT17**, which alone unblocks §6.1's primary dataset, §6.2's second direction, and a
    retention number that can honestly sit beside the field's. Blocked on an adapter and a
    download.
@@ -492,3 +492,192 @@ Two consequences for the rest of this protocol:
 4. **CCVID** (§6.4's cloth-change half) and **CUHK03-NP** (§6.1). Adapters.
 5. **§6.5's open-set check**, which needs a protocol value with non-mated probes before it
    needs any code.
+
+---
+
+## 14. The teacher ablation — 2026-08-26
+
+§7 ran. Five encoder specs, sixty new rows, and one methods fix that had to land first. The
+matrix is now twelve encoder-resolution pairs × four heads × three datasets = 144 rows, all in
+[results/table.md](../../results/table.md).
+
+### 14.1 The confound that had to be fixed first
+
+The teachers reach the bench through timm, and timm's *eval* transform is a short-side resize
+followed by a centre crop. On a 64×128 Market crop that is `Resize(248) → 248×496 →
+CenterCrop(224)`: **it keeps the middle 45% of the body and throws away head and feet.** The
+torchhub path every C-RADIOv4 row used does no such thing — it resizes to exactly
+`input_size`. Run as-is, §7 would have measured preprocessing and called it distillation.
+
+`preprocess: {"resize": "squash"}` is now a hashed encoder-spec field, so the two geometries
+get different cache keys and the pre-existing CLIP row stays honestly described by its own
+spec. Measured on CLIP, same weights, geometry the only variable:
+
+| CLIP ViT-B/16 @224 | crop | squash | |
+|---|---|---|---|
+| Market, frozen | 0.0227 | 0.0287 | +26% |
+| Market, ArcFace | 0.1744 | 0.2887 | **+66%** |
+| ArcFace train top-1 | 0.7073 | **0.9319** | — |
+
+That last row matters beyond CLIP: §13.3 reported that "an angular margin cannot separate 751
+identities in CLIP's frozen space" as a property of the representation. It was substantially a
+property of the crop. The claim survives in weakened form — 0.9319 still trails every
+C-RADIOv4's 1.0000 — but the stated magnitude was measuring a preprocessing choice.
+
+Every §7 encoder runs squashed, so the ablation itself is clean.
+
+### 14.2 What was run, and what stands in for what
+
+| Spec | Params | Role |
+|---|---|---|
+| SigLIP2-g/16 @256 | 1163M | **the literal C-RADIOv4 teacher** |
+| SigLIP2-SO400M/14 @224 | 428M | teacher, capacity-matched to C-RADIOv4-SO400M's 431M |
+| DINOv3-H+/16 @224 | 840M | teacher family, *above* C-RADIOv4-H's 653M |
+| DINOv3-L/16 @224 | 303M | teacher family, below it |
+| CLIP-B/16 @224 squash | 87M | the preprocessing control of §14.1 |
+
+**DINOv3-alone is a stand-in at every size.** The real teacher is DINOv3-7B, which is 28GB at
+fp32 and cannot run on this 8GB card. SigLIP2-g is the genuine article. Note also that SigLIP2
+checkpoints are resolution-locked, so SigLIP2-g runs at its native 256×256 against everything
+else at 224×224 — per §13.3's resolution finding that is an advantage, not a neutral
+difference, which only sharpens the result below.
+
+### 14.3 H1 and H2 — supported on people, falsified on vehicles
+
+ArcFace, the head under which every probe converged (≥0.9911 train top-1 for every teacher;
+C-RADIOv4 saturates at 1.0000):
+
+| mAP | Market | Occluded-REID | VRAI |
+|---|---|---|---|
+| C-RADIOv4-H 653M | **0.7087** | 0.6459 | 0.2276 |
+| C-RADIOv4-SO400M 431M | 0.6957 | **0.6510** | 0.2068 |
+| SigLIP2-g 1163M *(teacher)* | 0.6077 | 0.6494 | 0.2290 |
+| DINOv3-H+ 840M | 0.6548 | 0.3560 | **0.2467** |
+| SigLIP2-SO400M 428M | 0.5137 | 0.5576 | 0.1772 |
+
+**On people, §7's outcome 1.** C-RADIOv4 beats the literal teacher by 17% relative on Market
+and ties it on Occluded-REID (0.6510 / 0.6494 / 0.6459 is inside noise, cf. §13.5's sd 0.0050
+on that set). The risk [foundation-model-reid-kb.md](../field/foundation-model-reid-kb.md) §6
+names — "distillation preserves category structure, not instance margins" — does not
+materialise.
+
+**And it is best refuted on the metric it is about.** mINP is the hardest true match's rank,
+which is the instance-margin quantity:
+
+| ArcFace mINP | Market | Occluded-REID |
+|---|---|---|
+| C-RADIOv4-H | **0.3202** | 0.4903 |
+| C-RADIOv4-SO400M | 0.2953 | **0.5011** |
+| SigLIP2-g | 0.2038 | 0.4745 |
+
+Market's mAP gap is 1.17× and its mINP gap is **1.57×**; Occluded-REID's mAP is a three-way
+tie while C-RADIOv4 still leads mINP. Where distillation was predicted to lose most, it wins
+most.
+
+**On aerial vehicles, §7's outcome 3.** DINOv3-H+ leads at 0.2467 against C-RADIOv4-H's
+0.2276, frozen (0.2346 vs 0.1739) and probed. H1 and H2 both fail on VRAI.
+
+### 14.4 Why VRAI goes the other way, and why it is not the predicted failure
+
+It is *scale within DINOv3 specifically*, not a general teacher-beats-student effect:
+
+| VRAI, frozen mAP | smaller | larger | |
+|---|---|---|---|
+| DINOv3 | 0.1492 (303M) | **0.2346** (840M) | +57%, overtakes everything |
+| SigLIP2 | 0.1269 (428M) | 0.1642 (1163M) | +29%, still below C-RADIOv4-H |
+| C-RADIOv4 | 0.1489 (431M) | 0.1739 (653M) | — |
+
+Scaling DINOv3 2.8× *helps* aerial vehicles (+57%) and *hurts* people (Market −5%,
+Occluded-REID −24%). Scaling SigLIP2 helps VRAI but not enough to pass the distilled model.
+
+The reading this supports is not margin destruction but **averaging**. VRAI is semantically
+impoverished — a car seen from above — so the language-aligned teacher contributes little and
+the self-supervised dense-feature teacher excels. C-RADIOv4 distils both and lands *between
+its two teachers*: 0.1739, above SigLIP2-g's 0.1642 and below DINOv3-H+'s 0.2346. That is
+agglomeration behaving as advertised. The cost of agglomeration is not a destroyed margin, it
+is **regression toward the teacher mean on any domain where the teachers disagree sharply.**
+
+### 14.5 The methodological result: frozen evaluation picks a different winner
+
+This is the finding worth the paper, and it is not about backbones.
+
+```mermaid
+flowchart LR
+    F["<b>Market, frozen cosine</b><br/>1. SigLIP2-g 0.1051<br/>2. SigLIP2-SO400M 0.0772<br/>3. C-RADIOv4-SO400M 0.0628<br/>4. C-RADIOv4-H 0.0610<br/>5. DINOv3-H+ 0.0487"]
+    P["<b>Market, same weights + 512-d affine map</b><br/>1. C-RADIOv4-H 0.7087<br/>2. C-RADIOv4-SO400M 0.6957<br/>3. DINOv3-H+ 0.6548<br/>4. SigLIP2-g 0.6077<br/>5. SigLIP2-SO400M 0.5137"]
+    F -->|"one linear head, fitted on 12,936 images"| P
+```
+
+SigLIP2-g is **first frozen and fourth probed**. DINOv3-H+ is last frozen and third probed.
+Same weights, same images, same protocol digest — the evaluation choice selected the winner.
+
+What a fitted head multiplies frozen Market mAP by:
+
+| | frozen → ArcFace | gain |
+|---|---|---|
+| DINOv3-H+ | 0.0487 → 0.6548 | **13.4×** |
+| DINOv3-L | 0.0512 → 0.6072 | 11.9× |
+| C-RADIOv4-H | 0.0610 → 0.7087 | 11.6× |
+| C-RADIOv4-SO400M | 0.0628 → 0.6957 | 11.1× |
+| SigLIP2-SO400M | 0.0772 → 0.5137 | 6.7× |
+| SigLIP2-g | 0.1051 → 0.6077 | **5.8×** |
+
+SigLIP2 is the outlier at both scales, by about 2×. The mechanism is not mysterious:
+**SigLIP2's contrastive objective directly optimises cosine geometry**, so its frozen space is
+already read out near-optimally and an affine map has little headroom left. DINOv3 and
+C-RADIOv4 are not cosine-optimised — their raw similarity is poor, but the information is
+present and a head recovers it.
+
+The consequence generalises past this study: **zero-shot frozen-cosine benchmarking
+systematically flatters contrastively-trained encoders**, and any backbone comparison run that
+way is measuring readout alignment as much as representation quality. §13.3 already observed
+that probing "widens the gap rather than closing it"; §14 shows it does not merely widen, it
+*reorders*, and the reorder is what separates publishing outcome 1 from publishing outcome 3.
+
+### 14.6 A DINOv3 family signature, at two scales
+
+ArcFace is worse than the plain linear head on Occluded-REID for **both** DINOv3 sizes — the
+only place in 144 rows where the angular margin loses:
+
+| Occluded-REID mAP | linear | ArcFace |
+|---|---|---|
+| DINOv3-L 303M | 0.3651 | 0.3324 |
+| DINOv3-H+ 840M | 0.3661 | 0.3560 |
+| C-RADIOv4-H | 0.6241 | **0.6459** |
+
+Both DINOv3 probes reach 1.0000 train top-1, so this is not a fit failure: the margin buys
+in-domain separation on Market people and pays for it on occluded ones. On VRAI the *linear*
+head damages DINOv3 outright (H+ 0.2346 frozen → 0.1871 linear). DINOv3-H+'s VRAI win is a
+frozen-features win that the probe barely improves (+5%, against C-RADIOv4-H's +31%).
+
+### 14.7 What these rows cost
+
+Sixty rows on one RTX 2070 Max-Q, thermally throttled to ~885 MHz SM clock after the first
+hour of sustained load:
+
+| Encoder | img/s | Wall |
+|---|---|---|
+| CLIP-B/16 squash | 46.2 | ~10 min |
+| DINOv3-L 303M | 24.7 | ~2.6 h |
+| SigLIP2-SO400M 428M | 15.0 | ~4.4 h |
+| DINOv3-H+ 840M | 9.5 | ~8.5 h |
+| SigLIP2-g 1163M | 6.3 | ~10.5 h |
+
+**80% of every VRAI extraction is discarded.** The manifest is 197,221 rows; the protocol
+ranks 6,302 queries against a 32,338-image gallery, so 158,581 images are encoded and never
+scored. That is ~8.7 of SigLIP2-g's 10.5 hours. Restricting the VRAI manifest to the 38,640
+rows the protocol touches would make every future encoder ~5× cheaper there, at the cost of a
+new manifest digest and therefore a re-extraction of the ten encoders already measured.
+Recorded here as the single largest available saving in this pipeline.
+
+### 14.8 What is still unrun
+
+§13.7's list, minus its first item, unchanged in priority: **MSMT17** (adapter + download),
+**EUPE-B** (the second agglomerative family, and the one whose licence forbids commercial
+use), **CCVID**, and **§6.5's open-set check**. **CUHK03-NP** now has an adapter, two protocol
+values and a verified tree on disk — see [cuhk03-np.md](../../datasets/cuhk03-np.md) §8 — and
+is deliberately not wired into the matrix yet.
+
+§7.1's SAM3 ablation remains untouched and is now more interesting than it was: §14.4 says
+C-RADIOv4 inherits a blend of its teachers, which predicts that masking background before
+pooling should help most where the segmentation teacher is the one carrying the signal.

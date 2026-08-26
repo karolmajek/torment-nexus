@@ -49,6 +49,7 @@ RUNS = HERE / "runs"
 CACHE = HERE / "cache"
 MANIFESTS = HERE / "manifests"
 TABLE = HERE / "table.md"
+FIGURES = HERE / "figures.json"
 NONE = "none"
 """The name of the head that is not a head. Every encoder is measured with it."""
 
@@ -340,9 +341,18 @@ def write_table() -> int:
     # hardest true match's rank and separates rows the ranking alone calls equal.
     reidbench(
         "render", *records,
-        "--labels", "encoder,resolution,head,protocol",
+        "--labels", "encoder,resolution,resize,head,protocol",
         "--scatter", "mAP,mINP",
         "--bar", "mAP",
+        # The head is the axis this table exists to argue about — four of them over seven
+        # encoder-resolution pairs — so it is what the marks are coloured by, and the same
+        # swatch sits in the head column so a colour in a figure is read off a row rather
+        # than remembered from a legend.
+        "--series", "head",
+        # Which figures, in a file, because which comparison is worth drawing is a claim
+        # about these runs and not about the renderer — and because turning one off should
+        # be deleting four lines rather than editing this call.
+        "--figures", FIGURES,
         "--out", TABLE,
     )
     return 0

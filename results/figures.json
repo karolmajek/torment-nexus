@@ -1,0 +1,67 @@
+{
+  "_": [
+    "Which figures results/table.md carries, and what each one is asking.",
+    "",
+    "A view re-orders and re-colours the section's rows; it never re-measures. `sort` is the",
+    "label order the bars are grouped in, so the last label named is the one that varies",
+    "inside each block — that is the comparison the block makes. `colour` is what the eye",
+    "groups by across the whole figure. `scatter: false` on a view whose sort is the point of",
+    "it, because a point's position is its two metrics and re-ordering moves nothing: only",
+    "colour tells two scatters apart, so only the three single-label views draw one.",
+    "",
+    "Delete a view to stop drawing it. Nothing else reads this file."
+  ],
+  "split": "head",
+  "domain": "observed",
+  "views": [
+    {
+      "name": "Every row, by encoder and resolution",
+      "sort": ["encoder", "resolution", "head"],
+      "colour": "head",
+      "scatter": true,
+      "bar": true
+    },
+    {
+      "name": "By head — does the probe carry it?",
+      "sort": ["head", "encoder", "resolution"],
+      "colour": "head",
+      "scatter": false,
+      "bar": true
+    },
+    {
+      "name": "By encoder — does the checkpoint carry it?",
+      "sort": ["encoder", "head", "resolution"],
+      "colour": "encoder",
+      "scatter": true,
+      "bar": true
+    },
+    {
+      "name": "By resolution — does the input size carry it?",
+      "sort": ["resolution", "encoder", "head"],
+      "colour": "resolution",
+      "scatter": true,
+      "bar": true
+    },
+    {
+      "name": "Resolution, within one encoder and head",
+      "sort": ["encoder", "head", "resolution"],
+      "colour": "resolution",
+      "scatter": false,
+      "bar": true
+    },
+    {
+      "name": "Head, within one encoder and resolution",
+      "sort": ["encoder", "resolution", "head"],
+      "colour": "head",
+      "scatter": false,
+      "bar": true
+    },
+    {
+      "name": "Encoder, within one resolution and head",
+      "sort": ["resolution", "head", "encoder"],
+      "colour": "encoder",
+      "scatter": false,
+      "bar": true
+    }
+  ]
+}

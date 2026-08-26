@@ -32,10 +32,10 @@ licence_verified = true
 commercial_ok = false
 access = "gdrive"
 homepage = "https://github.com/zhunzhong07/person-re-ranking/tree/master/CUHK03-NP"
-dir = "cuhk03-np"
-adapter = ""
+dir = "CUHK03/archive"
+adapter = ""              # DISARMED — set to "cuhk03-detected" to run. See §8.
 protocols = ["cuhk03/detected-767@1"]
-checked_on = "2026-08-21"
+checked_on = "2026-08-25"
 link_verified = true
 
 [counts]
@@ -57,23 +57,24 @@ query = 1400
 gallery = 5328
 
 [expect]
-"detected/bounding_box_train" = 7365
-"detected/query" = 1400
-"detected/bounding_box_test" = 5332
-"labeled/bounding_box_train" = 7368
-"labeled/query" = 1400
-"labeled/bounding_box_test" = 5328
+"images_detected" = 14097
+"images_labeled" = 14096
 
 [fetch]
 gdrive_id = "1pBCIAGSZ81pgvqjC-lUHtl0OYV1icgkz"
 manual = """
-The NP release is already in Market-1501 folder format, which is why it is the one to take.
-The original .mat release (drive id 0B7TOZKXmIjU3OUhfd3BPaVRHZVE) needs the two
-cuhk03_new_protocol_config_*.mat split files on top and is not worth the trouble.
+ON DISK 2026-08-25, but NOT in the layout the drive id above serves. What is here is the
+*original* release — flat `images_detected/` and `images_labeled/` directories of PNGs named
+{group}_{pid}_{camid}_{index}.png — together with the new-protocol split files:
+`cuhk03_new_protocol_config_{detected,labeled}.mat` and the derived
+`splits_new_{detected,labeled}.json` / `splits_classic_{detected,labeled}.json`.
 
-Take detected/. labeled/ is systematically easier and mixing the two silently is one of the
-field's standard reporting errors. Baidu Yun links for both are in the README if Drive is
-rate-limiting.
+That is a better starting point than the Market-format NP release this page used to assume,
+because the classic splits ship alongside the new ones. The adapter reads the JSON, not the
+.mat, so no scipy or h5py is needed. Provenance of this particular unpack is not recorded
+here because it was not downloaded by `get.py fetch`.
+
+The counts in [counts] were measured against this tree, not copied from a paper.
 """
 ```
 
@@ -90,19 +91,24 @@ adapter that already reads Market needs almost nothing new.
 ## 3. What is inside
 
 ```
-cuhk03-np/
-  detected/
-    bounding_box_train/
-    query/
-    bounding_box_test/
-  labeled/
-    bounding_box_train/
-    query/
-    bounding_box_test/
+CUHK03/archive/
+  images_detected/                       14,097 png   flat; {group}_{pid}_{camid}_{index}.png
+  images_labeled/                        14,096 png   flat; same convention
+  splits_new_detected.json                            767/700, the protocol below
+  splits_new_labeled.json
+  splits_classic_detected.json                        the 20-split classic protocol
+  splits_classic_labeled.json
+  cuhk03_new_protocol_config_detected.mat             the same split, unread
+  cuhk03_new_protocol_config_labeled.mat
+  cuhk03_release/cuhk-03.mat                          the original archive, unread
 ```
 
-Per-directory image counts are in §1 under `counts.detected` and `counts.labeled`; `verify`
-checks them against the extracted tree.
+There are no `bounding_box_train/` directories: the split is data, not directory structure.
+`verify` checks the two image directories; the per-split counts in §1 under `counts.detected`
+and `counts.labeled` are what the adapter reproduces from the JSON, and they match the
+published protocol exactly.
+
+Every image is used exactly once — no file appears in two splits, and none is left over.
 
 ## 4. Splits and protocol — two names, never a flag
 
@@ -113,8 +119,10 @@ Two CUHK03 protocols are in circulation and they are not comparable:
 | **new protocol (767/700)** | one split, identity-disjoint, Market-format | lower — the harder and now-standard one |
 | **classic 20 random splits** | a 1,367/100 split, twenty of them, results averaged | higher, and averaged over 20 runs |
 
-`reidbench` will carry these as **two protocol values with two names** —
-`cuhk03/detected-767@1` and `cuhk03/detected-classic-20split@1` — never as a flag on one value.
+`reidbench` carries these as **separate protocol values with separate names** —
+`cuhk03/detected-767@1` and `cuhk03/labeled-767@1` ship today; a classic-20 value would be
+`cuhk03/detected-classic-20split@1` and is not written, though `splits_classic_*.json` is on
+disk for whoever wants it. Never a flag on one value.
 The reasoning is the same as `veri776/naive-no-exclusion@1`: a reader who cannot see which
 protocol produced a number will assume the flattering one, and a boolean parameter left at its
 default is invisible in a results file.
@@ -127,9 +135,11 @@ Multiply that by detected-vs-labelled and there are four numbers that can all be
 Google Drive, no agreement. The file id is in §1.
 
 ```bash
-python datasets/get.py fetch cuhk03-np      # delegates to gdown; prints the link if absent
 python datasets/get.py verify cuhk03-np
 ```
+
+`fetch` would serve the Market-format NP release, which is *not* what is on disk here (§1
+[fetch]). Do not run it over this tree expecting a match.
 
 ## 6. Licence and citation
 
@@ -151,9 +161,20 @@ protocol; citing only one is the common error and the README is explicit about i
 
 ## 7. Traps
 
+- **The split file's `pid` is not an identity.** `splits_new_*.json` renumbers identities from
+  zero *within each split*, so train `pid` 3 and query `pid` 3 are different people — 377 of the
+  767 training labels collide with a test label this way. An adapter that trusts that column
+  puts identities in both the training split and the gallery without any file appearing twice,
+  which raises every number and looks like nothing. `adapters/cuhk03.py` takes the identity from
+  the filename, which is stable across splits, and the entry's `pid`/`camid` fields are read for
+  nothing at all.
+- **`{group}` is part of the identity and of the camera.** CUHK03 is five camera pairs, each
+  numbering its people and its two cameras from one. Person 001 of group 1 is not person 001 of
+  group 3, and their cameras are unrelated. The adapter encodes `pid = group*1000 + n` and
+  `camid = group*10 + c`.
 - **Detected vs labelled.** Labelled is easier; mixing them across a table is a classic silent
   inflation. Both directories are in `expect` so `verify` can confirm which you have, and the
-  adapter should read `detected/` only.
+  two variants are separate adapters with separate uid namespaces so they cannot pool.
 - **767 vs classic-20.** §4.
 - **Small gallery.** An order of magnitude smaller than MSMT17's — absolute mAP is not comparable
   across the two, only the drop is.
@@ -163,8 +184,13 @@ protocol; citing only one is the common error and the README is explicit about i
 
 | | |
 |---|---|
-| On disk | no |
-| `reidbench` adapter | not written — `adapters/cuhk03.py`, detected only |
-| `reidbench` protocol | not written — two names, per §4 |
+| On disk | ✅ `data/CUHK03/archive`, counts verified 2026-08-25 |
+| `reidbench` adapter | ✅ `adapters/cuhk03.py` — `cuhk03-detected`, `cuhk03-labeled` |
+| `reidbench` protocol | ✅ `cuhk03/detected-767@1`, `cuhk03/labeled-767@1` |
 | Provenance record | not written |
-| Access | Drive id recorded; one `fetch` away |
+| Measured | ⏸ **deliberately disarmed** — `adapter = ""` in §1 |
+
+**Why disarmed.** `results/run.py` re-reads this directory on every invocation, so arming the
+page mid-experiment would silently add CUHK03 rows to whichever encoder happened to start next
+and leave the matrix ragged. Set `adapter = "cuhk03-detected"` once the encoder sweep in
+[results/table.md](../results/table.md) is complete, then `python results/run.py plan cuhk03`.

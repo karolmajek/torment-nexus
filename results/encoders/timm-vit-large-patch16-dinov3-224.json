@@ -1,0 +1,8 @@
+{
+  "id": "timm:vit_large_patch16_dinov3.lvd1689m",
+  "input_size": [224, 224],
+  "preprocess": {"resize": "squash"},
+  "runtime": "torch",
+  "precision": "fp32",
+  "batch_size": 32
+}

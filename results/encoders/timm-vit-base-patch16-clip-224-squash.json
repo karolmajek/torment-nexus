@@ -1,0 +1,8 @@
+{
+  "id": "timm:vit_base_patch16_clip_224.openai",
+  "input_size": [224, 224],
+  "preprocess": {"resize": "squash"},
+  "runtime": "torch",
+  "precision": "fp32",
+  "batch_size": 64
+}

@@ -1,3 +1,48 @@
+# Summary
+
+*12 encoders x 4 heads (`none` is one of them) x 3 datasets: **144 of 144** combinations measured. 62.5 h of encoding over 36 feature stores. Records written 2026-08-22 to 2026-08-26 by reidbench 0.1.dev6+g0e6ee2a. **144 of 144 from a dirty working tree**. 10 more dataset pages cannot run here.*
+
+One cell is *measured / in the matrix*, counting every head and protocol for that pair. The encoder is named by its spec's file stem, which is also what `run.py all <pattern>` matches.
+
+| encoder                                 | market1501 | occluded-reid |  vrai |    runs |
+|-----------------------------------------|-----------:|--------------:|------:|--------:|
+| `timm-vit-base-patch16-clip-224`        |        4/4 |           4/4 |   4/4 |   12/12 |
+| `timm-vit-base-patch16-clip-224-squash` |        4/4 |           4/4 |   4/4 |   12/12 |
+| `timm-vit-giantopt-patch16-siglip2-256` |        4/4 |           4/4 |   4/4 |   12/12 |
+| `timm-vit-huge-plus-patch16-dinov3-224` |        4/4 |           4/4 |   4/4 |   12/12 |
+| `timm-vit-large-patch16-dinov3-224`     |        4/4 |           4/4 |   4/4 |   12/12 |
+| `timm-vit-so400m-patch14-siglip2-224`   |        4/4 |           4/4 |   4/4 |   12/12 |
+| `torchhub-c-radio-v4-h-224`             |        4/4 |           4/4 |   4/4 |   12/12 |
+| `torchhub-c-radio-v4-h-256x128`         |        4/4 |           4/4 |   4/4 |   12/12 |
+| `torchhub-c-radio-v4-h-native`          |        4/4 |           4/4 |   4/4 |   12/12 |
+| `torchhub-c-radio-v4-so400m-224`        |        4/4 |           4/4 |   4/4 |   12/12 |
+| `torchhub-c-radio-v4-so400m-256x128`    |        4/4 |           4/4 |   4/4 |   12/12 |
+| `torchhub-c-radio-v4-so400m-native`     |        4/4 |           4/4 |   4/4 |   12/12 |
+| **all**                                 |      48/48 |         48/48 | 48/48 | 144/144 |
+
+| head      | is                                 | market1501 | occluded-reid |  vrai |    runs |
+|-----------|------------------------------------|-----------:|--------------:|------:|--------:|
+| `arcface` | arcface 512d on `market1501/train` |      12/12 |         12/12 | 12/12 |   36/36 |
+| `linear`  | linear 512d on `market1501/train`  |      12/12 |         12/12 | 12/12 |   36/36 |
+| `none`    | the frozen encoder                 |      12/12 |         12/12 | 12/12 |   36/36 |
+| `pca`     | pca 512d on `market1501/train`     |      12/12 |         12/12 | 12/12 |   36/36 |
+| **all**   |                                    |      48/48 |         48/48 | 48/48 | 144/144 |
+
+## Not measured
+
+| what                           | why                                                 |
+|--------------------------------|-----------------------------------------------------|
+| dataset `ccvid`                | no reidbench adapter                                |
+| dataset `cuhk03-np`            | no reidbench adapter                                |
+| dataset `market1501-500k`      | not on disk: Market-1501-v15.09.15/distractors_500k |
+| dataset `market1501-attribute` | no reidbench adapter                                |
+| dataset `mars`                 | no reidbench adapter                                |
+| dataset `msmt17`               | no reidbench adapter                                |
+| dataset `soma`                 | not on disk: soma                                   |
+| dataset `vehicleid`            | no reidbench adapter                                |
+| dataset `veri-wild`            | no reidbench adapter                                |
+| dataset `veri776`              | not on disk: veri776/VeRi                           |
+
 # Datasets
 
 ## market1501

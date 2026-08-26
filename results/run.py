@@ -34,6 +34,7 @@ import json
 import os
 import subprocess
 import sys
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
@@ -329,6 +330,272 @@ def run_one(combo: dict[str, Any], force: bool) -> None:
     reidbench("measure", scores, "--out", run)
 
 
+# --------------------------------------------------------------------------------- summary
+
+
+ALL = "all"
+"""The row and column a coverage table totals over. No encoder, head or dataset is named it."""
+
+SHOWN = 12
+"""How many missing combinations the gaps table names before it counts the rest.
+
+Long enough that adding one encoder lists in full — twelve rows here, one per head and
+dataset — and short enough that a matrix nobody has run yet does not push the table it is
+summarising off the screen.
+"""
+
+
+def summary(records: Sequence[Path]) -> str:
+    """The status block above the table: how much of the matrix is on disk, and what is not.
+
+    The table below it is one row per run, which answers *what was measured* and cannot
+    answer *what is missing* — a combination nobody ran is not a row there, it is the
+    absence of one, and an absence is invisible in a thousand-line file. So the counts here
+    come from the matrix, where a missing combination still exists, and only the provenance
+    sentence is read off the records themselves.
+
+    It is written here rather than by ``reidbench render`` because every number in it is a
+    fact about *this* directory's cross product — which specs exist, which datasets are on
+    this disk — while the renderer is handed the results.json files that exist, which is
+    precisely the list a combination nobody ran is absent from.
+    """
+    combos = combinations()
+    runnable = [combo for combo in combos if not combo["why"]]
+    live = sorted({combo["dataset"] for combo in runnable})
+    parts = [
+        "# Summary",
+        "",
+        _headline(runnable, records),
+        "",
+        "One cell is *measured / in the matrix*, counting every head and protocol for that"
+        " pair. The encoder is named by its spec's file stem, which is also what"
+        " `run.py all <pattern>` matches.",
+        "",
+        _coverage(runnable, "encoder", live),
+        "",
+        _coverage(runnable, "head", live, _fitted_on()),
+    ]
+    gaps = _gaps(combos)
+    if gaps:
+        parts += ["", "## Not measured", "", gaps]
+    return "\n".join(parts) + "\n\n"
+
+
+def _headline(runnable: list[dict[str, Any]], records: Sequence[Path]) -> str:
+    """One italic paragraph: the size of the matrix, what it cost, and what wrote it."""
+    done = sum(1 for combo in runnable if (combo["run"] / "results.json").exists())
+    facts = _facts(records)
+    said = [
+        f"{len(encoders())} encoders x {len(heads())} heads (`none` is one of them) x "
+        f"{len({combo['dataset'] for combo in runnable})} datasets: "
+        f"**{done} of {len(runnable)}** combinations measured"
+    ]
+    if facts["stores"]:
+        said.append(f"{facts['hours']:.1f} h of encoding over {facts['stores']} feature stores")
+    if facts["created"]:
+        first, last = facts["created"][0][:10], facts["created"][-1][:10]
+        span = first if first == last else f"{first} to {last}"
+        said.append(f"Records written {span} by reidbench {', '.join(facts['versions'])}")
+    if facts["dirty"]:
+        # Its own clause: a run recorded from a dirty tree cannot be reproduced from the sha
+        # it names, and that is a property of the table rather than of any one row in it.
+        said.append(f"**{facts['dirty']} of {facts['read']} from a dirty working tree**")
+    stray = _stray(runnable, records)
+    if stray:
+        said.append(
+            f"**{len(stray)} records below are no longer in the matrix** — a spec was "
+            "renamed or deleted and its runs were not"
+        )
+    absent = sum(1 for dataset in datasets().values() if dataset["why"])
+    if absent:
+        said.append(f"{absent} more dataset pages cannot run here")
+    return "*" + ". ".join(said) + ".*"
+
+
+def _facts(records: Sequence[Path]) -> dict[str, Any]:
+    """What the run records say about themselves. An unreadable one is skipped, not fatal.
+
+    A half-written results.json is a gap in a status block and not a reason to refuse to
+    write the table, which is what the reader came for.
+    """
+    created: list[str] = []
+    versions: set[str] = set()
+    read = 0
+    dirty = 0
+    seconds: dict[str, float] = {}
+    for path in records:
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        read += 1
+        env = record.get("env", {})
+        if record.get("created"):
+            created.append(str(record["created"]))
+        versions.add(str(env.get("reidbench", "?")))
+        dirty += bool(env.get("git", {}).get("dirty"))
+        features = record.get("inputs", {}).get("features", {})
+        timing = features.get("timing") or {}
+        # Keyed by feature store rather than summed per run: twelve rows read one store, and
+        # charging its extraction time to each of them would report twelve times what the
+        # machine actually spent. Only frozen stores count — applying a head is a matrix
+        # multiply whose milliseconds are noise beside a forward pass over 36,036 images.
+        if timing.get("seconds") and not (features.get("encoder") or {}).get("head"):
+            seconds[str(features.get("key"))] = float(timing["seconds"])
+    return {
+        "read": read,
+        "created": sorted(created),
+        "versions": sorted(versions),
+        "dirty": dirty,
+        "stores": len(seconds),
+        "hours": sum(seconds.values()) / 3600,
+    }
+
+
+def _stray(runnable: list[dict[str, Any]], records: Sequence[Path]) -> list[Path]:
+    """Records on disk that no combination in the matrix would write.
+
+    ``render`` is handed every results.json under ``runs/``, so these are rows in the table
+    below — and nothing else in this script would ever mention them again.
+    """
+    matrix = {(combo["run"] / "results.json").resolve() for combo in runnable}
+    return [path for path in records if path.resolve() not in matrix]
+
+
+def _fitted_on() -> dict[str, str]:
+    """``{head: what it is}``, for the column that makes the head table readable alone.
+
+    Every head here is fitted on one split of one dataset, and which one decides whether a
+    given column of the table below is in-domain or transfer — so it belongs beside the
+    counts rather than only in the prose.
+    """
+    return {
+        name: (
+            "the frozen encoder"
+            if head is None
+            else f"{head['head']} {head.get('dim', '?')}d on "
+            f"`{head['train']['dataset']}/{head['train']['split']}`"
+        )
+        for name, head in heads().items()
+    }
+
+
+def _coverage(
+    combos: list[dict[str, Any]],
+    axis: str,
+    live: list[str],
+    describe: dict[str, str] | None = None,
+) -> str:
+    """One table: ``axis`` down the side, datasets across, *measured / in the matrix* inside."""
+    cells: dict[tuple[str, str], list[int]] = {}
+    for combo in combos:
+        done = (combo["run"] / "results.json").exists()
+        for key in (
+            (combo[axis], combo["dataset"]),
+            (combo[axis], ALL),
+            (ALL, combo["dataset"]),
+            (ALL, ALL),
+        ):
+            tally = cells.setdefault(key, [0, 0])
+            tally[0] += done
+            tally[1] += 1
+
+    def cell(value: str, dataset: str) -> str:
+        tally = cells.get((value, dataset))
+        return f"{tally[0]}/{tally[1]}" if tally else "—"
+
+    header = [axis] + (["is"] if describe else []) + [*live, "runs"]
+    rows = []
+    for value in sorted({combo[axis] for combo in combos}) + [ALL]:
+        total = value == ALL
+        row = [f"**{ALL}**" if total else f"`{value}`"]
+        if describe:
+            row.append("" if total else describe.get(value, ""))
+        rows.append(row + [cell(value, dataset) for dataset in live] + [cell(value, ALL)])
+    return _markdown(header, rows, "l" + ("l" if describe else "") + "r" * (len(live) + 1))
+
+
+def _gaps(combos: list[dict[str, Any]]) -> str:
+    """Everything the matrix holds that the table does not: not run yet, or cannot run.
+
+    A dataset that is not on disk is one row here rather than forty-eight blank cells
+    above, because one missing download is one fact.
+    """
+    known = datasets()
+    missing = [
+        combo
+        for combo in combos
+        if not combo["why"] and not (combo["run"] / "results.json").exists()
+    ]
+    rows = [
+        [
+            f"`{combo['encoder']}` x `{combo['head']}` x `{combo['dataset']}` "
+            f"x `{combo['protocol']}`",
+            "not run — `run.py all` would run it",
+        ]
+        for combo in missing[:SHOWN]
+    ]
+    if len(missing) > SHOWN:
+        rows.append([f"… and {len(missing) - SHOWN} more combinations", "not run"])
+    rows += [
+        [f"dataset `{name}`", _portable(dataset["why"])]
+        for name, dataset in sorted(known.items())
+        if dataset["why"]
+    ]
+    rows += [
+        [f"head `{name}`", _portable(_why_not_head(head, known))]
+        for name, head in heads().items()
+        if _why_not_head(head, known)
+    ]
+    return _markdown(["what", "why"], rows, "ll") if rows else ""
+
+
+def _portable(why: str) -> str:
+    """A reason with this machine out of it: paths relative to the data root, forward slashes.
+
+    ``plan`` prints the absolute path, because someone at a terminal is about to go and look
+    for the directory. This table is committed, and a reason that names one laptop's drive
+    letter is a diff every other clone would have to make.
+    """
+    return (
+        why.replace(str(data_root()) + os.sep, "")
+        .replace(str(data_root()), "")
+        .replace("\\", "/")
+    )
+
+
+def _markdown(header: Sequence[str], rows: Sequence[Sequence[str]], align: str) -> str:
+    """A padded markdown table. ``report.py`` writes the ones below; this writes these.
+
+    Padded rather than minimal because the copy of this table most of its edits are read
+    against is the source, not the render.
+    """
+    widths = [
+        max([len(str(head))] + [len(str(row[i])) for row in rows])
+        for i, head in enumerate(header)
+    ]
+
+    def line(cells: Sequence[str]) -> str:
+        return (
+            "| "
+            + " | ".join(
+                str(cell).rjust(width) if side == "r" else str(cell).ljust(width)
+                for cell, width, side in zip(cells, widths, align, strict=True)
+            )
+            + " |"
+        )
+
+    rule = (
+        "|"
+        + "|".join(
+            ("-" * (width + 1) + ":") if side == "r" else "-" * (width + 2)
+            for width, side in zip(widths, align, strict=True)
+        )
+        + "|"
+    )
+    return "\n".join([line(header), rule, *(line(row) for row in rows)])
+
+
 def write_table() -> int:
     records = sorted(RUNS.rglob("results.json"))
     if not records:
@@ -355,6 +622,10 @@ def write_table() -> int:
         "--figures", FIGURES,
         "--out", TABLE,
     )
+    # Prepended rather than passed in: the renderer is given the runs that exist, and the
+    # first question anyone opening this file has — is anything missing? — is answerable
+    # only from the matrix, which is this script's half of the work.
+    TABLE.write_text(summary(records) + TABLE.read_text(encoding="utf-8"), encoding="utf-8")
     return 0
 
 

@@ -1,7 +1,11 @@
 # Results
 
 Every (encoder, head, dataset, protocol) combination this project has actually run, in one
-table: [`table.md`](table.md). It is generated — edit the inputs, not the table.
+table: [`table.md`](table.md). It is generated — edit the inputs, not the table. It opens
+with a status block: how much of the matrix is measured, per encoder and per head, what the
+encoding cost, and what is missing or cannot run. That half is counted from the matrix rather
+than from the rows, because a combination nobody ran is not a row in a results table — it is
+the absence of one, and an absence is invisible in a thousand lines of numbers.
 
 A **head** is a small map trained on the frozen encoder's features and nothing else — no
 gradient reaches the backbone, ever. `none` is a value of that axis rather than the absence
@@ -46,6 +50,7 @@ flowchart LR
     PR -->|another store| F
     F -->|score · measure| RUN
     RUN -->|reidbench render| T
+    R -->|the summary block| T
     G --> T
 ```
 
@@ -67,7 +72,9 @@ flowchart LR
   with a `dirty` flag. Nothing about a row lives only in this directory.
 
 `plan` prints a reason for every combination that does *not* run, so the gap between what is
-supported and what has been measured stays visible instead of being an empty table cell.
+supported and what has been measured stays visible instead of being an empty table cell. The
+same reasons head `table.md` under **Not measured**, so a reader who never runs `plan` still
+sees them.
 
 ## What these numbers do not claim
 

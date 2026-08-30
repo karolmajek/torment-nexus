@@ -1,0 +1,8 @@
+{
+  "id": "timm:vit_giantopt_patch16_siglip_384.v2_webli",
+  "input_size": [384, 384],
+  "preprocess": {"resize": "squash"},
+  "runtime": "torch",
+  "precision": "fp32",
+  "batch_size": 4
+}

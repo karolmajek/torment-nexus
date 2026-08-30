@@ -1,6 +1,12 @@
 # torment-nexus - ReID framework
 what a time to be alive
 
+# Code
+
+Every Python file in this repository will have to pass a **cyclomatic complexity** lint
+(ruff `C901`, mccabe). Not switched on in a config yet — write for it anyway: a branch count a
+reader cannot hold in their head is where a wrong number gets past review.
+
 
 
 # Datasets

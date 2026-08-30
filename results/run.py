@@ -3,9 +3,10 @@
 
     python results/run.py plan            # what would run, and why the rest would not
     python results/run.py all             # run everything missing, then rewrite the table
+    python results/run.py all --keep-scores   # ... and keep each run's score matrix
     python results/run.py all market1501  # only the combinations whose names contain that
     python results/run.py all --force     # ignore existing runs and re-measure
-    python results/run.py table           # rewrite results/table.md from what is on disk
+    python results/run.py table           # rewrite results/table.md and results/tables/
 
 The combinations are not listed here. An **encoder** is a JSON spec in ``results/encoders/``,
 which is the same file ``reidbench encode --encoder`` consumes, so the spec is never written
@@ -32,6 +33,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 from collections.abc import Sequence
@@ -50,6 +52,7 @@ RUNS = HERE / "runs"
 CACHE = HERE / "cache"
 MANIFESTS = HERE / "manifests"
 TABLE = HERE / "table.md"
+TABLES = HERE / "tables"
 FIGURES = HERE / "figures.json"
 NONE = "none"
 """The name of the head that is not a head. Every encoder is measured with it."""
@@ -99,6 +102,11 @@ def datasets() -> dict[str, dict[str, Any]]:
             "adapter": block.get("adapter", ""),
             "protocols": block.get("protocols", []),
             "root": data_root() / block.get("dir", name),
+            # A tracklet dataset says so on its own page, in the same block that names its
+            # adapter. This script therefore still holds no dataset knowledge: "CCVID is
+            # tracklet-shaped" is a fact about CCVID and lives on CCVID's page.
+            "tracklet_by": block.get("tracklet_by", ""),
+            "frames_per_tracklet": block.get("frames_per_tracklet", 0),
             "why": _why_not(page),
         }
     return out
@@ -115,12 +123,16 @@ def _why_not(page: dict[str, Any]) -> str:
     return f"not on disk: {absent[0]}" if absent else ""
 
 
-def combinations(pattern: str = "") -> list[dict[str, Any]]:
+def combinations(pattern: str = "", exclude: Sequence[str] = ()) -> list[dict[str, Any]]:
     """One entry per (encoder, head, dataset, protocol). Sorted, so the plan is stable.
 
-    ``pattern`` is a plain substring over ``encoder head dataset protocol``. Choosing what to
-    run is not a property of the matrix, so it is stored nowhere: it filters the list on the
-    way out. One combination expensive enough to not want by accident is enough to need it.
+    ``pattern`` is a plain substring over ``encoder head dataset protocol``, and ``exclude`` is
+    a list of substrings over the same string that removes rows instead. Choosing what to run is
+    not a property of the matrix, so neither is stored anywhere: they filter the list on the way
+    out. One combination expensive enough to not want by accident is enough to need the first;
+    the second is for when the cheap way to say what you want is to name what you do not — two
+    encoders out of fourteen are 62% of this matrix's GPU cost, and holding them back for a
+    session with more machine time is not the same decision as never running them.
 
     A head names the dataset it is fitted on, and a head whose train set is not on this disk
     cannot run anywhere — so that reason is attached per combination, beside the reason a
@@ -151,10 +163,13 @@ def combinations(pattern: str = "") -> list[dict[str, Any]]:
                             "run": RUNS / variant / dataset_name / protocol.replace("/", "_"),
                         }
                     )
+    def label(c: dict[str, Any]) -> str:
+        return f"{c['encoder']} {c['head']} {c['dataset']} {c['protocol']}"
+
     return [
         c
         for c in out
-        if pattern in f"{c['encoder']} {c['head']} {c['dataset']} {c['protocol']}"
+        if pattern in label(c) and not any(e in label(c) for e in exclude)
     ]
 
 
@@ -231,10 +246,24 @@ def manifest_of(combo: dict[str, Any], dataset: str) -> Path:
     file sits changes nothing that was already measured.
     """
     path = MANIFESTS / f"{dataset}.parquet"
+    known = datasets()[dataset]
     if not path.exists():
-        known = datasets()[dataset]
         reidbench("manifest", known["adapter"], "--root", known["root"], "--out", path)
-    return path
+
+    # A video dataset is evaluated over a few frames per tracklet, not all of them, and the
+    # thinning happens here — before `encode` — because the point is to not extract features
+    # for frames nobody will pool. How many is a fact about the dataset and lives on its page;
+    # the sampled manifest stamps the recipe, so every result downstream carries the number.
+    by, size = known["tracklet_by"], known["frames_per_tracklet"]
+    if not (by and size):
+        return path
+    sampled = MANIFESTS / f"{dataset}.{size}f.parquet"
+    if not sampled.exists():
+        sh(
+            sys.executable, str(HERE / "aggregate.py"), "sample",
+            "--manifest", path, "--by", by, "--size", str(size), "--out", sampled,
+        )
+    return sampled
 
 
 def features_of(combo: dict[str, Any], dataset: str, force: bool = False) -> Path:
@@ -305,7 +334,31 @@ def _fitted_from(path: Path) -> dict[str, Any] | None:
 _NOT_SPEC = frozenset({"kind", "id", "input_norm", "source", "encoder_digest", "weights"})
 
 
-def run_one(combo: dict[str, Any], force: bool) -> None:
+def collapse_to_tracklets(
+    combo: dict[str, Any], features: Path, manifest: Path, by: str
+) -> tuple[Path, Path]:
+    """Pool a frame store and its manifest to tracklets, and return the pair to score over.
+
+    Both halves or neither: `manifest.collapse` and `transform.aggregate` agree on the uid, so
+    a tracklet protocol scored over them is the same shape as every other protocol. Scoring it
+    over the frame-level pair instead materialises a `(frames, frames)` boolean pair — 26 GB on
+    CCVID — to answer a question about 834 tracklets.
+    """
+    dataset = combo["dataset"]
+    base = combo["cache"].parent / f"{dataset}.tracklet"
+    collapsed = MANIFESTS / f"{dataset}.tracklet.parquet"
+    sh(
+        sys.executable, str(HERE / "aggregate.py"), "pool",
+        "--features", features,
+        "--manifest", manifest,
+        "--by", by,
+        "--cache", base,
+        "--out-manifest", collapsed,
+    )
+    return store_of(base, dataset), collapsed
+
+
+def run_one(combo: dict[str, Any], force: bool, keep_scores: bool = False) -> None:
     run = combo["run"]
     if (run / "results.json").exists() and not force:
         print(f"[ have ] {run.relative_to(PROJECT)}")
@@ -317,10 +370,16 @@ def run_one(combo: dict[str, Any], force: bool) -> None:
     work.mkdir(parents=True, exist_ok=True)
     scores = work / "scores.npz"
 
+    features = features_of(combo, combo["dataset"], force)
+    manifest = manifest_of(combo, combo["dataset"])
+    by = datasets()[combo["dataset"]]["tracklet_by"]
+    if by:
+        features, manifest = collapse_to_tracklets(combo, features, manifest, by)
+
     reidbench(
         "score",
-        "--features", features_of(combo, combo["dataset"], force),
-        "--manifest", manifest_of(combo, combo["dataset"]),
+        "--features", features,
+        "--manifest", manifest,
         "--protocol", combo["protocol"],
         "--out", scores,
     )
@@ -328,6 +387,15 @@ def run_one(combo: dict[str, Any], force: bool) -> None:
     # which protocols those are is the protocol's business, not this script's. Without
     # them every open-set metric is NaN and `check` says so.
     reidbench("measure", scores, "--out", run)
+
+    # The score matrix is an intermediate, and on the large protocols it is *the* cost: a
+    # market1501 run is 212 MB of scores.npz beside 112 KB of results, and the same table over
+    # msmt17 and market1501+500k would want 776 GB of them. What the table reads —
+    # results.json, per_query.parquet, curves.npz — is kept; this is regenerable by re-running
+    # the same three commands, which is why it is safe to discard and why `--keep-scores`
+    # exists for anyone who wants to re-measure without re-scoring.
+    if not keep_scores:
+        shutil.rmtree(work, ignore_errors=True)
 
 
 # --------------------------------------------------------------------------------- summary
@@ -601,14 +669,27 @@ def write_table() -> int:
     if not records:
         print("no runs on disk; nothing to render")
         return 1
+    # `render` is handed the tree, not the 355 paths inside it: naming them individually is a
+    # 34,832-character command line, and Windows will not start a process past 32,767. That
+    # limit was crossed silently — the failure is in CreateProcess, so it surfaced as a
+    # traceback after every run had already been written, and two chained jobs swallowed it.
     # The figures are named here rather than left to the renderer's defaults, because which
     # two metrics are worth plotting against each other is a claim about these datasets and
     # belongs where a reader can change it. mAP against mINP, not against R1: R1 tracks mAP
     # almost exactly here, so that scatter would be a diagonal line, while mINP is the
     # hardest true match's rank and separates rows the ranking alone calls equal.
     reidbench(
-        "render", *records,
+        "render", RUNS,
         "--labels", "encoder,resolution,resize,head,protocol",
+        # A section per dataset *and per protocol*, because the protocol is the one label
+        # whose values do not compete. CCVID ships two — `ccvid/tracklet@1` and
+        # `ccvid/tracklet-cloth-changing@1` — differing by one exclusion, and the second
+        # asks a strictly harder question of the same tracklets. One table over both
+        # numbers the rows against each other, emphasises the higher value and draws one
+        # scatter through the pair, all three of which say the cloth-changing row lost a
+        # comparison nobody made. Named here rather than left to the default because which
+        # rows are each other's competition is a claim about these runs.
+        "--group-by", "dataset,protocol",
         "--scatter", "mAP,mINP",
         "--bar", "mAP",
         # The head is the axis this table exists to argue about — four of them over seven
@@ -620,6 +701,13 @@ def write_table() -> int:
         # about these runs and not about the renderer — and because turning one off should
         # be deleting four lines rather than editing this call.
         "--figures", FIGURES,
+        # One file per dataset, and `table.md` becomes the index over them. The whole report
+        # was 3,000 lines, of which 96% was the numbers: CCVID alone is 756 and five other
+        # datasets are ~380 each, so every question about one dataset was asked by scrolling
+        # past four others, and re-running one showed up as a diff to the report. What stays
+        # in `table.md` is what is about the matrix rather than about a dataset — the
+        # coverage summary above, the licences below, and now a table of where to look.
+        "--pages", TABLES,
         "--out", TABLE,
     )
     # Prepended rather than passed in: the renderer is given the runs that exist, and the
@@ -654,7 +742,7 @@ def cmd_plan(args: argparse.Namespace) -> int:
         )
         print(f"[{mark}] {name:22} {what}{'  — ' + why if why else ''}")
     print("\ncombinations")
-    for combo in combinations(args.pattern):
+    for combo in combinations(args.pattern, args.exclude):
         state = (
             "skip"
             if combo["why"]
@@ -668,12 +756,12 @@ def cmd_plan(args: argparse.Namespace) -> int:
 
 
 def cmd_all(args: argparse.Namespace) -> int:
-    todo = [c for c in combinations(args.pattern) if not c["why"]]
+    todo = [c for c in combinations(args.pattern, args.exclude) if not c["why"]]
     if not todo:
         print("nothing to run; `plan` says why")
         return 1
     for combo in todo:
-        run_one(combo, args.force)
+        run_one(combo, args.force, args.keep_scores)
     return write_table()
 
 
@@ -687,11 +775,25 @@ def main(argv: list[str] | None = None) -> int:
     plan_parser = sub.add_parser("plan", help="what would run, and why the rest would not")
     run_parser = sub.add_parser("all", help="run every missing combination, then rewrite the table")
     run_parser.add_argument("--force", action="store_true", help="re-run combinations already on disk")
+    run_parser.add_argument(
+        "--keep-scores",
+        action="store_true",
+        help="keep each run's work/scores.npz. Off by default: it is a regenerable intermediate "
+             "and 99.9%% of the disk a run costs",
+    )
     for one in (plan_parser, run_parser):
         one.add_argument(
             "pattern", nargs="?", default="", help="substring of 'encoder head dataset protocol'"
         )
-    sub.add_parser("table", help="rewrite results/table.md from the runs on disk")
+        one.add_argument(
+            "--exclude",
+            action="append",
+            default=[],
+            metavar="SUBSTRING",
+            help="drop combinations matching this substring; repeatable. For holding an "
+                 "expensive encoder back from a short session without editing the matrix",
+        )
+    sub.add_parser("table", help="rewrite results/table.md and results/tables/ from the runs")
     args = parser.parse_args(argv)
     return {"plan": cmd_plan, "all": cmd_all, "table": cmd_table}[args.command](args)
 

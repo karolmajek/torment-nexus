@@ -429,7 +429,9 @@ Two things follow, and the second is the one to argue about.
   §1, because those are transfers between two ordinary ReID benchmarks and Occluded-REID's
   gallery is fifteen times smaller than Market's. The ratio is recorded; it is not a retention
   result until there is a second ordinary person benchmark to point it at, which is MSMT17,
-  which is not here.
+  which is not here. **Closed on 2026-08-26 by CUHK03-NP rather than MSMT17** — an ordinary
+  person benchmark with a disjoint identity split and a gallery 3x smaller than Market's rather
+  than 15x. See §14.7, which is where H4 gets answered.
 - **The head also transfers out of its object class.** A head fitted only on 751 people
   improves aerial-vehicle retrieval by 31% relative, having never seen a vehicle. The matched
   PCA control on VRAI *falls* (0.1739 → 0.1625), so this is not the bottleneck and not an
@@ -497,9 +499,12 @@ Two consequences for the rest of this protocol:
 
 ## 14. The teacher ablation — 2026-08-26
 
-§7 ran. Five encoder specs, sixty new rows, and one methods fix that had to land first. The
-matrix is now twelve encoder-resolution pairs × four heads × three datasets = 144 rows, all in
-[results/table.md](../../results/table.md).
+§7 ran. Five encoder specs, sixty new rows, and one methods fix that had to land first;
+CUHK03-NP was then added on 2026-08-26 and re-ran the whole matrix over a fourth dataset. It is
+now twelve encoder-resolution pairs × four heads × four datasets = 192 rows, all in
+[results/table.md](../../results/table.md). CUHK03 is what turned §14.3's conclusion from
+"agglomeration wins on people" into "agglomeration wins in-domain", which is why a dataset
+adapter written on a spare afternoon was worth more than another encoder.
 
 ### 14.1 The confound that had to be fixed first
 
@@ -542,60 +547,88 @@ checkpoints are resolution-locked, so SigLIP2-g runs at its native 256×256 agai
 else at 224×224 — per §13.3's resolution finding that is an advantage, not a neutral
 difference, which only sharpens the result below.
 
-### 14.3 H1 and H2 — supported on people, falsified on vehicles
+### 14.3 H1 and H2 — supported in-domain, not on transfer
 
 ArcFace, the head under which every probe converged (≥0.9911 train top-1 for every teacher;
-C-RADIOv4 saturates at 1.0000):
+C-RADIOv4 saturates at 1.0000). CUHK03-NP detected was added on 2026-08-26, after the first
+reading of this section, and it changed the conclusion:
 
-| mAP | Market | Occluded-REID | VRAI |
-|---|---|---|---|
-| C-RADIOv4-H 653M | **0.7087** | 0.6459 | 0.2276 |
-| C-RADIOv4-SO400M 431M | 0.6957 | **0.6510** | 0.2068 |
-| SigLIP2-g 1163M *(teacher)* | 0.6077 | 0.6494 | 0.2290 |
-| DINOv3-H+ 840M | 0.6548 | 0.3560 | **0.2467** |
-| SigLIP2-SO400M 428M | 0.5137 | 0.5576 | 0.1772 |
+| mAP | Market | Occluded-REID | CUHK03 | VRAI |
+|---|---|---|---|---|
+| C-RADIOv4-H 653M | **0.7087** | 0.6459 | 0.1528 | 0.2276 |
+| C-RADIOv4-SO400M 431M | 0.6957 | **0.6510** | 0.1399 | 0.2068 |
+| SigLIP2-g 1163M *(teacher)* | 0.6077 | 0.6494 | **0.2826** | 0.2290 |
+| SigLIP2-SO400M 428M *(teacher)* | 0.5137 | 0.5576 | 0.1743 | 0.1772 |
+| DINOv3-H+ 840M *(teacher\*)* | 0.6548 | 0.3560 | 0.0971 | **0.2467** |
+| DINOv3-L 303M *(teacher\*)* | 0.6072 | 0.3324 | 0.0755 | 0.1599 |
 
-**On people, §7's outcome 1.** C-RADIOv4 beats the literal teacher by 17% relative on Market
-and ties it on Occluded-REID (0.6510 / 0.6494 / 0.6459 is inside noise, cf. §13.5's sd 0.0050
-on that set). The risk [foundation-model-reid-kb.md](../field/foundation-model-reid-kb.md) §6
-names — "distillation preserves category structure, not instance margins" — does not
-materialise.
+**The axis is not people-versus-vehicles. It is in-domain versus transfer.**
 
-**And it is best refuted on the metric it is about.** mINP is the hardest true match's rank,
-which is the instance-margin quantity:
-
-| ArcFace mINP | Market | Occluded-REID |
+| dataset | did the head see these identities? | student vs best teacher |
 |---|---|---|
-| C-RADIOv4-H | **0.3202** | 0.4903 |
-| C-RADIOv4-SO400M | 0.2953 | **0.5011** |
-| SigLIP2-g | 0.2038 | 0.4745 |
+| Market-1501 | **yes** — all three heads fit on `market1501/train` | **wins**, 0.7087 vs 0.6548 |
+| Occluded-REID | no | ties, 0.6459 vs 0.6494 |
+| CUHK03-NP | no | **loses**, 0.1528 vs 0.2826 |
+| VRAI | no | **loses**, 0.2276 vs 0.2467 |
 
-Market's mAP gap is 1.17× and its mINP gap is **1.57×**; Occluded-REID's mAP is a three-way
-tie while C-RADIOv4 still leads mINP. Where distillation was predicted to lose most, it wins
-most.
+Market is the only dataset whose identities any head has seen, and it is the only clear
+student win. On the three transfer sets the distilled model ties once and loses twice — and on
+CUHK03 it loses to **SigLIP2-SO400M at 428M**, a teacher 1.5x smaller than C-RADIOv4-H, even
+at C-RADIOv4-H's best CUHK03 configuration (256x128, 0.1632).
 
-**On aerial vehicles, §7's outcome 3.** DINOv3-H+ leads at 0.2467 against C-RADIOv4-H's
-0.2276, frozen (0.2346 vs 0.1739) and probed. H1 and H2 both fail on VRAI.
+So H1 and H2 hold **where the probe was fitted** and fail as a general claim. The earlier
+reading in this section — that they hold "on people" — was an artifact of the person datasets
+then available: Market, which is in-domain, and Occluded-REID, which is a tie. CUHK03 is a
+person dataset where the student loses outright.
 
-### 14.4 Why VRAI goes the other way, and why it is not the predicted failure
+**Where H2 does survive unambiguously, it survives on the metric it is about.** In-domain, on
+mINP — the hardest true match's rank, i.e. the instance margin
+[foundation-model-reid-kb.md](../field/foundation-model-reid-kb.md) §6 predicts distillation
+destroys:
 
-It is *scale within DINOv3 specifically*, not a general teacher-beats-student effect:
+| Market, ArcFace | mAP | mINP |
+|---|---|---|
+| C-RADIOv4-H | 0.7087 (1.17x) | **0.3202 (1.57x)** |
+| SigLIP2-g | 0.6077 | 0.2038 |
 
-| VRAI, frozen mAP | smaller | larger | |
+The gap is wider on mINP than on mAP. Where the probe has labels, distillation does not merely
+preserve the fine-grained margin, it improves it. That is a narrower claim than §7's outcome 1
+and it is the one the data actually supports.
+
+### 14.4 The shape of the transfer loss: regression to the teacher mean
+
+On every transfer set the student lands *between* its teacher families, never below both and
+never above both:
+
+| ArcFace mAP | SigLIP2 best | **C-RADIOv4 best** | DINOv3 best |
 |---|---|---|---|
-| DINOv3 | 0.1492 (303M) | **0.2346** (840M) | +57%, overtakes everything |
-| SigLIP2 | 0.1269 (428M) | 0.1642 (1163M) | +29%, still below C-RADIOv4-H |
-| C-RADIOv4 | 0.1489 (431M) | 0.1739 (653M) | — |
+| CUHK03 | 0.2826 | **0.1632** | 0.0971 |
+| VRAI | 0.2290 | **0.2276** | 0.2467 |
+| Occluded-REID | 0.6494 | **0.6510** | 0.3660 |
 
-Scaling DINOv3 2.8× *helps* aerial vehicles (+57%) and *hurts* people (Market −5%,
-Occluded-REID −24%). Scaling SigLIP2 helps VRAI but not enough to pass the distilled model.
+This was a prediction before it was a result: C-RADIOv4-H's and C-RADIOv4-SO400M's CUHK03 rows
+were both forecast to fall between 0.0971 and 0.2826 on the strength of the VRAI pattern, and
+both did (0.1528, 0.1399). Two independent students, one dataset added after the model was
+written.
 
-The reading this supports is not margin destruction but **averaging**. VRAI is semantically
-impoverished — a car seen from above — so the language-aligned teacher contributes little and
-the self-supervised dense-feature teacher excels. C-RADIOv4 distils both and lands *between
-its two teachers*: 0.1739, above SigLIP2-g's 0.1642 and below DINOv3-H+'s 0.2346. That is
-agglomeration behaving as advertised. The cost of agglomeration is not a destroyed margin, it
-is **regression toward the teacher mean on any domain where the teachers disagree sharply.**
+The teachers disagree by domain, sharply and consistently:
+
+| | SigLIP2 | DINOv3 |
+|---|---|---|
+| CUHK03 (degraded person crops) | 0.2826 | 0.0971 — **2.9x apart** |
+| Occluded-REID (occluded people) | 0.6494 | 0.3660 — 1.8x apart |
+| VRAI (aerial vehicles) | 0.2290 | 0.2467 — DINOv3 ahead |
+
+Language-aligned features carry cross-domain person re-id; self-supervised dense features carry
+aerial vehicles. **Agglomeration inherits a blend, and a blend is worse than the better teacher
+wherever the teachers disagree.** VRAI is semantically thin — a car from above — so SigLIP2
+contributes little; CUHK03 is degraded detector boxes of people, where DINOv3 contributes
+little. In both cases the student pays for the teacher it did not need.
+
+The cost of agglomeration is therefore not the destroyed instance margin the literature warns
+about. It is **regression toward the teacher mean on any domain where one teacher is much
+better than the other** — a real cost, but a different and more predictable one, and one a
+practitioner can reason about by asking which teacher suits their domain.
 
 ### 14.5 The methodological result: frozen evaluation picks a different winner
 
@@ -634,23 +667,100 @@ way is measuring readout alignment as much as representation quality. §13.3 alr
 that probing "widens the gap rather than closing it"; §14 shows it does not merely widen, it
 *reorders*, and the reorder is what separates publishing outcome 1 from publishing outcome 3.
 
-### 14.6 A DINOv3 family signature, at two scales
+### 14.6 A DINOv3 family signature: the angular margin does not transfer
 
-ArcFace is worse than the plain linear head on Occluded-REID for **both** DINOv3 sizes — the
-only place in 144 rows where the angular margin loses:
+ArcFace beats the plain linear head everywhere in this table except in DINOv3's feature space
+on a transfer set, where it loses in three of four cells:
 
-| Occluded-REID mAP | linear | ArcFace |
-|---|---|---|
-| DINOv3-L 303M | 0.3651 | 0.3324 |
-| DINOv3-H+ 840M | 0.3661 | 0.3560 |
-| C-RADIOv4-H | 0.6241 | **0.6459** |
+| linear → ArcFace, mAP | DINOv3-L 303M | DINOv3-H+ 840M | C-RADIOv4-H | SigLIP2-g |
+|---|---|---|---|---|
+| Market (**in-domain**) | 0.3022 → **0.6072** | 0.3189 → **0.6548** | ✅ | ✅ |
+| Occluded-REID | 0.3651 → 0.3324 ❌ | 0.3661 → 0.3560 ❌ | ✅ | ✅ |
+| CUHK03 | 0.0750 → 0.0755 *(tie)* | 0.1219 → 0.0971 ❌ | ✅ | ✅ |
 
-Both DINOv3 probes reach 1.0000 train top-1, so this is not a fit failure: the margin buys
-in-domain separation on Market people and pays for it on occluded ones. On VRAI the *linear*
-head damages DINOv3 outright (H+ 0.2346 frozen → 0.1871 linear). DINOv3-H+'s VRAI win is a
-frozen-features win that the probe barely improves (+5%, against C-RADIOv4-H's +31%).
+Three of four DINOv3 transfer cells invert; the fourth is a tie. It is not a fit failure —
+both DINOv3 probes reach 1.0000 train top-1 — and it never happens for SigLIP2 or C-RADIOv4 on
+any dataset. In DINOv3's space the angular margin **buys in-domain separation and pays for it
+out of domain**: 2.05x on the identities it was fitted on, a loss on the sets it was not.
 
-### 14.7 What these rows cost
+The effect is strongest at the larger scale, which is the one worth deploying, so the practical
+reading is real: *fit ArcFace on your labelled domain* is bad advice for a DINOv3 backbone used
+cross-domain, where a plain linear head transfers better. That is the opposite of what Market's
+numbers alone would recommend.
+
+On VRAI the *linear* head damages DINOv3 outright (H+ 0.2346 frozen → 0.1871 linear), and
+DINOv3-H+'s VRAI win is a frozen-features win the probe barely improves (+5%, against
+C-RADIOv4-H's +31%).
+
+### 14.7 H4 — falsified, and it is H2 seen from the other side
+
+§13.4 recorded a retention ratio and refused to call it a result, because Occluded-REID is not
+an ordinary person benchmark and its gallery is a fifteenth of Market's. CUHK03-NP is ordinary,
+its identities are disjoint from its training split, and its gallery is 5,332 against Market's
+15,913. That is close enough to make H4 answerable.
+
+Retention is `target mAP / source mAP` for the ArcFace head fitted on `market1501/train` and
+applied unchanged. Market is the source; everything else is a target:
+
+| ArcFace | Market *(source)* | CUHK03 | ret | Occluded-REID | ret | VRAI | ret |
+|---|---|---|---|---|---|---|---|
+| SigLIP2-g 1163M *(teacher)* | 0.6077 | **0.2826** | **0.46** | 0.6494 | 1.07 | 0.2290 | **0.38** |
+| SigLIP2-SO400M 428M *(teacher)* | 0.5137 | 0.1743 | 0.34 | 0.5576 | **1.09** | 0.1772 | 0.35 |
+| C-RADIOv4-H 653M *(student)* | **0.7087** | 0.1528 | 0.22 | 0.6459 | 0.91 | 0.2276 | 0.32 |
+| C-RADIOv4-SO400M 431M *(student)* | 0.6957 | 0.1399 | 0.20 | 0.6510 | 0.94 | 0.2068 | 0.30 |
+| DINOv3-H+ 840M *(teacher\*)* | 0.6548 | 0.0971 | 0.15 | 0.3560 | 0.54 | 0.2467 | 0.38 |
+| DINOv3-L 303M *(teacher\*)* | 0.6072 | 0.0755 | 0.12 | 0.3324 | 0.55 | 0.1599 | 0.26 |
+| CLIP-B/16 87M squash | 0.2887 | 0.0165 | 0.06 | 0.4137 | 1.43 | 0.0394 | 0.14 |
+
+**H4 predicted the agglomerative backbones would retain at least as well as the best single
+foundation encoder. They do not, on any of the three targets.** SigLIP2-g retains 0.46 on
+CUHK03 against C-RADIOv4-H's 0.22 — twice as well — and leads on Occluded-REID and VRAI too.
+
+### 14.7.1 Why this is not a normalisation artefact
+
+A retention ratio flatters a weak source model, and this table contains the warning example:
+CLIP's **1.43** on Occluded-REID is not generalisation, it is a Market score of 0.2887 in the
+denominator. Any retention table without the absolute columns beside it is a trap, which is why
+they are printed here.
+
+The SigLIP2-vs-C-RADIOv4 comparison survives that objection:
+
+- SigLIP2-g's source score is **within 17%** of C-RADIOv4-H's (0.6077 vs 0.7087), so the
+  denominators are comparable — this is not a weak model being flattered;
+- SigLIP2-g wins the CUHK03 **target in absolute terms**, 0.2826 vs 0.1528. Numerator and
+  denominator point the same way, so the ratio is not doing the work.
+
+### 14.7.2 H2 and H4 are one property
+
+H2 and H4 were written in §1 as independent hypotheses. They are not:
+
+```mermaid
+flowchart LR
+    A["<b>One property</b><br/>the student's gain is<br/>concentrated where<br/>the probe had labels"]
+    A --> B["<b>read as H2</b><br/>student beats teachers<br/>in-domain, ties or loses<br/>on transfer &#40;§14.3&#41;"]
+    A --> C["<b>read as H4</b><br/>high source + mediocre<br/>targets = low retention<br/>&#40;§14.7&#41;"]
+```
+
+High in-domain performance with mediocre transfer *is* low retention — the same numbers, one
+divided by the other. So §14.3's conclusion and H4's falsification are a single finding, and
+neither is independent evidence for the other. Worth stating plainly, because a paper that
+reported them as two results would be double-counting one.
+
+**What this costs the study's headline.** C-RADIOv4 remains the right default when you have
+labels in your target domain: it wins Market outright and wins it on mINP by more than on mAP
+(§14.3). It is the wrong default when you do not — there SigLIP2-g is better on two of three
+targets and never worse. "Agglomerative backbones are a strong ReID default" needs the
+qualifier *if you can fit a head on your own data*.
+
+### 14.7.3 The caveat that remains
+
+CUHK03's gallery is 5,332 and Market's is 15,913, so these ratios are still not gallery-matched
+and do not belong beside the published retention figures in
+[60-finetuning-question.md](../field/60-finetuning-question.md) §1 without saying so. 3x is much
+better than Occluded-REID's 15x and is not 1x. MSMT17 remains the dataset that would settle it,
+and remains §14.9's first item.
+
+### 14.8 What these rows cost
 
 Sixty rows on one RTX 2070 Max-Q, thermally throttled to ~885 MHz SM clock after the first
 hour of sustained load:
@@ -670,13 +780,26 @@ rows the protocol touches would make every future encoder ~5× cheaper there, at
 new manifest digest and therefore a re-extraction of the ten encoders already measured.
 Recorded here as the single largest available saving in this pipeline.
 
-### 14.8 What is still unrun
+### 14.9 What is still unrun
 
-§13.7's list, minus its first item, unchanged in priority: **MSMT17** (adapter + download),
-**EUPE-B** (the second agglomerative family, and the one whose licence forbids commercial
-use), **CCVID**, and **§6.5's open-set check**. **CUHK03-NP** now has an adapter, two protocol
-values and a verified tree on disk — see [cuhk03-np.md](../../datasets/cuhk03-np.md) §8 — and
-is deliberately not wired into the matrix yet.
+§13.7's list, minus its first item and minus CUHK03, which ran: **MSMT17** (adapter +
+download), **EUPE-B** (the second agglomerative family, and the one whose licence forbids
+commercial use), **CCVID**, and **§6.5's open-set check**.
+
+**CUHK03-NP detected** is measured — adapter, protocol value and all 48 rows. Two things it
+left open. Its `labeled` variant has an adapter and a protocol value
+(`cuhk03/labeled-767@1`) and has never been run, deliberately: the project reports detected
+only. And the crop-vs-squash geometry of §14.1 is only measurable there through CLIP, the one
+encoder with both specs, which on CUHK03 sits at 3-9x its random floor and cannot resolve the
+question; a squash/crop pair for a strong encoder would settle it for one JSON file and about
+forty minutes.
+
+**A guard worth having.** Before any CUHK03 number was read, the manifest and protocol were
+checked by scoring *perfect* features (the relevance matrix as its own similarity) and *random*
+ones: oracle mAP 1.0000, random mAP 0.0022, against Market's 1.0000 / 0.0015. That is what
+separated "this dataset is hard" from "the new adapter is silently wrong" — CLIP's frozen 0.0073
+here is 3.3x its floor where on Market it is 19x. Any future adapter deserves the same two
+lines before its first result is believed.
 
 §7.1's SAM3 ablation remains untouched and is now more interesting than it was: §14.4 says
 C-RADIOv4 inherits a blend of its teachers, which predicts that masking background before

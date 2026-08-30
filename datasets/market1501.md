@@ -227,4 +227,4 @@ It also means the archive must not be re-hosted from this project.
 | `reidbench` protocol | ✅ `market1501/official@1` |
 | Provenance record | ✅ `market1501` |
 | Access | ✅ public Drive link; sha256 recorded |
-| Measured | ✅ [results/table.md](../results/table.md) |
+| Measured | ✅ [results/tables/market1501.md](../results/tables/market1501.md) |

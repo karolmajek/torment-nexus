@@ -33,7 +33,7 @@ commercial_ok = false
 access = "gdrive"
 homepage = "https://github.com/zhunzhong07/person-re-ranking/tree/master/CUHK03-NP"
 dir = "CUHK03/archive"
-adapter = ""              # DISARMED — set to "cuhk03-detected" to run. See §8.
+adapter = "cuhk03-detected"
 protocols = ["cuhk03/detected-767@1"]
 checked_on = "2026-08-25"
 link_verified = true
@@ -103,7 +103,31 @@ CUHK03/archive/
   cuhk03_release/cuhk-03.mat                          the original archive, unread
 ```
 
-There are no `bounding_box_train/` directories: the split is data, not directory structure.
+### Both packagings are on this disk, and they are the same data
+
+`data/cuhk03-np/` holds the **CUHK03-NP release** — the widely circulated repackaging into
+Market-1501 directories, renamed `{pid:04d}_c{camid}_{index}.png` with a global identity:
+
+```
+cuhk03-np/
+  detected/  bounding_box_train/ 7,365   query/ 1,400   bounding_box_test/ 5,332
+  labeled/   bounding_box_train/ 7,368   query/ 1,400   bounding_box_test/ 5,328
+```
+
+**Verified equal to the archive tree by decoding every image**, because the release re-encoded
+the PNGs and so shares *no bytes* with it at all — a checksum comparison says they are unrelated
+and is wrong. On pixels: all 14,097 detected images present in both, **0** images in a different
+split, and the identity and (identity, camera) partitions **1:1 in both directions** across all
+1,467 identities and 2,934 identity-camera pairs.
+
+So the two are one dataset in two boxes. `reidbench` reads both — `cuhk03-detected` for the
+archive tree, `cuhk03-np-detected` for the release — and they produce the same science and
+different `uid`s, since a uid carries a relative path. **Feature caches do not transfer between
+them; results do.** Everything measured here used the archive tree; re-running the release would
+buy nothing but a second set of identical numbers.
+
+There are no `bounding_box_train/` directories *in the archive tree*: there, the split is data,
+not directory structure.
 `verify` checks the two image directories; the per-split counts in §1 under `counts.detected`
 and `counts.labeled` are what the adapter reproduces from the JSON, and they match the
 published protocol exactly.
@@ -184,13 +208,8 @@ protocol; citing only one is the common error and the README is explicit about i
 
 | | |
 |---|---|
-| On disk | ✅ `data/CUHK03/archive`, counts verified 2026-08-25 |
-| `reidbench` adapter | ✅ `adapters/cuhk03.py` — `cuhk03-detected`, `cuhk03-labeled` |
+| On disk | ✅ `data/CUHK03/archive` (measured) and `data/cuhk03-np` (the release; proven identical, not re-run) |
+| `reidbench` adapter | ✅ `adapters/cuhk03.py` — `cuhk03-detected`, `cuhk03-labeled`, and `cuhk03-np-detected`, `cuhk03-np-labeled` for the release packaging |
 | `reidbench` protocol | ✅ `cuhk03/detected-767@1`, `cuhk03/labeled-767@1` |
 | Provenance record | not written |
-| Measured | ⏸ **deliberately disarmed** — `adapter = ""` in §1 |
-
-**Why disarmed.** `results/run.py` re-reads this directory on every invocation, so arming the
-page mid-experiment would silently add CUHK03 rows to whichever encoder happened to start next
-and leave the matrix ragged. Set `adapter = "cuhk03-detected"` once the encoder sweep in
-[results/table.md](../results/table.md) is complete, then `python results/run.py plan cuhk03`.
+| Measured | ✅ [results/tables/cuhk03-np.md](../results/tables/cuhk03-np.md) |

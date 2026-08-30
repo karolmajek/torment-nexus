@@ -34,7 +34,7 @@ tracker bridge, a `local:` backend — stay unbuilt on purpose.
 
 ```mermaid
 flowchart TD
-    DATA["data lane<br/>msmt17 · cuhk03 · occluded-reid · ccvid<br/><i>4 adapters · 6 protocol values</i>"]
+    DATA["data lane<br/>msmt17 · cuhk03 · occluded-reid · ccvid · mars · vric<br/><i>7 adapters ✅ · 10 protocol values ✅</i>"]
     ENC["encoder lane<br/>GeM pooling · a teacher backend"]
     CHK["reporting lane<br/>pooling + input_size axes<br/>backbone-comparison finding"]
     C1["C1 — frozen-probe study"]
@@ -65,12 +65,14 @@ The data lane is shared, which is why it goes first: it is the only work three s
 
 | Owed | Forced by | Shape | State |
 |---|---|---|---|
-| `adapters/msmt17.py` | C1 §3 (primary), C16 §3, C3 | read the official `list_*.txt` files, not a directory glob, so it takes both the V1 and V2 layouts | 📋 — `msmt17/official@1` and the dataset record already ship; **access is the harder half**, see [datasets/msmt17.md](../../datasets/msmt17.md) §4 |
+| `adapters/msmt17.py` | C1 §3 (primary), C16 §3, C3 | read the official `list_*.txt` files, not a directory glob, so it takes both the V1 and V2 layouts | ✅ **written and run** — 126,441 rows off the real tree, all four list files at their published lengths. The data is on disk too; what remains open is **which route it came by**, see [datasets/msmt17.md](../../datasets/msmt17.md) §4 and decision 3 |
 | `adapters/cuhk03.py` | C16 §3 (hard cross-domain), C1 §3 | detected boxes; **two named protocol values** — `cuhk03/detected-767@1` and `cuhk03/detected-classic-20split@1`, never a flag, because a reader who cannot see which split produced a number will assume the flattering one | ✖ |
 | `adapters/occluded_reid.py` | C1 §6.4, C16 §7.5 | TIFF images and **no camera labels**, so its protocol excludes `same_uid` only — a property of the release, written into the protocol's definition rather than left as a silently absent rule. Plus a regression test that `occluded-duke` still resolves **denied** | ✖ — data is on disk |
-| `adapters/ccvid.py` | C1 §6.4, C16 §7.5 | tracklet-shaped: the manifest carries `trackid`, then `transform.aggregate` and a `ccvid/tracklet@1` value shaped like `veri776/tracklet@1` | ✖ |
+| `adapters/ccvid.py` | C1 §6.4, C16 §7.5 | tracklet-shaped: the manifest carries `trackid`, then `transform.aggregate` and a `ccvid/tracklet@1` value shaped like `veri776/tracklet@1` | ✅ **written** — plus `clothes_id` and a second value, `ccvid/tracklet-cloth-changing@1`, per decision 5. Data on disk, licence closed at CC BY-NC-SA 4.0 |
+| `adapters/mars.py` | C15 (tracklet aggregation) | same tracklet shape; the splits come out of `info/`, a **separate download** from the frames | ✅ **written** — needs `reidbench[mat]`, because MARS published `query_IDX.mat` as MATLAB and as nothing else. Frames and `info/` both on disk |
+| `adapters/vric.py` | vehicle breadth beside VeRi-776 | labels live only in the annotation files; single-shot on both sides, so mAP here is mean reciprocal rank | ✅ **written and run** — 60,430 rows, one valid answer per query. Data on disk and verified |
 | Market-1501 attribute columns | C16 §7.3 — the labels the H1 probe trains against | 27 binary attributes as manifest extras, which a manifest already carries untouched | ✖ — small |
-| Provenance records | all three | `cuhk03`, `occluded-reid`, `ccvid`, `market1501-attribute`, `dinov3`, `siglip2`; and only if run, `c-radio-v4-l`, `dune`, `osnet` | 📋 — the two model records get `licence_verified = false` with a note naming the exact thing to read |
+| Provenance records | all three | `cuhk03`, `occluded-reid`, `ccvid`, `market1501-attribute`, `dinov3`, `siglip2`; and only if run, `c-radio-v4-l`, `dune`, `osnet` | 🚧 — `ccvid`, `mars` and `vric` now ship; the model records are still owed and get `licence_verified = false` with a note naming the exact thing to read |
 
 Each adapter is `market1501.py`-sized: 60–130 lines, a filename regex or a list file, `deny_if_denied`, a
 `verify()` that names what is missing, and a fixture test. None needs a GPU, and each can be written before the
@@ -181,7 +183,7 @@ the zero-shot floor without a probe existing; a trained head adds one column, fr
 | 2 | Is 256×128 a supported C-RADIOv4 input size? | **not answerable offline.** `_torchhub` deliberately raises rather than snapping, so the answer arrives as an error naming the nearest supported size. Settled by running the floor |
 | 3 | MSMT17: which access route, at what provenance cost? | open — the first-party distribution is gone; the three remaining routes and the Market + CUHK03-detected fallback are in [datasets/msmt17.md](../../datasets/msmt17.md) §4 |
 | 4 | Which repo trains the heads — a sibling directory or a separate repository? | open, and shared by C1 and C16. Either way it pins an exact `reidbench` version |
-| 5 | Is CCVID's cloth-change comparison its own protocol value? | **yes, if it is scored separately** — the same reasoning as CUHK03's two names |
+| 5 | Is CCVID's cloth-change comparison its own protocol value? | **settled: yes.** `ccvid/tracklet@1` and `ccvid/tracklet-cloth-changing@1` both ship. The difference is one exclusion, `{same: clothes_id}`, using a new generic "equal on this column" predicate — so the second value cost a line of YAML, not a code path |
 | 6 | A CLI verb for the backbone grid, or for a nesting sweep? | **no.** Both are loops over values — a directory of JSON specs, a dict of levels — and a `--backbones a,b,c` flag would be a second, stringly-typed way to say what those already say. Build it when an experiment repo asks twice |
 
 ---

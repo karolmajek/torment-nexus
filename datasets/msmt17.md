@@ -35,10 +35,12 @@ commercial_ok = false
 access = "request"
 homepage = "http://www.pkuvmc.com/publications/msmt17.html"
 dir = "msmt17/MSMT17_V1"
-adapter = ""
+adapter = "msmt17"
 protocols = ["msmt17/official@1"]
-checked_on = "2026-08-21"
+checked_on = "2026-08-26"
 link_verified = true      # verified GONE — see §4
+on_disk_since = "2026-08-26"
+on_disk_provenance = "UNRECORDED — a copy arrived as MSMT17.zip and was unpacked on 2026-08-26. Which of §4's three routes produced it is not yet written down, and §4 says it has to be. Fill this in."
 
 [counts]
 identities = 4101
@@ -55,11 +57,14 @@ queries = 11659
 gallery = 82161
 
 [expect]
-# Line counts of the four list files, which is the check that survives both layouts.
+# Line counts of the four list files, which is the check that survives both layouts, plus the
+# two identity-directory counts. All six confirmed against the extracted V1 tree on 2026-08-26.
 "list_train.txt" = 30248
 "list_val.txt" = 2373
 "list_query.txt" = 11659
 "list_gallery.txt" = 82161
+"train" = 1041
+"test" = 3060
 
 [fetch]
 manual = """
@@ -170,6 +175,12 @@ currently hard to obtain, hence §4.
 ## 7. Traps
 
 - **Test identities are not queries.** §5.
+- **`list_train.txt` and `list_query.txt` both number their identities from zero.** Label 0 is
+  one person in the training half and a different person in the test half, and the directory
+  names collide the same way. Joining on the published number puts a training identity in the
+  gallery with no file appearing twice — the CUHK03 leak, in a dataset four times the size.
+  `adapters/msmt17.py` shifts train and val by `TRAIN_PID_OFFSET = 100_000`; test labels are
+  carried through unchanged because those are the ones every published number is computed on.
 - **V1 and V2 are different data.** Blurred faces change what a face-sensitive encoder sees.
 - **Mirrors may be re-packed.** A mirror that reorganised directories or re-encoded JPEGs is not
   the same dataset; the manifest content digest will differ from anyone else's, and that is a
@@ -181,8 +192,13 @@ currently hard to obtain, hence §4.
 
 | | |
 |---|---|
-| On disk | no |
-| `reidbench` adapter | not written — **the C1 blocker** |
-| `reidbench` protocol | `msmt17/official@1` ships |
-| Provenance record | `msmt17` ships |
-| Access | blocked on the §4 decision |
+| On disk | ✅ `data/msmt17/MSMT17_V1`, V1 layout, unpacked and verified 2026-08-26 |
+| `reidbench` adapter | ✅ `adapters/msmt17.py` — reads the four list files, so V1 and V2 both work |
+| `reidbench` protocol | ✅ `msmt17/official@1` |
+| Provenance record | ✅ `msmt17` |
+| Access | **the copy is here; where it came from is not written down.** See §4 and the `on_disk_provenance` field in §1 — this is the one open item, and it is a licence question, not a plumbing one |
+| Experiments | none run yet |
+
+Verified on 2026-08-26 by building the manifest: 126,441 rows, all four list files at their
+expected lengths, 1,041 train / 3,060 test identities, 15 cameras, every one of the 11,659
+queries with at least one valid cross-camera answer.

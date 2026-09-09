@@ -7,7 +7,7 @@ tags: [reidbench, c12, evaluation, packaging, scope-lock, pointer]
 retrieved: 2026-08-22
 confidence: high — read from the working tree of `reidbench/` on 2026-08-22
 supersedes: null
-related: [reid-reidbench-owed, reid-frameworks-2026, reid-contribution-ledger-2026, gallery-and-evaluation, reid-benchmarks-datasets, open-world-rejection-calibration, reid-mot-metrics, mrl-kb, openood-v1.5]
+related: [reid-reidbench-owed, reid-frameworks-2026, reid-contribution-ledger-2026, gallery-and-evaluation, reid-benchmarks-datasets, open-world-rejection-calibration, reid-mot-metrics, matryoshka-representation-learning, openood-v1.5]
 ---
 
 # reidbench — the pointer
@@ -39,10 +39,10 @@ wiki — an installer of `reidbench` can read neither this file nor any other pa
 
 | Question | Read |
 |---|---|
-| What is it, what does it refuse to be, what is supported today | [[reidbench/README.md](../../reidbench/README.md)](../../reidbench/README.md) |
-| The five values and four functions; the module graph; what each module refuses to do; replicability without a tracking service; the decisions that had two defensible answers; **what is not built yet** | [[reidbench/docs/design.md](../../reidbench/docs/design.md)](../../reidbench/docs/design.md) |
-| The five oracles, the property and contract tests, and the validation still owed | [[reidbench/docs/validation.md](../../reidbench/docs/validation.md)](../../reidbench/docs/validation.md) |
-| What changed between versions | [[reidbench/CHANGELOG.md](../../reidbench/CHANGELOG.md)](../../reidbench/CHANGELOG.md) |
+| What is it, what does it refuse to be, what is supported today | [`reidbench/README.md`](../../reidbench/README.md) |
+| The five values and four functions; the module graph; what each module refuses to do; replicability without a tracking service; the decisions that had two defensible answers; **what is not built yet** | [`reidbench/docs/design.md`](../../reidbench/docs/design.md) |
+| The five oracles, the property and contract tests, and the validation still owed | [`reidbench/docs/validation.md`](../../reidbench/docs/validation.md) |
+| What changed between versions | [`reidbench/CHANGELOG.md`](../../reidbench/CHANGELOG.md) |
 
 ---
 

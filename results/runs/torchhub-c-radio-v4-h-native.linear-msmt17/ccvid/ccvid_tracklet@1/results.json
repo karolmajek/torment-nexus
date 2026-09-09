@@ -1,0 +1,358 @@
+{
+  "created": "2026-09-02T02:35:48+00:00",
+  "env": {
+    "git": {
+      "branch": "main",
+      "describe": "f241452-dirty",
+      "dirty": true,
+      "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+      "short": "f241452346f8"
+    },
+    "gpu": [
+      {
+        "compute_cap": "7.5",
+        "driver": "531.41",
+        "memory_mb": 8192,
+        "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+      }
+    ],
+    "machine": "AMD64",
+    "numpy": "2.2.6",
+    "platform": "win32",
+    "pyarrow": "25.0.1",
+    "python": "3.13.2",
+    "python_implementation": "CPython",
+    "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+    "threads": {
+      "MKL_NUM_THREADS": "6",
+      "OMP_NUM_THREADS": "6"
+    }
+  },
+  "inputs": {
+    "features": {
+      "dataset": "ccvid",
+      "encoder": {
+        "adaptor": null,
+        "aggregate": {
+          "by": "trackid",
+          "how": "mean"
+        },
+        "entrypoint": "radio_model",
+        "extract_semantics": 1,
+        "head": {
+          "batch_size": 256,
+          "dim": 512,
+          "encoder_digest": "e2c6a480d23c467637678b887310edb8",
+          "epochs": 100,
+          "head": "linear",
+          "id": "linear-msmt17",
+          "input_norm": "l2",
+          "kind": "head",
+          "label_smoothing": 0.1,
+          "lr": 0.001,
+          "seed": 0,
+          "source": {
+            "dataset": "msmt17",
+            "manifest_digest": "be4c13617c466afb87bfe210dfd9635a",
+            "n_identities": 1041,
+            "n_images": 30248,
+            "split": "train"
+          },
+          "weight_decay": 0.0005,
+          "weights": {
+            "W": {
+              "digest": "5c2fbf9b7e999fe0c2d628cab3375aa2",
+              "dtype": "float32",
+              "kind": "array",
+              "shape": [
+                512,
+                2560
+              ]
+            },
+            "b": {
+              "digest": "ce725e636f8a10e6d7fd6c1588e6d904",
+              "dtype": "float32",
+              "kind": "array",
+              "shape": [
+                512
+              ]
+            }
+          }
+        },
+        "hub_kwargs": {},
+        "id": "torchhub:NVlabs/RADIO/c-radio_v4-h",
+        "input_size": "native",
+        "kind": "encoder",
+        "pooling": "summary",
+        "precision": "fp32",
+        "preprocess": {
+          "max_side": 512
+        },
+        "runtime": "torch",
+        "tta": {},
+        "weights_sha": null
+      },
+      "env": {
+        "git": {
+          "branch": "main",
+          "describe": "f241452-dirty",
+          "dirty": true,
+          "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+          "short": "f241452346f8"
+        },
+        "gpu": [
+          {
+            "compute_cap": "7.5",
+            "driver": "531.41",
+            "memory_mb": 8192,
+            "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+          }
+        ],
+        "machine": "AMD64",
+        "numpy": "2.2.6",
+        "platform": "win32",
+        "pyarrow": "25.0.1",
+        "python": "3.13.2",
+        "python_implementation": "CPython",
+        "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+        "threads": {
+          "MKL_NUM_THREADS": "6",
+          "OMP_NUM_THREADS": "6"
+        }
+      },
+      "extract_semantics": 1,
+      "key": "19b1af17b6e6f0b5202921bd20c3f845",
+      "kind": "features",
+      "manifest": {
+        "columns": [
+          "camid",
+          "clothes_id",
+          "pid",
+          "split",
+          "trackid",
+          "uid"
+        ],
+        "dataset": "ccvid",
+        "digest": "c5d962a0a8e10ab611a530450362daf9",
+        "kind": "manifest",
+        "recipes": [
+          {
+            "at": "2026-09-02T02:35:43+00:00",
+            "by": "trackid",
+            "parent_digest": "1209f7c055afe0e404e8eabc4985e275",
+            "transform": "manifest.collapse"
+          }
+        ],
+        "rows": 2856,
+        "version": null
+      },
+      "shape": [
+        2856,
+        512
+      ],
+      "storage_dtype": "float16",
+      "timing": {
+        "items_per_second": 11335.434,
+        "measured_at": "2026-09-02T02:35:44+00:00",
+        "n_items": 2856,
+        "seconds": 0.252,
+        "source_key": "74196aa66e611956db5479d48a2e8590"
+      },
+      "written_at": "2026-09-02T02:35:44+00:00"
+    },
+    "manifest": {
+      "columns": [
+        "camid",
+        "clothes_id",
+        "pid",
+        "split",
+        "trackid",
+        "uid"
+      ],
+      "dataset": "ccvid",
+      "digest": "c5d962a0a8e10ab611a530450362daf9",
+      "kind": "manifest",
+      "recipes": [
+        {
+          "at": "2026-08-27T11:52:04+00:00",
+          "by": "trackid",
+          "parent_digest": "1209f7c055afe0e404e8eabc4985e275",
+          "transform": "manifest.collapse"
+        }
+      ],
+      "rows": 2856,
+      "version": null
+    },
+    "protocol": {
+      "digest": "18aad2b010fc95c7ef93ce5ff5e849da",
+      "exclude": [
+        [
+          "same_trackid",
+          []
+        ],
+        [
+          "same_pid_same_camid",
+          []
+        ]
+      ],
+      "gallery": {
+        "split": "gallery"
+      },
+      "kind": "protocol",
+      "name": "ccvid/tracklet@1",
+      "query": {
+        "split": "query"
+      }
+    },
+    "scores": {
+      "cross_query_comparable": true,
+      "features": {
+        "dataset": "ccvid",
+        "encoder": {
+          "adaptor": null,
+          "aggregate": {
+            "by": "trackid",
+            "how": "mean"
+          },
+          "entrypoint": "radio_model",
+          "extract_semantics": 1,
+          "head": {
+            "batch_size": 256,
+            "dim": 512,
+            "encoder_digest": "e2c6a480d23c467637678b887310edb8",
+            "epochs": 100,
+            "head": "linear",
+            "id": "linear-msmt17",
+            "input_norm": "l2",
+            "kind": "head",
+            "label_smoothing": 0.1,
+            "lr": 0.001,
+            "seed": 0,
+            "source": {
+              "dataset": "msmt17",
+              "manifest_digest": "be4c13617c466afb87bfe210dfd9635a",
+              "n_identities": 1041,
+              "n_images": 30248,
+              "split": "train"
+            },
+            "weight_decay": 0.0005,
+            "weights": {
+              "W": {
+                "digest": "5c2fbf9b7e999fe0c2d628cab3375aa2",
+                "dtype": "float32",
+                "kind": "array",
+                "shape": [
+                  512,
+                  2560
+                ]
+              },
+              "b": {
+                "digest": "ce725e636f8a10e6d7fd6c1588e6d904",
+                "dtype": "float32",
+                "kind": "array",
+                "shape": [
+                  512
+                ]
+              }
+            }
+          },
+          "hub_kwargs": {},
+          "id": "torchhub:NVlabs/RADIO/c-radio_v4-h",
+          "input_size": "native",
+          "kind": "encoder",
+          "pooling": "summary",
+          "precision": "fp32",
+          "preprocess": {
+            "max_side": 512
+          },
+          "runtime": "torch",
+          "tta": {},
+          "weights_sha": null
+        },
+        "env": {
+          "git": {
+            "branch": "main",
+            "describe": "f241452-dirty",
+            "dirty": true,
+            "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+            "short": "f241452346f8"
+          },
+          "gpu": [
+            {
+              "compute_cap": "7.5",
+              "driver": "531.41",
+              "memory_mb": 8192,
+              "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+            }
+          ],
+          "machine": "AMD64",
+          "numpy": "2.2.6",
+          "platform": "win32",
+          "pyarrow": "25.0.1",
+          "python": "3.13.2",
+          "python_implementation": "CPython",
+          "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+          "threads": {
+            "MKL_NUM_THREADS": "6",
+            "OMP_NUM_THREADS": "6"
+          }
+        },
+        "extract_semantics": 1,
+        "key": "19b1af17b6e6f0b5202921bd20c3f845",
+        "kind": "features",
+        "manifest": {
+          "columns": [
+            "camid",
+            "clothes_id",
+            "pid",
+            "split",
+            "trackid",
+            "uid"
+          ],
+          "dataset": "ccvid",
+          "digest": "c5d962a0a8e10ab611a530450362daf9",
+          "kind": "manifest",
+          "recipes": [
+            {
+              "at": "2026-09-02T02:35:43+00:00",
+              "by": "trackid",
+              "parent_digest": "1209f7c055afe0e404e8eabc4985e275",
+              "transform": "manifest.collapse"
+            }
+          ],
+          "rows": 2856,
+          "version": null
+        },
+        "shape": [
+          2856,
+          512
+        ],
+        "storage_dtype": "float16",
+        "timing": {
+          "items_per_second": 11335.434,
+          "measured_at": "2026-09-02T02:35:44+00:00",
+          "n_items": 2856,
+          "seconds": 0.252,
+          "source_key": "74196aa66e611956db5479d48a2e8590"
+        },
+        "written_at": "2026-09-02T02:35:44+00:00"
+      },
+      "kind": "scores",
+      "metric": "cosine",
+      "n_gallery": 1074,
+      "n_query": 834,
+      "transforms": []
+    }
+  },
+  "metrics": {
+    "R1": 0.5707434052757794,
+    "R10": 0.6834532374100719,
+    "R20": 0.7398081534772182,
+    "R5": 0.6474820143884892,
+    "mAP": 0.499293283138002,
+    "mINP": 0.31440841179606077,
+    "n_dropped": 0.0,
+    "n_query": 834.0,
+    "n_scored": 834.0
+  }
+}

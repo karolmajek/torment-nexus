@@ -1,0 +1,342 @@
+{
+  "created": "2026-09-05T22:03:40+00:00",
+  "env": {
+    "git": {
+      "branch": "main",
+      "describe": "f241452-dirty",
+      "dirty": true,
+      "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+      "short": "f241452346f8"
+    },
+    "gpu": [
+      {
+        "compute_cap": "7.5",
+        "driver": "531.41",
+        "memory_mb": 8192,
+        "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+      }
+    ],
+    "machine": "AMD64",
+    "numpy": "2.2.6",
+    "platform": "win32",
+    "pyarrow": "25.0.1",
+    "python": "3.13.2",
+    "python_implementation": "CPython",
+    "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+    "threads": {}
+  },
+  "inputs": {
+    "features": {
+      "dataset": "market1501-500k",
+      "encoder": {
+        "adaptor": null,
+        "entrypoint": null,
+        "extract_semantics": 1,
+        "head": {
+          "dim": 512,
+          "encoder_digest": "2ddbdeee80ee793d8896ea3c6ff62e6a",
+          "head": "pca",
+          "id": "pca",
+          "input_norm": "l2",
+          "kind": "head",
+          "source": {
+            "dataset": "market1501",
+            "manifest_digest": "623d6b70dfbfdfc7a276044961db4b64",
+            "n_identities": 751,
+            "n_images": 12936,
+            "split": "train"
+          },
+          "weights": {
+            "W": {
+              "digest": "d7eea504daf53e1e2723431d6c816340",
+              "dtype": "float32",
+              "kind": "array",
+              "shape": [
+                512,
+                1024
+              ]
+            },
+            "b": {
+              "digest": "3640d43e77f40d737792daa03859b57c",
+              "dtype": "float32",
+              "kind": "array",
+              "shape": [
+                512
+              ]
+            }
+          }
+        },
+        "hub_kwargs": {},
+        "id": "timm:vit_large_patch16_dinov3.lvd1689m",
+        "input_size": [
+          224,
+          224
+        ],
+        "kind": "encoder",
+        "pooling": null,
+        "precision": "fp32",
+        "preprocess": {
+          "resize": "squash"
+        },
+        "runtime": "torch",
+        "tta": {},
+        "weights_sha": null
+      },
+      "env": {
+        "git": {
+          "branch": "main",
+          "describe": "f241452-dirty",
+          "dirty": true,
+          "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+          "short": "f241452346f8"
+        },
+        "gpu": [
+          {
+            "compute_cap": "7.5",
+            "driver": "531.41",
+            "memory_mb": 8192,
+            "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+          }
+        ],
+        "machine": "AMD64",
+        "numpy": "2.2.6",
+        "platform": "win32",
+        "pyarrow": "25.0.1",
+        "python": "3.13.2",
+        "python_implementation": "CPython",
+        "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+        "threads": {}
+      },
+      "extract_semantics": 1,
+      "key": "babfa4e086d995730c7354a5a26c095b",
+      "kind": "features",
+      "manifest": {
+        "columns": [
+          "camid",
+          "frame",
+          "pid",
+          "relpath",
+          "seq",
+          "split",
+          "uid"
+        ],
+        "dataset": "market1501-500k",
+        "digest": "0bd0563f0abb3a9c29b04bb4f083b397",
+        "kind": "manifest",
+        "recipes": [],
+        "rows": 536036,
+        "version": null
+      },
+      "probe_training": {
+        "explained_variance_ratio": 0.9834,
+        "items_per_second": 4604.358,
+        "measured_at": "2026-08-25T08:15:18+00:00",
+        "n_items": 12936,
+        "seconds": 2.8095
+      },
+      "shape": [
+        536036,
+        512
+      ],
+      "storage_dtype": "float16",
+      "timing": {
+        "items_per_second": 52329.905,
+        "measured_at": "2026-09-05T21:44:08+00:00",
+        "n_items": 536036,
+        "seconds": 10.2434,
+        "source_key": "5884bd2ec4a678f5b85f33deaed61ee5"
+      },
+      "written_at": "2026-09-05T21:44:11+00:00"
+    },
+    "manifest": {
+      "columns": [
+        "camid",
+        "frame",
+        "pid",
+        "relpath",
+        "seq",
+        "split",
+        "uid"
+      ],
+      "dataset": "market1501-500k",
+      "digest": "0bd0563f0abb3a9c29b04bb4f083b397",
+      "kind": "manifest",
+      "recipes": [],
+      "rows": 536036,
+      "version": null
+    },
+    "protocol": {
+      "digest": "9c589b02d0c31bf1197a606baecbbf85",
+      "exclude": [
+        [
+          "same_uid",
+          []
+        ],
+        [
+          "same_pid_same_camid",
+          []
+        ],
+        [
+          "pid_in",
+          [
+            [
+              -1
+            ]
+          ]
+        ]
+      ],
+      "gallery": {
+        "split": [
+          "gallery",
+          "distractor"
+        ]
+      },
+      "kind": "protocol",
+      "name": "market1501/official+500k@1",
+      "query": {
+        "split": "query"
+      }
+    },
+    "scores": {
+      "cross_query_comparable": true,
+      "features": {
+        "dataset": "market1501-500k",
+        "encoder": {
+          "adaptor": null,
+          "entrypoint": null,
+          "extract_semantics": 1,
+          "head": {
+            "dim": 512,
+            "encoder_digest": "2ddbdeee80ee793d8896ea3c6ff62e6a",
+            "head": "pca",
+            "id": "pca",
+            "input_norm": "l2",
+            "kind": "head",
+            "source": {
+              "dataset": "market1501",
+              "manifest_digest": "623d6b70dfbfdfc7a276044961db4b64",
+              "n_identities": 751,
+              "n_images": 12936,
+              "split": "train"
+            },
+            "weights": {
+              "W": {
+                "digest": "d7eea504daf53e1e2723431d6c816340",
+                "dtype": "float32",
+                "kind": "array",
+                "shape": [
+                  512,
+                  1024
+                ]
+              },
+              "b": {
+                "digest": "3640d43e77f40d737792daa03859b57c",
+                "dtype": "float32",
+                "kind": "array",
+                "shape": [
+                  512
+                ]
+              }
+            }
+          },
+          "hub_kwargs": {},
+          "id": "timm:vit_large_patch16_dinov3.lvd1689m",
+          "input_size": [
+            224,
+            224
+          ],
+          "kind": "encoder",
+          "pooling": null,
+          "precision": "fp32",
+          "preprocess": {
+            "resize": "squash"
+          },
+          "runtime": "torch",
+          "tta": {},
+          "weights_sha": null
+        },
+        "env": {
+          "git": {
+            "branch": "main",
+            "describe": "f241452-dirty",
+            "dirty": true,
+            "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+            "short": "f241452346f8"
+          },
+          "gpu": [
+            {
+              "compute_cap": "7.5",
+              "driver": "531.41",
+              "memory_mb": 8192,
+              "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+            }
+          ],
+          "machine": "AMD64",
+          "numpy": "2.2.6",
+          "platform": "win32",
+          "pyarrow": "25.0.1",
+          "python": "3.13.2",
+          "python_implementation": "CPython",
+          "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+          "threads": {}
+        },
+        "extract_semantics": 1,
+        "key": "babfa4e086d995730c7354a5a26c095b",
+        "kind": "features",
+        "manifest": {
+          "columns": [
+            "camid",
+            "frame",
+            "pid",
+            "relpath",
+            "seq",
+            "split",
+            "uid"
+          ],
+          "dataset": "market1501-500k",
+          "digest": "0bd0563f0abb3a9c29b04bb4f083b397",
+          "kind": "manifest",
+          "recipes": [],
+          "rows": 536036,
+          "version": null
+        },
+        "probe_training": {
+          "explained_variance_ratio": 0.9834,
+          "items_per_second": 4604.358,
+          "measured_at": "2026-08-25T08:15:18+00:00",
+          "n_items": 12936,
+          "seconds": 2.8095
+        },
+        "shape": [
+          536036,
+          512
+        ],
+        "storage_dtype": "float16",
+        "timing": {
+          "items_per_second": 52329.905,
+          "measured_at": "2026-09-05T21:44:08+00:00",
+          "n_items": 536036,
+          "seconds": 10.2434,
+          "source_key": "5884bd2ec4a678f5b85f33deaed61ee5"
+        },
+        "written_at": "2026-09-05T21:44:11+00:00"
+      },
+      "kind": "scores",
+      "metric": "cosine",
+      "n_gallery": 519732,
+      "n_query": 3368,
+      "transforms": []
+    }
+  },
+  "metrics": {
+    "R1": 0.12381235154394299,
+    "R10": 0.2586104513064133,
+    "R20": 0.3141330166270784,
+    "R5": 0.21258907363420426,
+    "mAP": 0.03280522070623791,
+    "mINP": 0.0012795404770157986,
+    "n_dropped": 0.0,
+    "n_query": 3368.0,
+    "n_scored": 3368.0
+  }
+}

@@ -31,10 +31,13 @@ Three findings that matter more than the list:
    head*. The other throws the head away and reports *retrieval mAP of the features the head reshaped*.
    ReID needs the second; almost every foundation-model paper reports the first. Numbers do not cross
    (§5.1).
-2. **The head is the smaller half of the choice.** Which token, which pooling, which layer, which
-   normalisation and which input resolution move probe numbers at least as much as which head reads
-   them — and this project has already measured a **~25% relative mAP swing from resolution alone**,
-   with no head involved at all (§6).
+2. **Which axis dominates depends on distance from the head's training domain, and both are large.**
+   On the dataset a head was fitted on, the head axis wins by an order of magnitude — this project
+   measures **+1060% mAP** from adding one 512-d affine map. Off that domain the same head buys 31–42%,
+   and the encoder axis takes over: **~25% relative mAP from resolution alone** (§6), and ~66% from
+   the crop-vs-squash resize that [92 §14.1](../project/92-protocol-agglomerative-probe.md) had to fix
+   before any of it could be read. Neither axis is the small one; reporting either without pinning the
+   other is what makes frozen-probe numbers irreproducible.
 3. **The two communities have different defaults and cite each other's numbers anyway.** VFM reports
    default to linear or attentive probing on ImageNet-style classification; ReID papers default to
    margin softmax evaluated by retrieval. A "frozen-probe" number from one is not a frozen-probe number
@@ -398,6 +401,9 @@ addition to — running both fixed poolings.
 
 Every rung above 0 must state its encoder-axis settings (§2) and be reported under Path B (§5.1) if it is to
 sit in the same table as the retrieval numbers.
+
+Which of these rungs this project should actually build next, and which it refuses:
+[39-sweep-backlog.md](../project/39-sweep-backlog.md).
 
 ---
 

@@ -12,7 +12,7 @@ reader cannot hold in their head is where a wrong number gets past review.
 # Datasets
 
 **[datasets/](datasets/) is the single source of truth.** One page per dataset — contents, splits,
-counts, licence, and how to obtain it — plus `get.py` (`ls · show · fetch · verify`), which reads
+counts, licence, and how to obtain it — plus `get.py` (`ls · show · counts · fetch · verify`), which reads
 those same pages. Counts are not repeated anywhere else in this repository, including here: the
 copy that used to live in this file disagreed with the release about VeRi's training set size.
 
@@ -25,14 +25,18 @@ python datasets/get.py counts veri776
 - [VehicleID](datasets/vehicleid.md) — vehicles, front/rear only [liu2016deep]
 - [VRAI](datasets/vrai.md) — vehicles from a drone; the test identities are not in the
   release, so the only protocol that scores offline is over its training split [Wang2019vehicle]
+- [VRIC](datasets/vric.md) — vehicles, low-resolution single-shot; drawn from UA-DETRAC
 - [MSMT17](datasets/msmt17.md), [Market-1501](datasets/market1501.md),
   [CUHK03-NP](datasets/cuhk03-np.md), [Occluded-REID](datasets/occluded-reid.md),
   [CCVID](datasets/ccvid.md), [MARS](datasets/mars.md) — people
 - [Market-1501 +500k](datasets/market1501-500k.md) — the same 3,368 queries against a gallery
   27x larger. It measures how fast a score decays with gallery size, which is the axis every
   other benchmark holds fixed and never reports [zheng2015scalable]
+- [LaST](datasets/last.md) — people over a long time span; no adapter yet
 - [VERI-Wild](datasets/veri-wild.md), [SOMA](datasets/soma.md),
   [Market-1501 Attribute](datasets/market1501-attribute.md)
+- [CrowdTrack](datasets/crowdtrack.md) — not a ReID set: a pedestrian MOT benchmark, the C4
+  tracker host. Apache-2.0, the only entry here that permits commercial use
 
 ## DukeMTMC / ANY Duke-derived WILL NOT BE USED
 

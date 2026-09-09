@@ -16,7 +16,7 @@ tags:
   - foundation-models
   - sim2real
   - index
-retrieved: 2026-08-13
+retrieved: 2026-09-08
 confidence: high for cited primary sources; medium for synthesis (the merged taxonomy in 10-… is this KB's own construction, not a published one)
 supersedes:
 related:
@@ -24,9 +24,12 @@ related:
   - reid-contribution-ledger-2026
   - reid-eval-package
   - reid-reidbench-owed
+  - reid-sweep-backlog
+  - reid-head-fit-domain-decisions
   - mmreid-bench
   - reid-nested-attribute-protocol
   - reid-agglomerative-probe-protocol
+  - reid-deployment-precision-fidelity
   - reid-frameworks-2026
   - matryoshka-representation-learning
   - disentangled-attribute-embeddings
@@ -64,15 +67,16 @@ Re-identification in 2026 is **no longer one field**. It has split into at least
 
 ## 1. File map
 
-Three places, split by what makes each one go stale:
+Four places, split by what makes each one go stale:
 
 | Where | What it holds | It changes when |
 |---|---|---|
 | **[field/](field/)** | What is true about ReID — the argument (§1.1) and the topic KBs (§1.2). Every page carries a `retrieved:` date | the field moves |
 | **[project/](project/)** | What we decided and what we are building — the ledger, the protocols, the venue, the package (§1.3) | we decide differently |
 | **[../datasets/](../datasets/)** | Not wiki pages — the data layer. One page per dataset (contents, splits, counts, licence, how to obtain it), plus `get.py` (`ls · show · counts · fetch · verify`) and the DukeMTMC denial | a dataset is added, moved, or denied |
+| **[../results/](../results/)** | Not wiki pages either — the measurement layer, and generated. [`table.md`](../results/table.md) is the matrix's ground truth; every cell count on [39](project/39-sweep-backlog.md) and [94](project/94-head-fit-domain-and-decision-metrics.md) is read from it, never typed | a run lands |
 
-This index and **[glossary.md](glossary.md)** sit above all three. There is **one glossary**: every page
+This index and **[glossary.md](glossary.md)** sit above all four. There is **one glossary**: every page
 links its terms there rather than defining them, so a definition exists in exactly one place. Add new terms
 to it; do not open a second one.
 
@@ -106,7 +110,6 @@ Deep references on one subject each, cited throughout the spine. Grouped by what
 | [foundation-model-reid-kb.md](field/foundation-model-reid-kb.md) | Foundation models for ReID — paradigms, published work, the agglomerative gap | You are choosing an encoder, or looking for the unrun experiment |
 | [agglomerative-vfm-kb.md](field/agglomerative-vfm-kb.md) | RADIO, EUPE, DUNE — multi-teacher distillation, sizes, licences | You need the details behind C-RADIOv4, including licence friction |
 | **Evaluation** ||
-| [glossary.md](glossary.md) | Every term used anywhere in this wiki, defined once | You hit a term you do not know, or are about to define one |
 | [gallery-and-evaluation-kb.md](field/gallery-and-evaluation-kb.md) | What the gallery *is*, and how mAP/CMC are actually computed, step by step with a worked VeRi query | You are unsure what a number means, or writing eval code |
 | [probing-protocols-kb.md](field/probing-protocols-kb.md) | Every probe head in practice — cosine, k-NN, linear, logistic-regression, attentive, ArcFace/CosFace/Circle, BNNeck, part-based — what each measures, and why "linear probe" names two different numbers | You are designing or reading a frozen-backbone evaluation |
 | [reid-mot-metrics-kb.md](field/reid-mot-metrics-kb.md) | HOTA, IDF1, MOTA, mAP, ARI — what each rewards | You are comparing retrieval numbers with tracking numbers |
@@ -121,17 +124,19 @@ Deep references on one subject each, cited throughout the spine. Grouped by what
 
 ### 1.3 project/ — decisions, protocols, and the package
 
-The 90s are the planning layer: **90 decides, 91–93 execute.** [90-contribution-ledger-2026.md](project/90-contribution-ledger-2026.md) is the single ledger; its §0 carries the crosswalk from the old idea-01…06 numbering to the canonical C-ids.
+The 90s are the planning layer: **90 decides, 91–93 execute, 94 records what execution found.** [90-contribution-ledger-2026.md](project/90-contribution-ledger-2026.md) is the single ledger; its §0 carries the crosswalk from the old idea-01…06 numbering to the canonical C-ids.
 
 | File | What it answers | Read it when |
 |---|---|---|
 | **[36-reidbench.md](project/36-reidbench.md)** | Pointer — **`reidbench`** (ledger C12) is built and documents itself: which of the package's own pages answers what, and the two rules that are policy rather than code (it scores and never trains; no dataset is re-shared) | You want the evaluation package's design, and need to know which file inside `reidbench/` to open |
-| **[38-reidbench-owed.md](project/38-reidbench-owed.md)** | **Live table** — what `reidbench` still owes C1 / C16 / C3: four missing adapters, GeM pooling, a teacher backend, three checkpoint records naming ids no backend can load, two `check` axes, which validation debt gates which study, and an order that starts with a zero-code floor run | You are about to start an experiment, or about to add something to `reidbench` and want to know whether an experiment actually forces it |
+| **[38-reidbench-owed.md](project/38-reidbench-owed.md)** | **Live table** — what `reidbench` still owes C1 / C16 / C3: three adapters nothing yet forces, GeM pooling, four provenance records, three checkpoint records naming ids no backend can load, two `check` axes, which validation debt gates which study, and the order to pay them in | You are about to start an experiment, or about to add something to `reidbench` and want to know whether an experiment actually forces it |
+| **[39-sweep-backlog.md](project/39-sweep-backlog.md)** | **Live table** — what the results matrix should gain next (ranked; the two top items, the head-training-split confound and the euclidean control, are both now closed) and what must stay out of it, with the reason each refusal is a refusal | You are deciding what to run next, or about to add an axis to `results/` |
 | **[80-publication-venue-2024.md](project/80-publication-venue-2024.md)** | Where to submit for 200 pkt in discipline 2021, how Dz.U. 2026 poz. 630 rewrites the scoring from 2027, and which venues are at risk | You are choosing where to publish |
 | **[90-contribution-ledger-2026.md](project/90-contribution-ledger-2026.md)** | Every candidate contribution (C1–C17) scored on value / work / resources, the Pareto front, the packages, and the running order | You are deciding what the paper actually contains |
 | **[91-protocol-nested-attribute-embeddings.md](project/91-protocol-nested-attribute-embeddings.md)** | Executable protocol for **C16** — architecture, losses, datasets, baselines, ablations, falsification bar | You are about to build the nested attribute embedding |
 | **[92-protocol-agglomerative-probe.md](project/92-protocol-agglomerative-probe.md)** | Executable protocol for **C1** — which backbones, which probes, licensing gates, the teacher ablation | You are about to run the frozen-backbone study |
 | **[93-protocol-deployment-precision-fidelity.md](project/93-protocol-deployment-precision-fidelity.md)** | Protocol for **C18 (proposed)** — what ONNX/TensorRT/fp16/int8 export costs in mAP and, more importantly, in threshold placement; plus the scope decision that `reidbench` records throughput as data and never optimises it | You are wondering whether to chase fast inference, or what your quantised encoder is actually doing to your operating point |
+| **[94-head-fit-domain-and-decision-metrics.md](project/94-head-fit-domain-and-decision-metrics.md)** | **Live results** — what the two 2026-09-02 sweeps measured: refitting a probe head on a second train split mirrors mAP by ±0.27 for ArcFace and ±0.006 for PCA, and calibration follows the fit domain the same way (ECE 0.008–0.036 where fitted, 0.10–0.63 elsewhere). Plus the threshold-transfer numbers, the conventions behind them, and what §9 of the manuscript still cannot claim | You are writing §9, or want to know whether a probe head helps or only helps in-domain |
 
 
 ---

@@ -87,25 +87,30 @@ sees them.
 
 ## What these numbers do not claim
 
-The table is **six frozen general-purpose backbones, none of them trained on
+The table is **seven frozen general-purpose checkpoints, none of them trained on
 re-identification** — two agglomerative students, their two teacher families at two scales
-each, and CLIP — over twelve encoder-resolution pairs, each scored directly and through three
-heads fitted on Market-1501's training split. Two of those pairs are the same CLIP weights at
-the same size under two preprocessing geometries, which is why `resize` is a column. It
-validates the pipeline end to end, ranks encoders within a dataset, and answers the teacher
-ablation in [92-protocol-agglomerative-probe.md](../docs/project/92-protocol-agglomerative-probe.md)
-§14:
+each, and CLIP — over fourteen encoder-resolution specs, each scored directly and through six
+heads fitted on two training splits. Two of those specs are the same CLIP weights at the same
+size under two preprocessing geometries, which is why `resize` is a column, and two
+(`tipsv2-448`, `siglip2-384`) have specs but no runs, which is the whole of the matrix's
+140-cell gap. Live counts are the summary block of [`table.md`](table.md), which is generated;
+nothing below restates them. It validates the pipeline end to end, ranks encoders within a
+dataset, and answers the teacher ablation in
+[92-protocol-agglomerative-probe.md](../docs/project/92-protocol-agglomerative-probe.md) §14:
 
 - **no backbone here was trained for ReID, and none was trained at all.** CLIP ViT-B/16
   learned from image-text pairs; C-RADIOv4 distils SigLIP2-g-384, DINOv3-7B and SAM3 into one
   backbone. Every `head` row is a 512-d affine map fitted on frozen features in under a
   minute; no gradient has ever reached a backbone in this directory;
-- **`head: none` rows are zero-shot; every other row is not.** All three heads are fitted on
-  `market1501/train` — 12,936 images, 751 identities, disjoint from the 750 test identities.
-  So a Market row with a head is an ordinary **supervised in-domain** number and belongs
-  beside published Market numbers; the same head's Occluded-REID and VRAI rows are
-  **cross-domain transfer**, with no target-domain label ever seen. Three different claims,
-  one column apart, which is why the column exists;
+- **`head: none` rows are zero-shot; every other row is not, and *where* it was fitted is
+  half the number.** The three recipes — `pca`, `linear`, `arcface` — are each fitted twice,
+  on `market1501/train` (12,936 images, 751 identities, disjoint from the 750 test identities)
+  and on `msmt17/train`, giving the six `*` and `*-msmt17` head stems. A row is a **supervised
+  in-domain** number on the dataset its head was fitted on and **cross-domain transfer**
+  everywhere else, with no target-domain label ever seen. Two different claims, one column
+  apart, which is why the column exists — and the swap is worth ±0.27 mAP for ArcFace against
+  ±0.006 for PCA, measured both directions in
+  [94-head-fit-domain-and-decision-metrics.md](../docs/project/94-head-fit-domain-and-decision-metrics.md);
 - **the rows are not comparable across protocols either, which is why the table nests.**
   `tables/<dataset>.md` is a section per protocol: the `#` column, the emphasised best value
   and the figures are all per protocol. CCVID ships two —
@@ -186,15 +191,20 @@ comparison is the one thing here that is sound:
 
 The gallery-size effect that the second bullet has to hand-wave is exactly what
 [market1501-500k](../datasets/market1501-500k.md) exists to measure directly: same queries,
-same model, same rules, a gallery 27x larger. It is supported and not yet run — the page says
-what that costs.
+same model, same rules, a gallery 27x larger. **It ran on 2026-09-08**, and the effect is
+large and not uniform: against its own plain-Market row, an encoder retains **0.53 to 0.84**
+of its mAP, and retention rises with how supervised the head is — 0.53-0.70 at `head = none`
+or `pca`, 0.59-0.84 with ArcFace. So a stronger head buys two things a single-gallery
+benchmark cannot separate: a higher score, and a slower decay as the gallery grows. Numbers
+per cell in [`tables/market1501-500k.md`](tables/market1501-500k.md).
 
 ## What a head does to all of that
 
-Every head is fitted on `market1501/train` and applied unchanged to all four datasets, so
-one column of the table is in-domain and three are transfer. That asymmetry turns out to be the
-single most important variable in this table — see the teacher ablation below. C-RADIOv4-H at
-224x224, mAP:
+The four columns below are the four datasets this section was first written against, and
+every head in them is fitted on `market1501/train` — so one column is in-domain and three are
+transfer. That asymmetry turns out to be the single most important variable in this table; the
+`*-msmt17` head stems added later measure it from the other side, in
+[94](../docs/project/94-head-fit-domain-and-decision-metrics.md). C-RADIOv4-H at 224x224, mAP:
 
 | | Market (in-domain) | Occluded-REID (transfer) | VRAI (transfer) |
 |---|---|---|---|
@@ -263,59 +273,26 @@ measurement about the table rather than a row in it.
 
 ## What the teacher ablation says
 
-C-RADIOv4 distils SigLIP2-g, DINOv3-7B and SAM3. Six of the twelve encoder-resolution pairs
-here are that student and those teachers, so the table answers the question the distillation
-raises: **does agglomerating teachers cost you the instance-level margin ReID depends on?** The
-full reading is
-[92-protocol-agglomerative-probe.md](../docs/project/92-protocol-agglomerative-probe.md) §14.
+C-RADIOv4 distils SigLIP2-g, DINOv3-7B and SAM3, and six of the encoder specs here are that
+student and those teachers — so the table answers the question the distillation raises:
+**does agglomerating teachers cost you the instance-level margin ReID depends on?**
 
-ArcFace mAP (SigLIP2-g at its native 256x256, which is resolution-locked; the rest at 224x224):
+**That reading lives in one place, and it is not this one:**
+[92-protocol-agglomerative-probe.md](../docs/project/92-protocol-agglomerative-probe.md) §14,
+where it belongs beside the hypotheses it settles. In one line each, so you know whether to
+open it:
 
-| | Market | Occluded-REID | CUHK03 | VRAI |
-|---|---|---|---|---|
-| C-RADIOv4-H 653M *(distilled)* | **0.7087** | 0.6459 | 0.1528 | 0.2276 |
-| C-RADIOv4-SO400M 431M *(distilled)* | 0.6957 | **0.6510** | 0.1399 | 0.2068 |
-| SigLIP2-g 1163M *(the actual teacher)* | 0.6077 | 0.6494 | **0.2826** | 0.2290 |
-| SigLIP2-SO400M 428M | 0.5137 | 0.5576 | 0.1743 | 0.1772 |
-| DINOv3-H+ 840M | 0.6548 | 0.3560 | 0.0971 | **0.2467** |
-| DINOv3-L 303M | 0.6072 | 0.3324 | 0.0755 | 0.1599 |
+| Finding | Where |
+|---|---|
+| The student's advantage is in-domain and only in-domain — it beats its literal teacher on Market and ties or loses on all three transfer sets | [92 §14.3](../docs/project/92-protocol-agglomerative-probe.md) |
+| Where it wins, it wins on mINP — the instance margin distillation was predicted to erode | [92 §14.3](../docs/project/92-protocol-agglomerative-probe.md) |
+| The transfer loss has a shape: regression to the teacher mean, bracketed by the teachers on every transfer set | [92 §14.4](../docs/project/92-protocol-agglomerative-probe.md) |
+| Frozen-cosine evaluation picks a different winner than a probed one, because it flatters contrastively trained encoders | [92 §14.5](../docs/project/92-protocol-agglomerative-probe.md) |
+| DINOv3's angular margin does not transfer — ArcFace loses to a linear head in its space, cross-domain | [92 §14.6](../docs/project/92-protocol-agglomerative-probe.md) |
+| Retention falsifies H4, and is the first finding seen from the other side rather than a second one | [92 §14.7](../docs/project/92-protocol-agglomerative-probe.md) |
 
-- **the student's advantage is in-domain, and only in-domain.** Market is the one dataset whose
-  identities any head has seen, and the one clear student win — C-RADIOv4-H beats the literal
-  teacher there by 17% relative. On the three transfer sets the distilled model ties once
-  (Occluded-REID) and loses twice (CUHK03, VRAI). On CUHK03 it loses to **SigLIP2-SO400M at
-  428M**, a teacher 1.5x smaller, even at C-RADIOv4-H's best configuration there (256x128,
-  0.1632). An earlier version of this section read the split as people-versus-vehicles; CUHK03
-  is people, and it falsified that;
-- **where it wins, it wins on the metric it was predicted to lose.** In-domain mINP — the
-  hardest true match's rank, i.e. the instance margin — is 0.3202 against SigLIP2-g's 0.2038, a
-  **1.57x** gap where mAP's is 1.17x. Given labels, distillation improves the fine-grained
-  margin rather than eroding it;
-- **the transfer loss has a shape: regression to the teacher mean.** On every transfer set the
-  student lands *between* its teacher families, never above both and never below both — CUHK03
-  0.2826 / **0.1632** / 0.0971, VRAI 0.2290 / **0.2276** / 0.2467. Both C-RADIOv4 checkpoints
-  were predicted to fall inside the CUHK03 bracket before those rows were run, and both did.
-  The teachers disagree sharply by domain — SigLIP2 beats DINOv3 by **2.9x** on CUHK03 and
-  loses to it on VRAI — so a blend is worse than the better teacher wherever they disagree.
-  That is a real cost of agglomeration, but it is not the destroyed-margin failure the
-  literature warns about, and it is predictable from which teacher suits your domain;
-- **DINOv3's angular margin does not transfer.** ArcFace beats a plain linear head everywhere
-  in this table except in DINOv3's space on a transfer set, where it loses in three of four
-  cells (Occluded-REID at both scales, CUHK03 at 840M; CUHK03 at 303M is a tie). Both DINOv3
-  probes reach 1.0000 train top-1, so it is not a fit failure. Practically: *fit ArcFace on
-  your labelled domain* is bad advice for a DINOv3 backbone deployed cross-domain, which is the
-  opposite of what Market alone would tell you;
-- **retention says the same thing from the other side, and falsifies H4.** `target/source`
-  mAP for the same head: SigLIP2-g retains **0.46** on CUHK03 against C-RADIOv4-H's **0.22**,
-  and leads on Occluded-REID and VRAI too. The usual objection does not apply — a ratio
-  flatters a weak source model, and CLIP's 1.43 on Occluded-REID is exactly that trap, but
-  SigLIP2-g's source score is within 17% of C-RADIOv4-H's and it wins the CUHK03 *target*
-  outright. High in-domain plus mediocre transfer **is** low retention, so this and the first
-  bullet are one property seen twice, not two results;
-- **CUHK03 is where backbone choice matters most.** SigLIP2-g leads CLIP by **17x** there,
-  against 2.5x on Market and 1.6x on Occluded-REID. Degraded, misaligned detector boxes are the
-  regime that separates representations — and the one closest to what a real detector hands a
-  ReID model.
+The per-cell numbers behind all of it are generated, in [`tables/`](tables) — not retyped here
+and not retyped there.
 
 The `resize` column exists because of this ablation. timm's eval transform short-side-resizes
 and centre-crops, which on a 64x128 person crop keeps the middle 45% of the body; the torchhub

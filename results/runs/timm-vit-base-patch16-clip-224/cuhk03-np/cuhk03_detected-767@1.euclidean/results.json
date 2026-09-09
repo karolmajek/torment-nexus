@@ -1,0 +1,251 @@
+{
+  "created": "2026-09-06T07:09:15+00:00",
+  "env": {
+    "git": {
+      "branch": "main",
+      "describe": "f241452-dirty",
+      "dirty": true,
+      "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+      "short": "f241452346f8"
+    },
+    "gpu": [
+      {
+        "compute_cap": "7.5",
+        "driver": "531.41",
+        "memory_mb": 8192,
+        "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+      }
+    ],
+    "machine": "AMD64",
+    "numpy": "2.2.6",
+    "platform": "win32",
+    "pyarrow": "25.0.1",
+    "python": "3.13.2",
+    "python_implementation": "CPython",
+    "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+    "threads": {}
+  },
+  "inputs": {
+    "features": {
+      "dataset": "cuhk03-np",
+      "encoder": {
+        "adaptor": null,
+        "entrypoint": null,
+        "extract_semantics": 1,
+        "hub_kwargs": {},
+        "id": "timm:vit_base_patch16_clip_224.openai",
+        "input_size": [
+          224,
+          224
+        ],
+        "kind": "encoder",
+        "pooling": null,
+        "precision": "fp32",
+        "preprocess": {},
+        "runtime": "torch",
+        "tta": {},
+        "weights_sha": null
+      },
+      "env": {
+        "git": {
+          "branch": "main",
+          "describe": "ab6a2b0-dirty",
+          "dirty": true,
+          "sha": "ab6a2b0dd7af86d44c614a22ee9acb5bf89a459a",
+          "short": "ab6a2b0dd7af"
+        },
+        "gpu": [
+          {
+            "compute_cap": "7.5",
+            "driver": "531.41",
+            "memory_mb": 8192,
+            "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+          }
+        ],
+        "machine": "AMD64",
+        "numpy": "2.2.6",
+        "platform": "win32",
+        "pyarrow": "25.0.1",
+        "python": "3.13.2",
+        "python_implementation": "CPython",
+        "reidbench": "0.1.dev6+g0e6ee2a",
+        "threads": {}
+      },
+      "extract_semantics": 1,
+      "key": "8549c4daf5e5b7e8fdd68a54a8898246",
+      "kind": "features",
+      "manifest": {
+        "columns": [
+          "camid",
+          "pid",
+          "relpath",
+          "split",
+          "uid"
+        ],
+        "dataset": "cuhk03-np",
+        "digest": "dcac80be6cf0b32170441ce5d05fe203",
+        "kind": "manifest",
+        "recipes": [],
+        "rows": 14097,
+        "version": null
+      },
+      "shape": [
+        14097,
+        768
+      ],
+      "storage_dtype": "float16",
+      "timing": {
+        "batch_size": 64,
+        "device": "cuda",
+        "items_per_second": 63.705,
+        "measured_at": "2026-08-26T13:00:27+00:00",
+        "n_items": 14097,
+        "precision": "fp32",
+        "runtime": "torch",
+        "runtime_versions": {
+          "torch": "2.6.0+cu124"
+        },
+        "seconds": 221.2862
+      },
+      "written_at": "2026-08-26T13:00:27+00:00"
+    },
+    "manifest": {
+      "columns": [
+        "camid",
+        "pid",
+        "relpath",
+        "split",
+        "uid"
+      ],
+      "dataset": "cuhk03-np",
+      "digest": "dcac80be6cf0b32170441ce5d05fe203",
+      "kind": "manifest",
+      "recipes": [],
+      "rows": 14097,
+      "version": null
+    },
+    "protocol": {
+      "digest": "6b78681e2dde80f9986df2235cfc8c4d",
+      "exclude": [
+        [
+          "same_uid",
+          []
+        ],
+        [
+          "same_pid_same_camid",
+          []
+        ]
+      ],
+      "gallery": {
+        "split": "gallery"
+      },
+      "kind": "protocol",
+      "name": "cuhk03/detected-767@1",
+      "query": {
+        "split": "query"
+      }
+    },
+    "scores": {
+      "cross_query_comparable": true,
+      "features": {
+        "dataset": "cuhk03-np",
+        "encoder": {
+          "adaptor": null,
+          "entrypoint": null,
+          "extract_semantics": 1,
+          "hub_kwargs": {},
+          "id": "timm:vit_base_patch16_clip_224.openai",
+          "input_size": [
+            224,
+            224
+          ],
+          "kind": "encoder",
+          "pooling": null,
+          "precision": "fp32",
+          "preprocess": {},
+          "runtime": "torch",
+          "tta": {},
+          "weights_sha": null
+        },
+        "env": {
+          "git": {
+            "branch": "main",
+            "describe": "ab6a2b0-dirty",
+            "dirty": true,
+            "sha": "ab6a2b0dd7af86d44c614a22ee9acb5bf89a459a",
+            "short": "ab6a2b0dd7af"
+          },
+          "gpu": [
+            {
+              "compute_cap": "7.5",
+              "driver": "531.41",
+              "memory_mb": 8192,
+              "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+            }
+          ],
+          "machine": "AMD64",
+          "numpy": "2.2.6",
+          "platform": "win32",
+          "pyarrow": "25.0.1",
+          "python": "3.13.2",
+          "python_implementation": "CPython",
+          "reidbench": "0.1.dev6+g0e6ee2a",
+          "threads": {}
+        },
+        "extract_semantics": 1,
+        "key": "8549c4daf5e5b7e8fdd68a54a8898246",
+        "kind": "features",
+        "manifest": {
+          "columns": [
+            "camid",
+            "pid",
+            "relpath",
+            "split",
+            "uid"
+          ],
+          "dataset": "cuhk03-np",
+          "digest": "dcac80be6cf0b32170441ce5d05fe203",
+          "kind": "manifest",
+          "recipes": [],
+          "rows": 14097,
+          "version": null
+        },
+        "shape": [
+          14097,
+          768
+        ],
+        "storage_dtype": "float16",
+        "timing": {
+          "batch_size": 64,
+          "device": "cuda",
+          "items_per_second": 63.705,
+          "measured_at": "2026-08-26T13:00:27+00:00",
+          "n_items": 14097,
+          "precision": "fp32",
+          "runtime": "torch",
+          "runtime_versions": {
+            "torch": "2.6.0+cu124"
+          },
+          "seconds": 221.2862
+        },
+        "written_at": "2026-08-26T13:00:27+00:00"
+      },
+      "kind": "scores",
+      "metric": "euclidean",
+      "n_gallery": 5332,
+      "n_query": 1400,
+      "transforms": []
+    }
+  },
+  "metrics": {
+    "R1": 0.0064285714285714285,
+    "R10": 0.03357142857142857,
+    "R20": 0.06142857142857143,
+    "R5": 0.018571428571428572,
+    "mAP": 0.007440176952690682,
+    "mINP": 0.0018785763207634146,
+    "n_dropped": 0.0,
+    "n_query": 1400.0,
+    "n_scored": 1400.0
+  }
+}

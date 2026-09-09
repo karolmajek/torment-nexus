@@ -197,7 +197,7 @@ currently hard to obtain, hence §4.
 | `reidbench` protocol | ✅ `msmt17/official@1` |
 | Provenance record | ✅ `msmt17` |
 | Access | **the copy is here; where it came from is not written down.** See §4 and the `on_disk_provenance` field in §1 — this is the one open item, and it is a licence question, not a plumbing one |
-| Experiments | none run yet |
+| Experiments | ✅ **84 runs** (12 encoders x 7 heads; no euclidean control — its 958-Mpair score matrices were left out to avoid RAM contention, so that row is still owed). Best mAP **48.89** — radio-h-256x128 + arcface-msmt17; best frozen **8.12** (siglip2-giantopt-256), a 6x lift from the head. `256x128` beats `224` for every RADIO pair and `native` is worst throughout. Low against published MSMT17 (trained models reach 50-70), as expected for frozen encoders — compare encoder-to-encoder, not to the literature |
 
 Verified on 2026-08-26 by building the manifest: 126,441 rows, all four list files at their
 expected lengths, 1,041 train / 3,060 test identities, 15 cameras, every one of the 11,659

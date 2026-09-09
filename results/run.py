@@ -36,6 +36,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
@@ -56,6 +57,12 @@ TABLES = HERE / "tables"
 FIGURES = HERE / "figures.json"
 NONE = "none"
 """The name of the head that is not a head. Every encoder is measured with it."""
+
+DEFAULT_METRIC = "cosine"
+"""`score.euclidean` does not L2-normalise and `score.cosine` does, so on raw frozen features
+the two are genuinely different values rather than a rank-preserving relabelling. That makes
+one euclidean control row worth having and a crossed `metric` axis not worth having — see
+docs/project/39-sweep-backlog.md §2 item 6 and §3."""
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -123,7 +130,9 @@ def _why_not(page: dict[str, Any]) -> str:
     return f"not on disk: {absent[0]}" if absent else ""
 
 
-def combinations(pattern: str = "", exclude: Sequence[str] = ()) -> list[dict[str, Any]]:
+def combinations(
+    pattern: str = "", exclude: Sequence[str] = (), metric: str = "cosine"
+) -> list[dict[str, Any]]:
     """One entry per (encoder, head, dataset, protocol). Sorted, so the plan is stable.
 
     ``pattern`` is a plain substring over ``encoder head dataset protocol``, and ``exclude`` is
@@ -160,7 +169,14 @@ def combinations(pattern: str = "", exclude: Sequence[str] = ()) -> list[dict[st
                             "protocol": protocol,
                             "cache": CACHE / variant / dataset_name,
                             "probe": CACHE / variant / "probe.npz",
-                            "run": RUNS / variant / dataset_name / protocol.replace("/", "_"),
+                            "metric": metric,
+                            # A non-default metric is a different score, so it is a different
+                            # run — never the same cell recomputed. `cosine` keeps the bare
+                            # path so every number already measured stays where it is.
+                            "run": RUNS / variant / dataset_name / (
+                                protocol.replace("/", "_")
+                                + ("" if metric == DEFAULT_METRIC else f".{metric}")
+                            ),
                         }
                     )
     def label(c: dict[str, Any]) -> str:
@@ -200,17 +216,53 @@ def child_env() -> dict[str, str]:
     return env
 
 
-def sh(*args: str | Path) -> None:
-    """Run one reidbench verb. Exit code 2 is 'findings', not failure — the run still wrote."""
+TRANSIENT = ("CUDA error", "cuDNN error", "CUDA_ERROR", "out of memory", "no kernel image")
+"""Driver-level faults that say nothing about the work being wrong.
+
+A laptop that suspends can come back with an invalidated CUDA context, and the next
+allocation fails with a bare ``RuntimeError: CUDA error: out of memory`` — note *not*
+``torch.cuda.OutOfMemoryError``, which is the allocator hitting its budget and is a real
+"this does not fit" that retrying cannot fix. On 2026-09-04 the first kind killed a 14-hour
+encode at 96%, and with it the whole matrix, because one failed verb raises.
+
+Retrying is only correct because every verb here is idempotent: ``encode`` is a cache miss
+that writes once, and a second attempt either hits the cache or redoes the same work."""
+
+RETRY_PAUSE_S = 60
+"""Long enough for a driver that has just lost a context to settle, short enough not to matter
+against a 14-hour encode."""
+
+
+def sh(*args: str | Path, retries: int = 0) -> None:
+    """Run one reidbench verb. Exit code 2 is 'findings', not failure — the run still wrote.
+
+    ``stderr`` is captured so a failure can be *classified* and then re-emitted unchanged;
+    ``stdout`` still streams, so progress is live. Nothing is swallowed either way.
+    """
     printable = [str(a) for a in args]
-    print("  $ " + " ".join(printable))
-    result = subprocess.run(printable, env=child_env())
-    if result.returncode not in (0, 2):
+    for attempt in range(retries + 1):
+        # Flushed, because the child writes straight to the console while this print sits in
+        # Python's buffer — without it a redirected log shows the two out of order.
+        print("  $ " + " ".join(printable), flush=True)
+        result = subprocess.run(printable, env=child_env(), stderr=subprocess.PIPE, text=True)
+        if result.stderr:
+            sys.stderr.write(result.stderr)
+            sys.stderr.flush()
+        if result.returncode in (0, 2):
+            return
+        transient = any(mark in (result.stderr or "") for mark in TRANSIENT)
+        if transient and attempt < retries:
+            print(
+                f"  ! transient GPU fault (attempt {attempt + 1} of {retries + 1}); "
+                f"waiting {RETRY_PAUSE_S}s and retrying"
+            )
+            time.sleep(RETRY_PAUSE_S)
+            continue
         raise SystemExit(f"failed ({result.returncode}): {' '.join(printable)}")
 
 
-def reidbench(*args: str | Path) -> None:
-    sh(sys.executable, "-m", "reidbench.cli", *args)
+def reidbench(*args: str | Path, retries: int = 0) -> None:
+    sh(sys.executable, "-m", "reidbench.cli", *args, retries=retries)
 
 
 def probe(*args: str | Path) -> None:
@@ -282,6 +334,9 @@ def features_of(combo: dict[str, Any], dataset: str, force: bool = False) -> Pat
         "--dataset", dataset,
         "--device", os.environ.get("REIDBENCH_DEVICE", "cuda"),
         "--cache", frozen,
+        # The only verb that touches the GPU, so the only one a driver fault can reach — and
+        # the most expensive to lose, at up to 14 hours. One retry, classified by stderr.
+        retries=1,
     )
     if combo["head"] == NONE:
         return store_of(frozen, dataset)
@@ -381,6 +436,7 @@ def run_one(combo: dict[str, Any], force: bool, keep_scores: bool = False) -> No
         "--features", features,
         "--manifest", manifest,
         "--protocol", combo["protocol"],
+        "--metric", combo["metric"],
         "--out", scores,
     )
     # No `--open-set`: it is meaningful only for a protocol with non-mated probes, and
@@ -741,8 +797,10 @@ def cmd_plan(args: argparse.Namespace) -> int:
             f"{head['train']['dataset']}/{head['train']['split']}"
         )
         print(f"[{mark}] {name:22} {what}{'  — ' + why if why else ''}")
+    chosen = combinations(args.pattern, args.exclude, args.metric)
+    print("\n" + selection([c for c in chosen if not c["why"]], args.pattern))
     print("\ncombinations")
-    for combo in combinations(args.pattern, args.exclude):
+    for combo in chosen:
         state = (
             "skip"
             if combo["why"]
@@ -755,11 +813,39 @@ def cmd_plan(args: argparse.Namespace) -> int:
     return 0
 
 
+def selection(combos: list[dict[str, Any]], pattern: str) -> str:
+    """One line naming what a pattern actually selected, before anything runs.
+
+    `pattern` is a substring and stays one, because `--exclude arcface` catching
+    `arcface-msmt17` is deliberate and useful. The cost of that is a pattern which quietly
+    selects more than it reads like: `market1501` also matches `market1501-500k`, which on
+    2026-09-04 put a second `run.py` onto the 500k set for two days — scoring 1.7-Gpair
+    matrices and CPU-encoding 500,000 images beside the job that was already doing it.
+    Nothing detected it because nothing ever said what had been chosen. Now it does.
+    """
+    def distinct(key: str) -> list[str]:
+        return sorted({str(c[key]) for c in combos})
+
+    parts = [f"{len(combos)} runs"]
+    for key in ("dataset", "encoder", "head"):
+        values = distinct(key)
+        parts.append(f"{len(values)} {key}s" if len(values) > 3 else "/".join(values))
+    line = f"selected: {', '.join(parts)}"
+    datasets_hit = distinct("dataset")
+    if pattern and len(datasets_hit) > 1:
+        line += (
+            f"\n  ! {pattern!r} is a substring and matched {len(datasets_hit)} datasets: "
+            f"{', '.join(datasets_hit)} — add --exclude if that is not what you meant"
+        )
+    return line
+
+
 def cmd_all(args: argparse.Namespace) -> int:
-    todo = [c for c in combinations(args.pattern, args.exclude) if not c["why"]]
+    todo = [c for c in combinations(args.pattern, args.exclude, args.metric) if not c["why"]]
     if not todo:
         print("nothing to run; `plan` says why")
         return 1
+    print(selection(todo, args.pattern))
     for combo in todo:
         run_one(combo, args.force, args.keep_scores)
     return write_table()
@@ -783,7 +869,18 @@ def main(argv: list[str] | None = None) -> int:
     )
     for one in (plan_parser, run_parser):
         one.add_argument(
-            "pattern", nargs="?", default="", help="substring of 'encoder head dataset protocol'"
+            "pattern",
+            nargs="?",
+            default="",
+            help="substring of 'encoder head dataset protocol'. A SUBSTRING, not a name: "
+                 "'market1501' also selects 'market1501-500k'. The selection is printed "
+                 "before anything runs, and warns when one pattern spans several datasets",
+        )
+        one.add_argument(
+            "--metric",
+            default=DEFAULT_METRIC,
+            help="score metric. A non-default one writes to its own run directory, because it "
+                 "is a different score and not a recomputation of the same cell",
         )
         one.add_argument(
             "--exclude",

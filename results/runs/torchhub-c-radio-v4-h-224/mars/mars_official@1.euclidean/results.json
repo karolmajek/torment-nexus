@@ -1,0 +1,279 @@
+{
+  "created": "2026-09-04T05:27:12+00:00",
+  "env": {
+    "git": {
+      "branch": "main",
+      "describe": "f241452-dirty",
+      "dirty": true,
+      "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+      "short": "f241452346f8"
+    },
+    "gpu": [
+      {
+        "compute_cap": "7.5",
+        "driver": "531.41",
+        "memory_mb": 8192,
+        "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+      }
+    ],
+    "machine": "AMD64",
+    "numpy": "2.2.6",
+    "platform": "win32",
+    "pyarrow": "25.0.1",
+    "python": "3.13.2",
+    "python_implementation": "CPython",
+    "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+    "threads": {}
+  },
+  "inputs": {
+    "features": {
+      "dataset": "mars",
+      "encoder": {
+        "adaptor": null,
+        "aggregate": {
+          "by": "trackid",
+          "how": "mean"
+        },
+        "entrypoint": "radio_model",
+        "extract_semantics": 1,
+        "hub_kwargs": {},
+        "id": "torchhub:NVlabs/RADIO/c-radio_v4-h",
+        "input_size": [
+          224,
+          224
+        ],
+        "kind": "encoder",
+        "pooling": "summary",
+        "precision": "fp32",
+        "preprocess": {},
+        "runtime": "torch",
+        "tta": {},
+        "weights_sha": null
+      },
+      "env": {
+        "git": {
+          "branch": "main",
+          "describe": "f241452-dirty",
+          "dirty": true,
+          "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+          "short": "f241452346f8"
+        },
+        "gpu": [
+          {
+            "compute_cap": "7.5",
+            "driver": "531.41",
+            "memory_mb": 8192,
+            "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+          }
+        ],
+        "machine": "AMD64",
+        "numpy": "2.2.6",
+        "platform": "win32",
+        "pyarrow": "25.0.1",
+        "python": "3.13.2",
+        "python_implementation": "CPython",
+        "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+        "threads": {}
+      },
+      "extract_semantics": 1,
+      "key": "8123df08403a118d30bc3f1f31efa84c",
+      "kind": "features",
+      "manifest": {
+        "columns": [
+          "camid",
+          "pid",
+          "split",
+          "trackid",
+          "uid"
+        ],
+        "dataset": "mars",
+        "digest": "1ba8a071ad5f5f4eb5922b1cd553f753",
+        "kind": "manifest",
+        "recipes": [
+          {
+            "at": "2026-09-01T23:50:28+00:00",
+            "by": "trackid",
+            "parent_digest": "8e1e5b3371b12967579e113460050e90",
+            "transform": "manifest.collapse"
+          }
+        ],
+        "rows": 20478,
+        "version": null
+      },
+      "shape": [
+        20478,
+        2560
+      ],
+      "storage_dtype": "float16",
+      "timing": {
+        "items_per_second": 2703.739,
+        "measured_at": "2026-09-01T23:50:36+00:00",
+        "n_items": 20478,
+        "seconds": 7.574,
+        "source_key": "1f556ea0580e265aa4ae014554d5729e"
+      },
+      "written_at": "2026-09-01T23:50:37+00:00"
+    },
+    "manifest": {
+      "columns": [
+        "camid",
+        "pid",
+        "split",
+        "trackid",
+        "uid"
+      ],
+      "dataset": "mars",
+      "digest": "1ba8a071ad5f5f4eb5922b1cd553f753",
+      "kind": "manifest",
+      "recipes": [
+        {
+          "at": "2026-09-01T02:38:11+00:00",
+          "by": "trackid",
+          "parent_digest": "8e1e5b3371b12967579e113460050e90",
+          "transform": "manifest.collapse"
+        }
+      ],
+      "rows": 20478,
+      "version": null
+    },
+    "protocol": {
+      "digest": "7540c2663716eca5f75fcac514adfd60",
+      "exclude": [
+        [
+          "same_trackid",
+          []
+        ],
+        [
+          "same_pid_same_camid",
+          []
+        ],
+        [
+          "pid_in",
+          [
+            [
+              -1
+            ]
+          ]
+        ]
+      ],
+      "gallery": {
+        "split": [
+          "query",
+          "gallery"
+        ]
+      },
+      "kind": "protocol",
+      "name": "mars/official@1",
+      "query": {
+        "split": "query"
+      }
+    },
+    "scores": {
+      "cross_query_comparable": true,
+      "features": {
+        "dataset": "mars",
+        "encoder": {
+          "adaptor": null,
+          "aggregate": {
+            "by": "trackid",
+            "how": "mean"
+          },
+          "entrypoint": "radio_model",
+          "extract_semantics": 1,
+          "hub_kwargs": {},
+          "id": "torchhub:NVlabs/RADIO/c-radio_v4-h",
+          "input_size": [
+            224,
+            224
+          ],
+          "kind": "encoder",
+          "pooling": "summary",
+          "precision": "fp32",
+          "preprocess": {},
+          "runtime": "torch",
+          "tta": {},
+          "weights_sha": null
+        },
+        "env": {
+          "git": {
+            "branch": "main",
+            "describe": "f241452-dirty",
+            "dirty": true,
+            "sha": "f241452346f80e849f5ef7455f20b61f5cb30021",
+            "short": "f241452346f8"
+          },
+          "gpu": [
+            {
+              "compute_cap": "7.5",
+              "driver": "531.41",
+              "memory_mb": 8192,
+              "name": "NVIDIA GeForce RTX 2070 with Max-Q Design"
+            }
+          ],
+          "machine": "AMD64",
+          "numpy": "2.2.6",
+          "platform": "win32",
+          "pyarrow": "25.0.1",
+          "python": "3.13.2",
+          "python_implementation": "CPython",
+          "reidbench": "0.1.dev17+gf8ea8e8.d20260831",
+          "threads": {}
+        },
+        "extract_semantics": 1,
+        "key": "8123df08403a118d30bc3f1f31efa84c",
+        "kind": "features",
+        "manifest": {
+          "columns": [
+            "camid",
+            "pid",
+            "split",
+            "trackid",
+            "uid"
+          ],
+          "dataset": "mars",
+          "digest": "1ba8a071ad5f5f4eb5922b1cd553f753",
+          "kind": "manifest",
+          "recipes": [
+            {
+              "at": "2026-09-01T23:50:28+00:00",
+              "by": "trackid",
+              "parent_digest": "8e1e5b3371b12967579e113460050e90",
+              "transform": "manifest.collapse"
+            }
+          ],
+          "rows": 20478,
+          "version": null
+        },
+        "shape": [
+          20478,
+          2560
+        ],
+        "storage_dtype": "float16",
+        "timing": {
+          "items_per_second": 2703.739,
+          "measured_at": "2026-09-01T23:50:36+00:00",
+          "n_items": 20478,
+          "seconds": 7.574,
+          "source_key": "1f556ea0580e265aa4ae014554d5729e"
+        },
+        "written_at": "2026-09-01T23:50:37+00:00"
+      },
+      "kind": "scores",
+      "metric": "euclidean",
+      "n_gallery": 12180,
+      "n_query": 1980,
+      "transforms": []
+    }
+  },
+  "metrics": {
+    "R1": 0.2474747474747475,
+    "R10": 0.45151515151515154,
+    "R20": 0.5222222222222223,
+    "R5": 0.3803030303030303,
+    "mAP": 0.11032243866326515,
+    "mINP": 0.015745672785732842,
+    "n_dropped": 0.0,
+    "n_query": 1980.0,
+    "n_scored": 1980.0
+  }
+}

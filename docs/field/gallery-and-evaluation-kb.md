@@ -10,7 +10,7 @@ confidence: |
   and the junk/ground-truth rule was verified against VeRi's official gt_index.txt and jk_index.txt for all 1,678 queries;
   protocol descriptions for datasets not present locally (Market-1501, CUHK03, VehicleID) come from their published protocols, not from local verification.
 supersedes: null
-related: [reid-glossary, 50-benchmarks-datasets, reid-mot-metrics, open-world-rejection-calibration, reid-2026-index, reid-in-mot]
+related: [reid-glossary, reid-benchmarks-datasets, reid-mot-metrics, open-world-rejection-calibration, reid-2026-index, reid-in-mot]
 ---
 
 # The ReID Gallery and How Evaluation Actually Works

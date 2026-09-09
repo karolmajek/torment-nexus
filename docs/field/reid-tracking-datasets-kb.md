@@ -149,6 +149,7 @@ Vehicle ReID's distinctive difficulty is the inverse of person ReID: **intra-cla
 |---|---|---|---|
 | **MOT17** | Pedestrian street scenes | Detection quality; three detector sets provided | Yes, but the benchmark is detection-dominated |
 | **MOT20** | Very dense crowds | Occlusion, crowd density | Yes — heavily |
+| **CrowdTrack** | Unconstrained daily scenes, fixed and moving lens | **Long occlusions specifically** — identities that leave for seconds and return. 33 videos, 5,185 tracklets, 20 fps | Yes — this is the one where a long-gap re-attachment is worth measuring |
 | **MOTS20 / KITTI-MOTS** | Segmentation-level tracking | Mask-level association | Yes |
 | **DanceTrack** | Group dance | **Uniform appearance + non-linear motion.** The benchmark that proved appearance-heavy trackers had been over-credited | **No** — deliberately |
 | **SportsMOT** | Basketball, football, volleyball | Fast, erratic motion; similar uniforms | Weakly |
@@ -160,6 +161,8 @@ Vehicle ReID's distinctive difficulty is the inverse of person ReID: **intra-cla
 | **SeaDronesSee-MOT** | Maritime UAV search-and-rescue | Tiny targets, water occlusion, platform motion | Poorly — use platform metadata |
 
 > **The DanceTrack / MOT17 pairing is the standard diagnostic.** A tracker that gains on MOT17 but not DanceTrack improved its detector or its appearance model. A tracker that gains on DanceTrack improved its motion model or association logic.
+
+> **Access note, checked 2026-08-31.** CrowdTrack is the cheapest tracking benchmark on this table to actually obtain: public and ungated on Hugging Face under the authors' account, **Apache-2.0**, no agreement and no Baidu account, 32 GB. That licence is more permissive than anything else this project uses. Counts, the three inconsistent archive layouts and the two annotation formats are in [datasets/crowdtrack.md](../../datasets/crowdtrack.md). **One catch worth generalising beyond this dataset:** the HF mirror has all the bytes but drops the official train/test grouping that the authors' Baidu share encodes as directories. Take data from the mirror and structure from the source — a convenient re-upload can be complete and still lossy, and nothing in the download warns you.
 
 ---
 

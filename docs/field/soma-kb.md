@@ -39,7 +39,7 @@ Three things make it relevant to this project:
 
 | Stated problem | SOMA's evidence | How much to trust it |
 |---|---|---|
-| Benchmarks contain almost no long occlusions | MOT17 has **7** ground-truth 4–6 s occlusion episodes; CrowdTrack has **~133** | Checkable, and the direction is certainly right |
+| Benchmarks contain almost no long occlusions | MOT17 has **7** ground-truth 4–6 s occlusion episodes; CrowdTrack has **~133** | **Direction checked 2026-08-31, magnitude not.** One CrowdTrack sequence (track0001, 799 frames) carries **21** identity gaps of 5 s or longer — three times MOT17's whole-benchmark total, in 1 of 33 sequences. Counted from the release's own gt file, [datasets/crowdtrack.md](../../datasets/crowdtrack.md) §7. The "~133" is over a specific duration window computed some other way and still wants recomputing |
 | Detectors are co-adapted to their benchmark | ByteTrack's MOT17 detector was trained on the full train set (train leakage) | Widely known in the MOT community |
 | Published numbers include offline tuning unavailable live | SOMA restricts itself to online-only, no interpolation, no per-sequence tuning | Self-imposed constraint, verifiable from the code |
 | Amodal boxes serve association, not reusable detection | Amodal box synthesis kept internal, at token level | Design argument, not measured |
@@ -349,7 +349,7 @@ Defined once, in **[glossary.md](../glossary.md)** — never here. Used on this 
 - Zenodo archive — DOI 10.5281/zenodo.21986816
 - PersonViT — https://arxiv.org/abs/2408.05398
 - OSNet-AIN — https://arxiv.org/abs/1910.06827
-- CrowdTrack — the benchmark SOMA evaluates on; verify split definitions at source before quoting
+- CrowdTrack — the benchmark SOMA evaluates on. Obtained and inspected 2026-08-31: [datasets/crowdtrack.md](../../datasets/crowdtrack.md), paper [arXiv 2507.02479](https://arxiv.org/abs/2507.02479). **`CrowdTrack/train` in §6 is a real, official split, not SOMA's invention** — the authors' Baidu share groups the sequences into train and test. The catch is that the convenient Hugging Face mirror flattens that grouping away, so anything of ours compared against §6's numbers has to carry the split across by hand
 - Companion entries: [reid-in-mot](reid-in-mot-kb.md), [reid-mot-metrics](reid-mot-metrics-kb.md), [reid-tracking-datasets](reid-tracking-datasets-kb.md), [agglomerative-vfm](agglomerative-vfm-kb.md), [reid-open-problems-2026](70-open-problems-2026.md)
 
 ---

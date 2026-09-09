@@ -500,9 +500,13 @@ Two consequences for the rest of this protocol:
 ## 14. The teacher ablation — 2026-08-26
 
 §7 ran. Five encoder specs, sixty new rows, and one methods fix that had to land first;
-CUHK03-NP was then added on 2026-08-26 and re-ran the whole matrix over a fourth dataset. It is
-now twelve encoder-resolution pairs × four heads × four datasets = 192 rows, all in
-[results/table.md](../../results/table.md). CUHK03 is what turned §14.3's conclusion from
+CUHK03-NP was then added on 2026-08-26 and re-ran the whole matrix over a fourth dataset. **On
+that date** the matrix was twelve encoder-resolution pairs × four heads × four datasets = 192
+rows; every number in this section is read from those rows, and every conclusion below has
+survived the matrix growing since. The live count is the summary block of
+[results/table.md](../../results/table.md), which is generated — do not retype it here.
+
+CUHK03 is what turned §14.3's conclusion from
 "agglomeration wins on people" into "agglomeration wins in-domain", which is why a dataset
 adapter written on a spare afternoon was worth more than another encoder.
 
@@ -782,11 +786,24 @@ Recorded here as the single largest available saving in this pipeline.
 
 ### 14.9 What is still unrun
 
-§13.7's list, minus its first item and minus CUHK03, which ran: **MSMT17** (adapter +
-download), **EUPE-B** (the second agglomerative family, and the one whose licence forbids
-commercial use), **CCVID**, and **§6.5's open-set check**.
+§13.7's list has shrunk to two items. **MSMT17** and **CCVID** both landed — adapters, protocol
+values and rows — leaving **EUPE-B** (the second agglomerative family, and the one whose licence
+forbids commercial use) and **§6.5's open-set check**, which still needs a protocol value with
+non-mated probes before it needs any code.
 
-**CUHK03-NP detected** is measured — adapter, protocol value and all 48 rows. Two things it
+Both are finished as far as the matrix goes, and what is left on each is the same two encoder
+specs that are unrun everywhere. Read from `results/table.md` on 2026-09-08:
+
+| | state | not yet run |
+|---|---|---|
+| **MSMT17** | adapter + `msmt17/official@1` ship; **84 of 98** cells | `tipsv2-448` and `siglip2-384` |
+| **CCVID** | adapter + both protocol values ship; **168 of 196** cells | `tipsv2-448` and `siglip2-384` |
+
+**MSMT17's encoder gap closed on 2026-09-08.** All six C-RADIOv4 specs have now measured it, so a
+retention ratio — which needs the *same* encoder on both domains — is computable for every encoder
+§14 draws its conclusions from. Writing that table is an editing task, not a compute one.
+
+**CUHK03-NP detected** is measured — adapter, protocol value and all 84 rows. Two things it
 left open. Its `labeled` variant has an adapter and a protocol value
 (`cuhk03/labeled-767@1`) and has never been run, deliberately: the project reports detected
 only. And the crop-vs-squash geometry of §14.1 is only measurable there through CLIP, the one

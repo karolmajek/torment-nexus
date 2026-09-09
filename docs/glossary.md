@@ -390,7 +390,7 @@ Owning page: [soma-kb.md](field/soma-kb.md).
 | **Fairness pairing** | Feeding every ReID-enabled row of a table the identical cached features and identical detections, so a row-to-row difference is attributable to the tracker alone |
 | **Per-frame whitening** | Normalising embeddings using statistics over the people visible in the current frame (OSNet path; web runtime requires ≥4 valid embeddings). Transductive — it has no single-crop retrieval equivalent |
 | **token-IN** | Token-level instance normalisation, used in the PersonViT variant |
-| **CrowdTrack** | Crowded-scene MOT benchmark with roughly 19× more 5-second occlusion episodes than MOT17 |
+| **CrowdTrack** | Crowded-scene MOT benchmark with roughly 19× more 5-second occlusion episodes than MOT17. 33 videos, 5,185 tracklets, Apache-2.0, public on Hugging Face — [datasets/crowdtrack.md](../datasets/crowdtrack.md) |
 
 ---
 

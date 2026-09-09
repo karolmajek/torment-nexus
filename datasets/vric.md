@@ -183,4 +183,4 @@ does not record that UA-DETRAC's has.
 | `reidbench` adapter | ✅ `adapters/vric.py` |
 | `reidbench` protocol | ✅ `vric/official@1` |
 | Provenance record | ✅ `vric` |
-| Experiments | none run yet |
+| Experiments | ✅ **96 runs** (12 encoders x 7 heads, + the 12-run euclidean control). Best mAP **35.93** — dinov3-huge-plus + arcface-msmt17; best frozen **35.74**, the same encoder. The one dataset where a head buys almost nothing (+0.19), and where DINOv3 wins while it is last or near-last on every person set |

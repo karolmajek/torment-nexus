@@ -23,56 +23,119 @@
 | 11 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1793 |     0.2129 |     0.3426 |     0.4099 |     0.0940 |
 | 12 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.2254 |     0.2663 |     0.4081 |     0.4746 |     0.1216 |
 
-### 🟧 linear
+### 🟧 arcface-msmt17
 
 |  # | encoder                                       | resolution | resize |        mAP |         R1 |         R5 |        R10 |       mINP |
 |---:|-----------------------------------------------|------------|--------|-----------:|-----------:|-----------:|-----------:|-----------:|
-| 13 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0272 |     0.0322 |     0.0797 |     0.1028 |     0.0094 |
-| 14 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0354 |     0.0473 |     0.0955 |     0.1333 |     0.0115 |
-| 15 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash |     0.1662 |     0.2137 |     0.3520 |     0.4199 |     0.0755 |
-| 16 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash | **0.1871** | **0.2355** | **0.3718** | **0.4411** | **0.0890** |
-| 17 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1363 |     0.1788 |     0.2840 |     0.3394 |     0.0620 |
-| 18 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1303 |     0.1725 |     0.2910 |     0.3481 |     0.0550 |
-| 19 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.1711 |     0.2093 |     0.3375 |     0.4067 |     0.0841 |
-| 20 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1450 |     0.1779 |     0.2936 |     0.3535 |     0.0694 |
-| 21 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash |     0.1808 |     0.2272 |     0.3585 |     0.4254 |     0.0865 |
-| 22 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.1464 |     0.1847 |     0.3078 |     0.3651 |     0.0666 |
-| 23 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1308 |     0.1615 |     0.2747 |     0.3351 |     0.0597 |
-| 24 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.1651 |     0.2074 |     0.3350 |     0.3999 |     0.0778 |
+| 13 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0378 |     0.0498 |     0.1041 |     0.1346 |     0.0138 |
+| 14 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0497 |     0.0641 |     0.1225 |     0.1587 |     0.0187 |
+| 15 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash | **0.2549** | **0.3031** | **0.4616** | **0.5344** | **0.1387** |
+| 16 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash |     0.2303 |     0.2924 |     0.4372 |     0.5148 |     0.1126 |
+| 17 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1526 |     0.1985 |     0.3010 |     0.3507 |     0.0699 |
+| 18 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1985 |     0.2429 |     0.3773 |     0.4475 |     0.0994 |
+| 19 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.2187 |     0.2555 |     0.4073 |     0.4805 |     0.1157 |
+| 20 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1820 |     0.2163 |     0.3494 |     0.4132 |     0.0932 |
+| 21 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash |     0.2414 |     0.2856 |     0.4280 |     0.5010 |     0.1343 |
+| 22 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.2010 |     0.2388 |     0.3688 |     0.4419 |     0.1035 |
+| 23 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1761 |     0.2098 |     0.3415 |     0.4111 |     0.0906 |
+| 24 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.2140 |     0.2550 |     0.3943 |     0.4589 |     0.1115 |
 
-### 🟩 none
-
-|  # | encoder                                       | resolution | resize |        mAP |         R1 |         R5 |        R10 |       mINP |
-|---:|-----------------------------------------------|------------|--------|-----------:|-----------:|-----------:|-----------:|-----------:|
-| 25 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0251 |     0.0349 |     0.0778 |     0.1043 |     0.0077 |
-| 26 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0308 |     0.0422 |     0.0897 |     0.1176 |     0.0097 |
-| 27 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash |     0.1642 |     0.2168 |     0.3561 |     0.4308 |     0.0693 |
-| 28 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash | **0.2346** | **0.2967** | **0.4348** | **0.5043** | **0.1193** |
-| 29 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1492 |     0.1990 |     0.3061 |     0.3556 |     0.0669 |
-| 30 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1269 |     0.1669 |     0.2815 |     0.3464 |     0.0518 |
-| 31 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.1739 |     0.2152 |     0.3510 |     0.4213 |     0.0805 |
-| 32 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1376 |     0.1709 |     0.2850 |     0.3440 |     0.0621 |
-| 33 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash |     0.1936 |     0.2421 |     0.3778 |     0.4434 |     0.0936 |
-| 34 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.1489 |     0.1945 |     0.3077 |     0.3712 |     0.0661 |
-| 35 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1268 |     0.1611 |     0.2745 |     0.3364 |     0.0550 |
-| 36 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.1603 |     0.2050 |     0.3304 |     0.3937 |     0.0716 |
-
-### 🟥 pca
+### 🟩 linear
 
 |  # | encoder                                       | resolution | resize |        mAP |         R1 |         R5 |        R10 |       mINP |
 |---:|-----------------------------------------------|------------|--------|-----------:|-----------:|-----------:|-----------:|-----------:|
-| 37 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0261 |     0.0348 |     0.0754 |     0.1052 |     0.0083 |
-| 38 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0306 |     0.0408 |     0.0874 |     0.1157 |     0.0100 |
-| 39 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash |     0.1725 |     0.2199 |     0.3646 |     0.4384 |     0.0761 |
-| 40 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash | **0.2144** | **0.2755** | **0.4126** | **0.4816** | **0.1037** |
-| 41 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1468 |     0.1947 |     0.3005 |     0.3524 |     0.0649 |
-| 42 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1383 |     0.1806 |     0.2951 |     0.3662 |     0.0589 |
-| 43 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.1625 |     0.2063 |     0.3286 |     0.3950 |     0.0729 |
-| 44 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1297 |     0.1634 |     0.2755 |     0.3305 |     0.0559 |
-| 45 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash |     0.1730 |     0.2236 |     0.3551 |     0.4207 |     0.0771 |
-| 46 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.1378 |     0.1798 |     0.2934 |     0.3542 |     0.0586 |
-| 47 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1205 |     0.1533 |     0.2604 |     0.3202 |     0.0512 |
-| 48 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.1462 |     0.1928 |     0.3167 |     0.3743 |     0.0606 |
+| 25 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0272 |     0.0322 |     0.0797 |     0.1028 |     0.0094 |
+| 26 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0354 |     0.0473 |     0.0955 |     0.1333 |     0.0115 |
+| 27 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash |     0.1662 |     0.2137 |     0.3520 |     0.4199 |     0.0755 |
+| 28 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash | **0.1871** | **0.2355** | **0.3718** | **0.4411** | **0.0890** |
+| 29 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1363 |     0.1788 |     0.2840 |     0.3394 |     0.0620 |
+| 30 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1303 |     0.1725 |     0.2910 |     0.3481 |     0.0550 |
+| 31 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.1711 |     0.2093 |     0.3375 |     0.4067 |     0.0841 |
+| 32 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1450 |     0.1779 |     0.2936 |     0.3535 |     0.0694 |
+| 33 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash |     0.1808 |     0.2272 |     0.3585 |     0.4254 |     0.0865 |
+| 34 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.1464 |     0.1847 |     0.3078 |     0.3651 |     0.0666 |
+| 35 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1308 |     0.1615 |     0.2747 |     0.3351 |     0.0597 |
+| 36 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.1651 |     0.2074 |     0.3350 |     0.3999 |     0.0778 |
+
+### 🟥 linear-msmt17
+
+|  # | encoder                                       | resolution | resize |        mAP |         R1 |         R5 |        R10 |       mINP |
+|---:|-----------------------------------------------|------------|--------|-----------:|-----------:|-----------:|-----------:|-----------:|
+| 37 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0339 |     0.0451 |     0.0935 |     0.1260 |     0.0123 |
+| 38 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0440 |     0.0598 |     0.1155 |     0.1553 |     0.0156 |
+| 39 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash |     0.2155 |     0.2636 |     0.4110 |     0.4818 |     0.1075 |
+| 40 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash |     0.2220 |     0.2866 |     0.4330 |     0.5010 |     0.1074 |
+| 41 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1594 |     0.2074 |     0.3110 |     0.3704 |     0.0740 |
+| 42 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1698 |     0.2110 |     0.3380 |     0.4064 |     0.0810 |
+| 43 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.2244 |     0.2644 |     0.4045 |     0.4787 |     0.1212 |
+| 44 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1857 |     0.2163 |     0.3483 |     0.4242 |     0.0978 |
+| 45 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash | **0.2465** | **0.2924** | **0.4386** | **0.5103** | **0.1379** |
+| 46 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.1984 |     0.2342 |     0.3696 |     0.4495 |     0.1022 |
+| 47 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1743 |     0.2052 |     0.3385 |     0.4032 |     0.0917 |
+| 48 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.2206 |     0.2644 |     0.4027 |     0.4738 |     0.1163 |
+
+### 🟪 none
+
+|  # | encoder                                       | resolution | resize |        mAP |         R1 |         R5 |        R10 |       mINP |
+|---:|-----------------------------------------------|------------|--------|-----------:|-----------:|-----------:|-----------:|-----------:|
+| 49 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0251 |     0.0349 |     0.0778 |     0.1043 |     0.0077 |
+| 50 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0253 |     0.0357 |     0.0787 |     0.1035 |     0.0077 |
+| 51 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0308 |     0.0422 |     0.0897 |     0.1176 |     0.0097 |
+| 52 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0308 |     0.0425 |     0.0908 |     0.1187 |     0.0097 |
+| 53 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash |     0.1642 |     0.2168 |     0.3561 |     0.4308 |     0.0693 |
+| 54 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash |     0.1673 |     0.2175 |     0.3604 |     0.4332 |     0.0712 |
+| 55 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash | **0.2346** | **0.2967** | **0.4348** | **0.5043** | **0.1193** |
+| 56 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash |     0.2292 |     0.2932 |     0.4299 |     0.4994 |     0.1137 |
+| 57 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1492 |     0.1990 |     0.3061 |     0.3556 |     0.0669 |
+| 58 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1503 |     0.1991 |     0.3058 |     0.3578 |     0.0677 |
+| 59 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1269 |     0.1669 |     0.2815 |     0.3464 |     0.0518 |
+| 60 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1282 |     0.1671 |     0.2832 |     0.3483 |     0.0530 |
+| 61 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.1739 |     0.2152 |     0.3510 |     0.4213 |     0.0805 |
+| 62 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.1746 |     0.2171 |     0.3546 |     0.4232 |     0.0805 |
+| 63 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1376 |     0.1709 |     0.2850 |     0.3440 |     0.0621 |
+| 64 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1375 |     0.1717 |     0.2832 |     0.3450 |     0.0619 |
+| 65 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash |     0.1936 |     0.2421 |     0.3778 |     0.4434 |     0.0936 |
+| 66 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash |     0.1935 |     0.2423 |     0.3797 |     0.4440 |     0.0930 |
+| 67 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.1489 |     0.1945 |     0.3077 |     0.3712 |     0.0661 |
+| 68 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.1482 |     0.1947 |     0.3077 |     0.3699 |     0.0648 |
+| 69 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1268 |     0.1611 |     0.2745 |     0.3364 |     0.0550 |
+| 70 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1264 |     0.1593 |     0.2744 |     0.3383 |     0.0546 |
+| 71 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.1603 |     0.2050 |     0.3304 |     0.3937 |     0.0716 |
+| 72 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.1596 |     0.2047 |     0.3318 |     0.3938 |     0.0706 |
+
+### 🟫 pca
+
+|  # | encoder                                       | resolution | resize |        mAP |         R1 |         R5 |        R10 |       mINP |
+|---:|-----------------------------------------------|------------|--------|-----------:|-----------:|-----------:|-----------:|-----------:|
+| 73 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0261 |     0.0348 |     0.0754 |     0.1052 |     0.0083 |
+| 74 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0306 |     0.0408 |     0.0874 |     0.1157 |     0.0100 |
+| 75 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash |     0.1725 |     0.2199 |     0.3646 |     0.4384 |     0.0761 |
+| 76 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash | **0.2144** | **0.2755** | **0.4126** | **0.4816** | **0.1037** |
+| 77 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1468 |     0.1947 |     0.3005 |     0.3524 |     0.0649 |
+| 78 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1383 |     0.1806 |     0.2951 |     0.3662 |     0.0589 |
+| 79 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.1625 |     0.2063 |     0.3286 |     0.3950 |     0.0729 |
+| 80 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1297 |     0.1634 |     0.2755 |     0.3305 |     0.0559 |
+| 81 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash |     0.1730 |     0.2236 |     0.3551 |     0.4207 |     0.0771 |
+| 82 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.1378 |     0.1798 |     0.2934 |     0.3542 |     0.0586 |
+| 83 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1205 |     0.1533 |     0.2604 |     0.3202 |     0.0512 |
+| 84 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.1462 |     0.1928 |     0.3167 |     0.3743 |     0.0606 |
+
+### 🟨 pca-msmt17
+
+|  # | encoder                                       | resolution | resize |        mAP |         R1 |         R5 |        R10 |       mINP |
+|---:|-----------------------------------------------|------------|--------|-----------:|-----------:|-----------:|-----------:|-----------:|
+| 85 | timm:vit_base_patch16_clip_224.openai         | 224x224    | crop   |     0.0260 |     0.0349 |     0.0762 |     0.1071 |     0.0084 |
+| 86 | timm:vit_base_patch16_clip_224.openai         | 224x224    | squash |     0.0312 |     0.0425 |     0.0893 |     0.1166 |     0.0102 |
+| 87 | timm:vit_giantopt_patch16_siglip_256.v2_webli | 256x256    | squash |     0.1696 |     0.2182 |     0.3619 |     0.4367 |     0.0742 |
+| 88 | timm:vit_huge_plus_patch16_dinov3.lvd1689m    | 224x224    | squash | **0.2202** | **0.2821** | **0.4221** | **0.4913** | **0.1066** |
+| 89 | timm:vit_large_patch16_dinov3.lvd1689m        | 224x224    | squash |     0.1468 |     0.1952 |     0.3024 |     0.3513 |     0.0650 |
+| 90 | timm:vit_so400m_patch14_siglip_224.v2_webli   | 224x224    | squash |     0.1322 |     0.1709 |     0.2874 |     0.3527 |     0.0560 |
+| 91 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 224x224    | squash |     0.1753 |     0.2204 |     0.3510 |     0.4213 |     0.0796 |
+| 92 | torchhub:NVlabs/RADIO/c-radio_v4-h            | 256x128    | squash |     0.1392 |     0.1712 |     0.2885 |     0.3497 |     0.0626 |
+| 93 | torchhub:NVlabs/RADIO/c-radio_v4-h            | native     | squash |     0.1939 |     0.2458 |     0.3850 |     0.4480 |     0.0919 |
+| 94 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 224x224    | squash |     0.1467 |     0.1888 |     0.3072 |     0.3677 |     0.0638 |
+| 95 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | 256x128    | squash |     0.1260 |     0.1587 |     0.2747 |     0.3383 |     0.0545 |
+| 96 | torchhub:NVlabs/RADIO/c-radio_v4-so400m       | native     | squash |     0.1585 |     0.2088 |     0.3348 |     0.3962 |     0.0678 |
 
 ### Every row, by encoder and resolution
 
@@ -80,90 +143,147 @@
 %%{init: {"themeVariables": {"quadrant1Fill": "transparent", "quadrant2Fill": "transparent", "quadrant3Fill": "transparent", "quadrant4Fill": "transparent", "quadrantExternalBorderStrokeFill": "#999999", "quadrantInternalBorderStrokeFill": "#cccccc", "quadrantPointFill": "#4e79a7"}}}%%
 quadrantChart
     title mAP vs mINP, coloured by head
-    x-axis "mAP 0.0251" --> "0.2467"
+    x-axis "mAP 0.0251" --> "0.2549"
     y-axis "mINP 0.0077" --> "0.1398"
     quadrant-1 " "
     quadrant-2 " "
     quadrant-3 " "
     quadrant-4 " "
-    1:::sarcface: [0.0884, 0.0829]
-    2:::sarcface: [0.1080, 0.0852]
-    3:::sarcface: [0.8781, 0.8227]
-    4:::sarcface: [0.9500, 0.8659]
-    5:::sarcface: [0.5974, 0.4935]
-    6:::sarcface: [0.6677, 0.5906]
-    7:::sarcface: [0.8724, 0.8223]
-    8:::sarcface: [0.7088, 0.6813]
-    9:::sarcface: [0.9392, 0.9500]
-    10:::sarcface: [0.7879, 0.7314]
-    11:::sarcface: [0.6762, 0.6377]
-    12:::sarcface: [0.8632, 0.8258]
-    13:::slinear: [0.0583, 0.0614]
-    14:::slinear: [0.0918, 0.0759]
-    15:::slinear: [0.6231, 0.5119]
-    16:::slinear: [0.7080, 0.6037]
-    17:::slinear: [0.5017, 0.4200]
-    18:::slinear: [0.4769, 0.3720]
-    19:::slinear: [0.6429, 0.5702]
-    20:::slinear: [0.5367, 0.4706]
-    21:::slinear: [0.6824, 0.5866]
-    22:::slinear: [0.5425, 0.4510]
-    23:::slinear: [0.4791, 0.4043]
-    24:::slinear: [0.6183, 0.5273]
-    25:::snone: [0.0500, 0.0500]
-    26:::snone: [0.0731, 0.0635]
-    27:::snone: [0.6149, 0.4699]
-    28:::snone: [0.9005, 0.8104]
-    29:::snone: [0.5540, 0.4531]
-    30:::snone: [0.4633, 0.3503]
-    31:::snone: [0.6544, 0.5461]
-    32:::snone: [0.5069, 0.4205]
-    33:::snone: [0.7341, 0.6353]
-    34:::snone: [0.5525, 0.4477]
-    35:::snone: [0.4631, 0.3719]
-    36:::snone: [0.5992, 0.4854]
-    37:::spca: [0.0540, 0.0541]
-    38:::spca: [0.0724, 0.0658]
-    39:::spca: [0.6486, 0.5161]
-    40:::spca: [0.8188, 0.7042]
-    41:::spca: [0.5442, 0.4395]
-    42:::spca: [0.5096, 0.3985]
-    43:::spca: [0.6081, 0.4943]
-    44:::spca: [0.4745, 0.3782]
-    45:::spca: [0.6505, 0.5231]
-    46:::spca: [0.5075, 0.3965]
-    47:::spca: [0.4372, 0.3466]
-    48:::spca: [0.5419, 0.4106]
+    1:::sarcface: [0.0870, 0.0831]
+    2:::sarcface: [0.1059, 0.0854]
+    3:::sarcface: [0.8487, 0.8227]
+    4:::sarcface: [0.9180, 0.8659]
+    5:::sarcface: [0.5779, 0.4936]
+    6:::sarcface: [0.6458, 0.5907]
+    7:::sarcface: [0.8432, 0.8224]
+    8:::sarcface: [0.6854, 0.6814]
+    9:::sarcface: [0.9076, 0.9500]
+    10:::sarcface: [0.7617, 0.7315]
+    11:::sarcface: [0.6539, 0.6378]
+    12:::sarcface: [0.8343, 0.8258]
+    13:::sarcfacemsmt17: [0.0997, 0.0918]
+    14:::sarcfacemsmt17: [0.1461, 0.1249]
+    15:::sarcfacemsmt17: [0.9500, 0.9422]
+    16:::sarcfacemsmt17: [0.8535, 0.7648]
+    17:::sarcfacemsmt17: [0.5491, 0.4739]
+    18:::sarcfacemsmt17: [0.7293, 0.6751]
+    19:::sarcfacemsmt17: [0.8083, 0.7860]
+    20:::sarcfacemsmt17: [0.6646, 0.6328]
+    21:::sarcfacemsmt17: [0.8972, 0.9126]
+    22:::sarcfacemsmt17: [0.7390, 0.7029]
+    23:::sarcfacemsmt17: [0.6415, 0.6151]
+    24:::sarcfacemsmt17: [0.7899, 0.7572]
+    25:::slinear: [0.0580, 0.0616]
+    26:::slinear: [0.0903, 0.0761]
+    27:::slinear: [0.6027, 0.5120]
+    28:::slinear: [0.6846, 0.6038]
+    29:::slinear: [0.4856, 0.4201]
+    30:::slinear: [0.4618, 0.3722]
+    31:::slinear: [0.6218, 0.5703]
+    32:::slinear: [0.5194, 0.4708]
+    33:::slinear: [0.6599, 0.5867]
+    34:::slinear: [0.5250, 0.4511]
+    35:::slinear: [0.4638, 0.4044]
+    36:::slinear: [0.5981, 0.5274]
+    37:::slinearmsmt17: [0.0845, 0.0815]
+    38:::slinearmsmt17: [0.1237, 0.1041]
+    39:::slinearmsmt17: [0.7958, 0.7298]
+    40:::slinearmsmt17: [0.8210, 0.7294]
+    41:::slinearmsmt17: [0.5761, 0.5015]
+    42:::slinearmsmt17: [0.6166, 0.5493]
+    43:::slinearmsmt17: [0.8306, 0.8236]
+    44:::slinearmsmt17: [0.6790, 0.6640]
+    45:::slinearmsmt17: [0.9170, 0.9373]
+    46:::slinearmsmt17: [0.7287, 0.6936]
+    47:::slinearmsmt17: [0.6343, 0.6221]
+    48:::slinearmsmt17: [0.8158, 0.7901]
+    49:::snone: [0.0500, 0.0502]
+    50:::snone: [0.0508, 0.0500]
+    51:::snone: [0.0723, 0.0638]
+    52:::snone: [0.0723, 0.0639]
+    53:::snone: [0.5949, 0.4700]
+    54:::snone: [0.6071, 0.4828]
+    55:::snone: [0.8703, 0.8105]
+    56:::snone: [0.8493, 0.7723]
+    57:::snone: [0.5361, 0.4533]
+    58:::snone: [0.5403, 0.4591]
+    59:::snone: [0.4486, 0.3504]
+    60:::snone: [0.4537, 0.3585]
+    61:::snone: [0.6329, 0.5462]
+    62:::snone: [0.6355, 0.5460]
+    63:::snone: [0.4907, 0.4207]
+    64:::snone: [0.4901, 0.4197]
+    65:::snone: [0.7097, 0.6354]
+    66:::snone: [0.7094, 0.6309]
+    67:::snone: [0.5347, 0.4478]
+    68:::snone: [0.5320, 0.4393]
+    69:::snone: [0.4484, 0.3721]
+    70:::snone: [0.4466, 0.3697]
+    71:::snone: [0.5797, 0.4855]
+    72:::snone: [0.5766, 0.4789]
+    73:::spca: [0.0538, 0.0544]
+    74:::spca: [0.0716, 0.0660]
+    75:::spca: [0.6273, 0.5162]
+    76:::spca: [0.7914, 0.7042]
+    77:::spca: [0.5266, 0.4396]
+    78:::spca: [0.4932, 0.3987]
+    79:::spca: [0.5882, 0.4945]
+    80:::spca: [0.4594, 0.3783]
+    81:::spca: [0.6292, 0.5232]
+    82:::spca: [0.4912, 0.3967]
+    83:::spca: [0.4235, 0.3468]
+    84:::spca: [0.5244, 0.4108]
+    85:::spcamsmt17: [0.0533, 0.0548]
+    86:::spcamsmt17: [0.0738, 0.0670]
+    87:::spcamsmt17: [0.6160, 0.5028]
+    88:::spcamsmt17: [0.8141, 0.7236]
+    89:::spcamsmt17: [0.5264, 0.4405]
+    90:::spcamsmt17: [0.4693, 0.3791]
+    91:::spcamsmt17: [0.6381, 0.5401]
+    92:::spcamsmt17: [0.4966, 0.4240]
+    93:::spcamsmt17: [0.7110, 0.6237]
+    94:::spcamsmt17: [0.5263, 0.4324]
+    95:::spcamsmt17: [0.4450, 0.3690]
+    96:::spcamsmt17: [0.5724, 0.4599]
     classDef sarcface color: #4e79a7
-    classDef slinear color: #f28e2b
-    classDef snone color: #59a14f
-    classDef spca color: #e15759
+    classDef sarcfacemsmt17 color: #f28e2b
+    classDef slinear color: #59a14f
+    classDef slinearmsmt17 color: #e15759
+    classDef snone color: #b07aa1
+    classDef spca color: #9c755f
+    classDef spcamsmt17 color: #edc948
 ```
 
 ```mermaid
-%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759"}}, "xyChart": {"height": 1384, "width": 1215, "yAxis": {"showLabel": false}}}}%%
+%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759,#b07aa1,#9c755f,#edc948"}}, "xyChart": {"height": 1600, "width": 1320, "yAxis": {"showLabel": false}}}}%%
 xychart-beta horizontal
     title "mAP, coloured by head"
-    x-axis ["vit_base_patch16_clip_224.openai 224x224 arcface crop · 3.46%", "vit_base_patch16_clip_224.openai 224x224 arcface squash · 3.94%", "vit_base_patch16_clip_224.openai 224x224 linear crop · 2.72%", "vit_base_patch16_clip_224.openai 224x224 linear squash · 3.54%", "vit_base_patch16_clip_224.openai 224x224 none crop · 2.51%", "vit_base_patch16_clip_224.openai 224x224 none squash · 3.08%", "vit_base_patch16_clip_224.openai 224x224 pca crop · 2.61%", "vit_base_patch16_clip_224.openai 224x224 pca squash · 3.06%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 arcface squash · 22.90%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 linear squash · 16.62%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 none squash · 16.42%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 pca squash · 17.25%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 arcface squash · 24.67%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 linear squash · 18.71%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 none squash · 23.46%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 pca squash · 21.44%", "vit_large_patch16_dinov3.lvd1689m 224x224 arcface squash · 15.99%", "vit_large_patch16_dinov3.lvd1689m 224x224 linear squash · 13.63%", "vit_large_patch16_dinov3.lvd1689m 224x224 none squash · 14.92%", "vit_large_patch16_dinov3.lvd1689m 224x224 pca squash · 14.68%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 arcface squash · 17.72%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 linear squash · 13.03%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 none squash · 12.69%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 pca squash · 13.83%", "c-radio_v4-h 224x224 arcface squash · 22.76%", "c-radio_v4-h 224x224 linear squash · 17.11%", "c-radio_v4-h 224x224 none squash · 17.39%", "c-radio_v4-h 224x224 pca squash · 16.25%", "c-radio_v4-h 256x128 arcface squash · 18.73%", "c-radio_v4-h 256x128 linear squash · 14.50%", "c-radio_v4-h 256x128 none squash · 13.76%", "c-radio_v4-h 256x128 pca squash · 12.97%", "c-radio_v4-h native arcface squash · 24.41%", "c-radio_v4-h native linear squash · 18.08%", "c-radio_v4-h native none squash · 19.36%", "c-radio_v4-h native pca squash · 17.30%", "c-radio_v4-so400m 224x224 arcface squash · 20.68%", "c-radio_v4-so400m 224x224 linear squash · 14.64%", "c-radio_v4-so400m 224x224 none squash · 14.89%", "c-radio_v4-so400m 224x224 pca squash · 13.78%", "c-radio_v4-so400m 256x128 arcface squash · 17.93%", "c-radio_v4-so400m 256x128 linear squash · 13.08%", "c-radio_v4-so400m 256x128 none squash · 12.68%", "c-radio_v4-so400m 256x128 pca squash · 12.05%", "c-radio_v4-so400m native arcface squash · 22.54%", "c-radio_v4-so400m native linear squash · 16.51%", "c-radio_v4-so400m native none squash · 16.03%", "c-radio_v4-so400m native pca squash · 14.62%"]
-    y-axis "mAP (%)" 0 --> 25.91
-    bar [3.46, 3.94, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 0.00, 0.00, 0.00, 24.67, 0.00, 0.00, 0.00, 15.99, 0.00, 0.00, 0.00, 17.72, 0.00, 0.00, 0.00, 22.76, 0.00, 0.00, 0.00, 18.73, 0.00, 0.00, 0.00, 24.41, 0.00, 0.00, 0.00, 20.68, 0.00, 0.00, 0.00, 17.93, 0.00, 0.00, 0.00, 22.54, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 2.72, 3.54, 0.00, 0.00, 0.00, 0.00, 0.00, 16.62, 0.00, 0.00, 0.00, 18.71, 0.00, 0.00, 0.00, 13.63, 0.00, 0.00, 0.00, 13.03, 0.00, 0.00, 0.00, 17.11, 0.00, 0.00, 0.00, 14.50, 0.00, 0.00, 0.00, 18.08, 0.00, 0.00, 0.00, 14.64, 0.00, 0.00, 0.00, 13.08, 0.00, 0.00, 0.00, 16.51, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 2.51, 3.08, 0.00, 0.00, 0.00, 0.00, 16.42, 0.00, 0.00, 0.00, 23.46, 0.00, 0.00, 0.00, 14.92, 0.00, 0.00, 0.00, 12.69, 0.00, 0.00, 0.00, 17.39, 0.00, 0.00, 0.00, 13.76, 0.00, 0.00, 0.00, 19.36, 0.00, 0.00, 0.00, 14.89, 0.00, 0.00, 0.00, 12.68, 0.00, 0.00, 0.00, 16.03, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.61, 3.06, 0.00, 0.00, 0.00, 17.25, 0.00, 0.00, 0.00, 21.44, 0.00, 0.00, 0.00, 14.68, 0.00, 0.00, 0.00, 13.83, 0.00, 0.00, 0.00, 16.25, 0.00, 0.00, 0.00, 12.97, 0.00, 0.00, 0.00, 17.30, 0.00, 0.00, 0.00, 13.78, 0.00, 0.00, 0.00, 12.05, 0.00, 0.00, 0.00, 14.62]
+    x-axis ["vit_base_patch16_clip_224.openai 224x224 arcface crop · 3.46%", "vit_base_patch16_clip_224.openai 224x224 arcface squash · 3.94%", "vit_base_patch16_clip_224.openai 224x224 arcface-msmt17 crop · 3.78%", "vit_base_patch16_clip_224.openai 224x224 arcface-msmt17 squash · 4.97%", "vit_base_patch16_clip_224.openai 224x224 linear crop · 2.72%", "vit_base_patch16_clip_224.openai 224x224 linear squash · 3.54%", "vit_base_patch16_clip_224.openai 224x224 linear-msmt17 crop · 3.39%", "vit_base_patch16_clip_224.openai 224x224 linear-msmt17 squash · 4.40%", "vit_base_patch16_clip_224.openai 224x224 none crop · 2.51%", "vit_base_patch16_clip_224.openai 224x224 none crop · 2.53%", "vit_base_patch16_clip_224.openai 224x224 none squash · 3.08%", "vit_base_patch16_clip_224.openai 224x224 none squash · 3.08%", "vit_base_patch16_clip_224.openai 224x224 pca crop · 2.61%", "vit_base_patch16_clip_224.openai 224x224 pca squash · 3.06%", "vit_base_patch16_clip_224.openai 224x224 pca-msmt17 crop · 2.60%", "vit_base_patch16_clip_224.openai 224x224 pca-msmt17 squash · 3.12%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 arcface squash · 22.90%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 arcface-msmt17 squash · 25.49%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 linear squash · 16.62%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 linear-msmt17 squash · 21.55%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 none squash · 16.42%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 none squash · 16.73%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 pca squash · 17.25%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 pca-msmt17 squash · 16.96%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 arcface squash · 24.67%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 arcface-msmt17 squash · 23.03%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 linear squash · 18.71%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 linear-msmt17 squash · 22.20%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 none squash · 23.46%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 none squash · 22.92%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 pca squash · 21.44%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 pca-msmt17 squash · 22.02%", "vit_large_patch16_dinov3.lvd1689m 224x224 arcface squash · 15.99%", "vit_large_patch16_dinov3.lvd1689m 224x224 arcface-msmt17 squash · 15.26%", "vit_large_patch16_dinov3.lvd1689m 224x224 linear squash · 13.63%", "vit_large_patch16_dinov3.lvd1689m 224x224 linear-msmt17 squash · 15.94%", "vit_large_patch16_dinov3.lvd1689m 224x224 none squash · 14.92%", "vit_large_patch16_dinov3.lvd1689m 224x224 none squash · 15.03%", "vit_large_patch16_dinov3.lvd1689m 224x224 pca squash · 14.68%", "vit_large_patch16_dinov3.lvd1689m 224x224 pca-msmt17 squash · 14.68%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 arcface squash · 17.72%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 arcface-msmt17 squash · 19.85%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 linear squash · 13.03%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 linear-msmt17 squash · 16.98%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 none squash · 12.69%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 none squash · 12.82%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 pca squash · 13.83%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 pca-msmt17 squash · 13.22%", "c-radio_v4-h 224x224 arcface squash · 22.76%", "c-radio_v4-h 224x224 arcface-msmt17 squash · 21.87%", "c-radio_v4-h 224x224 linear squash · 17.11%", "c-radio_v4-h 224x224 linear-msmt17 squash · 22.44%", "c-radio_v4-h 224x224 none squash · 17.39%", "c-radio_v4-h 224x224 none squash · 17.46%", "c-radio_v4-h 224x224 pca squash · 16.25%", "c-radio_v4-h 224x224 pca-msmt17 squash · 17.53%", "c-radio_v4-h 256x128 arcface squash · 18.73%", "c-radio_v4-h 256x128 arcface-msmt17 squash · 18.20%", "c-radio_v4-h 256x128 linear squash · 14.50%", "c-radio_v4-h 256x128 linear-msmt17 squash · 18.57%", "c-radio_v4-h 256x128 none squash · 13.76%", "c-radio_v4-h 256x128 none squash · 13.75%", "c-radio_v4-h 256x128 pca squash · 12.97%", "c-radio_v4-h 256x128 pca-msmt17 squash · 13.92%", "c-radio_v4-h native arcface squash · 24.41%", "c-radio_v4-h native arcface-msmt17 squash · 24.14%", "c-radio_v4-h native linear squash · 18.08%", "c-radio_v4-h native linear-msmt17 squash · 24.65%", "c-radio_v4-h native none squash · 19.36%", "c-radio_v4-h native none squash · 19.35%", "c-radio_v4-h native pca squash · 17.30%", "c-radio_v4-h native pca-msmt17 squash · 19.39%", "c-radio_v4-so400m 224x224 arcface squash · 20.68%", "c-radio_v4-so400m 224x224 arcface-msmt17 squash · 20.10%", "c-radio_v4-so400m 224x224 linear squash · 14.64%", "c-radio_v4-so400m 224x224 linear-msmt17 squash · 19.84%", "c-radio_v4-so400m 224x224 none squash · 14.89%", "c-radio_v4-so400m 224x224 none squash · 14.82%", "c-radio_v4-so400m 224x224 pca squash · 13.78%", "c-radio_v4-so400m 224x224 pca-msmt17 squash · 14.67%", "c-radio_v4-so400m 256x128 arcface squash · 17.93%", "c-radio_v4-so400m 256x128 arcface-msmt17 squash · 17.61%", "c-radio_v4-so400m 256x128 linear squash · 13.08%", "c-radio_v4-so400m 256x128 linear-msmt17 squash · 17.43%", "c-radio_v4-so400m 256x128 none squash · 12.68%", "c-radio_v4-so400m 256x128 none squash · 12.64%", "c-radio_v4-so400m 256x128 pca squash · 12.05%", "c-radio_v4-so400m 256x128 pca-msmt17 squash · 12.60%", "c-radio_v4-so400m native arcface squash · 22.54%", "c-radio_v4-so400m native arcface-msmt17 squash · 21.40%", "c-radio_v4-so400m native linear squash · 16.51%", "c-radio_v4-so400m native linear-msmt17 squash · 22.06%", "c-radio_v4-so400m native none squash · 16.03%", "c-radio_v4-so400m native none squash · 15.96%", "c-radio_v4-so400m native pca squash · 14.62%", "c-radio_v4-so400m native pca-msmt17 squash · 15.85%"]
+    y-axis "mAP (%)" 0 --> 26.76
+    bar [3.46, 3.94, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.67, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.99, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.72, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.76, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.73, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.41, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 20.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.93, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.54, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 3.78, 4.97, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 25.49, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 23.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.26, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.85, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.87, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.20, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.14, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 20.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.61, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.40, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 2.72, 3.54, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.62, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.71, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.63, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.11, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.50, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.08, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.64, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.08, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.51, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.39, 4.40, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.55, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.20, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.94, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.98, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.44, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.57, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.65, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.84, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.43, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.06, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.51, 2.53, 3.08, 3.08, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.42, 16.73, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 23.46, 22.92, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.92, 15.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.69, 12.82, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.39, 17.46, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.76, 13.75, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.36, 19.35, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.89, 14.82, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.68, 12.64, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.03, 15.96, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.61, 3.06, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.44, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.83, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.97, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.30, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.78, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.62, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.60, 3.12, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.96, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.02, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.22, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.53, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.92, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.39, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.67, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.60, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.85]
 ```
 
 ### By head — does the probe carry it?
 
 ```mermaid
-%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759"}}, "xyChart": {"height": 1384, "width": 1215, "yAxis": {"showLabel": false}}}}%%
+%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759,#b07aa1,#9c755f,#edc948"}}, "xyChart": {"height": 1600, "width": 1320, "yAxis": {"showLabel": false}}}}%%
 xychart-beta horizontal
     title "mAP, coloured by head"
-    x-axis ["arcface vit_base_patch16_clip_224.openai 224x224 crop · 3.46%", "arcface vit_base_patch16_clip_224.openai 224x224 squash · 3.94%", "arcface vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 22.90%", "arcface vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 24.67%", "arcface vit_large_patch16_dinov3.lvd1689m 224x224 squash · 15.99%", "arcface vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 17.72%", "arcface c-radio_v4-h 224x224 squash · 22.76%", "arcface c-radio_v4-h 256x128 squash · 18.73%", "arcface c-radio_v4-h native squash · 24.41%", "arcface c-radio_v4-so400m 224x224 squash · 20.68%", "arcface c-radio_v4-so400m 256x128 squash · 17.93%", "arcface c-radio_v4-so400m native squash · 22.54%", "linear vit_base_patch16_clip_224.openai 224x224 crop · 2.72%", "linear vit_base_patch16_clip_224.openai 224x224 squash · 3.54%", "linear vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 16.62%", "linear vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 18.71%", "linear vit_large_patch16_dinov3.lvd1689m 224x224 squash · 13.63%", "linear vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 13.03%", "linear c-radio_v4-h 224x224 squash · 17.11%", "linear c-radio_v4-h 256x128 squash · 14.50%", "linear c-radio_v4-h native squash · 18.08%", "linear c-radio_v4-so400m 224x224 squash · 14.64%", "linear c-radio_v4-so400m 256x128 squash · 13.08%", "linear c-radio_v4-so400m native squash · 16.51%", "none vit_base_patch16_clip_224.openai 224x224 crop · 2.51%", "none vit_base_patch16_clip_224.openai 224x224 squash · 3.08%", "none vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 16.42%", "none vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 23.46%", "none vit_large_patch16_dinov3.lvd1689m 224x224 squash · 14.92%", "none vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 12.69%", "none c-radio_v4-h 224x224 squash · 17.39%", "none c-radio_v4-h 256x128 squash · 13.76%", "none c-radio_v4-h native squash · 19.36%", "none c-radio_v4-so400m 224x224 squash · 14.89%", "none c-radio_v4-so400m 256x128 squash · 12.68%", "none c-radio_v4-so400m native squash · 16.03%", "pca vit_base_patch16_clip_224.openai 224x224 crop · 2.61%", "pca vit_base_patch16_clip_224.openai 224x224 squash · 3.06%", "pca vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 17.25%", "pca vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 21.44%", "pca vit_large_patch16_dinov3.lvd1689m 224x224 squash · 14.68%", "pca vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 13.83%", "pca c-radio_v4-h 224x224 squash · 16.25%", "pca c-radio_v4-h 256x128 squash · 12.97%", "pca c-radio_v4-h native squash · 17.30%", "pca c-radio_v4-so400m 224x224 squash · 13.78%", "pca c-radio_v4-so400m 256x128 squash · 12.05%", "pca c-radio_v4-so400m native squash · 14.62%"]
-    y-axis "mAP (%)" 0 --> 25.91
-    bar [3.46, 3.94, 22.90, 24.67, 15.99, 17.72, 22.76, 18.73, 24.41, 20.68, 17.93, 22.54, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.72, 3.54, 16.62, 18.71, 13.63, 13.03, 17.11, 14.50, 18.08, 14.64, 13.08, 16.51, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.51, 3.08, 16.42, 23.46, 14.92, 12.69, 17.39, 13.76, 19.36, 14.89, 12.68, 16.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.61, 3.06, 17.25, 21.44, 14.68, 13.83, 16.25, 12.97, 17.30, 13.78, 12.05, 14.62]
+    x-axis ["arcface vit_base_patch16_clip_224.openai 224x224 crop · 3.46%", "arcface vit_base_patch16_clip_224.openai 224x224 squash · 3.94%", "arcface vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 22.90%", "arcface vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 24.67%", "arcface vit_large_patch16_dinov3.lvd1689m 224x224 squash · 15.99%", "arcface vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 17.72%", "arcface c-radio_v4-h 224x224 squash · 22.76%", "arcface c-radio_v4-h 256x128 squash · 18.73%", "arcface c-radio_v4-h native squash · 24.41%", "arcface c-radio_v4-so400m 224x224 squash · 20.68%", "arcface c-radio_v4-so400m 256x128 squash · 17.93%", "arcface c-radio_v4-so400m native squash · 22.54%", "arcface-msmt17 vit_base_patch16_clip_224.openai 224x224 crop · 3.78%", "arcface-msmt17 vit_base_patch16_clip_224.openai 224x224 squash · 4.97%", "arcface-msmt17 vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 25.49%", "arcface-msmt17 vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 23.03%", "arcface-msmt17 vit_large_patch16_dinov3.lvd1689m 224x224 squash · 15.26%", "arcface-msmt17 vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 19.85%", "arcface-msmt17 c-radio_v4-h 224x224 squash · 21.87%", "arcface-msmt17 c-radio_v4-h 256x128 squash · 18.20%", "arcface-msmt17 c-radio_v4-h native squash · 24.14%", "arcface-msmt17 c-radio_v4-so400m 224x224 squash · 20.10%", "arcface-msmt17 c-radio_v4-so400m 256x128 squash · 17.61%", "arcface-msmt17 c-radio_v4-so400m native squash · 21.40%", "linear vit_base_patch16_clip_224.openai 224x224 crop · 2.72%", "linear vit_base_patch16_clip_224.openai 224x224 squash · 3.54%", "linear vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 16.62%", "linear vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 18.71%", "linear vit_large_patch16_dinov3.lvd1689m 224x224 squash · 13.63%", "linear vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 13.03%", "linear c-radio_v4-h 224x224 squash · 17.11%", "linear c-radio_v4-h 256x128 squash · 14.50%", "linear c-radio_v4-h native squash · 18.08%", "linear c-radio_v4-so400m 224x224 squash · 14.64%", "linear c-radio_v4-so400m 256x128 squash · 13.08%", "linear c-radio_v4-so400m native squash · 16.51%", "linear-msmt17 vit_base_patch16_clip_224.openai 224x224 crop · 3.39%", "linear-msmt17 vit_base_patch16_clip_224.openai 224x224 squash · 4.40%", "linear-msmt17 vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 21.55%", "linear-msmt17 vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 22.20%", "linear-msmt17 vit_large_patch16_dinov3.lvd1689m 224x224 squash · 15.94%", "linear-msmt17 vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 16.98%", "linear-msmt17 c-radio_v4-h 224x224 squash · 22.44%", "linear-msmt17 c-radio_v4-h 256x128 squash · 18.57%", "linear-msmt17 c-radio_v4-h native squash · 24.65%", "linear-msmt17 c-radio_v4-so400m 224x224 squash · 19.84%", "linear-msmt17 c-radio_v4-so400m 256x128 squash · 17.43%", "linear-msmt17 c-radio_v4-so400m native squash · 22.06%", "none vit_base_patch16_clip_224.openai 224x224 crop · 2.51%", "none vit_base_patch16_clip_224.openai 224x224 crop · 2.53%", "none vit_base_patch16_clip_224.openai 224x224 squash · 3.08%", "none vit_base_patch16_clip_224.openai 224x224 squash · 3.08%", "none vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 16.42%", "none vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 16.73%", "none vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 23.46%", "none vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 22.92%", "none vit_large_patch16_dinov3.lvd1689m 224x224 squash · 14.92%", "none vit_large_patch16_dinov3.lvd1689m 224x224 squash · 15.03%", "none vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 12.69%", "none vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 12.82%", "none c-radio_v4-h 224x224 squash · 17.39%", "none c-radio_v4-h 224x224 squash · 17.46%", "none c-radio_v4-h 256x128 squash · 13.76%", "none c-radio_v4-h 256x128 squash · 13.75%", "none c-radio_v4-h native squash · 19.36%", "none c-radio_v4-h native squash · 19.35%", "none c-radio_v4-so400m 224x224 squash · 14.89%", "none c-radio_v4-so400m 224x224 squash · 14.82%", "none c-radio_v4-so400m 256x128 squash · 12.68%", "none c-radio_v4-so400m 256x128 squash · 12.64%", "none c-radio_v4-so400m native squash · 16.03%", "none c-radio_v4-so400m native squash · 15.96%", "pca vit_base_patch16_clip_224.openai 224x224 crop · 2.61%", "pca vit_base_patch16_clip_224.openai 224x224 squash · 3.06%", "pca vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 17.25%", "pca vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 21.44%", "pca vit_large_patch16_dinov3.lvd1689m 224x224 squash · 14.68%", "pca vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 13.83%", "pca c-radio_v4-h 224x224 squash · 16.25%", "pca c-radio_v4-h 256x128 squash · 12.97%", "pca c-radio_v4-h native squash · 17.30%", "pca c-radio_v4-so400m 224x224 squash · 13.78%", "pca c-radio_v4-so400m 256x128 squash · 12.05%", "pca c-radio_v4-so400m native squash · 14.62%", "pca-msmt17 vit_base_patch16_clip_224.openai 224x224 crop · 2.60%", "pca-msmt17 vit_base_patch16_clip_224.openai 224x224 squash · 3.12%", "pca-msmt17 vit_giantopt_patch16_siglip_256.v2_webli 256x256 squash · 16.96%", "pca-msmt17 vit_huge_plus_patch16_dinov3.lvd1689m 224x224 squash · 22.02%", "pca-msmt17 vit_large_patch16_dinov3.lvd1689m 224x224 squash · 14.68%", "pca-msmt17 vit_so400m_patch14_siglip_224.v2_webli 224x224 squash · 13.22%", "pca-msmt17 c-radio_v4-h 224x224 squash · 17.53%", "pca-msmt17 c-radio_v4-h 256x128 squash · 13.92%", "pca-msmt17 c-radio_v4-h native squash · 19.39%", "pca-msmt17 c-radio_v4-so400m 224x224 squash · 14.67%", "pca-msmt17 c-radio_v4-so400m 256x128 squash · 12.60%", "pca-msmt17 c-radio_v4-so400m native squash · 15.85%"]
+    y-axis "mAP (%)" 0 --> 26.76
+    bar [3.46, 3.94, 22.90, 24.67, 15.99, 17.72, 22.76, 18.73, 24.41, 20.68, 17.93, 22.54, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.78, 4.97, 25.49, 23.03, 15.26, 19.85, 21.87, 18.20, 24.14, 20.10, 17.61, 21.40, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.72, 3.54, 16.62, 18.71, 13.63, 13.03, 17.11, 14.50, 18.08, 14.64, 13.08, 16.51, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.39, 4.40, 21.55, 22.20, 15.94, 16.98, 22.44, 18.57, 24.65, 19.84, 17.43, 22.06, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.51, 2.53, 3.08, 3.08, 16.42, 16.73, 23.46, 22.92, 14.92, 15.03, 12.69, 12.82, 17.39, 17.46, 13.76, 13.75, 19.36, 19.35, 14.89, 14.82, 12.68, 12.64, 16.03, 15.96, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.61, 3.06, 17.25, 21.44, 14.68, 13.83, 16.25, 12.97, 17.30, 13.78, 12.05, 14.62, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.60, 3.12, 16.96, 22.02, 14.68, 13.22, 17.53, 13.92, 19.39, 14.67, 12.60, 15.85]
 ```
 
 ### By encoder — does the checkpoint carry it?
@@ -174,60 +294,108 @@ xychart-beta horizontal
 %%{init: {"themeVariables": {"quadrant1Fill": "transparent", "quadrant2Fill": "transparent", "quadrant3Fill": "transparent", "quadrant4Fill": "transparent", "quadrantExternalBorderStrokeFill": "#999999", "quadrantInternalBorderStrokeFill": "#cccccc", "quadrantPointFill": "#4e79a7"}}}%%
 quadrantChart
     title mAP vs mINP, coloured by encoder
-    x-axis "mAP 0.0251" --> "0.2467"
+    x-axis "mAP 0.0251" --> "0.2549"
     y-axis "mINP 0.0077" --> "0.1398"
     quadrant-1 " "
     quadrant-2 " "
     quadrant-3 " "
     quadrant-4 " "
-    1:::stimmvitbasepatch16clip224openai: [0.0884, 0.0829]
-    2:::stimmvitbasepatch16clip224openai: [0.1080, 0.0852]
-    3:::stimmvitgiantoptpatch16siglip256v2webli: [0.8781, 0.8227]
-    4:::stimmvithugepluspatch16dinov3lvd1689m: [0.9500, 0.8659]
-    5:::stimmvitlargepatch16dinov3lvd1689m: [0.5974, 0.4935]
-    6:::stimmvitso400mpatch14siglip224v2webli: [0.6677, 0.5906]
-    7:::storchhubNVlabsRADIOcradiov4h: [0.8724, 0.8223]
-    8:::storchhubNVlabsRADIOcradiov4h: [0.7088, 0.6813]
-    9:::storchhubNVlabsRADIOcradiov4h: [0.9392, 0.9500]
-    10:::storchhubNVlabsRADIOcradiov4so400m: [0.7879, 0.7314]
-    11:::storchhubNVlabsRADIOcradiov4so400m: [0.6762, 0.6377]
-    12:::storchhubNVlabsRADIOcradiov4so400m: [0.8632, 0.8258]
-    13:::stimmvitbasepatch16clip224openai: [0.0583, 0.0614]
-    14:::stimmvitbasepatch16clip224openai: [0.0918, 0.0759]
-    15:::stimmvitgiantoptpatch16siglip256v2webli: [0.6231, 0.5119]
-    16:::stimmvithugepluspatch16dinov3lvd1689m: [0.7080, 0.6037]
-    17:::stimmvitlargepatch16dinov3lvd1689m: [0.5017, 0.4200]
-    18:::stimmvitso400mpatch14siglip224v2webli: [0.4769, 0.3720]
-    19:::storchhubNVlabsRADIOcradiov4h: [0.6429, 0.5702]
-    20:::storchhubNVlabsRADIOcradiov4h: [0.5367, 0.4706]
-    21:::storchhubNVlabsRADIOcradiov4h: [0.6824, 0.5866]
-    22:::storchhubNVlabsRADIOcradiov4so400m: [0.5425, 0.4510]
-    23:::storchhubNVlabsRADIOcradiov4so400m: [0.4791, 0.4043]
-    24:::storchhubNVlabsRADIOcradiov4so400m: [0.6183, 0.5273]
-    25:::stimmvitbasepatch16clip224openai: [0.0500, 0.0500]
-    26:::stimmvitbasepatch16clip224openai: [0.0731, 0.0635]
-    27:::stimmvitgiantoptpatch16siglip256v2webli: [0.6149, 0.4699]
-    28:::stimmvithugepluspatch16dinov3lvd1689m: [0.9005, 0.8104]
-    29:::stimmvitlargepatch16dinov3lvd1689m: [0.5540, 0.4531]
-    30:::stimmvitso400mpatch14siglip224v2webli: [0.4633, 0.3503]
-    31:::storchhubNVlabsRADIOcradiov4h: [0.6544, 0.5461]
-    32:::storchhubNVlabsRADIOcradiov4h: [0.5069, 0.4205]
-    33:::storchhubNVlabsRADIOcradiov4h: [0.7341, 0.6353]
-    34:::storchhubNVlabsRADIOcradiov4so400m: [0.5525, 0.4477]
-    35:::storchhubNVlabsRADIOcradiov4so400m: [0.4631, 0.3719]
-    36:::storchhubNVlabsRADIOcradiov4so400m: [0.5992, 0.4854]
-    37:::stimmvitbasepatch16clip224openai: [0.0540, 0.0541]
-    38:::stimmvitbasepatch16clip224openai: [0.0724, 0.0658]
-    39:::stimmvitgiantoptpatch16siglip256v2webli: [0.6486, 0.5161]
-    40:::stimmvithugepluspatch16dinov3lvd1689m: [0.8188, 0.7042]
-    41:::stimmvitlargepatch16dinov3lvd1689m: [0.5442, 0.4395]
-    42:::stimmvitso400mpatch14siglip224v2webli: [0.5096, 0.3985]
-    43:::storchhubNVlabsRADIOcradiov4h: [0.6081, 0.4943]
-    44:::storchhubNVlabsRADIOcradiov4h: [0.4745, 0.3782]
-    45:::storchhubNVlabsRADIOcradiov4h: [0.6505, 0.5231]
-    46:::storchhubNVlabsRADIOcradiov4so400m: [0.5075, 0.3965]
-    47:::storchhubNVlabsRADIOcradiov4so400m: [0.4372, 0.3466]
-    48:::storchhubNVlabsRADIOcradiov4so400m: [0.5419, 0.4106]
+    1:::stimmvitbasepatch16clip224openai: [0.0870, 0.0831]
+    2:::stimmvitbasepatch16clip224openai: [0.1059, 0.0854]
+    3:::stimmvitgiantoptpatch16siglip256v2webli: [0.8487, 0.8227]
+    4:::stimmvithugepluspatch16dinov3lvd1689m: [0.9180, 0.8659]
+    5:::stimmvitlargepatch16dinov3lvd1689m: [0.5779, 0.4936]
+    6:::stimmvitso400mpatch14siglip224v2webli: [0.6458, 0.5907]
+    7:::storchhubNVlabsRADIOcradiov4h: [0.8432, 0.8224]
+    8:::storchhubNVlabsRADIOcradiov4h: [0.6854, 0.6814]
+    9:::storchhubNVlabsRADIOcradiov4h: [0.9076, 0.9500]
+    10:::storchhubNVlabsRADIOcradiov4so400m: [0.7617, 0.7315]
+    11:::storchhubNVlabsRADIOcradiov4so400m: [0.6539, 0.6378]
+    12:::storchhubNVlabsRADIOcradiov4so400m: [0.8343, 0.8258]
+    13:::stimmvitbasepatch16clip224openai: [0.0997, 0.0918]
+    14:::stimmvitbasepatch16clip224openai: [0.1461, 0.1249]
+    15:::stimmvitgiantoptpatch16siglip256v2webli: [0.9500, 0.9422]
+    16:::stimmvithugepluspatch16dinov3lvd1689m: [0.8535, 0.7648]
+    17:::stimmvitlargepatch16dinov3lvd1689m: [0.5491, 0.4739]
+    18:::stimmvitso400mpatch14siglip224v2webli: [0.7293, 0.6751]
+    19:::storchhubNVlabsRADIOcradiov4h: [0.8083, 0.7860]
+    20:::storchhubNVlabsRADIOcradiov4h: [0.6646, 0.6328]
+    21:::storchhubNVlabsRADIOcradiov4h: [0.8972, 0.9126]
+    22:::storchhubNVlabsRADIOcradiov4so400m: [0.7390, 0.7029]
+    23:::storchhubNVlabsRADIOcradiov4so400m: [0.6415, 0.6151]
+    24:::storchhubNVlabsRADIOcradiov4so400m: [0.7899, 0.7572]
+    25:::stimmvitbasepatch16clip224openai: [0.0580, 0.0616]
+    26:::stimmvitbasepatch16clip224openai: [0.0903, 0.0761]
+    27:::stimmvitgiantoptpatch16siglip256v2webli: [0.6027, 0.5120]
+    28:::stimmvithugepluspatch16dinov3lvd1689m: [0.6846, 0.6038]
+    29:::stimmvitlargepatch16dinov3lvd1689m: [0.4856, 0.4201]
+    30:::stimmvitso400mpatch14siglip224v2webli: [0.4618, 0.3722]
+    31:::storchhubNVlabsRADIOcradiov4h: [0.6218, 0.5703]
+    32:::storchhubNVlabsRADIOcradiov4h: [0.5194, 0.4708]
+    33:::storchhubNVlabsRADIOcradiov4h: [0.6599, 0.5867]
+    34:::storchhubNVlabsRADIOcradiov4so400m: [0.5250, 0.4511]
+    35:::storchhubNVlabsRADIOcradiov4so400m: [0.4638, 0.4044]
+    36:::storchhubNVlabsRADIOcradiov4so400m: [0.5981, 0.5274]
+    37:::stimmvitbasepatch16clip224openai: [0.0845, 0.0815]
+    38:::stimmvitbasepatch16clip224openai: [0.1237, 0.1041]
+    39:::stimmvitgiantoptpatch16siglip256v2webli: [0.7958, 0.7298]
+    40:::stimmvithugepluspatch16dinov3lvd1689m: [0.8210, 0.7294]
+    41:::stimmvitlargepatch16dinov3lvd1689m: [0.5761, 0.5015]
+    42:::stimmvitso400mpatch14siglip224v2webli: [0.6166, 0.5493]
+    43:::storchhubNVlabsRADIOcradiov4h: [0.8306, 0.8236]
+    44:::storchhubNVlabsRADIOcradiov4h: [0.6790, 0.6640]
+    45:::storchhubNVlabsRADIOcradiov4h: [0.9170, 0.9373]
+    46:::storchhubNVlabsRADIOcradiov4so400m: [0.7287, 0.6936]
+    47:::storchhubNVlabsRADIOcradiov4so400m: [0.6343, 0.6221]
+    48:::storchhubNVlabsRADIOcradiov4so400m: [0.8158, 0.7901]
+    49:::stimmvitbasepatch16clip224openai: [0.0500, 0.0502]
+    50:::stimmvitbasepatch16clip224openai: [0.0508, 0.0500]
+    51:::stimmvitbasepatch16clip224openai: [0.0723, 0.0638]
+    52:::stimmvitbasepatch16clip224openai: [0.0723, 0.0639]
+    53:::stimmvitgiantoptpatch16siglip256v2webli: [0.5949, 0.4700]
+    54:::stimmvitgiantoptpatch16siglip256v2webli: [0.6071, 0.4828]
+    55:::stimmvithugepluspatch16dinov3lvd1689m: [0.8703, 0.8105]
+    56:::stimmvithugepluspatch16dinov3lvd1689m: [0.8493, 0.7723]
+    57:::stimmvitlargepatch16dinov3lvd1689m: [0.5361, 0.4533]
+    58:::stimmvitlargepatch16dinov3lvd1689m: [0.5403, 0.4591]
+    59:::stimmvitso400mpatch14siglip224v2webli: [0.4486, 0.3504]
+    60:::stimmvitso400mpatch14siglip224v2webli: [0.4537, 0.3585]
+    61:::storchhubNVlabsRADIOcradiov4h: [0.6329, 0.5462]
+    62:::storchhubNVlabsRADIOcradiov4h: [0.6355, 0.5460]
+    63:::storchhubNVlabsRADIOcradiov4h: [0.4907, 0.4207]
+    64:::storchhubNVlabsRADIOcradiov4h: [0.4901, 0.4197]
+    65:::storchhubNVlabsRADIOcradiov4h: [0.7097, 0.6354]
+    66:::storchhubNVlabsRADIOcradiov4h: [0.7094, 0.6309]
+    67:::storchhubNVlabsRADIOcradiov4so400m: [0.5347, 0.4478]
+    68:::storchhubNVlabsRADIOcradiov4so400m: [0.5320, 0.4393]
+    69:::storchhubNVlabsRADIOcradiov4so400m: [0.4484, 0.3721]
+    70:::storchhubNVlabsRADIOcradiov4so400m: [0.4466, 0.3697]
+    71:::storchhubNVlabsRADIOcradiov4so400m: [0.5797, 0.4855]
+    72:::storchhubNVlabsRADIOcradiov4so400m: [0.5766, 0.4789]
+    73:::stimmvitbasepatch16clip224openai: [0.0538, 0.0544]
+    74:::stimmvitbasepatch16clip224openai: [0.0716, 0.0660]
+    75:::stimmvitgiantoptpatch16siglip256v2webli: [0.6273, 0.5162]
+    76:::stimmvithugepluspatch16dinov3lvd1689m: [0.7914, 0.7042]
+    77:::stimmvitlargepatch16dinov3lvd1689m: [0.5266, 0.4396]
+    78:::stimmvitso400mpatch14siglip224v2webli: [0.4932, 0.3987]
+    79:::storchhubNVlabsRADIOcradiov4h: [0.5882, 0.4945]
+    80:::storchhubNVlabsRADIOcradiov4h: [0.4594, 0.3783]
+    81:::storchhubNVlabsRADIOcradiov4h: [0.6292, 0.5232]
+    82:::storchhubNVlabsRADIOcradiov4so400m: [0.4912, 0.3967]
+    83:::storchhubNVlabsRADIOcradiov4so400m: [0.4235, 0.3468]
+    84:::storchhubNVlabsRADIOcradiov4so400m: [0.5244, 0.4108]
+    85:::stimmvitbasepatch16clip224openai: [0.0533, 0.0548]
+    86:::stimmvitbasepatch16clip224openai: [0.0738, 0.0670]
+    87:::stimmvitgiantoptpatch16siglip256v2webli: [0.6160, 0.5028]
+    88:::stimmvithugepluspatch16dinov3lvd1689m: [0.8141, 0.7236]
+    89:::stimmvitlargepatch16dinov3lvd1689m: [0.5264, 0.4405]
+    90:::stimmvitso400mpatch14siglip224v2webli: [0.4693, 0.3791]
+    91:::storchhubNVlabsRADIOcradiov4h: [0.6381, 0.5401]
+    92:::storchhubNVlabsRADIOcradiov4h: [0.4966, 0.4240]
+    93:::storchhubNVlabsRADIOcradiov4h: [0.7110, 0.6237]
+    94:::storchhubNVlabsRADIOcradiov4so400m: [0.5263, 0.4324]
+    95:::storchhubNVlabsRADIOcradiov4so400m: [0.4450, 0.3690]
+    96:::storchhubNVlabsRADIOcradiov4so400m: [0.5724, 0.4599]
     classDef stimmvitbasepatch16clip224openai color: #4e79a7
     classDef stimmvitgiantoptpatch16siglip256v2webli color: #f28e2b
     classDef stimmvithugepluspatch16dinov3lvd1689m color: #59a14f
@@ -238,18 +406,18 @@ quadrantChart
 ```
 
 ```mermaid
-%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759,#b07aa1,#9c755f,#edc948"}}, "xyChart": {"height": 1384, "width": 1215, "yAxis": {"showLabel": false}}}}%%
+%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759,#b07aa1,#9c755f,#edc948"}}, "xyChart": {"height": 1600, "width": 1320, "yAxis": {"showLabel": false}}}}%%
 xychart-beta horizontal
     title "mAP, coloured by encoder"
-    x-axis ["vit_base_patch16_clip_224.openai arcface 224x224 crop · 3.46%", "vit_base_patch16_clip_224.openai arcface 224x224 squash · 3.94%", "vit_base_patch16_clip_224.openai linear 224x224 crop · 2.72%", "vit_base_patch16_clip_224.openai linear 224x224 squash · 3.54%", "vit_base_patch16_clip_224.openai none 224x224 crop · 2.51%", "vit_base_patch16_clip_224.openai none 224x224 squash · 3.08%", "vit_base_patch16_clip_224.openai pca 224x224 crop · 2.61%", "vit_base_patch16_clip_224.openai pca 224x224 squash · 3.06%", "vit_giantopt_patch16_siglip_256.v2_webli arcface 256x256 squash · 22.90%", "vit_giantopt_patch16_siglip_256.v2_webli linear 256x256 squash · 16.62%", "vit_giantopt_patch16_siglip_256.v2_webli none 256x256 squash · 16.42%", "vit_giantopt_patch16_siglip_256.v2_webli pca 256x256 squash · 17.25%", "vit_huge_plus_patch16_dinov3.lvd1689m arcface 224x224 squash · 24.67%", "vit_huge_plus_patch16_dinov3.lvd1689m linear 224x224 squash · 18.71%", "vit_huge_plus_patch16_dinov3.lvd1689m none 224x224 squash · 23.46%", "vit_huge_plus_patch16_dinov3.lvd1689m pca 224x224 squash · 21.44%", "vit_large_patch16_dinov3.lvd1689m arcface 224x224 squash · 15.99%", "vit_large_patch16_dinov3.lvd1689m linear 224x224 squash · 13.63%", "vit_large_patch16_dinov3.lvd1689m none 224x224 squash · 14.92%", "vit_large_patch16_dinov3.lvd1689m pca 224x224 squash · 14.68%", "vit_so400m_patch14_siglip_224.v2_webli arcface 224x224 squash · 17.72%", "vit_so400m_patch14_siglip_224.v2_webli linear 224x224 squash · 13.03%", "vit_so400m_patch14_siglip_224.v2_webli none 224x224 squash · 12.69%", "vit_so400m_patch14_siglip_224.v2_webli pca 224x224 squash · 13.83%", "c-radio_v4-h arcface 224x224 squash · 22.76%", "c-radio_v4-h arcface 256x128 squash · 18.73%", "c-radio_v4-h arcface native squash · 24.41%", "c-radio_v4-h linear 224x224 squash · 17.11%", "c-radio_v4-h linear 256x128 squash · 14.50%", "c-radio_v4-h linear native squash · 18.08%", "c-radio_v4-h none 224x224 squash · 17.39%", "c-radio_v4-h none 256x128 squash · 13.76%", "c-radio_v4-h none native squash · 19.36%", "c-radio_v4-h pca 224x224 squash · 16.25%", "c-radio_v4-h pca 256x128 squash · 12.97%", "c-radio_v4-h pca native squash · 17.30%", "c-radio_v4-so400m arcface 224x224 squash · 20.68%", "c-radio_v4-so400m arcface 256x128 squash · 17.93%", "c-radio_v4-so400m arcface native squash · 22.54%", "c-radio_v4-so400m linear 224x224 squash · 14.64%", "c-radio_v4-so400m linear 256x128 squash · 13.08%", "c-radio_v4-so400m linear native squash · 16.51%", "c-radio_v4-so400m none 224x224 squash · 14.89%", "c-radio_v4-so400m none 256x128 squash · 12.68%", "c-radio_v4-so400m none native squash · 16.03%", "c-radio_v4-so400m pca 224x224 squash · 13.78%", "c-radio_v4-so400m pca 256x128 squash · 12.05%", "c-radio_v4-so400m pca native squash · 14.62%"]
-    y-axis "mAP (%)" 0 --> 25.91
-    bar [3.46, 3.94, 2.72, 3.54, 2.51, 3.08, 2.61, 3.06, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 16.62, 16.42, 17.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.67, 18.71, 23.46, 21.44, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.99, 13.63, 14.92, 14.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.72, 13.03, 12.69, 13.83, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.76, 18.73, 24.41, 17.11, 14.50, 18.08, 17.39, 13.76, 19.36, 16.25, 12.97, 17.30, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 20.68, 17.93, 22.54, 14.64, 13.08, 16.51, 14.89, 12.68, 16.03, 13.78, 12.05, 14.62]
+    x-axis ["vit_base_patch16_clip_224.openai arcface 224x224 crop · 3.46%", "vit_base_patch16_clip_224.openai arcface 224x224 squash · 3.94%", "vit_base_patch16_clip_224.openai arcface-msmt17 224x224 crop · 3.78%", "vit_base_patch16_clip_224.openai arcface-msmt17 224x224 squash · 4.97%", "vit_base_patch16_clip_224.openai linear 224x224 crop · 2.72%", "vit_base_patch16_clip_224.openai linear 224x224 squash · 3.54%", "vit_base_patch16_clip_224.openai linear-msmt17 224x224 crop · 3.39%", "vit_base_patch16_clip_224.openai linear-msmt17 224x224 squash · 4.40%", "vit_base_patch16_clip_224.openai none 224x224 crop · 2.51%", "vit_base_patch16_clip_224.openai none 224x224 crop · 2.53%", "vit_base_patch16_clip_224.openai none 224x224 squash · 3.08%", "vit_base_patch16_clip_224.openai none 224x224 squash · 3.08%", "vit_base_patch16_clip_224.openai pca 224x224 crop · 2.61%", "vit_base_patch16_clip_224.openai pca 224x224 squash · 3.06%", "vit_base_patch16_clip_224.openai pca-msmt17 224x224 crop · 2.60%", "vit_base_patch16_clip_224.openai pca-msmt17 224x224 squash · 3.12%", "vit_giantopt_patch16_siglip_256.v2_webli arcface 256x256 squash · 22.90%", "vit_giantopt_patch16_siglip_256.v2_webli arcface-msmt17 256x256 squash · 25.49%", "vit_giantopt_patch16_siglip_256.v2_webli linear 256x256 squash · 16.62%", "vit_giantopt_patch16_siglip_256.v2_webli linear-msmt17 256x256 squash · 21.55%", "vit_giantopt_patch16_siglip_256.v2_webli none 256x256 squash · 16.42%", "vit_giantopt_patch16_siglip_256.v2_webli none 256x256 squash · 16.73%", "vit_giantopt_patch16_siglip_256.v2_webli pca 256x256 squash · 17.25%", "vit_giantopt_patch16_siglip_256.v2_webli pca-msmt17 256x256 squash · 16.96%", "vit_huge_plus_patch16_dinov3.lvd1689m arcface 224x224 squash · 24.67%", "vit_huge_plus_patch16_dinov3.lvd1689m arcface-msmt17 224x224 squash · 23.03%", "vit_huge_plus_patch16_dinov3.lvd1689m linear 224x224 squash · 18.71%", "vit_huge_plus_patch16_dinov3.lvd1689m linear-msmt17 224x224 squash · 22.20%", "vit_huge_plus_patch16_dinov3.lvd1689m none 224x224 squash · 23.46%", "vit_huge_plus_patch16_dinov3.lvd1689m none 224x224 squash · 22.92%", "vit_huge_plus_patch16_dinov3.lvd1689m pca 224x224 squash · 21.44%", "vit_huge_plus_patch16_dinov3.lvd1689m pca-msmt17 224x224 squash · 22.02%", "vit_large_patch16_dinov3.lvd1689m arcface 224x224 squash · 15.99%", "vit_large_patch16_dinov3.lvd1689m arcface-msmt17 224x224 squash · 15.26%", "vit_large_patch16_dinov3.lvd1689m linear 224x224 squash · 13.63%", "vit_large_patch16_dinov3.lvd1689m linear-msmt17 224x224 squash · 15.94%", "vit_large_patch16_dinov3.lvd1689m none 224x224 squash · 14.92%", "vit_large_patch16_dinov3.lvd1689m none 224x224 squash · 15.03%", "vit_large_patch16_dinov3.lvd1689m pca 224x224 squash · 14.68%", "vit_large_patch16_dinov3.lvd1689m pca-msmt17 224x224 squash · 14.68%", "vit_so400m_patch14_siglip_224.v2_webli arcface 224x224 squash · 17.72%", "vit_so400m_patch14_siglip_224.v2_webli arcface-msmt17 224x224 squash · 19.85%", "vit_so400m_patch14_siglip_224.v2_webli linear 224x224 squash · 13.03%", "vit_so400m_patch14_siglip_224.v2_webli linear-msmt17 224x224 squash · 16.98%", "vit_so400m_patch14_siglip_224.v2_webli none 224x224 squash · 12.69%", "vit_so400m_patch14_siglip_224.v2_webli none 224x224 squash · 12.82%", "vit_so400m_patch14_siglip_224.v2_webli pca 224x224 squash · 13.83%", "vit_so400m_patch14_siglip_224.v2_webli pca-msmt17 224x224 squash · 13.22%", "c-radio_v4-h arcface 224x224 squash · 22.76%", "c-radio_v4-h arcface 256x128 squash · 18.73%", "c-radio_v4-h arcface native squash · 24.41%", "c-radio_v4-h arcface-msmt17 224x224 squash · 21.87%", "c-radio_v4-h arcface-msmt17 256x128 squash · 18.20%", "c-radio_v4-h arcface-msmt17 native squash · 24.14%", "c-radio_v4-h linear 224x224 squash · 17.11%", "c-radio_v4-h linear 256x128 squash · 14.50%", "c-radio_v4-h linear native squash · 18.08%", "c-radio_v4-h linear-msmt17 224x224 squash · 22.44%", "c-radio_v4-h linear-msmt17 256x128 squash · 18.57%", "c-radio_v4-h linear-msmt17 native squash · 24.65%", "c-radio_v4-h none 224x224 squash · 17.39%", "c-radio_v4-h none 224x224 squash · 17.46%", "c-radio_v4-h none 256x128 squash · 13.76%", "c-radio_v4-h none 256x128 squash · 13.75%", "c-radio_v4-h none native squash · 19.36%", "c-radio_v4-h none native squash · 19.35%", "c-radio_v4-h pca 224x224 squash · 16.25%", "c-radio_v4-h pca 256x128 squash · 12.97%", "c-radio_v4-h pca native squash · 17.30%", "c-radio_v4-h pca-msmt17 224x224 squash · 17.53%", "c-radio_v4-h pca-msmt17 256x128 squash · 13.92%", "c-radio_v4-h pca-msmt17 native squash · 19.39%", "c-radio_v4-so400m arcface 224x224 squash · 20.68%", "c-radio_v4-so400m arcface 256x128 squash · 17.93%", "c-radio_v4-so400m arcface native squash · 22.54%", "c-radio_v4-so400m arcface-msmt17 224x224 squash · 20.10%", "c-radio_v4-so400m arcface-msmt17 256x128 squash · 17.61%", "c-radio_v4-so400m arcface-msmt17 native squash · 21.40%", "c-radio_v4-so400m linear 224x224 squash · 14.64%", "c-radio_v4-so400m linear 256x128 squash · 13.08%", "c-radio_v4-so400m linear native squash · 16.51%", "c-radio_v4-so400m linear-msmt17 224x224 squash · 19.84%", "c-radio_v4-so400m linear-msmt17 256x128 squash · 17.43%", "c-radio_v4-so400m linear-msmt17 native squash · 22.06%", "c-radio_v4-so400m none 224x224 squash · 14.89%", "c-radio_v4-so400m none 224x224 squash · 14.82%", "c-radio_v4-so400m none 256x128 squash · 12.68%", "c-radio_v4-so400m none 256x128 squash · 12.64%", "c-radio_v4-so400m none native squash · 16.03%", "c-radio_v4-so400m none native squash · 15.96%", "c-radio_v4-so400m pca 224x224 squash · 13.78%", "c-radio_v4-so400m pca 256x128 squash · 12.05%", "c-radio_v4-so400m pca native squash · 14.62%", "c-radio_v4-so400m pca-msmt17 224x224 squash · 14.67%", "c-radio_v4-so400m pca-msmt17 256x128 squash · 12.60%", "c-radio_v4-so400m pca-msmt17 native squash · 15.85%"]
+    y-axis "mAP (%)" 0 --> 26.76
+    bar [3.46, 3.94, 3.78, 4.97, 2.72, 3.54, 3.39, 4.40, 2.51, 2.53, 3.08, 3.08, 2.61, 3.06, 2.60, 3.12, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 25.49, 16.62, 21.55, 16.42, 16.73, 17.25, 16.96, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.67, 23.03, 18.71, 22.20, 23.46, 22.92, 21.44, 22.02, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.99, 15.26, 13.63, 15.94, 14.92, 15.03, 14.68, 14.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.72, 19.85, 13.03, 16.98, 12.69, 12.82, 13.83, 13.22, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.76, 18.73, 24.41, 21.87, 18.20, 24.14, 17.11, 14.50, 18.08, 22.44, 18.57, 24.65, 17.39, 17.46, 13.76, 13.75, 19.36, 19.35, 16.25, 12.97, 17.30, 17.53, 13.92, 19.39, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 20.68, 17.93, 22.54, 20.10, 17.61, 21.40, 14.64, 13.08, 16.51, 19.84, 17.43, 22.06, 14.89, 14.82, 12.68, 12.64, 16.03, 15.96, 13.78, 12.05, 14.62, 14.67, 12.60, 15.85]
 ```
 
 ### By resolution — does the input size carry it?
@@ -260,60 +428,108 @@ xychart-beta horizontal
 %%{init: {"themeVariables": {"quadrant1Fill": "transparent", "quadrant2Fill": "transparent", "quadrant3Fill": "transparent", "quadrant4Fill": "transparent", "quadrantExternalBorderStrokeFill": "#999999", "quadrantInternalBorderStrokeFill": "#cccccc", "quadrantPointFill": "#4e79a7"}}}%%
 quadrantChart
     title mAP vs mINP, coloured by resolution
-    x-axis "mAP 0.0251" --> "0.2467"
+    x-axis "mAP 0.0251" --> "0.2549"
     y-axis "mINP 0.0077" --> "0.1398"
     quadrant-1 " "
     quadrant-2 " "
     quadrant-3 " "
     quadrant-4 " "
-    1:::s224x224: [0.0884, 0.0829]
-    2:::s224x224: [0.1080, 0.0852]
-    3:::s256x256: [0.8781, 0.8227]
-    4:::s224x224: [0.9500, 0.8659]
-    5:::s224x224: [0.5974, 0.4935]
-    6:::s224x224: [0.6677, 0.5906]
-    7:::s224x224: [0.8724, 0.8223]
-    8:::s256x128: [0.7088, 0.6813]
-    9:::snative: [0.9392, 0.9500]
-    10:::s224x224: [0.7879, 0.7314]
-    11:::s256x128: [0.6762, 0.6377]
-    12:::snative: [0.8632, 0.8258]
-    13:::s224x224: [0.0583, 0.0614]
-    14:::s224x224: [0.0918, 0.0759]
-    15:::s256x256: [0.6231, 0.5119]
-    16:::s224x224: [0.7080, 0.6037]
-    17:::s224x224: [0.5017, 0.4200]
-    18:::s224x224: [0.4769, 0.3720]
-    19:::s224x224: [0.6429, 0.5702]
-    20:::s256x128: [0.5367, 0.4706]
-    21:::snative: [0.6824, 0.5866]
-    22:::s224x224: [0.5425, 0.4510]
-    23:::s256x128: [0.4791, 0.4043]
-    24:::snative: [0.6183, 0.5273]
-    25:::s224x224: [0.0500, 0.0500]
-    26:::s224x224: [0.0731, 0.0635]
-    27:::s256x256: [0.6149, 0.4699]
-    28:::s224x224: [0.9005, 0.8104]
-    29:::s224x224: [0.5540, 0.4531]
-    30:::s224x224: [0.4633, 0.3503]
-    31:::s224x224: [0.6544, 0.5461]
-    32:::s256x128: [0.5069, 0.4205]
-    33:::snative: [0.7341, 0.6353]
-    34:::s224x224: [0.5525, 0.4477]
-    35:::s256x128: [0.4631, 0.3719]
-    36:::snative: [0.5992, 0.4854]
-    37:::s224x224: [0.0540, 0.0541]
-    38:::s224x224: [0.0724, 0.0658]
-    39:::s256x256: [0.6486, 0.5161]
-    40:::s224x224: [0.8188, 0.7042]
-    41:::s224x224: [0.5442, 0.4395]
-    42:::s224x224: [0.5096, 0.3985]
-    43:::s224x224: [0.6081, 0.4943]
-    44:::s256x128: [0.4745, 0.3782]
-    45:::snative: [0.6505, 0.5231]
-    46:::s224x224: [0.5075, 0.3965]
-    47:::s256x128: [0.4372, 0.3466]
-    48:::snative: [0.5419, 0.4106]
+    1:::s224x224: [0.0870, 0.0831]
+    2:::s224x224: [0.1059, 0.0854]
+    3:::s256x256: [0.8487, 0.8227]
+    4:::s224x224: [0.9180, 0.8659]
+    5:::s224x224: [0.5779, 0.4936]
+    6:::s224x224: [0.6458, 0.5907]
+    7:::s224x224: [0.8432, 0.8224]
+    8:::s256x128: [0.6854, 0.6814]
+    9:::snative: [0.9076, 0.9500]
+    10:::s224x224: [0.7617, 0.7315]
+    11:::s256x128: [0.6539, 0.6378]
+    12:::snative: [0.8343, 0.8258]
+    13:::s224x224: [0.0997, 0.0918]
+    14:::s224x224: [0.1461, 0.1249]
+    15:::s256x256: [0.9500, 0.9422]
+    16:::s224x224: [0.8535, 0.7648]
+    17:::s224x224: [0.5491, 0.4739]
+    18:::s224x224: [0.7293, 0.6751]
+    19:::s224x224: [0.8083, 0.7860]
+    20:::s256x128: [0.6646, 0.6328]
+    21:::snative: [0.8972, 0.9126]
+    22:::s224x224: [0.7390, 0.7029]
+    23:::s256x128: [0.6415, 0.6151]
+    24:::snative: [0.7899, 0.7572]
+    25:::s224x224: [0.0580, 0.0616]
+    26:::s224x224: [0.0903, 0.0761]
+    27:::s256x256: [0.6027, 0.5120]
+    28:::s224x224: [0.6846, 0.6038]
+    29:::s224x224: [0.4856, 0.4201]
+    30:::s224x224: [0.4618, 0.3722]
+    31:::s224x224: [0.6218, 0.5703]
+    32:::s256x128: [0.5194, 0.4708]
+    33:::snative: [0.6599, 0.5867]
+    34:::s224x224: [0.5250, 0.4511]
+    35:::s256x128: [0.4638, 0.4044]
+    36:::snative: [0.5981, 0.5274]
+    37:::s224x224: [0.0845, 0.0815]
+    38:::s224x224: [0.1237, 0.1041]
+    39:::s256x256: [0.7958, 0.7298]
+    40:::s224x224: [0.8210, 0.7294]
+    41:::s224x224: [0.5761, 0.5015]
+    42:::s224x224: [0.6166, 0.5493]
+    43:::s224x224: [0.8306, 0.8236]
+    44:::s256x128: [0.6790, 0.6640]
+    45:::snative: [0.9170, 0.9373]
+    46:::s224x224: [0.7287, 0.6936]
+    47:::s256x128: [0.6343, 0.6221]
+    48:::snative: [0.8158, 0.7901]
+    49:::s224x224: [0.0500, 0.0502]
+    50:::s224x224: [0.0508, 0.0500]
+    51:::s224x224: [0.0723, 0.0638]
+    52:::s224x224: [0.0723, 0.0639]
+    53:::s256x256: [0.5949, 0.4700]
+    54:::s256x256: [0.6071, 0.4828]
+    55:::s224x224: [0.8703, 0.8105]
+    56:::s224x224: [0.8493, 0.7723]
+    57:::s224x224: [0.5361, 0.4533]
+    58:::s224x224: [0.5403, 0.4591]
+    59:::s224x224: [0.4486, 0.3504]
+    60:::s224x224: [0.4537, 0.3585]
+    61:::s224x224: [0.6329, 0.5462]
+    62:::s224x224: [0.6355, 0.5460]
+    63:::s256x128: [0.4907, 0.4207]
+    64:::s256x128: [0.4901, 0.4197]
+    65:::snative: [0.7097, 0.6354]
+    66:::snative: [0.7094, 0.6309]
+    67:::s224x224: [0.5347, 0.4478]
+    68:::s224x224: [0.5320, 0.4393]
+    69:::s256x128: [0.4484, 0.3721]
+    70:::s256x128: [0.4466, 0.3697]
+    71:::snative: [0.5797, 0.4855]
+    72:::snative: [0.5766, 0.4789]
+    73:::s224x224: [0.0538, 0.0544]
+    74:::s224x224: [0.0716, 0.0660]
+    75:::s256x256: [0.6273, 0.5162]
+    76:::s224x224: [0.7914, 0.7042]
+    77:::s224x224: [0.5266, 0.4396]
+    78:::s224x224: [0.4932, 0.3987]
+    79:::s224x224: [0.5882, 0.4945]
+    80:::s256x128: [0.4594, 0.3783]
+    81:::snative: [0.6292, 0.5232]
+    82:::s224x224: [0.4912, 0.3967]
+    83:::s256x128: [0.4235, 0.3468]
+    84:::snative: [0.5244, 0.4108]
+    85:::s224x224: [0.0533, 0.0548]
+    86:::s224x224: [0.0738, 0.0670]
+    87:::s256x256: [0.6160, 0.5028]
+    88:::s224x224: [0.8141, 0.7236]
+    89:::s224x224: [0.5264, 0.4405]
+    90:::s224x224: [0.4693, 0.3791]
+    91:::s224x224: [0.6381, 0.5401]
+    92:::s256x128: [0.4966, 0.4240]
+    93:::snative: [0.7110, 0.6237]
+    94:::s224x224: [0.5263, 0.4324]
+    95:::s256x128: [0.4450, 0.3690]
+    96:::snative: [0.5724, 0.4599]
     classDef s224x224 color: #4e79a7
     classDef s256x128 color: #f28e2b
     classDef s256x256 color: #59a14f
@@ -321,15 +537,15 @@ quadrantChart
 ```
 
 ```mermaid
-%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759"}}, "xyChart": {"height": 1384, "width": 1215, "yAxis": {"showLabel": false}}}}%%
+%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759"}}, "xyChart": {"height": 1600, "width": 1320, "yAxis": {"showLabel": false}}}}%%
 xychart-beta horizontal
     title "mAP, coloured by resolution"
-    x-axis ["224x224 vit_base_patch16_clip_224.openai arcface crop · 3.46%", "224x224 vit_base_patch16_clip_224.openai arcface squash · 3.94%", "224x224 vit_base_patch16_clip_224.openai linear crop · 2.72%", "224x224 vit_base_patch16_clip_224.openai linear squash · 3.54%", "224x224 vit_base_patch16_clip_224.openai none crop · 2.51%", "224x224 vit_base_patch16_clip_224.openai none squash · 3.08%", "224x224 vit_base_patch16_clip_224.openai pca crop · 2.61%", "224x224 vit_base_patch16_clip_224.openai pca squash · 3.06%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m arcface squash · 24.67%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m linear squash · 18.71%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m none squash · 23.46%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m pca squash · 21.44%", "224x224 vit_large_patch16_dinov3.lvd1689m arcface squash · 15.99%", "224x224 vit_large_patch16_dinov3.lvd1689m linear squash · 13.63%", "224x224 vit_large_patch16_dinov3.lvd1689m none squash · 14.92%", "224x224 vit_large_patch16_dinov3.lvd1689m pca squash · 14.68%", "224x224 vit_so400m_patch14_siglip_224.v2_webli arcface squash · 17.72%", "224x224 vit_so400m_patch14_siglip_224.v2_webli linear squash · 13.03%", "224x224 vit_so400m_patch14_siglip_224.v2_webli none squash · 12.69%", "224x224 vit_so400m_patch14_siglip_224.v2_webli pca squash · 13.83%", "224x224 c-radio_v4-h arcface squash · 22.76%", "224x224 c-radio_v4-h linear squash · 17.11%", "224x224 c-radio_v4-h none squash · 17.39%", "224x224 c-radio_v4-h pca squash · 16.25%", "224x224 c-radio_v4-so400m arcface squash · 20.68%", "224x224 c-radio_v4-so400m linear squash · 14.64%", "224x224 c-radio_v4-so400m none squash · 14.89%", "224x224 c-radio_v4-so400m pca squash · 13.78%", "256x128 c-radio_v4-h arcface squash · 18.73%", "256x128 c-radio_v4-h linear squash · 14.50%", "256x128 c-radio_v4-h none squash · 13.76%", "256x128 c-radio_v4-h pca squash · 12.97%", "256x128 c-radio_v4-so400m arcface squash · 17.93%", "256x128 c-radio_v4-so400m linear squash · 13.08%", "256x128 c-radio_v4-so400m none squash · 12.68%", "256x128 c-radio_v4-so400m pca squash · 12.05%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli arcface squash · 22.90%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli linear squash · 16.62%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli none squash · 16.42%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli pca squash · 17.25%", "native c-radio_v4-h arcface squash · 24.41%", "native c-radio_v4-h linear squash · 18.08%", "native c-radio_v4-h none squash · 19.36%", "native c-radio_v4-h pca squash · 17.30%", "native c-radio_v4-so400m arcface squash · 22.54%", "native c-radio_v4-so400m linear squash · 16.51%", "native c-radio_v4-so400m none squash · 16.03%", "native c-radio_v4-so400m pca squash · 14.62%"]
-    y-axis "mAP (%)" 0 --> 25.91
-    bar [3.46, 3.94, 2.72, 3.54, 2.51, 3.08, 2.61, 3.06, 24.67, 18.71, 23.46, 21.44, 15.99, 13.63, 14.92, 14.68, 17.72, 13.03, 12.69, 13.83, 22.76, 17.11, 17.39, 16.25, 20.68, 14.64, 14.89, 13.78, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.73, 14.50, 13.76, 12.97, 17.93, 13.08, 12.68, 12.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 16.62, 16.42, 17.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.41, 18.08, 19.36, 17.30, 22.54, 16.51, 16.03, 14.62]
+    x-axis ["224x224 vit_base_patch16_clip_224.openai arcface crop · 3.46%", "224x224 vit_base_patch16_clip_224.openai arcface squash · 3.94%", "224x224 vit_base_patch16_clip_224.openai arcface-msmt17 crop · 3.78%", "224x224 vit_base_patch16_clip_224.openai arcface-msmt17 squash · 4.97%", "224x224 vit_base_patch16_clip_224.openai linear crop · 2.72%", "224x224 vit_base_patch16_clip_224.openai linear squash · 3.54%", "224x224 vit_base_patch16_clip_224.openai linear-msmt17 crop · 3.39%", "224x224 vit_base_patch16_clip_224.openai linear-msmt17 squash · 4.40%", "224x224 vit_base_patch16_clip_224.openai none crop · 2.51%", "224x224 vit_base_patch16_clip_224.openai none crop · 2.53%", "224x224 vit_base_patch16_clip_224.openai none squash · 3.08%", "224x224 vit_base_patch16_clip_224.openai none squash · 3.08%", "224x224 vit_base_patch16_clip_224.openai pca crop · 2.61%", "224x224 vit_base_patch16_clip_224.openai pca squash · 3.06%", "224x224 vit_base_patch16_clip_224.openai pca-msmt17 crop · 2.60%", "224x224 vit_base_patch16_clip_224.openai pca-msmt17 squash · 3.12%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m arcface squash · 24.67%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m arcface-msmt17 squash · 23.03%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m linear squash · 18.71%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m linear-msmt17 squash · 22.20%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m none squash · 23.46%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m none squash · 22.92%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m pca squash · 21.44%", "224x224 vit_huge_plus_patch16_dinov3.lvd1689m pca-msmt17 squash · 22.02%", "224x224 vit_large_patch16_dinov3.lvd1689m arcface squash · 15.99%", "224x224 vit_large_patch16_dinov3.lvd1689m arcface-msmt17 squash · 15.26%", "224x224 vit_large_patch16_dinov3.lvd1689m linear squash · 13.63%", "224x224 vit_large_patch16_dinov3.lvd1689m linear-msmt17 squash · 15.94%", "224x224 vit_large_patch16_dinov3.lvd1689m none squash · 14.92%", "224x224 vit_large_patch16_dinov3.lvd1689m none squash · 15.03%", "224x224 vit_large_patch16_dinov3.lvd1689m pca squash · 14.68%", "224x224 vit_large_patch16_dinov3.lvd1689m pca-msmt17 squash · 14.68%", "224x224 vit_so400m_patch14_siglip_224.v2_webli arcface squash · 17.72%", "224x224 vit_so400m_patch14_siglip_224.v2_webli arcface-msmt17 squash · 19.85%", "224x224 vit_so400m_patch14_siglip_224.v2_webli linear squash · 13.03%", "224x224 vit_so400m_patch14_siglip_224.v2_webli linear-msmt17 squash · 16.98%", "224x224 vit_so400m_patch14_siglip_224.v2_webli none squash · 12.69%", "224x224 vit_so400m_patch14_siglip_224.v2_webli none squash · 12.82%", "224x224 vit_so400m_patch14_siglip_224.v2_webli pca squash · 13.83%", "224x224 vit_so400m_patch14_siglip_224.v2_webli pca-msmt17 squash · 13.22%", "224x224 c-radio_v4-h arcface squash · 22.76%", "224x224 c-radio_v4-h arcface-msmt17 squash · 21.87%", "224x224 c-radio_v4-h linear squash · 17.11%", "224x224 c-radio_v4-h linear-msmt17 squash · 22.44%", "224x224 c-radio_v4-h none squash · 17.39%", "224x224 c-radio_v4-h none squash · 17.46%", "224x224 c-radio_v4-h pca squash · 16.25%", "224x224 c-radio_v4-h pca-msmt17 squash · 17.53%", "224x224 c-radio_v4-so400m arcface squash · 20.68%", "224x224 c-radio_v4-so400m arcface-msmt17 squash · 20.10%", "224x224 c-radio_v4-so400m linear squash · 14.64%", "224x224 c-radio_v4-so400m linear-msmt17 squash · 19.84%", "224x224 c-radio_v4-so400m none squash · 14.89%", "224x224 c-radio_v4-so400m none squash · 14.82%", "224x224 c-radio_v4-so400m pca squash · 13.78%", "224x224 c-radio_v4-so400m pca-msmt17 squash · 14.67%", "256x128 c-radio_v4-h arcface squash · 18.73%", "256x128 c-radio_v4-h arcface-msmt17 squash · 18.20%", "256x128 c-radio_v4-h linear squash · 14.50%", "256x128 c-radio_v4-h linear-msmt17 squash · 18.57%", "256x128 c-radio_v4-h none squash · 13.76%", "256x128 c-radio_v4-h none squash · 13.75%", "256x128 c-radio_v4-h pca squash · 12.97%", "256x128 c-radio_v4-h pca-msmt17 squash · 13.92%", "256x128 c-radio_v4-so400m arcface squash · 17.93%", "256x128 c-radio_v4-so400m arcface-msmt17 squash · 17.61%", "256x128 c-radio_v4-so400m linear squash · 13.08%", "256x128 c-radio_v4-so400m linear-msmt17 squash · 17.43%", "256x128 c-radio_v4-so400m none squash · 12.68%", "256x128 c-radio_v4-so400m none squash · 12.64%", "256x128 c-radio_v4-so400m pca squash · 12.05%", "256x128 c-radio_v4-so400m pca-msmt17 squash · 12.60%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli arcface squash · 22.90%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli arcface-msmt17 squash · 25.49%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli linear squash · 16.62%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli linear-msmt17 squash · 21.55%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli none squash · 16.42%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli none squash · 16.73%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli pca squash · 17.25%", "256x256 vit_giantopt_patch16_siglip_256.v2_webli pca-msmt17 squash · 16.96%", "native c-radio_v4-h arcface squash · 24.41%", "native c-radio_v4-h arcface-msmt17 squash · 24.14%", "native c-radio_v4-h linear squash · 18.08%", "native c-radio_v4-h linear-msmt17 squash · 24.65%", "native c-radio_v4-h none squash · 19.36%", "native c-radio_v4-h none squash · 19.35%", "native c-radio_v4-h pca squash · 17.30%", "native c-radio_v4-h pca-msmt17 squash · 19.39%", "native c-radio_v4-so400m arcface squash · 22.54%", "native c-radio_v4-so400m arcface-msmt17 squash · 21.40%", "native c-radio_v4-so400m linear squash · 16.51%", "native c-radio_v4-so400m linear-msmt17 squash · 22.06%", "native c-radio_v4-so400m none squash · 16.03%", "native c-radio_v4-so400m none squash · 15.96%", "native c-radio_v4-so400m pca squash · 14.62%", "native c-radio_v4-so400m pca-msmt17 squash · 15.85%"]
+    y-axis "mAP (%)" 0 --> 26.76
+    bar [3.46, 3.94, 3.78, 4.97, 2.72, 3.54, 3.39, 4.40, 2.51, 2.53, 3.08, 3.08, 2.61, 3.06, 2.60, 3.12, 24.67, 23.03, 18.71, 22.20, 23.46, 22.92, 21.44, 22.02, 15.99, 15.26, 13.63, 15.94, 14.92, 15.03, 14.68, 14.68, 17.72, 19.85, 13.03, 16.98, 12.69, 12.82, 13.83, 13.22, 22.76, 21.87, 17.11, 22.44, 17.39, 17.46, 16.25, 17.53, 20.68, 20.10, 14.64, 19.84, 14.89, 14.82, 13.78, 14.67, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.73, 18.20, 14.50, 18.57, 13.76, 13.75, 12.97, 13.92, 17.93, 17.61, 13.08, 17.43, 12.68, 12.64, 12.05, 12.60, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 25.49, 16.62, 21.55, 16.42, 16.73, 17.25, 16.96, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.41, 24.14, 18.08, 24.65, 19.36, 19.35, 17.30, 19.39, 22.54, 21.40, 16.51, 22.06, 16.03, 15.96, 14.62, 15.85]
 ```
 
 ### Resolution, within one encoder and head
@@ -337,29 +553,32 @@ xychart-beta horizontal
 *Colour — resolution:* 🟦 224x224 · 🟧 256x128 · 🟩 256x256 · 🟥 native
 
 ```mermaid
-%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759"}}, "xyChart": {"height": 1384, "width": 1215, "yAxis": {"showLabel": false}}}}%%
+%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759"}}, "xyChart": {"height": 1600, "width": 1320, "yAxis": {"showLabel": false}}}}%%
 xychart-beta horizontal
     title "mAP, coloured by resolution"
-    x-axis ["vit_base_patch16_clip_224.openai arcface 224x224 crop · 3.46%", "vit_base_patch16_clip_224.openai arcface 224x224 squash · 3.94%", "vit_base_patch16_clip_224.openai linear 224x224 crop · 2.72%", "vit_base_patch16_clip_224.openai linear 224x224 squash · 3.54%", "vit_base_patch16_clip_224.openai none 224x224 crop · 2.51%", "vit_base_patch16_clip_224.openai none 224x224 squash · 3.08%", "vit_base_patch16_clip_224.openai pca 224x224 crop · 2.61%", "vit_base_patch16_clip_224.openai pca 224x224 squash · 3.06%", "vit_giantopt_patch16_siglip_256.v2_webli arcface 256x256 squash · 22.90%", "vit_giantopt_patch16_siglip_256.v2_webli linear 256x256 squash · 16.62%", "vit_giantopt_patch16_siglip_256.v2_webli none 256x256 squash · 16.42%", "vit_giantopt_patch16_siglip_256.v2_webli pca 256x256 squash · 17.25%", "vit_huge_plus_patch16_dinov3.lvd1689m arcface 224x224 squash · 24.67%", "vit_huge_plus_patch16_dinov3.lvd1689m linear 224x224 squash · 18.71%", "vit_huge_plus_patch16_dinov3.lvd1689m none 224x224 squash · 23.46%", "vit_huge_plus_patch16_dinov3.lvd1689m pca 224x224 squash · 21.44%", "vit_large_patch16_dinov3.lvd1689m arcface 224x224 squash · 15.99%", "vit_large_patch16_dinov3.lvd1689m linear 224x224 squash · 13.63%", "vit_large_patch16_dinov3.lvd1689m none 224x224 squash · 14.92%", "vit_large_patch16_dinov3.lvd1689m pca 224x224 squash · 14.68%", "vit_so400m_patch14_siglip_224.v2_webli arcface 224x224 squash · 17.72%", "vit_so400m_patch14_siglip_224.v2_webli linear 224x224 squash · 13.03%", "vit_so400m_patch14_siglip_224.v2_webli none 224x224 squash · 12.69%", "vit_so400m_patch14_siglip_224.v2_webli pca 224x224 squash · 13.83%", "c-radio_v4-h arcface 224x224 squash · 22.76%", "c-radio_v4-h arcface 256x128 squash · 18.73%", "c-radio_v4-h arcface native squash · 24.41%", "c-radio_v4-h linear 224x224 squash · 17.11%", "c-radio_v4-h linear 256x128 squash · 14.50%", "c-radio_v4-h linear native squash · 18.08%", "c-radio_v4-h none 224x224 squash · 17.39%", "c-radio_v4-h none 256x128 squash · 13.76%", "c-radio_v4-h none native squash · 19.36%", "c-radio_v4-h pca 224x224 squash · 16.25%", "c-radio_v4-h pca 256x128 squash · 12.97%", "c-radio_v4-h pca native squash · 17.30%", "c-radio_v4-so400m arcface 224x224 squash · 20.68%", "c-radio_v4-so400m arcface 256x128 squash · 17.93%", "c-radio_v4-so400m arcface native squash · 22.54%", "c-radio_v4-so400m linear 224x224 squash · 14.64%", "c-radio_v4-so400m linear 256x128 squash · 13.08%", "c-radio_v4-so400m linear native squash · 16.51%", "c-radio_v4-so400m none 224x224 squash · 14.89%", "c-radio_v4-so400m none 256x128 squash · 12.68%", "c-radio_v4-so400m none native squash · 16.03%", "c-radio_v4-so400m pca 224x224 squash · 13.78%", "c-radio_v4-so400m pca 256x128 squash · 12.05%", "c-radio_v4-so400m pca native squash · 14.62%"]
-    y-axis "mAP (%)" 0 --> 25.91
-    bar [3.46, 3.94, 2.72, 3.54, 2.51, 3.08, 2.61, 3.06, 0.00, 0.00, 0.00, 0.00, 24.67, 18.71, 23.46, 21.44, 15.99, 13.63, 14.92, 14.68, 17.72, 13.03, 12.69, 13.83, 22.76, 0.00, 0.00, 17.11, 0.00, 0.00, 17.39, 0.00, 0.00, 16.25, 0.00, 0.00, 20.68, 0.00, 0.00, 14.64, 0.00, 0.00, 14.89, 0.00, 0.00, 13.78, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.73, 0.00, 0.00, 14.50, 0.00, 0.00, 13.76, 0.00, 0.00, 12.97, 0.00, 0.00, 17.93, 0.00, 0.00, 13.08, 0.00, 0.00, 12.68, 0.00, 0.00, 12.05, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 16.62, 16.42, 17.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.41, 0.00, 0.00, 18.08, 0.00, 0.00, 19.36, 0.00, 0.00, 17.30, 0.00, 0.00, 22.54, 0.00, 0.00, 16.51, 0.00, 0.00, 16.03, 0.00, 0.00, 14.62]
+    x-axis ["vit_base_patch16_clip_224.openai arcface 224x224 crop · 3.46%", "vit_base_patch16_clip_224.openai arcface 224x224 squash · 3.94%", "vit_base_patch16_clip_224.openai arcface-msmt17 224x224 crop · 3.78%", "vit_base_patch16_clip_224.openai arcface-msmt17 224x224 squash · 4.97%", "vit_base_patch16_clip_224.openai linear 224x224 crop · 2.72%", "vit_base_patch16_clip_224.openai linear 224x224 squash · 3.54%", "vit_base_patch16_clip_224.openai linear-msmt17 224x224 crop · 3.39%", "vit_base_patch16_clip_224.openai linear-msmt17 224x224 squash · 4.40%", "vit_base_patch16_clip_224.openai none 224x224 crop · 2.51%", "vit_base_patch16_clip_224.openai none 224x224 crop · 2.53%", "vit_base_patch16_clip_224.openai none 224x224 squash · 3.08%", "vit_base_patch16_clip_224.openai none 224x224 squash · 3.08%", "vit_base_patch16_clip_224.openai pca 224x224 crop · 2.61%", "vit_base_patch16_clip_224.openai pca 224x224 squash · 3.06%", "vit_base_patch16_clip_224.openai pca-msmt17 224x224 crop · 2.60%", "vit_base_patch16_clip_224.openai pca-msmt17 224x224 squash · 3.12%", "vit_giantopt_patch16_siglip_256.v2_webli arcface 256x256 squash · 22.90%", "vit_giantopt_patch16_siglip_256.v2_webli arcface-msmt17 256x256 squash · 25.49%", "vit_giantopt_patch16_siglip_256.v2_webli linear 256x256 squash · 16.62%", "vit_giantopt_patch16_siglip_256.v2_webli linear-msmt17 256x256 squash · 21.55%", "vit_giantopt_patch16_siglip_256.v2_webli none 256x256 squash · 16.42%", "vit_giantopt_patch16_siglip_256.v2_webli none 256x256 squash · 16.73%", "vit_giantopt_patch16_siglip_256.v2_webli pca 256x256 squash · 17.25%", "vit_giantopt_patch16_siglip_256.v2_webli pca-msmt17 256x256 squash · 16.96%", "vit_huge_plus_patch16_dinov3.lvd1689m arcface 224x224 squash · 24.67%", "vit_huge_plus_patch16_dinov3.lvd1689m arcface-msmt17 224x224 squash · 23.03%", "vit_huge_plus_patch16_dinov3.lvd1689m linear 224x224 squash · 18.71%", "vit_huge_plus_patch16_dinov3.lvd1689m linear-msmt17 224x224 squash · 22.20%", "vit_huge_plus_patch16_dinov3.lvd1689m none 224x224 squash · 23.46%", "vit_huge_plus_patch16_dinov3.lvd1689m none 224x224 squash · 22.92%", "vit_huge_plus_patch16_dinov3.lvd1689m pca 224x224 squash · 21.44%", "vit_huge_plus_patch16_dinov3.lvd1689m pca-msmt17 224x224 squash · 22.02%", "vit_large_patch16_dinov3.lvd1689m arcface 224x224 squash · 15.99%", "vit_large_patch16_dinov3.lvd1689m arcface-msmt17 224x224 squash · 15.26%", "vit_large_patch16_dinov3.lvd1689m linear 224x224 squash · 13.63%", "vit_large_patch16_dinov3.lvd1689m linear-msmt17 224x224 squash · 15.94%", "vit_large_patch16_dinov3.lvd1689m none 224x224 squash · 14.92%", "vit_large_patch16_dinov3.lvd1689m none 224x224 squash · 15.03%", "vit_large_patch16_dinov3.lvd1689m pca 224x224 squash · 14.68%", "vit_large_patch16_dinov3.lvd1689m pca-msmt17 224x224 squash · 14.68%", "vit_so400m_patch14_siglip_224.v2_webli arcface 224x224 squash · 17.72%", "vit_so400m_patch14_siglip_224.v2_webli arcface-msmt17 224x224 squash · 19.85%", "vit_so400m_patch14_siglip_224.v2_webli linear 224x224 squash · 13.03%", "vit_so400m_patch14_siglip_224.v2_webli linear-msmt17 224x224 squash · 16.98%", "vit_so400m_patch14_siglip_224.v2_webli none 224x224 squash · 12.69%", "vit_so400m_patch14_siglip_224.v2_webli none 224x224 squash · 12.82%", "vit_so400m_patch14_siglip_224.v2_webli pca 224x224 squash · 13.83%", "vit_so400m_patch14_siglip_224.v2_webli pca-msmt17 224x224 squash · 13.22%", "c-radio_v4-h arcface 224x224 squash · 22.76%", "c-radio_v4-h arcface 256x128 squash · 18.73%", "c-radio_v4-h arcface native squash · 24.41%", "c-radio_v4-h arcface-msmt17 224x224 squash · 21.87%", "c-radio_v4-h arcface-msmt17 256x128 squash · 18.20%", "c-radio_v4-h arcface-msmt17 native squash · 24.14%", "c-radio_v4-h linear 224x224 squash · 17.11%", "c-radio_v4-h linear 256x128 squash · 14.50%", "c-radio_v4-h linear native squash · 18.08%", "c-radio_v4-h linear-msmt17 224x224 squash · 22.44%", "c-radio_v4-h linear-msmt17 256x128 squash · 18.57%", "c-radio_v4-h linear-msmt17 native squash · 24.65%", "c-radio_v4-h none 224x224 squash · 17.39%", "c-radio_v4-h none 224x224 squash · 17.46%", "c-radio_v4-h none 256x128 squash · 13.76%", "c-radio_v4-h none 256x128 squash · 13.75%", "c-radio_v4-h none native squash · 19.36%", "c-radio_v4-h none native squash · 19.35%", "c-radio_v4-h pca 224x224 squash · 16.25%", "c-radio_v4-h pca 256x128 squash · 12.97%", "c-radio_v4-h pca native squash · 17.30%", "c-radio_v4-h pca-msmt17 224x224 squash · 17.53%", "c-radio_v4-h pca-msmt17 256x128 squash · 13.92%", "c-radio_v4-h pca-msmt17 native squash · 19.39%", "c-radio_v4-so400m arcface 224x224 squash · 20.68%", "c-radio_v4-so400m arcface 256x128 squash · 17.93%", "c-radio_v4-so400m arcface native squash · 22.54%", "c-radio_v4-so400m arcface-msmt17 224x224 squash · 20.10%", "c-radio_v4-so400m arcface-msmt17 256x128 squash · 17.61%", "c-radio_v4-so400m arcface-msmt17 native squash · 21.40%", "c-radio_v4-so400m linear 224x224 squash · 14.64%", "c-radio_v4-so400m linear 256x128 squash · 13.08%", "c-radio_v4-so400m linear native squash · 16.51%", "c-radio_v4-so400m linear-msmt17 224x224 squash · 19.84%", "c-radio_v4-so400m linear-msmt17 256x128 squash · 17.43%", "c-radio_v4-so400m linear-msmt17 native squash · 22.06%", "c-radio_v4-so400m none 224x224 squash · 14.89%", "c-radio_v4-so400m none 224x224 squash · 14.82%", "c-radio_v4-so400m none 256x128 squash · 12.68%", "c-radio_v4-so400m none 256x128 squash · 12.64%", "c-radio_v4-so400m none native squash · 16.03%", "c-radio_v4-so400m none native squash · 15.96%", "c-radio_v4-so400m pca 224x224 squash · 13.78%", "c-radio_v4-so400m pca 256x128 squash · 12.05%", "c-radio_v4-so400m pca native squash · 14.62%", "c-radio_v4-so400m pca-msmt17 224x224 squash · 14.67%", "c-radio_v4-so400m pca-msmt17 256x128 squash · 12.60%", "c-radio_v4-so400m pca-msmt17 native squash · 15.85%"]
+    y-axis "mAP (%)" 0 --> 26.76
+    bar [3.46, 3.94, 3.78, 4.97, 2.72, 3.54, 3.39, 4.40, 2.51, 2.53, 3.08, 3.08, 2.61, 3.06, 2.60, 3.12, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.67, 23.03, 18.71, 22.20, 23.46, 22.92, 21.44, 22.02, 15.99, 15.26, 13.63, 15.94, 14.92, 15.03, 14.68, 14.68, 17.72, 19.85, 13.03, 16.98, 12.69, 12.82, 13.83, 13.22, 22.76, 0.00, 0.00, 21.87, 0.00, 0.00, 17.11, 0.00, 0.00, 22.44, 0.00, 0.00, 17.39, 17.46, 0.00, 0.00, 0.00, 0.00, 16.25, 0.00, 0.00, 17.53, 0.00, 0.00, 20.68, 0.00, 0.00, 20.10, 0.00, 0.00, 14.64, 0.00, 0.00, 19.84, 0.00, 0.00, 14.89, 14.82, 0.00, 0.00, 0.00, 0.00, 13.78, 0.00, 0.00, 14.67, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.73, 0.00, 0.00, 18.20, 0.00, 0.00, 14.50, 0.00, 0.00, 18.57, 0.00, 0.00, 0.00, 13.76, 13.75, 0.00, 0.00, 0.00, 12.97, 0.00, 0.00, 13.92, 0.00, 0.00, 17.93, 0.00, 0.00, 17.61, 0.00, 0.00, 13.08, 0.00, 0.00, 17.43, 0.00, 0.00, 0.00, 12.68, 12.64, 0.00, 0.00, 0.00, 12.05, 0.00, 0.00, 12.60, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 25.49, 16.62, 21.55, 16.42, 16.73, 17.25, 16.96, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.41, 0.00, 0.00, 24.14, 0.00, 0.00, 18.08, 0.00, 0.00, 24.65, 0.00, 0.00, 0.00, 0.00, 19.36, 19.35, 0.00, 0.00, 17.30, 0.00, 0.00, 19.39, 0.00, 0.00, 22.54, 0.00, 0.00, 21.40, 0.00, 0.00, 16.51, 0.00, 0.00, 22.06, 0.00, 0.00, 0.00, 0.00, 16.03, 15.96, 0.00, 0.00, 14.62, 0.00, 0.00, 15.85]
 ```
 
 ### Head, within one encoder and resolution
 
 ```mermaid
-%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759"}}, "xyChart": {"height": 1384, "width": 1215, "yAxis": {"showLabel": false}}}}%%
+%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759,#b07aa1,#9c755f,#edc948"}}, "xyChart": {"height": 1600, "width": 1320, "yAxis": {"showLabel": false}}}}%%
 xychart-beta horizontal
     title "mAP, coloured by head"
-    x-axis ["vit_base_patch16_clip_224.openai 224x224 arcface crop · 3.46%", "vit_base_patch16_clip_224.openai 224x224 arcface squash · 3.94%", "vit_base_patch16_clip_224.openai 224x224 linear crop · 2.72%", "vit_base_patch16_clip_224.openai 224x224 linear squash · 3.54%", "vit_base_patch16_clip_224.openai 224x224 none crop · 2.51%", "vit_base_patch16_clip_224.openai 224x224 none squash · 3.08%", "vit_base_patch16_clip_224.openai 224x224 pca crop · 2.61%", "vit_base_patch16_clip_224.openai 224x224 pca squash · 3.06%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 arcface squash · 22.90%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 linear squash · 16.62%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 none squash · 16.42%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 pca squash · 17.25%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 arcface squash · 24.67%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 linear squash · 18.71%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 none squash · 23.46%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 pca squash · 21.44%", "vit_large_patch16_dinov3.lvd1689m 224x224 arcface squash · 15.99%", "vit_large_patch16_dinov3.lvd1689m 224x224 linear squash · 13.63%", "vit_large_patch16_dinov3.lvd1689m 224x224 none squash · 14.92%", "vit_large_patch16_dinov3.lvd1689m 224x224 pca squash · 14.68%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 arcface squash · 17.72%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 linear squash · 13.03%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 none squash · 12.69%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 pca squash · 13.83%", "c-radio_v4-h 224x224 arcface squash · 22.76%", "c-radio_v4-h 224x224 linear squash · 17.11%", "c-radio_v4-h 224x224 none squash · 17.39%", "c-radio_v4-h 224x224 pca squash · 16.25%", "c-radio_v4-h 256x128 arcface squash · 18.73%", "c-radio_v4-h 256x128 linear squash · 14.50%", "c-radio_v4-h 256x128 none squash · 13.76%", "c-radio_v4-h 256x128 pca squash · 12.97%", "c-radio_v4-h native arcface squash · 24.41%", "c-radio_v4-h native linear squash · 18.08%", "c-radio_v4-h native none squash · 19.36%", "c-radio_v4-h native pca squash · 17.30%", "c-radio_v4-so400m 224x224 arcface squash · 20.68%", "c-radio_v4-so400m 224x224 linear squash · 14.64%", "c-radio_v4-so400m 224x224 none squash · 14.89%", "c-radio_v4-so400m 224x224 pca squash · 13.78%", "c-radio_v4-so400m 256x128 arcface squash · 17.93%", "c-radio_v4-so400m 256x128 linear squash · 13.08%", "c-radio_v4-so400m 256x128 none squash · 12.68%", "c-radio_v4-so400m 256x128 pca squash · 12.05%", "c-radio_v4-so400m native arcface squash · 22.54%", "c-radio_v4-so400m native linear squash · 16.51%", "c-radio_v4-so400m native none squash · 16.03%", "c-radio_v4-so400m native pca squash · 14.62%"]
-    y-axis "mAP (%)" 0 --> 25.91
-    bar [3.46, 3.94, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 0.00, 0.00, 0.00, 24.67, 0.00, 0.00, 0.00, 15.99, 0.00, 0.00, 0.00, 17.72, 0.00, 0.00, 0.00, 22.76, 0.00, 0.00, 0.00, 18.73, 0.00, 0.00, 0.00, 24.41, 0.00, 0.00, 0.00, 20.68, 0.00, 0.00, 0.00, 17.93, 0.00, 0.00, 0.00, 22.54, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 2.72, 3.54, 0.00, 0.00, 0.00, 0.00, 0.00, 16.62, 0.00, 0.00, 0.00, 18.71, 0.00, 0.00, 0.00, 13.63, 0.00, 0.00, 0.00, 13.03, 0.00, 0.00, 0.00, 17.11, 0.00, 0.00, 0.00, 14.50, 0.00, 0.00, 0.00, 18.08, 0.00, 0.00, 0.00, 14.64, 0.00, 0.00, 0.00, 13.08, 0.00, 0.00, 0.00, 16.51, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 2.51, 3.08, 0.00, 0.00, 0.00, 0.00, 16.42, 0.00, 0.00, 0.00, 23.46, 0.00, 0.00, 0.00, 14.92, 0.00, 0.00, 0.00, 12.69, 0.00, 0.00, 0.00, 17.39, 0.00, 0.00, 0.00, 13.76, 0.00, 0.00, 0.00, 19.36, 0.00, 0.00, 0.00, 14.89, 0.00, 0.00, 0.00, 12.68, 0.00, 0.00, 0.00, 16.03, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.61, 3.06, 0.00, 0.00, 0.00, 17.25, 0.00, 0.00, 0.00, 21.44, 0.00, 0.00, 0.00, 14.68, 0.00, 0.00, 0.00, 13.83, 0.00, 0.00, 0.00, 16.25, 0.00, 0.00, 0.00, 12.97, 0.00, 0.00, 0.00, 17.30, 0.00, 0.00, 0.00, 13.78, 0.00, 0.00, 0.00, 12.05, 0.00, 0.00, 0.00, 14.62]
+    x-axis ["vit_base_patch16_clip_224.openai 224x224 arcface crop · 3.46%", "vit_base_patch16_clip_224.openai 224x224 arcface squash · 3.94%", "vit_base_patch16_clip_224.openai 224x224 arcface-msmt17 crop · 3.78%", "vit_base_patch16_clip_224.openai 224x224 arcface-msmt17 squash · 4.97%", "vit_base_patch16_clip_224.openai 224x224 linear crop · 2.72%", "vit_base_patch16_clip_224.openai 224x224 linear squash · 3.54%", "vit_base_patch16_clip_224.openai 224x224 linear-msmt17 crop · 3.39%", "vit_base_patch16_clip_224.openai 224x224 linear-msmt17 squash · 4.40%", "vit_base_patch16_clip_224.openai 224x224 none crop · 2.51%", "vit_base_patch16_clip_224.openai 224x224 none crop · 2.53%", "vit_base_patch16_clip_224.openai 224x224 none squash · 3.08%", "vit_base_patch16_clip_224.openai 224x224 none squash · 3.08%", "vit_base_patch16_clip_224.openai 224x224 pca crop · 2.61%", "vit_base_patch16_clip_224.openai 224x224 pca squash · 3.06%", "vit_base_patch16_clip_224.openai 224x224 pca-msmt17 crop · 2.60%", "vit_base_patch16_clip_224.openai 224x224 pca-msmt17 squash · 3.12%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 arcface squash · 22.90%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 arcface-msmt17 squash · 25.49%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 linear squash · 16.62%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 linear-msmt17 squash · 21.55%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 none squash · 16.42%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 none squash · 16.73%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 pca squash · 17.25%", "vit_giantopt_patch16_siglip_256.v2_webli 256x256 pca-msmt17 squash · 16.96%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 arcface squash · 24.67%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 arcface-msmt17 squash · 23.03%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 linear squash · 18.71%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 linear-msmt17 squash · 22.20%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 none squash · 23.46%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 none squash · 22.92%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 pca squash · 21.44%", "vit_huge_plus_patch16_dinov3.lvd1689m 224x224 pca-msmt17 squash · 22.02%", "vit_large_patch16_dinov3.lvd1689m 224x224 arcface squash · 15.99%", "vit_large_patch16_dinov3.lvd1689m 224x224 arcface-msmt17 squash · 15.26%", "vit_large_patch16_dinov3.lvd1689m 224x224 linear squash · 13.63%", "vit_large_patch16_dinov3.lvd1689m 224x224 linear-msmt17 squash · 15.94%", "vit_large_patch16_dinov3.lvd1689m 224x224 none squash · 14.92%", "vit_large_patch16_dinov3.lvd1689m 224x224 none squash · 15.03%", "vit_large_patch16_dinov3.lvd1689m 224x224 pca squash · 14.68%", "vit_large_patch16_dinov3.lvd1689m 224x224 pca-msmt17 squash · 14.68%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 arcface squash · 17.72%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 arcface-msmt17 squash · 19.85%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 linear squash · 13.03%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 linear-msmt17 squash · 16.98%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 none squash · 12.69%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 none squash · 12.82%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 pca squash · 13.83%", "vit_so400m_patch14_siglip_224.v2_webli 224x224 pca-msmt17 squash · 13.22%", "c-radio_v4-h 224x224 arcface squash · 22.76%", "c-radio_v4-h 224x224 arcface-msmt17 squash · 21.87%", "c-radio_v4-h 224x224 linear squash · 17.11%", "c-radio_v4-h 224x224 linear-msmt17 squash · 22.44%", "c-radio_v4-h 224x224 none squash · 17.39%", "c-radio_v4-h 224x224 none squash · 17.46%", "c-radio_v4-h 224x224 pca squash · 16.25%", "c-radio_v4-h 224x224 pca-msmt17 squash · 17.53%", "c-radio_v4-h 256x128 arcface squash · 18.73%", "c-radio_v4-h 256x128 arcface-msmt17 squash · 18.20%", "c-radio_v4-h 256x128 linear squash · 14.50%", "c-radio_v4-h 256x128 linear-msmt17 squash · 18.57%", "c-radio_v4-h 256x128 none squash · 13.76%", "c-radio_v4-h 256x128 none squash · 13.75%", "c-radio_v4-h 256x128 pca squash · 12.97%", "c-radio_v4-h 256x128 pca-msmt17 squash · 13.92%", "c-radio_v4-h native arcface squash · 24.41%", "c-radio_v4-h native arcface-msmt17 squash · 24.14%", "c-radio_v4-h native linear squash · 18.08%", "c-radio_v4-h native linear-msmt17 squash · 24.65%", "c-radio_v4-h native none squash · 19.36%", "c-radio_v4-h native none squash · 19.35%", "c-radio_v4-h native pca squash · 17.30%", "c-radio_v4-h native pca-msmt17 squash · 19.39%", "c-radio_v4-so400m 224x224 arcface squash · 20.68%", "c-radio_v4-so400m 224x224 arcface-msmt17 squash · 20.10%", "c-radio_v4-so400m 224x224 linear squash · 14.64%", "c-radio_v4-so400m 224x224 linear-msmt17 squash · 19.84%", "c-radio_v4-so400m 224x224 none squash · 14.89%", "c-radio_v4-so400m 224x224 none squash · 14.82%", "c-radio_v4-so400m 224x224 pca squash · 13.78%", "c-radio_v4-so400m 224x224 pca-msmt17 squash · 14.67%", "c-radio_v4-so400m 256x128 arcface squash · 17.93%", "c-radio_v4-so400m 256x128 arcface-msmt17 squash · 17.61%", "c-radio_v4-so400m 256x128 linear squash · 13.08%", "c-radio_v4-so400m 256x128 linear-msmt17 squash · 17.43%", "c-radio_v4-so400m 256x128 none squash · 12.68%", "c-radio_v4-so400m 256x128 none squash · 12.64%", "c-radio_v4-so400m 256x128 pca squash · 12.05%", "c-radio_v4-so400m 256x128 pca-msmt17 squash · 12.60%", "c-radio_v4-so400m native arcface squash · 22.54%", "c-radio_v4-so400m native arcface-msmt17 squash · 21.40%", "c-radio_v4-so400m native linear squash · 16.51%", "c-radio_v4-so400m native linear-msmt17 squash · 22.06%", "c-radio_v4-so400m native none squash · 16.03%", "c-radio_v4-so400m native none squash · 15.96%", "c-radio_v4-so400m native pca squash · 14.62%", "c-radio_v4-so400m native pca-msmt17 squash · 15.85%"]
+    y-axis "mAP (%)" 0 --> 26.76
+    bar [3.46, 3.94, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.67, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.99, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.72, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.76, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.73, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.41, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 20.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.93, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.54, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 3.78, 4.97, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 25.49, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 23.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.26, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.85, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.87, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.20, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.14, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 20.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.61, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.40, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 2.72, 3.54, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.62, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.71, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.63, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.11, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.50, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.08, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.64, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.08, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.51, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 3.39, 4.40, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.55, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.20, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.94, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.98, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.44, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.57, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.65, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.84, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.43, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.06, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.51, 2.53, 3.08, 3.08, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.42, 16.73, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 23.46, 22.92, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.92, 15.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.69, 12.82, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.39, 17.46, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.76, 13.75, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.36, 19.35, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.89, 14.82, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.68, 12.64, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.03, 15.96, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.61, 3.06, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.44, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.83, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.97, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.30, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.78, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.05, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.62, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.60, 3.12, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.96, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.02, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.22, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.53, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.92, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.39, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.67, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.60, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.85]
 ```
 
 ### Encoder, within one resolution and head
@@ -367,16 +586,16 @@ xychart-beta horizontal
 *Colour — encoder:* 🟦 timm:vit_base_patch16_clip_224.openai · 🟧 timm:vit_giantopt_patch16_siglip_256.v2_webli · 🟩 timm:vit_huge_plus_patch16_dinov3.lvd1689m · 🟥 timm:vit_large_patch16_dinov3.lvd1689m · 🟪 timm:vit_so400m_patch14_siglip_224.v2_webli · 🟫 torchhub:NVlabs/RADIO/c-radio_v4-h · 🟨 torchhub:NVlabs/RADIO/c-radio_v4-so400m
 
 ```mermaid
-%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759,#b07aa1,#9c755f,#edc948"}}, "xyChart": {"height": 1384, "width": 1215, "yAxis": {"showLabel": false}}}}%%
+%%{init: {"themeVariables": {"xyChart": {"backgroundColor": "transparent", "plotColorPalette": "#4e79a7,#f28e2b,#59a14f,#e15759,#b07aa1,#9c755f,#edc948"}}, "xyChart": {"height": 1600, "width": 1320, "yAxis": {"showLabel": false}}}}%%
 xychart-beta horizontal
     title "mAP, coloured by encoder"
-    x-axis ["224x224 arcface vit_base_patch16_clip_224.openai crop · 3.46%", "224x224 arcface vit_base_patch16_clip_224.openai squash · 3.94%", "224x224 arcface vit_huge_plus_patch16_dinov3.lvd1689m squash · 24.67%", "224x224 arcface vit_large_patch16_dinov3.lvd1689m squash · 15.99%", "224x224 arcface vit_so400m_patch14_siglip_224.v2_webli squash · 17.72%", "224x224 arcface c-radio_v4-h squash · 22.76%", "224x224 arcface c-radio_v4-so400m squash · 20.68%", "224x224 linear vit_base_patch16_clip_224.openai crop · 2.72%", "224x224 linear vit_base_patch16_clip_224.openai squash · 3.54%", "224x224 linear vit_huge_plus_patch16_dinov3.lvd1689m squash · 18.71%", "224x224 linear vit_large_patch16_dinov3.lvd1689m squash · 13.63%", "224x224 linear vit_so400m_patch14_siglip_224.v2_webli squash · 13.03%", "224x224 linear c-radio_v4-h squash · 17.11%", "224x224 linear c-radio_v4-so400m squash · 14.64%", "224x224 none vit_base_patch16_clip_224.openai crop · 2.51%", "224x224 none vit_base_patch16_clip_224.openai squash · 3.08%", "224x224 none vit_huge_plus_patch16_dinov3.lvd1689m squash · 23.46%", "224x224 none vit_large_patch16_dinov3.lvd1689m squash · 14.92%", "224x224 none vit_so400m_patch14_siglip_224.v2_webli squash · 12.69%", "224x224 none c-radio_v4-h squash · 17.39%", "224x224 none c-radio_v4-so400m squash · 14.89%", "224x224 pca vit_base_patch16_clip_224.openai crop · 2.61%", "224x224 pca vit_base_patch16_clip_224.openai squash · 3.06%", "224x224 pca vit_huge_plus_patch16_dinov3.lvd1689m squash · 21.44%", "224x224 pca vit_large_patch16_dinov3.lvd1689m squash · 14.68%", "224x224 pca vit_so400m_patch14_siglip_224.v2_webli squash · 13.83%", "224x224 pca c-radio_v4-h squash · 16.25%", "224x224 pca c-radio_v4-so400m squash · 13.78%", "256x128 arcface c-radio_v4-h squash · 18.73%", "256x128 arcface c-radio_v4-so400m squash · 17.93%", "256x128 linear c-radio_v4-h squash · 14.50%", "256x128 linear c-radio_v4-so400m squash · 13.08%", "256x128 none c-radio_v4-h squash · 13.76%", "256x128 none c-radio_v4-so400m squash · 12.68%", "256x128 pca c-radio_v4-h squash · 12.97%", "256x128 pca c-radio_v4-so400m squash · 12.05%", "256x256 arcface vit_giantopt_patch16_siglip_256.v2_webli squash · 22.90%", "256x256 linear vit_giantopt_patch16_siglip_256.v2_webli squash · 16.62%", "256x256 none vit_giantopt_patch16_siglip_256.v2_webli squash · 16.42%", "256x256 pca vit_giantopt_patch16_siglip_256.v2_webli squash · 17.25%", "native arcface c-radio_v4-h squash · 24.41%", "native arcface c-radio_v4-so400m squash · 22.54%", "native linear c-radio_v4-h squash · 18.08%", "native linear c-radio_v4-so400m squash · 16.51%", "native none c-radio_v4-h squash · 19.36%", "native none c-radio_v4-so400m squash · 16.03%", "native pca c-radio_v4-h squash · 17.30%", "native pca c-radio_v4-so400m squash · 14.62%"]
-    y-axis "mAP (%)" 0 --> 25.91
-    bar [3.46, 3.94, 0.00, 0.00, 0.00, 0.00, 0.00, 2.72, 3.54, 0.00, 0.00, 0.00, 0.00, 0.00, 2.51, 3.08, 0.00, 0.00, 0.00, 0.00, 0.00, 2.61, 3.06, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 16.62, 16.42, 17.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 24.67, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.71, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 23.46, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.44, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 15.99, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.63, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.92, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 17.72, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.69, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.83, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 22.76, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.11, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.39, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.25, 0.00, 18.73, 0.00, 14.50, 0.00, 13.76, 0.00, 12.97, 0.00, 0.00, 0.00, 0.00, 0.00, 24.41, 0.00, 18.08, 0.00, 19.36, 0.00, 17.30, 0.00]
-    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 20.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.64, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.89, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.78, 0.00, 17.93, 0.00, 13.08, 0.00, 12.68, 0.00, 12.05, 0.00, 0.00, 0.00, 0.00, 0.00, 22.54, 0.00, 16.51, 0.00, 16.03, 0.00, 14.62]
+    x-axis ["224x224 arcface vit_base_patch16_clip_224.openai crop · 3.46%", "224x224 arcface vit_base_patch16_clip_224.openai squash · 3.94%", "224x224 arcface vit_huge_plus_patch16_dinov3.lvd1689m squash · 24.67%", "224x224 arcface vit_large_patch16_dinov3.lvd1689m squash · 15.99%", "224x224 arcface vit_so400m_patch14_siglip_224.v2_webli squash · 17.72%", "224x224 arcface c-radio_v4-h squash · 22.76%", "224x224 arcface c-radio_v4-so400m squash · 20.68%", "224x224 arcface-msmt17 vit_base_patch16_clip_224.openai crop · 3.78%", "224x224 arcface-msmt17 vit_base_patch16_clip_224.openai squash · 4.97%", "224x224 arcface-msmt17 vit_huge_plus_patch16_dinov3.lvd1689m squash · 23.03%", "224x224 arcface-msmt17 vit_large_patch16_dinov3.lvd1689m squash · 15.26%", "224x224 arcface-msmt17 vit_so400m_patch14_siglip_224.v2_webli squash · 19.85%", "224x224 arcface-msmt17 c-radio_v4-h squash · 21.87%", "224x224 arcface-msmt17 c-radio_v4-so400m squash · 20.10%", "224x224 linear vit_base_patch16_clip_224.openai crop · 2.72%", "224x224 linear vit_base_patch16_clip_224.openai squash · 3.54%", "224x224 linear vit_huge_plus_patch16_dinov3.lvd1689m squash · 18.71%", "224x224 linear vit_large_patch16_dinov3.lvd1689m squash · 13.63%", "224x224 linear vit_so400m_patch14_siglip_224.v2_webli squash · 13.03%", "224x224 linear c-radio_v4-h squash · 17.11%", "224x224 linear c-radio_v4-so400m squash · 14.64%", "224x224 linear-msmt17 vit_base_patch16_clip_224.openai crop · 3.39%", "224x224 linear-msmt17 vit_base_patch16_clip_224.openai squash · 4.40%", "224x224 linear-msmt17 vit_huge_plus_patch16_dinov3.lvd1689m squash · 22.20%", "224x224 linear-msmt17 vit_large_patch16_dinov3.lvd1689m squash · 15.94%", "224x224 linear-msmt17 vit_so400m_patch14_siglip_224.v2_webli squash · 16.98%", "224x224 linear-msmt17 c-radio_v4-h squash · 22.44%", "224x224 linear-msmt17 c-radio_v4-so400m squash · 19.84%", "224x224 none vit_base_patch16_clip_224.openai crop · 2.51%", "224x224 none vit_base_patch16_clip_224.openai crop · 2.53%", "224x224 none vit_base_patch16_clip_224.openai squash · 3.08%", "224x224 none vit_base_patch16_clip_224.openai squash · 3.08%", "224x224 none vit_huge_plus_patch16_dinov3.lvd1689m squash · 23.46%", "224x224 none vit_huge_plus_patch16_dinov3.lvd1689m squash · 22.92%", "224x224 none vit_large_patch16_dinov3.lvd1689m squash · 14.92%", "224x224 none vit_large_patch16_dinov3.lvd1689m squash · 15.03%", "224x224 none vit_so400m_patch14_siglip_224.v2_webli squash · 12.69%", "224x224 none vit_so400m_patch14_siglip_224.v2_webli squash · 12.82%", "224x224 none c-radio_v4-h squash · 17.39%", "224x224 none c-radio_v4-h squash · 17.46%", "224x224 none c-radio_v4-so400m squash · 14.89%", "224x224 none c-radio_v4-so400m squash · 14.82%", "224x224 pca vit_base_patch16_clip_224.openai crop · 2.61%", "224x224 pca vit_base_patch16_clip_224.openai squash · 3.06%", "224x224 pca vit_huge_plus_patch16_dinov3.lvd1689m squash · 21.44%", "224x224 pca vit_large_patch16_dinov3.lvd1689m squash · 14.68%", "224x224 pca vit_so400m_patch14_siglip_224.v2_webli squash · 13.83%", "224x224 pca c-radio_v4-h squash · 16.25%", "224x224 pca c-radio_v4-so400m squash · 13.78%", "224x224 pca-msmt17 vit_base_patch16_clip_224.openai crop · 2.60%", "224x224 pca-msmt17 vit_base_patch16_clip_224.openai squash · 3.12%", "224x224 pca-msmt17 vit_huge_plus_patch16_dinov3.lvd1689m squash · 22.02%", "224x224 pca-msmt17 vit_large_patch16_dinov3.lvd1689m squash · 14.68%", "224x224 pca-msmt17 vit_so400m_patch14_siglip_224.v2_webli squash · 13.22%", "224x224 pca-msmt17 c-radio_v4-h squash · 17.53%", "224x224 pca-msmt17 c-radio_v4-so400m squash · 14.67%", "256x128 arcface c-radio_v4-h squash · 18.73%", "256x128 arcface c-radio_v4-so400m squash · 17.93%", "256x128 arcface-msmt17 c-radio_v4-h squash · 18.20%", "256x128 arcface-msmt17 c-radio_v4-so400m squash · 17.61%", "256x128 linear c-radio_v4-h squash · 14.50%", "256x128 linear c-radio_v4-so400m squash · 13.08%", "256x128 linear-msmt17 c-radio_v4-h squash · 18.57%", "256x128 linear-msmt17 c-radio_v4-so400m squash · 17.43%", "256x128 none c-radio_v4-h squash · 13.76%", "256x128 none c-radio_v4-h squash · 13.75%", "256x128 none c-radio_v4-so400m squash · 12.68%", "256x128 none c-radio_v4-so400m squash · 12.64%", "256x128 pca c-radio_v4-h squash · 12.97%", "256x128 pca c-radio_v4-so400m squash · 12.05%", "256x128 pca-msmt17 c-radio_v4-h squash · 13.92%", "256x128 pca-msmt17 c-radio_v4-so400m squash · 12.60%", "256x256 arcface vit_giantopt_patch16_siglip_256.v2_webli squash · 22.90%", "256x256 arcface-msmt17 vit_giantopt_patch16_siglip_256.v2_webli squash · 25.49%", "256x256 linear vit_giantopt_patch16_siglip_256.v2_webli squash · 16.62%", "256x256 linear-msmt17 vit_giantopt_patch16_siglip_256.v2_webli squash · 21.55%", "256x256 none vit_giantopt_patch16_siglip_256.v2_webli squash · 16.42%", "256x256 none vit_giantopt_patch16_siglip_256.v2_webli squash · 16.73%", "256x256 pca vit_giantopt_patch16_siglip_256.v2_webli squash · 17.25%", "256x256 pca-msmt17 vit_giantopt_patch16_siglip_256.v2_webli squash · 16.96%", "native arcface c-radio_v4-h squash · 24.41%", "native arcface c-radio_v4-so400m squash · 22.54%", "native arcface-msmt17 c-radio_v4-h squash · 24.14%", "native arcface-msmt17 c-radio_v4-so400m squash · 21.40%", "native linear c-radio_v4-h squash · 18.08%", "native linear c-radio_v4-so400m squash · 16.51%", "native linear-msmt17 c-radio_v4-h squash · 24.65%", "native linear-msmt17 c-radio_v4-so400m squash · 22.06%", "native none c-radio_v4-h squash · 19.36%", "native none c-radio_v4-h squash · 19.35%", "native none c-radio_v4-so400m squash · 16.03%", "native none c-radio_v4-so400m squash · 15.96%", "native pca c-radio_v4-h squash · 17.30%", "native pca c-radio_v4-so400m squash · 14.62%", "native pca-msmt17 c-radio_v4-h squash · 19.39%", "native pca-msmt17 c-radio_v4-so400m squash · 15.85%"]
+    y-axis "mAP (%)" 0 --> 26.76
+    bar [3.46, 3.94, 0.00, 0.00, 0.00, 0.00, 0.00, 3.78, 4.97, 0.00, 0.00, 0.00, 0.00, 0.00, 2.72, 3.54, 0.00, 0.00, 0.00, 0.00, 0.00, 3.39, 4.40, 0.00, 0.00, 0.00, 0.00, 0.00, 2.51, 2.53, 3.08, 3.08, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 2.61, 3.06, 0.00, 0.00, 0.00, 0.00, 0.00, 2.60, 3.12, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.90, 25.49, 16.62, 21.55, 16.42, 16.73, 17.25, 16.96, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 24.67, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 23.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 18.71, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.20, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 23.46, 22.92, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.44, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.02, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 15.99, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.26, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.63, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 15.94, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.92, 15.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 17.72, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.85, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.03, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.98, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 12.69, 12.82, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.83, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.22, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 22.76, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 21.87, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.11, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.44, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.39, 17.46, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 16.25, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 17.53, 0.00, 18.73, 0.00, 18.20, 0.00, 14.50, 0.00, 18.57, 0.00, 13.76, 13.75, 0.00, 0.00, 12.97, 0.00, 13.92, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 24.41, 0.00, 24.14, 0.00, 18.08, 0.00, 24.65, 0.00, 19.36, 19.35, 0.00, 0.00, 17.30, 0.00, 19.39, 0.00]
+    bar [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 20.68, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 20.10, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.64, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 19.84, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.89, 14.82, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 13.78, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 14.67, 0.00, 17.93, 0.00, 17.61, 0.00, 13.08, 0.00, 17.43, 0.00, 0.00, 12.68, 12.64, 0.00, 12.05, 0.00, 12.60, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 22.54, 0.00, 21.40, 0.00, 16.51, 0.00, 22.06, 0.00, 0.00, 16.03, 15.96, 0.00, 14.62, 0.00, 15.85]
 ```

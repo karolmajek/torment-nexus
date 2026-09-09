@@ -393,6 +393,13 @@ def _fetch_gdrive(
         print(f"  then unpack into: {target}")
         return 2
 
+    # What arrived is the difference this call made to the directory, not the newest thing in
+    # it. gdown preserves the Drive file's own modification time, so a 2023 archive downloaded
+    # today looks older than everything already here: picking by mtime extracted a *different
+    # dataset's* zip into LaST's directory and reported success. The before/after diff cannot
+    # make that mistake, and it needs no assumption about what the file will be called.
+    before = {path.name for path in downloads.iterdir()}
+
     say(OK, f"gdown {file_id}")
     result = subprocess.run(["gdown", file_id, "-O", str(downloads)], check=False)  # noqa: S603, S607
     if result.returncode != 0:
@@ -400,13 +407,30 @@ def _fetch_gdrive(
         print(f"  open: {url}")
         return result.returncode
 
-    archives = sorted(downloads.glob("*.zip")) + sorted(downloads.glob("*.tar*"))
+    archives = [
+        path
+        for path in sorted(downloads.iterdir())
+        if path.name not in before and _is_archive(path)
+    ]
     if not archives:
-        say(WARN, f"nothing archive-shaped landed in {downloads}; unpack it into {target} yourself")
+        say(WARN, f"this call added no archive to {downloads}; unpack it into {target} yourself")
+        print("  a file that was already there is not evidence that this download produced it")
         return 2
-    _extract(max(archives, key=lambda p: p.stat().st_mtime), target)
+    if len(archives) > 1:
+        say(BAD, f"this call added {len(archives)} archives and cannot tell which is {item['id']}")
+        for path in archives:
+            print(f"    {path}")
+        print(f"  unpack the right one into: {target}")
+        return 1
+    _extract(archives[0], target)
     print(f"      now run:  python datasets/get.py verify {item['id']}")
     return 0
+
+
+def _is_archive(path: Path) -> bool:
+    return path.is_file() and (
+        path.suffix in {".zip", ".tar", ".gz", ".bz2"} or ".tar." in path.name
+    )
 
 
 # ------------------------------------------------------------------------------------ main

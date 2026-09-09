@@ -223,4 +223,4 @@ Research use only. `licence_verified = false`.
 | `reidbench` protocol | ✅ `mars/official@1` |
 | Provenance record | ✅ `mars` |
 | Access | the project page's "Drive link" is broken; the frames here came from a Kaggle mirror and that is recorded in §1 |
-| Experiments | none run yet |
+| Experiments | ✅ **96 runs** (12 encoders x 7 heads, + 12 euclidean), at 8 frames per tracklet. Best mAP **72.70** — radio-so400m-224 + arcface; best frozen **23.61** (siglip2-giantopt-256). The head is worth 3x here: frozen features barely separate these encoders (7.8-8.5 for five of them) and the probe reorders the table entirely |

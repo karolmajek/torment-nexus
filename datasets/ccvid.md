@@ -257,4 +257,4 @@ Two things do not follow from that line, and both matter:
 | `reidbench` protocol | ✅ `ccvid/tracklet@1` and `ccvid/tracklet-cloth-changing@1` |
 | Provenance record | ✅ `ccvid` |
 | Access | the copy is here; the Drive id is still unrecorded (§5), which only affects re-fetching |
-| Experiments | none run yet |
+| Experiments | ✅ **192 runs** (12 encoders x 7 heads x 2 protocols, + 24 euclidean). Best general mAP **79.47** and cloth-changing **70.85**, both clip-224-**squash** + arcface; best frozen 74.62 / 63.07, same encoder. Squash beats crop by ~18 mAP here and loses on VRIC, so the resize mode is a real axis. Euclidean beats cosine by +6.8 mAP mean at `head=none` — the only dataset where it does, and unexplained (MARS, also pooled, differs by 0.000) |

@@ -305,7 +305,7 @@ this is sweeps plus a GPU box), **Resources 5** (TRT needs hardware the project 
 
 ## 10. Sources
 
-- [[reidbench/docs/design.md](../../reidbench/docs/design.md)](../../reidbench/docs/design.md) — the one-arithmetic rule, the description tree, the
+- [`reidbench/docs/design.md`](../../reidbench/docs/design.md) — the one-arithmetic rule, the description tree, the
   value/context distinction §2 generalises, and the cache-key derivation and fp16 storage default §7.3 puts on trial
 - [35-frameworks-toolboxes.md](../field/35-frameworks-toolboxes.md) §5–§6, §7.4 — who exports what, and the "ONNX first —
   BoxMOT proves the demand" line that makes §4's ordering a continuation rather than a new idea

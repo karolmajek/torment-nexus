@@ -1,0 +1,52 @@
+{
+  "_comment": "Presentation only: a full name, a column-header abbreviation, the object class, and the regime each dataset sits in relative to the head's training split (market1501/train). Counts, protocols and every number are read from the run records — none of them are repeated here.",
+  "market1501": {
+    "name": "Market-1501",
+    "short": "Market",
+    "object": "person",
+    "regime": "in-domain",
+    "order": 0
+  },
+  "msmt17": {
+    "name": "MSMT17",
+    "short": "MSMT17",
+    "object": "person",
+    "regime": "transfer",
+    "order": 1
+  },
+  "cuhk03-np": {
+    "name": "CUHK03-NP",
+    "short": "CUHK03",
+    "object": "person",
+    "regime": "transfer",
+    "order": 2
+  },
+  "occluded-reid": {
+    "name": "Occluded-REID",
+    "short": "Occ-REID",
+    "object": "person",
+    "regime": "transfer",
+    "order": 3
+  },
+  "ccvid": {
+    "name": "CCVID",
+    "short": "CCVID",
+    "object": "person",
+    "regime": "transfer",
+    "order": 4
+  },
+  "vric": {
+    "name": "VRIC",
+    "short": "VRIC",
+    "object": "vehicle",
+    "regime": "transfer",
+    "order": 5
+  },
+  "vrai": {
+    "name": "VRAI",
+    "short": "VRAI",
+    "object": "vehicle",
+    "regime": "transfer",
+    "order": 6
+  }
+}

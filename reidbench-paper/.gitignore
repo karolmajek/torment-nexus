@@ -1,0 +1,17 @@
+# Build artifacts. The generated tables are committed on purpose (see README) so that the
+# PDF builds without a copy of results/, but everything latexmk produces is not.
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.pdf
+!figures/*.pdf
+
+# Tooling caches
+__pycache__/
+.ruff_cache/

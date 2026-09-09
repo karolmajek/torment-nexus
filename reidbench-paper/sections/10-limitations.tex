@@ -1,0 +1,63 @@
+\section{Limitations and Threats to Validity}\label{sec:limitations}
+We state these at length because several of them bound the conclusions above rather than
+merely qualifying them.
+
+\paragraph{One head-training domain}
+Every fitted head in this study is fitted on \texttt{market1501/train}. That is what makes the
+in-domain versus transfer contrast clean, and it is also the study's largest structural limit:
+``the student's gain is concentrated where the probe had labels'' is established with one
+source domain. Whether the same asymmetry appears with a head fitted on MSMT17 or on a vehicle
+set is not tested here, and it is the first experiment we would add.
+
+\paragraph{MSMT17 is measured for the teachers only}
+\Cref{tab:coverage} shows the gap. MSMT17 is the large-scale person transfer target and the
+dataset best placed to settle the retention question of \cref{tab:retention} on a
+gallery-comparable footing, and the C-RADIOv4 rows for it are not yet run. The retention ratios
+we do report are not gallery-matched --- CUHK03-NP's gallery is roughly a third of
+Market-1501's --- and should not be placed beside published retention figures without that
+caveat.
+
+\paragraph{DINOv3 is a stand-in}
+C-RADIOv4's actual DINOv3 teacher is the 7B model, which does not fit on the GPU this
+study ran on. The DINOv3 rows bracket the student's capacity from above and below and represent
+the teacher \emph{family}; SigLIP2-g is the genuine article. Conclusions about the DINOv3 side
+of the bracket are correspondingly weaker than those about the SigLIP2 side.
+
+\paragraph{The CCVID anomaly}
+CLIP ViT-B/16 at 87M scores \clipCcvid{} mAP on CCVID, ahead of every larger encoder
+here. We have verified that it is not an adapter fault --- the protocol and manifest digests are
+shared with every other row in that column --- and we have no mechanism for it. CCVID is the
+one dataset in the study whose features pass through a tracklet pooling step, which is the
+obvious place to look and which we have not yet ruled in or out. Until it is explained, we do
+not draw any conclusion from the CCVID column, and readers should not either.
+
+\paragraph{Two protocols are non-standard, for reasons outside our control}
+Occluded-REID ships no standard split and labels no cameras, so its protocol uses the whole set
+and cannot apply the same-camera exclusion that every Market-1501 number depends on. VRAI
+withholds its test identities, so the only offline-scorable protocol runs over its training
+split. That is sound for every row in this paper --- no head here has seen a VRAI image --- and
+it would be unsound for any model fine-tuned on VRAI, which is a constraint on who may cite
+these rows rather than on the rows themselves.
+
+\paragraph{Absolute values are not comparable across datasets}
+Gallery sizes here span roughly a thousand to over thirty thousand images. Every claim we make
+is within a column, where all rows share a protocol digest and a manifest digest. The tables
+print query and gallery sizes (\cref{tab:datasets}) so that any reader tempted to compare
+across columns can see the reason not to.
+
+\paragraph{Throughput measures a machine}
+The figures in \cref{tab:cost} come from one thermally throttled consumer GPU and are useful
+only as ratios within that table, as the caption's example shows.
+
+\paragraph{Licence heterogeneity}
+Of the checkpoints here, only the two C-RADIOv4 weights carry a verified licence permitting
+commercial use; the rest are unverified or research-only, as are most of the datasets. Our
+substrate reports this per run. It does not change any measurement and it changes the practical
+recommendation considerably.
+
+\paragraph{No backbone was trained}
+This is a design choice, not an oversight, and it bounds the claims accordingly. Nothing here
+speaks to what these encoders do when fine-tuned, and \cref{sec:readout}'s reordering result
+should not be assumed to survive fine-tuning --- probe rankings are known not to predict
+fine-tuned rankings in general, and testing that here would have cost more compute than the
+entire study.

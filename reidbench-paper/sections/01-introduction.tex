@@ -1,0 +1,87 @@
+\section{Introduction}
+\IEEEPARstart{O}{bject} re-identification asks whether two images, taken by different cameras
+at different times, show the same individual. A decade of supervised work on person
+benchmarks has driven in-domain accuracy close to saturation \cite{ye2022deep,zhang2024review},
+and the field's attention has moved to two questions that in-domain accuracy does not answer:
+how a representation behaves off the domain it was trained on \cite{kim2025dgsurvey}, and
+whether a general-purpose visual encoder can replace the specialist entirely
+\cite{li2023clipreid,paradigm2026}.
+
+The second question is now asked routinely, and it is usually asked in the same way. A
+foundation backbone is frozen, its features are extracted, queries are ranked against a
+gallery by cosine similarity, and the resulting mAP is reported beside another backbone's.
+The comparison is cheap, it needs no training, and it appears to isolate the representation
+from everything else. \textbf{This paper's central claim is that it does not, and that the
+ranking it produces is not stable under a change that a practitioner would regard as an
+implementation detail.}
+
+Concretely, we take \nEncoders{} modern backbones at \nEncoderConfigs{}
+encoder-resolution configurations, spanning three pre-training paradigms --- agglomerative
+distillation (C-RADIOv4 \cite{ranzinger2024amradio,heinrich2025radiov25}), language-image
+contrastive learning (SigLIP2 \cite{tschannen2025siglip2}, CLIP \cite{radford2021clip}) and
+self-supervised distillation (DINOv3 \cite{simeoni2025dinov3}) --- and evaluate each one under
+four readouts over the identical cached features: the frozen encoder itself, a label-free PCA
+projection, a linear head, and an ArcFace \cite{deng2019arcface} head. All three fitted heads
+see one training split and one only, \texttt{market1501/train}. We evaluate every combination
+on \nDatasets{} datasets under \nProtocols{} exact protocols, covering person and vehicle
+re-identification, occlusion, cloth change, degraded detector boxes and aerial viewpoints.
+
+Three findings follow, and the first is about methodology rather than about any backbone.
+
+\subsection*{The readout decides the ranking}
+On Market-1501, SigLIP2-g is the best encoder in this study when read frozen
+(\mapSiglipgFrozen{} mAP, rank \rankSiglipgFrozen{}) and the \rankSiglipgProbed{}th when the
+same weights are read through one affine map fitted on \nHeadImages{} images
+(\mapSiglipgProbed{}). DINOv3-H+ moves the other way, from rank \rankDinohpFrozen{} to rank
+\rankDinohpProbed{}. Nothing about the weights, the images, the protocol or the metric changed
+between those two rankings --- only how the features were read. The mechanism is not
+mysterious: a contrastive objective optimises cosine geometry directly, so a
+contrastively pre-trained encoder is already read out near-optimally and an affine map has
+little headroom left (\gainSiglipg{}$\times$), whereas encoders trained on other objectives
+carry the information in a geometry cosine similarity cannot see, and a head recovers it
+(\gainDinohp{}$\times$). Zero-shot frozen-cosine benchmarking is therefore not a neutral
+instrument; it measures readout alignment as much as representation quality, and it flatters
+one pre-training family in particular.
+
+\subsection*{Agglomeration keeps the margin, in-domain}
+Agglomerative backbones distil several teachers into one student
+\cite{ranzinger2024amradio,heinrich2025radiov25}, and a standing concern is that averaging
+teacher objectives erodes the fine-grained instance separability that re-identification, unlike
+classification, depends on. Because C-RADIOv4's actual teachers are in our encoder set, we can
+test this directly rather than by analogy. In-domain the concern is not borne out and the
+opposite holds on exactly the metric it is about: against its own teacher SigLIP2-g, the
+student's advantage is \minpGap{}$\times$ on mINP --- the rank of the \emph{hardest} true match
+--- against a smaller factor on mAP. Off the head's training domain the advantage disappears,
+and the shape of its disappearance is regular: the student lands between its two teacher
+families wherever those families disagree, which they do sharply and by domain.
+
+\subsection*{Two nuisance variables outweigh the model choice}
+The transform that fits a $64\times128$ pedestrian crop to a $224\times224$ input is not a
+detail. \texttt{timm}'s default evaluation transform short-side-resizes and centre-crops,
+which on such a crop discards the head and the feet; the alternative is to resize to the target
+directly. Measured on identical CLIP weights with geometry as the only variable, the choice is
+worth a large fraction of the probed Market-1501 score. Input resolution is worth a comparable
+amount in the other direction. Either variable, left unpinned, is large enough to reverse the
+ordering of several backbone pairs in this study --- which is a reproducibility problem for
+frozen-encoder comparisons generally, not a property of these particular models.
+
+\subsection*{Contributions}
+\begin{enumerate}
+  \item A controlled demonstration that readout choice reorders frozen-encoder rankings on a
+        standard ReID benchmark, with a matched label-free control that attributes the effect
+        to supervision rather than to dimensionality (\cref{sec:readout,sec:heads}).
+  \item The first evaluation of agglomerative vision foundation models as ReID encoders,
+        together with an ablation against their own teachers at matched capacity, separating
+        an in-domain gain from a transfer cost with a predictable shape
+        (\cref{sec:ablation}).
+  \item Quantification of two preprocessing variables --- resize geometry and input resolution
+        --- that are routinely left unreported and that are individually larger than the
+        differences such comparisons are used to establish (\cref{sec:geometry}).
+  \item An MIT-licensed evaluation substrate in which a protocol is a value with a digest, a
+        run record carries its own provenance, and every table in this paper is generated from
+        those records rather than transcribed (\cref{sec:substrate}).
+\end{enumerate}
+
+We deliberately train no backbone. Every number here is one forward pass over cached crops
+plus, at most, under a minute of head fitting on a single consumer GPU, which is what makes a
+grid of this size affordable and what makes each cell exactly reproducible from its digest.

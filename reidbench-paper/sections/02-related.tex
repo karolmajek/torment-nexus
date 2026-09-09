@@ -1,0 +1,67 @@
+\section{Related Work}\label{sec:related}
+
+\subsection{Re-identification with frozen and foundation encoders}
+CLIP-ReID \cite{li2023clipreid} established that a language-image backbone is a strong
+initialisation for person ReID, and a family of adaptation methods followed --- prompt
+learning, parameter-efficient tuning and instruction conditioning
+\cite{he2024mambapro,chen2024instructreid,zhu2022pass}. These works fine-tune. The
+complementary question, what a foundation encoder is worth \emph{without} adaptation, is
+answered less often and less consistently. A 2026 cross-paradigm study
+\cite{paradigm2026} compares supervised, self-supervised and language-aligned models over 11
+backbones and 9 datasets and is the closest prior work to ours in scope; a parallel line
+evaluates multimodal LLMs as the matcher itself \cite{mmreid2025}. Neither varies the readout
+as an experimental axis: each fixes a single evaluation convention and reports backbone
+differences under it. Our contribution is orthogonal and, we argue, prior to theirs --- if the
+ranking depends on the convention, then a table that fixes one convention is reporting a
+property of the pair, not of the backbones.
+
+\subsection{Agglomerative vision foundation models}
+AM-RADIO \cite{ranzinger2024amradio} showed that several heterogeneous teachers --- a
+language-aligned model, a self-supervised model and a segmentation model --- can be distilled
+into a single student that matches or exceeds each teacher on that teacher's own benchmarks,
+and RADIOv2.5 \cite{heinrich2025radiov25} addressed the mode-switching and resolution
+pathologies that the first version exhibited. The line has since been extended by other
+agglomerative students \cite{eupe2026} and by mixture-of-experts variants
+\cite{amoe2025}. What this family has not been evaluated on is instance-level retrieval, where
+the relevant quantity is not whether a class is separable but whether one individual is
+separable from a visually near-identical other. Distillation from an averaged teacher signal
+is a plausible threat to exactly that margin, and it is the hypothesis \cref{sec:ablation}
+tests against C-RADIOv4's own teachers.
+
+\subsection{Probing a frozen representation}
+Linear probing is the standard instrument for comparing frozen representations, inherited from
+the self-supervised classification literature \cite{chen2020simclr,caron2021dino,oquab2024dinov2}.
+Two conventions travel under the name and are not interchangeable. The classification
+convention trains a linear classifier on frozen features and reports \emph{the classifier's}
+accuracy; the retrieval convention discards the classifier and reports mAP over the features
+it reshaped. Foundation-model reports overwhelmingly use the first, ReID uses the second, and
+numbers from one are quoted beside numbers from the other. Within ReID, the readout that
+matters in practice is a margin-based one --- ArcFace \cite{deng2019arcface},
+CosFace \cite{wang2018cosface} or Circle loss \cite{sun2020circle} --- because it optimises the
+angular geometry the retrieval metric reads, which is precisely why substituting it for a plain
+linear head is not a neutral implementation choice. We report the retrieval convention
+throughout and treat the head as an axis of the experiment rather than as part of its setup.
+
+\subsection{Evaluation protocol and its failure modes}
+Market-1501 \cite{zheng2015scalable} fixed the query--gallery--junk convention that most person
+benchmarks still follow; MSMT17 \cite{wei2018msmt} scaled it; CUHK03-NP
+\cite{zhong2017reranking} supplied the detector-box regime and the 767/700 split that made
+CUHK03 comparable across papers. mINP \cite{ye2022deep} was introduced precisely because mAP is
+dominated by easy true matches and says little about the hardest one, which is the quantity a
+deployed system fails on. Beyond ReID, OpenOOD \cite{zhang2023openood} is the clearest recent
+demonstration that protocol discipline --- fixed splits, tuning on validation data only,
+stratified difficulty --- changes published conclusions in a whole subfield, and the
+open-set ReID literature \cite{liao2014operid,li2018adversarial,wang2020gom} has repeatedly
+observed that closed-set rank metrics assume the answer is present in the gallery. Our
+substrate (\cref{sec:substrate}) is built on the same premise: an evaluation protocol should
+be a value with an identity, so that two numbers can be checked for comparability rather than
+assumed to be comparable.
+
+\subsection{Benchmark toolboxes}
+Torchreid \cite{zhou2019torchreid} and FastReID \cite{he2023fastreid} are the field's reference
+implementations and are training frameworks first; their evaluation code is a component of a
+training loop rather than an independently usable artifact, and neither exposes an
+agglomerative backbone, a frozen-probe harness, or an open-set protocol. We release the
+evaluation half as a standalone package with no training loop, no dataset mirror and no torch
+dependency in its core, which is what allows a run record to be re-scored on a machine that
+cannot run the encoder that produced it.

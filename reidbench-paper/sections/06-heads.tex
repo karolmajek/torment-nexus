@@ -1,0 +1,118 @@
+\section{What a Head Buys, and Where the Gain Comes From}\label{sec:heads}
+\Cref{sec:readout} established that the readout reorders the encoders. This section asks what
+the readout is actually supplying, using the PCA control to separate two hypotheses that the
+supervised rows cannot distinguish on their own.
+
+\begin{table*}[t]
+\centering
+\caption{The lead encoder (C-RADIOv4-H at $224\times224$) under all four \texttt{market1501/train}-fitted readouts, mAP. Only
+the Market-1501 column is in-domain; every other column applies the same Market-fitted head to
+a domain whose labels it has never seen. The PCA row is the matched control --- same images,
+same output dimension, no labels.}
+\label{tab:heads}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{generated/tbl-heads}
+\end{table*}
+
+\subsection{The gain is the labels, not the bottleneck}
+Every fitted head in this study produces a 512-dimensional embedding from a
+higher-dimensional frozen one, so any improvement it shows is confounded between two causes:
+the supervision it received, and the dimensionality reduction itself. Without a control, ``the
+ArcFace head beats the frozen encoder'' is indistinguishable from ``512 dimensions are enough''.
+
+The PCA row is that control. It is fitted on the same \nHeadImages{} images, produces the same
+512-dimensional embedding, and uses none of the \nHeadIdentities{} identity labels. On
+the lead encoder it moves Market-1501 from \leadMarketFrozen{} to \leadMarketPCA{}, moves
+Occluded-REID from \leadOccludedFrozen{} to \leadOccludedPCA{} --- a change well inside that
+dataset's seed noise --- and \emph{loses} on VRAI, \leadVraiFrozen{} to \leadVraiPCA{}. The
+bottleneck is worth approximately nothing. The supervised heads on the same features reach
+\leadMarketLinear{} and \leadMarketArc{}, so the entire effect reported in \cref{sec:readout}
+is attributable to the identity supervision.
+
+\begin{table}[t]
+\centering
+\caption{The same recipe fitted on each of two training splits, read on both of them, on the
+lead encoder. The diagonal is in-domain. Every off-diagonal cell is the same recipe, the same
+encoder, the same fitting budget and the same test set, and differs only in where the head was
+fitted --- which is what makes this a control rather than a comparison.}
+\label{tab:fitsplit}
+\small
+\input{generated/tbl-fitsplit}
+\end{table}
+
+\subsection{Half of what a head buys is where it was fitted}
+\Cref{sec:setup} fixes every head in the preceding tables on \texttt{market1501/train}, which
+makes one column of each of them in-domain and every other column a transfer number. That
+convention is the usual one, and it is also a confound: it cannot separate \emph{a head helps}
+from \emph{a head fitted here helps}, because it never varies the second clause.
+
+\Cref{tab:fitsplit} varies it. The same three recipes, the same encoders, the same budget and
+the same seed are refitted on \texttt{msmt17/train} --- \nHeadImagesMsmt{} images of
+\nHeadIdentitiesMsmt{} identities --- and each is read on both training domains. Nothing else
+changes, and no backbone is re-run: the frozen features of both training splits were already
+cached, so the control costs a head fit and not a single forward pass.
+
+The result is a mirror. Averaged over every encoder, ArcFace reads \fitArcfaceMarketHere{} mAP
+on Market-1501 when it was fitted there and \fitArcfaceMarketElse{} when the identical recipe
+was fitted on MSMT17; on MSMT17 the same two heads read \fitArcfaceMsmtHere{} and
+\fitArcfaceMsmtElse{}. The swing is \fitSwingArcfaceMarket{} in one direction and
+\fitSwingArcfaceMsmt{} in the other. A gap visible in one direction only could be a property of
+MSMT17; one that appears in both directions at the same size is a property of fitting.
+
+It is monotone in supervision, and the PCA control is again what makes that legible. The same
+swap moves PCA by \fitSwingPcaMarket{}, the linear head by \fitSwingLinearMarket{} and ArcFace
+by \fitSwingArcfaceMarket{}. An unsupervised rotation of the same features barely encodes which
+domain it was fitted on; an angular-margin classifier over identity labels encodes it most.
+
+This sharpens \cref{sec:readout}'s claim rather than weakening it. A head that has never seen a
+Market-1501 label still lifts Market-1501 mAP from \fitFrozenMarket{} to
+\fitArcfaceMarketElse{}, so most of what the readout supplies is a transferable metric geometry
+and not memorised identities; fitting it in-domain then roughly doubles that again. Of the
+total gain over the frozen encoder, \fitShareArcfaceMarket{} survives being fitted elsewhere on
+Market-1501 and \fitShareArcfaceMsmt{} does on MSMT17. The readout still determines the
+ranking, as \cref{sec:readout} reports. What the fit domain determines is how much of the
+readout a deployment somewhere else gets to keep.
+
+One asymmetry in \cref{tab:fitsplit} carries less than it appears to. \texttt{msmt17/train} is
+\nHeadImagesMsmt{} images against Market-1501's \nHeadImages{}, so which of the two splits
+yields the better \emph{transfer} head is confounded with how much data each head saw. The
+mirror above is read within a column and does not rest on that comparison; a matched-budget
+version of it is left to future work.
+
+\subsection{A frozen backbone plus one affine layer is a real system}
+The best in-domain configuration in this study reaches \bestMarketMAP{} mAP and
+\bestMarketRone{} Rank-1 on \texttt{market1501/official@1}. This is the first number in the
+study that may be placed beside a published one, because it is produced the way published
+numbers are: fitted on the official training split, evaluated on the official protocol, with
+the test identities disjoint from the training identities. It does not beat a tuned
+specialist. It costs one forward pass over \nHeadImages{} cached crops plus well under a
+minute of head fitting on a single consumer GPU, with no backbone gradient at any point.
+
+\subsection{Angular margin, and where it fails}
+ArcFace beats a plain linear head almost everywhere in this study, and by the largest margin
+where the head was fitted --- \leadMarketLinear{} to \leadMarketArc{} on Market-1501. This is
+expected: an angular margin optimises the cosine geometry the retrieval metric reads, and a
+softmax cross-entropy head does not. The exceptions are informative and are concentrated in one
+encoder family; \cref{tab:margin} shows them, and \cref{sec:ablation} interprets them.
+
+\begin{table*}[t]
+\centering
+\caption{Relative change in mAP from replacing the linear head with the ArcFace head, same
+features and same budget. Positive is the expected direction. The losses cluster in DINOv3's
+feature space on transfer sets, and both DINOv3 probes reach a perfect training accuracy, so
+they are not fit failures.}
+\label{tab:margin}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{generated/tbl-margin}
+\end{table*}
+
+\subsection{The head transfers out of its object class}
+The same head fitted on \nHeadIdentities{} pedestrian identities improves aerial \emph{vehicle}
+retrieval, from \leadVraiFrozen{} frozen to \leadVraiArc{} with ArcFace, having never seen a
+vehicle label. Since the matched PCA control \emph{falls} on that dataset, this is not a
+dimensionality effect either. What the head learned is not ``what a person looks like'' but a
+metric geometry that instance discrimination reuses across object classes --- which is the
+most useful practical finding in this section and the one that most needs a larger transfer
+grid before it is leaned on.

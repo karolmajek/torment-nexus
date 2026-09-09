@@ -1,0 +1,69 @@
+%% ---------------------------------------------------------------------------
+%% Frozen foundation encoders for re-identification — IEEE TCSVT submission
+%%
+%% Build:  latexmk -pdf main.tex        (after: python tools/gen_tables.py)
+%%
+%% Every number in this document comes from generated/, which is written by
+%% tools/gen_tables.py out of results/runs. Do not type a metric into the prose.
+%% ---------------------------------------------------------------------------
+\documentclass[journal]{IEEEtran}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalise,nameinlink]{cleveref}
+
+% A number that went the wrong way. Named rather than coloured inline, so that the one
+% decision about how a regression looks lives in one place.
+\newcommand{\loss}[1]{\textcolor{black!65}{#1}}
+
+% Section marker for work that is scaffolded but not yet measured. Delete the macro's body
+% before submission and every such marker disappears with it.
+\newcommand{\scaffold}[1]{\par\noindent\textit{[#1]}\par}
+
+\input{generated/macros}
+
+\begin{document}
+
+\title{The Readout Decides the Winner: Probing Frozen\\Foundation Encoders for Person and
+Vehicle Re-Identification}
+
+\author{Karol~Majek% <-- affiliation, ORCID, funding and co-authors before submission
+\thanks{Manuscript prepared \today. Code, run records and the exact protocol digests behind
+every number in this paper are released with the \texttt{reidbench} package (MIT).}}
+
+\markboth{IEEE Transactions on Circuits and Systems for Video Technology}%
+{Majek: The Readout Decides the Winner}
+
+\maketitle
+
+\input{sections/00-abstract}
+
+\begin{IEEEkeywords}
+Re-identification, foundation models, frozen features, linear probing, knowledge distillation,
+evaluation protocols, vehicle re-identification, reproducibility.
+\end{IEEEkeywords}
+
+\input{sections/01-introduction}
+\input{sections/02-related}
+\input{sections/03-substrate}
+\input{sections/04-setup}
+\input{sections/05-readout}
+\input{sections/06-heads}
+\input{sections/07-ablation}
+\input{sections/08-geometry}
+\input{sections/09-decisions}
+\input{sections/10-limitations}
+\input{sections/11-conclusion}
+\input{sections/12-appendix}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}

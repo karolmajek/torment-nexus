@@ -1,0 +1,68 @@
+\section{The Evaluation Substrate}\label{sec:substrate}
+A study of this shape --- \nRuns{} run records over four axes --- is only as trustworthy as its
+bookkeeping. Two rows in a results table are a comparison if and only if they were produced
+over the same images, under the same rules, and differ in the one variable being claimed. That
+condition is easy to state and easy to violate silently. This section describes the substrate
+we built to make the condition checkable, because several of the results in this paper were
+originally a different number, and were corrected by a check the substrate made possible.
+
+\subsection{Two boolean matrices, and nothing downstream of them}
+The substrate reduces every re-identification protocol to a pair of boolean matrices over a
+selected query and gallery set:
+\begin{align}
+  \mathrm{rel}[q,g]   &= \mathbb{1}[\text{$q$ and $g$ are the same identity}], \\
+  \mathrm{valid}[q,g] &= \mathbb{1}[\text{this pair is scored}].
+\end{align}
+Four functions close over them:
+\begin{align}
+  \textsf{select}&: (\text{manifest}, \text{protocol}) \rightarrow (q, g, \mathrm{rel},
+     \mathrm{valid}) \nonumber\\
+  \textsf{score}&: (X_q, X_g) \rightarrow S \nonumber\\
+  \textsf{measure}&: (S, \mathrm{rel}, \mathrm{valid}) \rightarrow
+     (\text{metrics}, \text{curves}) \nonumber\\
+  \textsf{describe}&: \text{value} \rightarrow \text{canonical, hashable record.} \nonumber
+\end{align}
+Once $\mathrm{rel}$ and $\mathrm{valid}$ exist, cameras, junk identities, tracklets, clothing
+labels, modality and open-set non-mates have all disappeared: mAP, CMC, mINP and the open-set
+measures are functions of $(S, \mathrm{rel}, \mathrm{valid})$ and nothing below
+\textsf{select} has heard of re-identification. The same-camera exclusion that every
+Market-1501 number depends on is an entry in $\mathrm{valid}$, not a branch inside a metric,
+which is why a dataset that labels no cameras --- Occluded-REID does not --- is expressible
+rather than a special case.
+
+\subsection{A protocol is a value with a digest}
+A protocol is a named, versioned value naming its query split, its gallery split and its
+exclusion rules, and it carries a content digest. Every run record stores that digest beside
+the digest of the manifest it selected over. Two rows are comparable when both digests match,
+and the substrate reports it rather than leaving it to the reader. This is what allows
+CCVID's two protocols --- with and without the cloth-changing restriction --- to be reported
+side by side without one silently being read as the other's improvement: they are two
+different questions with two different digests, and a table that pooled them would emphasise
+the easier one and call it the better system.
+
+\subsection{Provenance, and the licence question}
+Every run record carries the encoder specification, the content-addressed feature-cache key,
+library versions, GPU and driver, and the source revision with a dirty-tree flag. Model and
+dataset licences are indexed in the same package and reported with the metrics rather than
+maintained beside them: of the checkpoints evaluated here, only the two C-RADIOv4 weights
+carry a verified licence permitting commercial use, and the substrate says so on every run.
+For a paper this is a footnote; for anyone acting on the paper's recommendation it is the
+first question.
+
+\subsection{Guards, and what they caught}
+Before the first number from a new dataset adapter is believed, we score two synthetic feature
+sets under the adapter's protocol: \emph{perfect} features, in which the relevance matrix is
+used as its own similarity, and \emph{random} ones. A correct adapter returns mAP $1.0$ and a
+value near the protocol's chance floor respectively. On CUHK03-NP this gave $1.0000$ and
+$0.0022$, against Market-1501's $1.0000$ and $0.0015$, which is what distinguishes a hard
+dataset from a broken adapter --- a distinction no amount of staring at a low score can make.
+
+The substrate also caught the largest error in this study. The teacher backbones are served
+through \texttt{timm}, whose default evaluation transform short-side-resizes and centre-crops;
+the \texttt{torchhub} path used for C-RADIOv4 resizes to the target directly. On a
+$64\times128$ pedestrian crop the former retains roughly the middle 45\% of the
+body. Run as first configured, the teacher ablation would have measured a preprocessing
+difference and reported it as a distillation result, with the same confidence and the opposite
+conclusion. The fix was to make the resize geometry a hashed field of the encoder
+specification, so that the two geometries occupy different cache keys and appear as different
+rows (\cref{sec:geometry}) rather than as one contradictory one.

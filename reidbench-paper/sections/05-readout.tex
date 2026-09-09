@@ -1,0 +1,64 @@
+\section{The Readout Decides the Ranking}\label{sec:readout}
+\Cref{tab:readout} is the experiment this paper is built on. It holds the weights, the images,
+the protocol and the metric fixed, and varies only how the cached features are read.
+
+\begin{table*}[t]
+\centering
+\caption{Market-1501 mAP under each readout, over identical cached features. \emph{rank} is the
+encoder's position among the \nEncoderConfigs{} configurations when read frozen and when read
+through the ArcFace head; \emph{gain} is the ratio of the two. The two CLIP rows are the same
+checkpoint at the same input size under the two resize geometries. Values at three decimals;
+the text quotes four.}
+\label{tab:readout}
+\input{generated/tbl-readout}
+\end{table*}
+
+\subsection{The ranking is not stable}
+Read frozen, the two SigLIP2 checkpoints are the best encoders in this study on Market-1501,
+at ranks \rankSiglipgFrozen{} and \rankSiglipsoFrozen{}. Read through one affine map fitted on
+\nHeadImages{} images, they are ranked \rankSiglipgProbed{} and \rankSiglipsoProbed{}. DINOv3-H+
+moves from rank \rankDinohpFrozen{} to \rankDinohpProbed{} in the opposite direction, and the
+two $256\times128$ C-RADIOv4 configurations take the top two places probed, from ranks 6 and 3
+frozen. The two orderings share no top-three membership.
+
+This is not a story about small differences being reordered by noise. Frozen, SigLIP2-g leads
+the best C-RADIOv4 configuration \mapSiglipgFrozen{} to \mapRadiohFrozen{}; probed, the same
+comparison runs \mapRadiohProbed{} to \mapSiglipgProbed{} the other way. Both gaps are two
+orders of magnitude above the seed noise of \cref{sec:setup}. The rankings genuinely disagree,
+and each is a correct answer to a different question.
+
+\subsection{Why contrastive encoders lose their lead}
+The \emph{gain} column is where the mechanism is visible. A fitted head multiplies frozen
+Market-1501 mAP by \gainDinohp{}$\times$ for DINOv3-H+ and \gainRadioh{}$\times$ for
+C-RADIOv4-H, but by only \gainSiglipg{}$\times$ for SigLIP2-g and \gainSiglipso{}$\times$ for
+SigLIP2-SO400M. SigLIP2 is the outlier at both scales, by roughly a factor of two, and the two
+scales agree with each other, which argues against an idiosyncrasy of one checkpoint.
+
+The explanation is the pre-training objective. A sigmoid or softmax contrastive loss over
+image--text pairs optimises cosine similarity in the embedding space directly; the frozen space
+of such a model is therefore already close to the geometry that zero-shot cosine retrieval
+reads, and an affine map has correspondingly little to recover. DINOv3's self-supervised
+objective and C-RADIOv4's distillation objective optimise no such thing: their raw cosine
+similarity is poor, but the identity information is present and a linear readout finds it. The
+practical consequence generalises past the encoders in this table:
+
+\begin{quote}
+\textbf{Frozen-cosine benchmarking systematically flatters contrastively pre-trained encoders.}
+A backbone comparison conducted that way is measuring readout alignment as much as
+representation quality, and will name a different winner than the same comparison conducted
+with a fitted head.
+\end{quote}
+
+Had this study reported only the frozen column --- as the zero-shot convention would --- it
+would have concluded that a language-aligned encoder is the best available frozen ReID
+representation. Had it reported only the probed column, it would have concluded the opposite.
+Both conclusions are supported by the data; neither is supported without naming the readout.
+
+\subsection{What this does not claim}
+It does not claim that a fitted head is the correct readout and a frozen one is the incorrect
+one. Which readout is right is a question about the deployment: if no labelled data exists in
+the target domain, the frozen column is the one that predicts what will happen, and SigLIP2-g's
+lead there is real. The claim is narrower and, we think, harder to argue with --- that the
+readout is an experimental axis with an effect size larger than the backbone differences the
+experiment is usually run to detect, and that a comparison which fixes it silently is
+under-specified.

@@ -1,0 +1,64 @@
+\section{From Rankings to Decisions}\label{sec:decisions}
+% ---------------------------------------------------------------------------------------
+% SCAFFOLD. This section is planned, not measured. The substrate already implements the
+% metrics named below (reidbench.measure.openset, .calibration, .selective, .cascade) and
+% the open-set protocol; what is missing is the sweep and the rejection head.
+%
+% Everything above this line is measured and citable today. Everything below is an outline
+% with the claims it intends to make, so that the experiments can be dropped in without
+% restructuring the paper. Delete this comment and the \scaffold markers when the runs land.
+% ---------------------------------------------------------------------------------------
+Every number reported so far answers a ranking question: given that the right answer is
+somewhere in the gallery, how highly is it ranked? Deployments do not ask that question. They
+ask whether a candidate match should be accepted at all, at a threshold fixed before the query
+arrives, against a gallery that frequently does not contain the answer. A confident wrong match
+in that setting is not a lower mAP --- it is the wrong person.
+
+This section reports what the encoders and heads of \cref{sec:setup} do when they are scored as
+\emph{decisions} rather than as rankings. The substrate of \cref{sec:substrate} already
+expresses these measures --- the same $(\mathrm{rel}, \mathrm{valid})$ pair supports them
+without a new abstraction --- so the additional cost is the sweep, not new machinery.
+
+\subsection{Open-set protocol}
+\scaffold{To be measured. A protocol in which a declared fraction of queries have no true match
+in the gallery, with the non-mate set drawn under a fixed, published rule and stratified into
+near and far difficulty following OpenOOD's discipline \cite{zhang2023openood}. Metrics:
+DIR@FAR and FNIR@FPIR after the biometric identification convention
+\cite{liao2014operid}, AUROC for the mated-versus-non-mated decision, and equal error rate.
+The claim under test: that the ranking of \cref{tab:readout} and the ranking by decision
+quality disagree, and specifically that the readout which wins on mAP is not the readout which
+wins on FNIR at a usable FPIR.}
+
+\subsection{Calibration}
+\scaffold{To be measured. Expected calibration error and reliability curves for the similarity
+score read as a confidence, per encoder and per head, in-domain and on each transfer set. The
+claim under test: that cosine similarity from a margin-trained head is systematically
+overconfident off its training domain, and that the overconfidence is worse for the encoder
+that wins in-domain --- i.e.\ that \cref{sec:ablation}'s in-domain/transfer asymmetry has a
+calibration signature as well as an accuracy one.}
+
+\subsection{A calibrated rejection head}
+\scaffold{To be built and measured. A distance-based readout with a parameter-free abstain
+option, fitted on the same cached frozen features and costing nothing additional at inference
+\cite{halo2026,dhamija2018agnostophobia}. Compared against the ArcFace head of
+\cref{sec:setup} at matched embedding dimension and matched fitting budget, on both the ranking
+metrics of \cref{sec:readout} and the decision metrics above. The claim under test: that the
+abstain option can be added without cost to closed-set retrieval quality, which is what would
+make it adoptable.}
+
+\subsection{Threshold transfer}
+\scaffold{To be measured. An acceptance threshold selected on the source domain, held fixed,
+and applied to each transfer domain; reported as the realised operating point against the
+intended one. This is the quantity a deployment actually needs and the one no benchmark in
+\cref{sec:related} reports. The claim under test: that thresholds selected on Market-1501 do
+not hold on any transfer domain, and that the size of the miss is predicted by the calibration
+measurement above rather than by the mAP gap.}
+
+\subsection{Why these belong with the preceding sections}
+The connection is not thematic. \Cref{sec:readout} showed that the readout determines the
+ranking; the readout also determines the \emph{geometry of the score}, and a threshold is a cut
+through that geometry. An encoder chosen by frozen cosine similarity, an encoder chosen by
+probed mAP, and an encoder chosen by decision quality at a fixed operating point need not be
+the same encoder, and the first two are already known here to differ. Establishing whether the
+third differs from both is the natural completion of this study, and the substrate that
+produced \cref{tab:readout} is the one that will produce it.

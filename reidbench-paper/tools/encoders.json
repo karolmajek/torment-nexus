@@ -1,0 +1,101 @@
+{
+  "_comment": "Presentation only: a short label, a family and a parameter count for each encoder spec stem. Nothing here is measured — the numbers in every table come from results/runs. Parameter counts are the checkpoints' own, quoted from the model cards; they are not read off the run records because a run record describes what was computed, not how big the weights were.",
+  "torchhub-c-radio-v4-h-224": {
+    "label": "C-RADIOv4-H",
+    "family": "agglomerative",
+    "role": "student",
+    "params_m": 653,
+    "order": 0
+  },
+  "torchhub-c-radio-v4-h-256x128": {
+    "label": "C-RADIOv4-H",
+    "family": "agglomerative",
+    "role": "student",
+    "params_m": 653,
+    "order": 1
+  },
+  "torchhub-c-radio-v4-h-native": {
+    "label": "C-RADIOv4-H",
+    "family": "agglomerative",
+    "role": "student",
+    "params_m": 653,
+    "order": 2
+  },
+  "torchhub-c-radio-v4-so400m-224": {
+    "label": "C-RADIOv4-SO400M",
+    "family": "agglomerative",
+    "role": "student",
+    "params_m": 431,
+    "order": 3
+  },
+  "torchhub-c-radio-v4-so400m-256x128": {
+    "label": "C-RADIOv4-SO400M",
+    "family": "agglomerative",
+    "role": "student",
+    "params_m": 431,
+    "order": 4
+  },
+  "torchhub-c-radio-v4-so400m-native": {
+    "label": "C-RADIOv4-SO400M",
+    "family": "agglomerative",
+    "role": "student",
+    "params_m": 431,
+    "order": 5
+  },
+  "timm-vit-giantopt-patch16-siglip2-256": {
+    "label": "SigLIP2-g",
+    "family": "language-aligned",
+    "role": "teacher",
+    "params_m": 1163,
+    "order": 6
+  },
+  "timm-vit-so400m-patch14-siglip2-224": {
+    "label": "SigLIP2-SO400M",
+    "family": "language-aligned",
+    "role": "teacher",
+    "params_m": 428,
+    "order": 7
+  },
+  "timm-vit-huge-plus-patch16-dinov3-224": {
+    "label": "DINOv3-H+",
+    "family": "self-supervised",
+    "role": "teacher-family",
+    "params_m": 840,
+    "order": 8
+  },
+  "timm-vit-large-patch16-dinov3-224": {
+    "label": "DINOv3-L",
+    "family": "self-supervised",
+    "role": "teacher-family",
+    "params_m": 303,
+    "order": 9
+  },
+  "timm-vit-base-patch16-clip-224-squash": {
+    "label": "CLIP-B/16",
+    "family": "language-aligned",
+    "role": "control",
+    "params_m": 87,
+    "order": 10
+  },
+  "timm-vit-base-patch16-clip-224": {
+    "label": "CLIP-B/16",
+    "family": "language-aligned",
+    "role": "control",
+    "params_m": 87,
+    "order": 11
+  },
+  "timm-vit-giantopt-patch16-siglip2-384": {
+    "label": "SigLIP2-g",
+    "family": "language-aligned",
+    "role": "teacher",
+    "params_m": 1163,
+    "order": 12
+  },
+  "timm-vit-giant-patch14-reg1-tipsv2-448": {
+    "label": "TIPSv2-g",
+    "family": "language-aligned",
+    "role": "unrun",
+    "params_m": 1128,
+    "order": 13
+  }
+}

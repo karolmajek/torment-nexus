@@ -1,0 +1,32 @@
+\begin{abstract}
+Frozen vision foundation models are increasingly proposed as general-purpose encoders for
+object re-identification (ReID), and are compared to one another by cosine similarity over
+their raw features. We show that this comparison does not measure what it is taken to
+measure. Across \nEncoderConfigs{} encoder-resolution configurations of \nEncoders{} modern
+backbones --- agglomerative (C-RADIOv4), language-aligned (SigLIP2, CLIP) and self-supervised
+(DINOv3) --- evaluated under \nProtocols{} exact retrieval protocols over \nDatasets{} person
+and vehicle datasets with \nHeadRecipes{} readout heads fitted on \nFitSplits{} training
+splits, \nRuns{} run records in total, we find that
+\emph{the choice of readout, not the choice of backbone, determines the ranking}. Fitting a
+single 512-dimensional affine map on \nHeadImages{} images of \nHeadIdentities{}
+identities moves SigLIP2-g from rank \rankSiglipgFrozen{} to rank \rankSiglipgProbed{} on
+Market-1501 and DINOv3-H+ from rank \rankDinohpFrozen{} to rank \rankDinohpProbed{}, while
+multiplying frozen mAP by between \gainSiglipg{}$\times$ and
+\gainDinohp{}$\times$ depending on the backbone. Contrastively pre-trained encoders gain least
+because their objective already optimised the cosine geometry that zero-shot evaluation reads;
+frozen-cosine benchmarking therefore flatters them systematically. A matched PCA control that
+sees the same images and none of the labels isolates the effect: the gain is the supervision,
+not the bottleneck. Refitting every head on a second training split then splits that
+supervision in two. A head that has never seen a target label still carries
+\fitShareArcfaceMarket{} of the gain, so most of what a readout supplies is a transferable
+metric geometry; the remainder is domain fitting, and it is worth \fitSwingArcfaceMarket{} mAP
+on Market-1501 --- more than the gap between several of the backbones compared here. We then use the same substrate to ask whether agglomerative distillation
+costs the instance-level margin ReID depends on. It does not --- in-domain the student beats
+its own teacher by a wider factor on mINP (\minpGap{}$\times$) than on mAP --- but its
+advantage does not survive the move off the head's training domain, where it regresses toward
+the mean of teachers that disagree sharply by domain. Two nuisance variables, the resize
+geometry used to fit a crop to the encoder's input and the input resolution itself, are each
+worth more than the gap between several of the backbones compared here. All protocols, run
+records, provenance digests and licence records are released as an MIT-licensed package, and
+the tables in this paper are generated from those records rather than transcribed.
+\end{abstract}

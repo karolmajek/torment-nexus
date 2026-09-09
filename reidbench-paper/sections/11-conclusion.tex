@@ -1,0 +1,48 @@
+\section{Conclusion}
+We evaluated \nEncoders{} frozen vision foundation backbones at \nEncoderConfigs{}
+encoder-resolution configurations, under \nHeads{} readouts, across \nDatasets{} person and
+vehicle re-identification datasets and \nProtocols{} exact protocols, for \nRuns{} run records
+in total, without training a single backbone.
+
+The result we would most like to see acted on is methodological. \textbf{The readout is an
+experimental axis, and it is a larger one than the backbone differences that frozen-encoder
+comparisons exist to detect.} On Market-1501, changing only how cached features are read moves
+SigLIP2-g from rank \rankSiglipgFrozen{} to rank \rankSiglipgProbed{}, and DINOv3-H+ from rank
+\rankDinohpFrozen{} to rank \rankDinohpProbed{}. Contrastively pre-trained encoders gain least from a fitted head because
+their objective already optimised the geometry that zero-shot cosine retrieval reads, so
+frozen-cosine benchmarking flatters them systematically. A matched label-free control shows the
+gain is the supervision and not the 512-dimensional bottleneck. Any comparison of frozen
+encoders that does not name its readout --- along with its resize convention and input size,
+each of which we show to be worth more than several of the differences being reported --- is
+under-specified, and can report the reverse of the truth with a table that looks correct.
+
+On the specific question of agglomerative distillation, the answer is two-sided and neither
+side is the one the concern anticipated. Where the probe has labels, distillation does not cost
+the instance margin --- it improves it, by a wider factor on mINP (\minpGap{}$\times$) than on
+mAP. Where the probe does not have labels, the student regresses toward the mean of teachers
+that disagree sharply by domain, and the size of that regression tracks the size of the
+disagreement: two independent datasets at a teacher spread near 3$\times$ both cost the
+student close to 45\% relative. That makes the cost of agglomeration predictable
+from a question a practitioner can answer without running the experiment. The practical
+recommendation follows and needs its qualifier attached: an agglomerative backbone is the right
+default \emph{if you can fit a head on labelled data from your own domain}; if you cannot, the
+better single teacher for your domain is available and is better.
+
+Finally, a frozen agglomerative backbone with one 512-dimensional affine head reaches
+\bestMarketMAP{} mAP and \bestMarketRone{} Rank-1 on \texttt{market1501/official@1}, for one
+forward pass over cached crops plus well under a minute of fitting on a consumer GPU. It does
+not beat a tuned specialist. It is a reminder of how much of a modern ReID number is already
+present in a general-purpose representation, waiting on the readout.
+
+The natural completion of this work is \cref{sec:decisions}: to ask the same encoders and heads
+not how well they rank, but how well they decide --- whether a match should be accepted at all,
+at a threshold fixed in advance, against a gallery that may not contain the answer. The
+substrate that produced every table here already expresses those measures.
+
+\section*{Reproducibility}
+The evaluation package, the protocol definitions with their digests, the encoder and head
+specifications, and the complete run records --- including per-query results, the provenance of
+every row, and the licence index --- are released under the MIT licence. The tables in this
+paper are generated from those records by a script included with the source; no metric in this
+document was transcribed by hand. We redistribute no dataset; obtaining each one, and complying
+with its licence, remains the reader's responsibility.

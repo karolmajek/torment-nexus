@@ -1,0 +1,123 @@
+\section{Experimental Design}\label{sec:setup}
+The experiment is a cross product of four axes --- encoder, input geometry, readout head and
+dataset --- evaluated under exact protocols. \Cref{tab:encoders} lists the encoders,
+\cref{tab:datasets} the datasets and protocols, and \cref{tab:coverage} which cells of the
+product are measured, so that an absence is visible as an absence rather than as a blank.
+
+\begin{table*}[t]
+\centering
+\caption{The encoders. Every checkpoint is frozen: no gradient reaches a backbone anywhere in
+this study. \emph{fit} is how an image is made to match the input size --- \texttt{squash}
+resizes to the target, \texttt{crop} short-side-resizes and centre-crops. C-RADIOv4 distils
+SigLIP2-g, DINOv3 and a segmentation teacher, so rows 1--6 are students of rows 7--10's
+families.}
+\label{tab:encoders}
+\small
+\setlength{\tabcolsep}{4pt}
+\input{generated/tbl-encoders}
+\end{table*}
+
+\subsection{Encoders}
+\nEncoders{} backbones at \nEncoderConfigs{} encoder-resolution configurations span three
+pre-training paradigms. \textbf{C-RADIOv4} (H, 653M; SO400M, 431M) is
+agglomerative: one student distilled from SigLIP2-g, DINOv3-7B and a segmentation teacher
+\cite{ranzinger2024amradio,heinrich2025radiov25}. \textbf{SigLIP2}
+\cite{tschannen2025siglip2} appears at 1163M --- the literal teacher --- and at
+428M, capacity-matched to C-RADIOv4-SO400M. \textbf{DINOv3}
+\cite{simeoni2025dinov3} appears at 840M and 303M, bracketing C-RADIOv4-H's
+653M from above and below; note that the true teacher is DINOv3-7B, which does not fit
+on the card this study ran on, so the DINOv3 rows stand in for a teacher family rather than
+being the teacher. \textbf{CLIP ViT-B/16} \cite{radford2021clip} is the small, well-understood
+control, and is the one encoder present under both resize geometries.
+
+Features are the encoder's pooled summary representation at \texttt{fp32}, cached to a
+content-addressed store keyed on the encoder description and the manifest digest. C-RADIOv4 is
+additionally run at $256\times128$ and at each image's native size, snapped to the model's
+patch grid and capped at 512 pixels, which is the resolution axis of \cref{sec:geometry}.
+
+\subsection{Readout heads}
+A \emph{head} is a small map fitted on the frozen encoder's cached features and nothing else.
+\nHeadRecipes{} recipes are reported, and \texttt{none} is one of them:
+\begin{itemize}
+  \item \textbf{none} --- the frozen encoder, ranked by cosine similarity. The zero-shot
+        convention, and the row every other row is read against.
+  \item \textbf{pca} --- a 512-dimensional PCA projection fitted on
+        \texttt{market1501/train}. It sees the same \nHeadImages{} images as the supervised
+        heads and none of the \nHeadIdentities{} identity labels. This is the control that
+        separates \emph{supervision} from \emph{dimensionality}.
+  \item \textbf{linear} --- a 512-dimensional affine map trained with softmax
+        cross-entropy over the \nHeadIdentities{} training identities; the classifier is
+        discarded and retrieval is scored on the projected features.
+  \item \textbf{arcface} --- the same map trained with an additive angular margin
+        \cite{deng2019arcface} ($m=0.3$, $s=30$).
+\end{itemize}
+All three fitted heads share one budget --- 100 epochs, Adam, lr $10^{-3}$, weight decay
+$5\times10^{-4}$, batch 256, $\ell_2$-normalised inputs, seed 0 --- fixed on training accuracy
+before any retrieval number was read. Fitting takes well under a minute per encoder on the
+study's single GPU. Except where \cref{tab:fitsplit} says otherwise, every head is fitted on
+\texttt{market1501/train} and applied unchanged everywhere, which makes exactly one column of
+every results table in-domain supervised and every other column cross-domain transfer with no
+target label ever seen. That asymmetry is the most important single fact about these tables, is
+why the regime is named in \cref{tab:datasets}, and is measured rather than assumed in
+\cref{sec:heads}, where the same recipes are refitted on a second training split.
+
+\begin{table*}[t]
+\centering
+\caption{Datasets and protocols. \emph{regime} is relative to the heads, all of which are
+fitted on \texttt{market1501/train}; only Market-1501 is in-domain. Query and gallery sizes are
+read from the run records, so a cross-dataset comparison of absolute scores can be checked
+against the search size that produced it.}
+\label{tab:datasets}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{generated/tbl-datasets}
+\end{table*}
+
+\subsection{Datasets and protocols}
+\nDatasets{} datasets under \nProtocols{} protocols cover five regimes of difficulty.
+\textbf{Market-1501} \cite{zheng2015scalable} is the source domain and the only in-domain
+column. \textbf{MSMT17} \cite{wei2018msmt} is the large-scale person transfer target.
+\textbf{CUHK03-NP} \cite{zhong2017reranking}, detected boxes under the 767/700 split, is the
+degraded-detector regime and the one closest to what a real detector hands a ReID model.
+\textbf{Occluded-REID} \cite{zhuo2018occluded} ships no standard split and labels no cameras,
+so the whole set is used, occluded probes against whole-body gallery, and the same-camera
+exclusion every Market number depends on does not exist there. \textbf{CCVID}
+\cite{gu2022ccvid} is video and cloth-changing; frames are thinned to eight per tracklet before
+encoding and mean-pooled into one vector per tracklet afterwards, and both protocols --- with
+and without the cloth-changing restriction --- are reported. \textbf{VRIC} \cite{kanaci2018vric}
+and \textbf{VRAI} \cite{wang2019vrai} are vehicles, the latter aerial. VRAI's test identities
+are withheld by its release, so the only protocol that scores offline runs over its training
+split, querying the first frame of each camera-1 trajectory against every camera-2 training
+image; that is a legitimate zero-shot number for an encoder that never saw VRAI, and it is
+sound for the head rows here \emph{only} because no head in this study has ever seen a VRAI
+image.
+
+We do not use DukeMTMC or any dataset derived from it. The exclusion is enforced in code with
+no override.
+
+\begin{table*}[t]
+\centering
+\caption{Coverage: run records per (encoder, dataset) pair, four per cell being the four heads
+and eight where the dataset ships two protocols. The MSMT17 column is the study's one
+systematic gap and is discussed in \cref{sec:limitations}.}
+\label{tab:coverage}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{generated/tbl-coverage}
+\end{table*}
+
+\subsection{Metrics}
+We report mAP and Rank-1 throughout, and mINP \cite{ye2022deep} where the claim is about the
+hardest true match rather than the average one. Cross-dataset comparison of absolute values is
+not meaningful here and we do not make it: Occluded-REID searches roughly a thousand images,
+Market-1501 searches nearly twenty thousand, and VRAI over thirty thousand, so a gallery an
+order of magnitude larger accounts for much of the difference between those columns before any
+question of difficulty arises. Every claim in this paper is a within-column comparison, where
+all rows share a protocol digest and a manifest digest.
+
+\subsection{Noise}
+Refitting the lead encoder's ArcFace head at three seeds and rescoring gives a standard
+deviation of $0.0002$ mAP on Market-1501, $0.0050$ on Occluded-REID --- the noisiest set here,
+with its thousand queries --- and $0.0009$ on VRAI. We treat differences below roughly twice
+those values as ties and say so where it matters; several comparisons in \cref{sec:ablation}
+turn on this.

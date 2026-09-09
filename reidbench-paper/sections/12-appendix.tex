@@ -1,0 +1,32 @@
+\appendices
+\section{Complete Result Matrices}\label{sec:appendix}
+The tables in the body are slices chosen to make one comparison each. These three are the full
+grid, so that any comparison the body does not make can still be checked. All rows within a
+column share a protocol digest and a manifest digest; no row is comparable across columns
+(\cref{sec:setup}). CCVID is shown under \texttt{ccvid/tracklet@1}; its cloth-changing
+protocol is a separate question and is reported separately in the released records.
+
+\begin{table*}[htbp]
+\centering
+\caption{Frozen encoders, ranked by cosine similarity over the raw pooled features, mAP. This
+is the zero-shot convention, and it is the ordering \cref{sec:readout} shows is not stable.}
+\label{tab:appendix-frozen}
+\input{generated/tbl-frozen}
+\end{table*}
+
+\begin{table*}[htbp]
+\centering
+\caption{The ArcFace head fitted on \texttt{market1501/train}, applied unchanged everywhere,
+mAP. Market-1501 is the only in-domain column.}
+\label{tab:appendix-map}
+\input{generated/tbl-main}
+\end{table*}
+
+\begin{table*}[htbp]
+\centering
+\caption{The same configurations as \cref{tab:appendix-map}, Rank-1. Reported because mAP and
+Rank-1 do not always agree --- notably on CCVID, where several encoders separate on one and not
+on the other.}
+\label{tab:appendix-r1}
+\input{generated/tbl-main-r1}
+\end{table*}

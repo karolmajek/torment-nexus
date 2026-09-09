@@ -1,0 +1,130 @@
+\section{Does Agglomeration Cost the Instance Margin?}\label{sec:ablation}
+Agglomerative backbones distil several heterogeneous teachers into one student
+\cite{ranzinger2024amradio,heinrich2025radiov25}. The concern this raises for
+re-identification is specific: classification asks whether a \emph{class} is separable, ReID
+asks whether one \emph{individual} is separable from a visually near-identical other, and
+averaging teacher objectives is a plausible way to lose exactly that margin while every
+classification benchmark continues to look healthy.
+
+The concern is testable here rather than by analogy, because C-RADIOv4's teachers are in the
+encoder set. \Cref{tab:ablation} is the ablation: the student at two capacities, its literal
+teacher SigLIP2-g at 1163M, a capacity-matched SigLIP2 at 428M, and the DINOv3
+family bracketing the student from above and below. All rows use the ArcFace head, under which
+every probe in the study converged, and all teacher rows use the \texttt{squash} geometry so
+that \cref{sec:geometry}'s confound is not silently inside this table.
+
+\begin{table*}[t]
+\centering
+\caption{The teacher ablation, ArcFace mAP. C-RADIOv4 is a student of the SigLIP2 and DINOv3
+families; SigLIP2-g is the literal teacher. \emph{role} names that relation. Market-1501 is the
+only column whose identities any head has seen. DINOv3 stands in for a teacher family, not for
+the actual DINOv3-7B teacher, which does not fit on this study's GPU.}
+\label{tab:ablation}
+\small
+\input{generated/tbl-ablation}
+\end{table*}
+
+\subsection{In-domain, the margin improves rather than erodes}
+On Market-1501 the student beats its literal teacher, \studentMarket{} against
+\teacherMarket{} mAP, despite the teacher having 1.8$\times$ its parameters and running
+at a higher input resolution that \cref{sec:geometry} shows is an advantage rather than a
+neutral difference.
+
+More to the point, the advantage is \emph{larger} on the metric the concern is about. mINP
+\cite{ye2022deep} measures the rank of the hardest true match, which is the instance margin
+that distillation was predicted to destroy. In-domain the student's mINP is
+\leadMarketMINP{} against the teacher's \teacherMarketMINP{}, a factor of \minpGap{}$\times$
+where the mAP factor is smaller. Given labels in the target domain, agglomerative distillation
+does not merely preserve the fine-grained margin --- it improves it.
+
+\subsection{Off-domain, the advantage does not survive}
+It is a narrower claim than it first appears, and the rest of \cref{tab:ablation} says why.
+Market-1501 is the only dataset whose identities any head has seen. On the five transfer sets
+the student never exceeds the better teacher family by more than the seed noise of
+\cref{sec:setup}: it ties on Occluded-REID (\familyStudentOccluded{} against
+\familySiglipOccluded{}) and CCVID (\familyStudentCcvid{} against \familySiglipCcvid{}), and
+loses on CUHK03-NP, VRIC and VRAI. On CUHK03-NP it loses to a teacher 1.5$\times$
+\emph{smaller} than itself.
+
+So the property is not ``agglomeration wins on people'' --- CUHK03-NP is a person dataset and
+falsifies that --- and it is not ``agglomeration wins'' either. It is that \textbf{the
+student's gain is concentrated exactly where the probe had labels}, which is also why the
+retention view of the same numbers (\cref{tab:retention}) is not independent evidence: high
+in-domain performance with mediocre transfer \emph{is} low retention, and reporting both as
+two findings would be counting one twice.
+
+\begin{table*}[t]
+\centering
+\caption{Retention: target mAP divided by source mAP, for the one head fitted on
+\texttt{market1501/train}. The absolute source column is printed beside the ratios on purpose
+--- a retention ratio flatters a weak source model, and CLIP's Occluded-REID and CCVID entries
+are exactly that trap.}
+\label{tab:retention}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{generated/tbl-retention}
+\end{table*}
+
+\subsection{The transfer loss has a shape, and it is predictable}
+The interesting result is not that the student loses off-domain but \emph{where}. The two
+teacher families disagree sharply and by domain: language-aligned features carry degraded
+person crops, and self-supervised dense features carry vehicles. SigLIP2 leads DINOv3 by
+\spreadCuhk{}$\times$ on CUHK03-NP and by \spreadMsmt{}$\times$ on MSMT17; DINOv3 leads SigLIP2
+by \spreadVric{}$\times$ on VRIC. \Cref{tab:bracket} places the student inside that
+disagreement.
+
+\begin{table*}[t]
+\centering
+\caption{Best-of-family ArcFace mAP, with the teachers' spread and the student's position
+inside it. \emph{spread} is the ratio of the better teacher family to the worse; \emph{vs.\
+best} is the student's relative distance from the better one. The two datasets where the
+teachers disagree by roughly 3$\times$ both cost the student roughly
+45\%.}
+\label{tab:bracket}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{generated/tbl-bracket}
+\end{table*}
+
+The pattern is regular enough to state as a rule of thumb. Where the teacher families agree
+--- Occluded-REID at \spreadOccluded{}$\times$, CCVID at \spreadCcvid{}$\times$, VRAI at
+\spreadVrai{}$\times$ --- the student matches the better of them to within
+8\% and usually to within noise. Where they disagree by roughly a factor of three
+--- CUHK03-NP at \spreadCuhk{}$\times$ and VRIC at \spreadVric{}$\times$ --- the student falls
+\deficitCuhk{}\% and \deficitVric{}\% short of the better teacher respectively. Two independent
+datasets, one person and one vehicle, at nearly the same teacher spread, produce nearly the
+same student deficit.
+
+\textbf{This is a different failure than the one the literature warns about, and a more useful
+one.} The cost of agglomeration here is not a destroyed instance margin --- \cref{sec:ablation}
+opens by showing the margin improving where labels exist. It is \emph{regression toward the
+teacher mean on any domain where one teacher is much better than the other}. That cost is
+predictable in advance from a question a practitioner can answer without running the
+experiment: do my images look more like what the language-aligned teacher was good at, or more
+like what the self-supervised one was good at? Where the honest answer is ``strongly one of
+them'', the blend is the wrong purchase and the better single teacher is available.
+
+We report one prospective check on this. Both C-RADIOv4 rows for CUHK03-NP were forecast to
+fall inside the teacher bracket before they were run, on the strength of the pattern in the
+datasets already measured, and both did.
+
+\subsection{A family signature: the angular margin does not transfer for DINOv3}
+\Cref{tab:margin} showed that replacing the linear head with an ArcFace head helps almost
+everywhere. The exceptions are concentrated in one family: in DINOv3's feature space, on
+transfer sets, the angular margin loses. Both DINOv3 probes reach a perfect training accuracy
+over the source identities, so this is not an optimisation failure --- the head fits, and what
+it fits transfers worse than the plainer head does. The practical reading is uncomfortable and
+worth stating plainly: \emph{fit an angular-margin head on your labelled domain} is good advice
+for an agglomerative or language-aligned backbone and bad advice for a DINOv3 backbone deployed
+cross-domain, which is the opposite of what a Market-1501-only study would conclude.
+
+\subsection{One anomaly we cannot yet explain}
+CCVID is the one column in \cref{tab:ablation} where the ordering does not resemble any other.
+The 87M CLIP control, run under the \texttt{squash} geometry, scores \clipCcvid{} mAP
+there, ahead of every larger encoder in the study including its own 1163M
+language-aligned relative. Its retention on that dataset is correspondingly implausible
+(\cref{tab:retention}). The result is reproducible from the cached features and the protocol
+digest is shared with every other row in the column, so it is not an adapter fault of the kind
+\cref{sec:substrate}'s guards are designed to catch; but we do not have a mechanism for it, the
+tracklet pooling step is unique to this dataset, and we flag it as unresolved rather than
+interpret it. It is listed among the open items in \cref{sec:limitations}.

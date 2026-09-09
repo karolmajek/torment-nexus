@@ -1,0 +1,103 @@
+\section{Two Nuisance Variables Larger Than the Effect}\label{sec:geometry}
+Neither of the variables in this section is interesting in itself. Both are reported because
+each is larger than several of the backbone differences that frozen-encoder comparisons are run
+to establish, and neither is routinely reported at all.
+
+\subsection{How the crop is fitted to the input}
+A pedestrian crop is roughly $64\times128$; a ViT input is square. Something has to reconcile
+them, and the two conventions in common use disagree about what. \texttt{timm}'s default
+evaluation transform resizes the short side and centre-crops, which on such an image retains
+roughly the middle 45\% of the body and discards the head and the feet. The
+\texttt{torchhub} path resizes to the target directly, distorting the aspect ratio and keeping
+everything.
+
+Measured on identical CLIP ViT-B/16 weights at identical input size, with geometry as the only
+variable, the choice moves probed Market-1501 mAP from \clipcropMarket{} to \clipMarket{}. It
+also moves the head's training accuracy over the source identities from $0.7073$ to $0.9319$,
+which is the more diagnostic of the two: under the centre-crop convention an angular margin
+cannot separate the training identities in CLIP's frozen space, and under the other convention
+it nearly can. A conclusion of the form ``an angular margin fails in CLIP's representation''
+--- which an earlier version of this study drew --- was substantially a statement about a
+resize transform.
+
+The consequence for the ablation of \cref{sec:ablation} is direct. The teachers reach the bench
+through \texttt{timm} and the student through \texttt{torchhub}. Run on each backend's default,
+the teachers would have carried a handicap the student never paid, worth up to a large fraction
+of their probed score, and \cref{tab:ablation} would have reported the opposite conclusion with
+the same confidence. This is why the resize geometry is a hashed field of the encoder
+specification in our substrate rather than a constant in a runner script: the two geometries
+address different cache entries and appear as different rows.
+
+\subsection{Input resolution}
+\Cref{tab:geometry} varies input size while holding the encoder, the head and the protocol
+fixed. Three regularities hold across both C-RADIOv4 capacities.
+
+\begin{table*}[t]
+\centering
+\caption{Input geometry, ArcFace mAP. Rows 1--3 and 4--6 vary resolution within one
+checkpoint; rows 7--8 vary only the resize convention. \emph{native} feeds each image at its
+own size, snapped to the patch grid and capped at 512 pixels.}
+\label{tab:geometry}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{generated/tbl-geometry}
+\end{table*}
+
+First, \textbf{$256\times128$ wins on Market-1501 and CUHK03-NP and loses on both vehicle
+sets}, at both C-RADIOv4 capacities, while also running about 1.6$\times$ faster; where it
+wins it is therefore the better purchase on both axes at once.
+
+Second, the tempting explanation for that --- that a $2{:}1$ input matches a person crop's
+aspect ratio --- is \textbf{false}, and this study contains its own counterexample.
+Market-1501 and Occluded-REID ship images that are every one of them exactly $64\times128$:
+identical median size, identical $2.00$ aspect, coefficient of variation $0.00$ in image area.
+With the same head they prefer \emph{opposite} input sizes --- $256\times128$ on Market
+($0.718$ against $0.709$) and $224\times224$ on Occluded-REID ($0.646$ against $0.622$, about
+five times that set's seed noise). CUHK03-NP, at a much taller $2.97$ aspect, prefers $2{:}1$
+by \emph{more} than Market does rather than less. A second candidate explanation, token count,
+fails on the same rows. We report the regularity and explicitly do not claim a mechanism for
+it; ``$2{:}1$ usually wins on person crops'' is a useful default with two measured exceptions
+inside this table, not a law.
+
+Third, \textbf{\emph{native} resolution wins on exactly one dataset, VRAI, and loses
+everywhere else --- including on the other vehicle set}. That last detail is the one that
+identifies the variable. If the split were person-versus-vehicle, native should also win on
+VRIC; instead it collapses there, from $0.191$ to $0.106$. What separates the two is crop
+size. VRAI's median crop is $295\times202$, inside the range C-RADIOv4 was trained across;
+VRIC's crops, and every Market-1501 and Occluded-REID crop, are far below it. Indeed on the two
+person sets where every file is exactly $64\times128$, ``native'' is not native at all: it is a
+fixed 32-token resolution wearing a misleading label, well under the roughly 128-pixel floor
+the encoder saw in training.
+
+The variable that moved is therefore resolution \emph{relative to the encoder's training
+distribution}, not resampling and not object class. Upsampling a small crop to $224$ is not a
+distortion to be avoided; it is how the crop reaches a size the encoder can read. Native is
+also far cheaper on small crops --- roughly 4$\times$ the throughput --- so it remains a real
+option wherever a quarter of the mAP is an acceptable price.
+
+Two further cells resist the story and we report them rather than smooth them: CLIP's
+Occluded-REID and VRIC rows prefer the centre-crop geometry, which every other column in the
+table penalises. Both are among the weakest scores in the study, and we have not established
+whether that is the reason.
+
+\subsection{Why this belongs in the paper rather than in an appendix}
+Take the two variables together. Resize geometry is worth up to a large fraction of a probed
+score; resolution is worth on the order of a fifth to a quarter of one. Several of the backbone
+comparisons in \cref{tab:ablation} are decided by less than either. A frozen-encoder comparison
+that does not pin both is therefore not merely imprecise --- it is capable of reporting the
+reverse of the truth, and it will do so with a table that looks exactly like a correct one.
+The remedy is cheap and we recommend it as a reporting standard: state the resize convention
+and the input size beside every frozen-encoder number, and treat any comparison that omits
+them as under-specified.
+
+\begin{table}[t]
+\centering
+\caption{Extraction throughput on this study's single RTX 2070 Max-Q, Market-1501, frozen
+features. A throughput figure measures a machine and a moment, not a model --- one cell here
+first recorded 2.2 img/s against 12.8 for the same encoder elsewhere because
+another process held part of the card; re-extracting on a quiet card gave 12.3, and the
+metrics never moved.}
+\label{tab:cost}
+\scriptsize
+\input{generated/tbl-cost}
+\end{table}
